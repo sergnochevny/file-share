@@ -22,6 +22,8 @@ use Yii;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ *
+ * @property Investigation[] $investigations
  */
 class User extends AbstractUndeletableActiveRecord
 {
@@ -71,5 +73,13 @@ class User extends AbstractUndeletableActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getInvestigations()
+    {
+        return $this->hasMany(Investigation::className(), ['id' => 'investigation_id'])->viaTable('investigation_user', ['user_id' => 'id']);
     }
 }

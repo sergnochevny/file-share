@@ -16,6 +16,7 @@ use Yii;
  * @property integer $updated_at
  *
  * @property Company $company
+ * @property User[] $users
  */
 class Investigation extends AbstractUndeletableActiveRecord
 {
@@ -68,5 +69,13 @@ class Investigation extends AbstractUndeletableActiveRecord
     public function getCompany()
     {
         return $this->hasOne(Company::className(), ['id' => 'company_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUsers()
+    {
+        return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('investigation_user', ['investigation_id' => 'id']);
     }
 }
