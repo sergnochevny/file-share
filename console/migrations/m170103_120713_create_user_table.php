@@ -27,7 +27,7 @@ class m170103_120713_create_user_table extends console\migrations\AbstractBaseMi
             'status' => $this->smallInteger()->unsigned()->notNull()->defaultValue(User::STATUS_ACTIVE),
             'created_at' => $this->integer()->unsigned()->notNull(),
             'updated_at' => $this->integer()->unsigned()->notNull(),
-        ]);
+        ], $this->tblOptions);
     }
 
     /**
