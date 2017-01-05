@@ -1,19 +1,20 @@
 <?php
-namespace common\models;
 
-use Yii;
+
+namespace backend\models;
+
+
+use common\models\User;
 use yii\base\Model;
+use Yii;
 
-/**
- * Login form
- */
 class LoginForm extends Model
 {
     public $username;
     public $password;
     public $rememberMe = true;
 
-    private $_user;
+    private $user;
 
 
     /**
@@ -69,10 +70,22 @@ class LoginForm extends Model
      */
     protected function getUser()
     {
-        if ($this->_user === null) {
-            $this->_user = User::findByUsername($this->username);
+        if ($this->user === null) {
+            if ($this->isEmail()) {
+                $this->user = User::findByEmail($this->username);
+            } else {
+                $this->user = User::findByUsername($this->username);
+            }
         }
 
-        return $this->_user;
+        return $this->user;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function isEmail()
+    {
+        return filter_var($this->username, FILTER_VALIDATE_EMAIL);
     }
 }

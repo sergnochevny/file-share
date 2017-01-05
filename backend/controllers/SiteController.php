@@ -1,11 +1,13 @@
 <?php
 namespace backend\controllers;
 
+use backend\finders\UserFinder;
+use common\models\User;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
+use backend\models\LoginForm;
 
 /**
  * Site controller
