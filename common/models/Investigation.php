@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "{{%investigation}}".
@@ -37,13 +38,32 @@ class Investigation extends AbstractUndeletableActiveRecord
     /**
      * @inheritdoc
      */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
-            [['company_id', 'created_at', 'updated_at'], 'required'],
-            [['company_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['company_id'], 'required'],
+            [['company_id'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
-            [['company_id'], 'exist', 'skipOnError' => true, 'targetClass' => Company::className(), 'targetAttribute' => ['company_id' => 'id']],
+            ['status', 'default', 'value' => self::STATUS_IN_PROGRESS],
+            ['status', 'in', 'range' => [
+                self::STATUS_COMPLETED, self::STATUS_IN_PROGRESS,
+                self::STATUS_IN_HISTORY, self::STATUS_CANCELLED, self::STATUS_DELETED
+            ]],
+            [
+                ['company_id'], 'exist', 'skipOnError' => true,
+                'targetClass' => Company::className(),
+                'targetAttribute' => ['company_id' => 'id']
+            ],
         ];
     }
 
