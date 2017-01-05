@@ -30,7 +30,7 @@ class m170103_134918_create_investigation_table extends \console\migrations\Abst
             '{{%company}}',
             'id',
             'RESTRICT',
-            'RESTRICT'
+            'CASCADE'
         );
 
         $this->createIndex('idx-investigation-company_id', '{{%investigation}}', 'company_id');

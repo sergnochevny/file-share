@@ -26,7 +26,7 @@ class m170103_142451_create_investigation_user_table extends \console\migrations
             '{{%investigation}}',
             'id',
             'RESTRICT',
-            'RESTRICT'
+            'CASCADE'
         );
 
         $this->addForeignKey(
@@ -36,7 +36,7 @@ class m170103_142451_create_investigation_user_table extends \console\migrations
             '{{%user}}',
             'id',
             'RESTRICT',
-            'RESTRICT'
+            'CASCADE'
         );
 
     }
