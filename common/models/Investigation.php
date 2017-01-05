@@ -54,6 +54,7 @@ class Investigation extends AbstractUndeletableActiveRecord
             [['company_id'], 'required'],
             [['company_id'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
+            [['description'], 'string', 'max' => 2000],
             ['status', 'default', 'value' => self::STATUS_IN_PROGRESS],
             ['status', 'in', 'range' => [
                 self::STATUS_COMPLETED, self::STATUS_IN_PROGRESS,
