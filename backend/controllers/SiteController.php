@@ -1,8 +1,8 @@
 <?php
 namespace backend\controllers;
 
-use backend\finders\UserFinder;
-use common\models\User;
+
+use backend\models\PasswordResetRequestForm;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -24,7 +24,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'password-reset', 'error'],
                         'allow' => true,
                     ],
                     [
@@ -72,6 +72,7 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        $this->layout = 'login-main';
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -84,6 +85,19 @@ class SiteController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    /**
+     * Password reset action
+     *
+     * @return string
+     */
+    public function actionPasswordReset()
+    {
+        $this->layout = 'login-main';
+
+        $model = new PasswordResetRequestForm();
+        return $this->render('password-reset', ['model' => $model]);
     }
 
     /**
