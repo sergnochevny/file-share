@@ -59,7 +59,6 @@ class User extends AbstractUndeletableActiveRecord implements IdentityInterface
     {
         return [
             [['email', 'username', 'auth_key', 'password_hash'], 'required'],
-            [['created_at', 'updated_at'], 'integer'],
             [['first_name', 'last_name', 'phone_number', 'email', 'username', 'password_hash', 'password_reset_token'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['email'], 'unique'],
