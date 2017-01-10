@@ -21,11 +21,11 @@ $fieldOptions2 = [
 
 <div class="login-box">
     <div class="login-logo">
-        <a href="#"><b>Admin</b>LTE</a>
+        <a href="#"><img class="img-responsive" src="images/logo.png" /></a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+        <h3 class="login-box-msg">Sign in</h3>
 
         <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
 
@@ -40,12 +40,15 @@ $fieldOptions2 = [
             ->passwordInput(['placeholder' => $model->getAttributeLabel('password')]) ?>
 
         <div class="row">
-            <div class="col-xs-8">
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
+            <div class="col-xs-12">
+                <?= Html::submitButton('Sign in', ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
             </div>
             <!-- /.col -->
-            <div class="col-xs-4">
-                <?= Html::submitButton('Sign in', ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
+            <div class="col-xs-12 text-center">
+                <?= $form->field($model, 'rememberMe')->checkbox() ?>
+                <a href="#">Forgot username?</a>
+                <span> · </span>
+                <a href="register.html">Forgot password?</a>
             </div>
             <!-- /.col -->
         </div>
@@ -53,18 +56,30 @@ $fieldOptions2 = [
 
         <?php ActiveForm::end(); ?>
 
-        <div class="social-auth-links text-center">
+        <!--<div class="social-auth-links text-center">
             <p>- OR -</p>
             <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in
                 using Facebook</a>
             <a href="#" class="btn btn-block btn-social btn-google-plus btn-flat"><i class="fa fa-google-plus"></i> Sign
                 in using Google+</a>
         </div>
-        <!-- /.social-auth-links -->
+         /.social-auth-links -->
 
-        <a href="#">I forgot my password</a><br>
-        <a href="register.html" class="text-center">Register a new membership</a>
+
 
     </div>
     <!-- /.login-box-body -->
 </div><!-- /.login-box -->
+<div class="col-xs-12 login-footer">
+    <ul class="list-inline">
+        <li><a href="#">Sign up</a></li>
+        <li>|</li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li>|</li>
+        <li><a href="#">Terms</a></li>
+        <li>|</li>
+        <li><a href="#">Cookie Policy</a></li>
+        <li>|</li>
+        <li>&copy; Protus3 2016</li>
+    </ul>
+</div>

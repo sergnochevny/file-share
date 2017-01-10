@@ -37,10 +37,9 @@ use dmstr\widgets\Alert;
 
 <footer class="main-footer">
     <div class="pull-right hidden-xs">
-        <b>Version</b> 2.0
+        <a target="_blank" href="#"><small>Web Design & hosting by Firm name</small></a>
     </div>
-    <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
-    reserved.
+    <small>2016 © Plan. Protect. Prosper.</small>
 </footer>
 
 <!-- Control Sidebar -->
