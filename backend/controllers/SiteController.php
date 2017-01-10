@@ -72,7 +72,6 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        $this->layout = 'login-main';
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -94,7 +93,6 @@ class SiteController extends Controller
      */
     public function actionPasswordReset()
     {
-        $this->layout = 'login-main';
 
         $model = new PasswordResetRequestForm();
         return $this->render('password-reset', ['model' => $model]);
