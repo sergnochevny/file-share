@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\UserForm;
 use Yii;
 use common\models\User;
 use backend\models\UserSearch;
@@ -63,15 +64,16 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-        $model = new User();
+        $model = new UserForm(new User());
+        $model->scenario = UserForm::SCENARIO_CREATE;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        if ($model->load(Yii::$app->request->post()) && $user = $model->saveUser()) {
+            return $this->redirect(['view', 'id' => $user->id]);
         }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -82,15 +84,16 @@ class UserController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $user = $this->findModel($id);
+        $model = new UserForm($user);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        if ($model->load(Yii::$app->request->post()) && $user = $model->saveUser()) {
+            return $this->redirect(['view', 'id' => $user->id]);
         }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**
