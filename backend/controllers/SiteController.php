@@ -28,7 +28,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index', 'wizard'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -64,6 +64,12 @@ class SiteController extends Controller
     {
         return $this->render('index');
     }
+
+    public function actionWizard()
+    {
+        return $this->render('wizard');
+    }
+
 
     /**
      * Login action.

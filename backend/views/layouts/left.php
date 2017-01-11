@@ -31,6 +31,7 @@
                 'options' => ['class' => 'sidebar-menu'],
                 'items' => [
                     //['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
+                    ['label' => 'Company', 'icon' => 'fa fa-contao', 'url' => ['/company/index']],
                     ['label' => 'User', 'icon' => 'fa fa-user', 'url' => ['/user/index']],
 
                 ],
