@@ -16,6 +16,8 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $created_at
  * @property integer $updated_at
  *
+ * @property array $statusLabels
+ *
  * @property Company $company
  * @property User[] $users
  */
@@ -81,6 +83,22 @@ class Investigation extends AbstractUndeletableActiveRecord
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+        ];
+    }
+
+    /**
+     * Gets labels of statuses
+     *
+     * @return array
+     */
+    public function getStatusLabels()
+    {
+        return [
+            self::STATUS_DELETED => 'Deleted',
+            self::STATUS_CANCELLED => 'Cancelled',
+            self::STATUS_IN_HISTORY => 'In history',
+            self::STATUS_IN_PROGRESS => 'In progress',
+            self::STATUS_COMPLETED => 'Completed',
         ];
     }
 
