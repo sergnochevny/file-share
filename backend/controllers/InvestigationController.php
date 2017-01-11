@@ -64,7 +64,7 @@ class InvestigationController extends Controller
     public function actionCreate()
     {
         $model = new Investigation();
-        $model->status = Investigation::STATUS_IN_PROGRESS;
+        $model->status = Investigation::STATUS_PENDING;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

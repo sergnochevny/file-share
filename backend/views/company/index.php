@@ -20,7 +20,8 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
+        'tableOptions' => ['class' => 'table table-hover table-striped  dataTable no-footer dtr-inline'],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 

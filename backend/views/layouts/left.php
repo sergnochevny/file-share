@@ -28,7 +28,7 @@
 
         <?= dmstr\widgets\Menu::widget(
             [
-                'options' => ['class' => 'sidebar-menu'],
+                'options' => ['class' => 'sidenav'],
                 'items' => [
                     //['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     ['label' => 'Home', 'icon' => 'fa fa-home', 'url' => ['/site/index']],

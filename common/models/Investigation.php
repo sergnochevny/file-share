@@ -26,6 +26,7 @@ class Investigation extends AbstractUndeletableActiveRecord
     const STATUS_DELETED = 0;
     const STATUS_CANCELLED = 100;
     const STATUS_IN_HISTORY = 200;
+    const STATUS_PENDING = 250;
     const STATUS_IN_PROGRESS = 300;
     const STATUS_COMPLETED = 400;
 
@@ -98,6 +99,7 @@ class Investigation extends AbstractUndeletableActiveRecord
             self::STATUS_CANCELLED => 'Cancelled',
             self::STATUS_IN_HISTORY => 'In history',
             self::STATUS_IN_PROGRESS => 'In progress',
+            self::STATUS_PENDING => 'Pending',
             self::STATUS_COMPLETED => 'Completed',
         ];
     }
