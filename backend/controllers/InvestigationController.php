@@ -3,7 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\Investigation;
+use backend\models\Investigation;
 use backend\models\InvestigationSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -64,6 +64,7 @@ class InvestigationController extends Controller
     public function actionCreate()
     {
         $model = new Investigation();
+        $model->status = Investigation::STATUS_IN_PROGRESS;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

@@ -5,7 +5,6 @@ namespace backend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Investigation;
 
 /**
  * InvestigationSearch represents the model behind the search form about `common\models\Investigation`.
