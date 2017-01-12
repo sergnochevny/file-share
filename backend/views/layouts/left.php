@@ -36,6 +36,7 @@
                     ['label' => 'Investigations', 'icon' => 'fa fa-folder-open-o', 'url' => ['/investigation/index']],
                     ['label' => 'History', 'icon' => 'fa fa-history', 'url' => ['/investigation/history']],
                     ['label' => 'Users', 'icon' => 'fa fa-users', 'url' => ['/user/index']],
+                    ['label' => 'Roles & Access', 'items' => []],
 
                 ],
             ]
