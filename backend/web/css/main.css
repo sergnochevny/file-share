@@ -198,3 +198,9 @@ a.desc:after {
     outline: none;
 }
 /* /site.css yii2 */
+
+/* menu hide */
+.sidenav > li > ul.treeview-menu {
+    display: none;
+    list-style: none;
+}
