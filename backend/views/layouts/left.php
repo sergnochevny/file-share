@@ -36,7 +36,15 @@
                     ['label' => 'Investigations', 'icon' => 'fa fa-folder-open-o', 'url' => ['/investigation/index']],
                     ['label' => 'History', 'icon' => 'fa fa-history', 'url' => ['/investigation/history']],
                     ['label' => 'Users', 'icon' => 'fa fa-users', 'url' => ['/user/index']],
-                    ['label' => 'Roles & Access', 'items' => []],
+                    ['label' => 'Roles & Access', 'url' => '#',
+
+                        'items' => [
+
+                        ['label' => 'Route', 'icon' => 'fa fa-users', 'url' => ['/admin/route']],
+                        ['label' => 'Permission', 'icon' => 'fa fa-users', 'url' => ['/admin/permission']],
+                        ['label' => 'Role', 'icon' => 'fa fa-users', 'url' => ['/admin/role']],
+                        ['label' => 'Assignment', 'icon' => 'fa fa-users', 'url' => ['/admin/assignment']],
+                    ]],
 
                 ],
             ]
