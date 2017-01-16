@@ -40,10 +40,10 @@
 
                         'items' => [
 
-                        ['label' => 'Route', 'icon' => 'fa fa-users', 'url' => ['/admin/route']],
-                        ['label' => 'Permission', 'icon' => 'fa fa-users', 'url' => ['/admin/permission']],
-                        ['label' => 'Role', 'icon' => 'fa fa-users', 'url' => ['/admin/role']],
-                        ['label' => 'Assignment', 'icon' => 'fa fa-users', 'url' => ['/admin/assignment']],
+                            ['label' => 'Role', 'icon' => 'fa fa-users', 'url' => ['/admin/role']],
+                            ['label' => 'Route', 'icon' => 'fa fa-users', 'url' => ['/admin/route']],
+                            ['label' => 'Permission', 'icon' => 'fa fa-users', 'url' => ['/admin/permission']],
+                            ['label' => 'Assignment', 'icon' => 'fa fa-users', 'url' => ['/admin/assignment']],
                     ]],
 
                 ],
