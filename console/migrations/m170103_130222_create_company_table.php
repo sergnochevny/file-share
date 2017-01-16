@@ -24,6 +24,17 @@ class m170103_130222_create_company_table extends \console\migrations\AbstractBa
             'created_at' => $this->integer()->unsigned()->notNull(),
             'updated_at' => $this->integer()->unsigned()->notNull(),
         ], $this->tblOptions);
+
+        //user to company
+        $this->addForeignKey(
+            'fk-user-company_id',
+            '{{%user}}',
+            'company_id',
+            '{{%company}}',
+            'id',
+            'RESTRICT',
+            'RESTRICT'
+        );
     }
 
     /**
