@@ -4,7 +4,7 @@
 namespace backend\models;
 
 
-class Company extends \common\models\Company
+final class Company extends \common\models\Company
 {
     /**
      * Gets list [id => name] of companies
@@ -13,7 +13,7 @@ class Company extends \common\models\Company
      */
     public static function getList()
     {
-        $companies = Company::find()->select(['id', 'name'])->asArray()->all();
+        $companies = self::find()->select(['id', 'name'])->asArray()->all();
         return array_column($companies, 'name', 'id');
     }
 }

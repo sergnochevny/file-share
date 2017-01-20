@@ -2,12 +2,15 @@
 
 namespace backend\controllers;
 
+use backend\models\CompanyService;
+use backend\models\forms\CompanyForm;
 use Yii;
 use common\models\Company;
 use backend\models\CompanySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * CompanyController implements the CRUD actions for Company model.
@@ -63,15 +66,16 @@ class CompanyController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Company();
+        Yii::$app->getResponse()->format = Response::FORMAT_JSON;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        $form = new CompanyForm();
+        $service = new CompanyService();
+
+        if ($form->load(Yii::$app->request->post()) && $service->save($form)) {
+            return ['status' => true];
         }
+
+        return ['status' => false];
     }
 
     /**

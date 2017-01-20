@@ -1,6 +1,7 @@
 <?php
 /** @var $this \yii\web\View */
-/** @var $companyForm $activeFormConfig */
+/** @var $companyForm \backend\models\forms\CompanyForm */
+///** @var $companyId int|bool If user is not client then false */
 
 
 ?>
@@ -19,8 +20,12 @@
     <hr/>
     <div class="row">
 
-        <?php $form = \backend\widgets\ActiveForm::begin(['id' => 'company-form']) ?>
+        <?php $form = \backend\widgets\ActiveForm::begin([
+                'id' => 'company-form',
+                'action' => ['company/create'],
+        ]) ?>
         <div class="col-sm-6">
+
             <?= $form->field($companyForm, 'name')->textInput() ?>
 
             <?= $form->field($companyForm, 'city')->textInput() ?>
@@ -37,11 +42,11 @@
         <div class="clearfix"></div>
         <hr/>
         <div align="center">
-            <button id="company-save" class="btn btn-sm btn-labeled  arrow-warning" type="button">
+            <button id="company-create" class="btn btn-sm btn-labeled  arrow-warning" type="button">
                 <span class="btn-label">
                     <span class="icon icon-check-square   icon-lg icon-fw"></span>
                 </span>
-                Save
+                Create
             </button>
             <button class="btn btn-sm btn-labeled  arrow-success" type="button">
                 <span class="btn-label">
