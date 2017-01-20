@@ -3,7 +3,15 @@
 ?>
 
 <div id="tab-1" class="tab-pane active">
-    <?= $this->render('_select-company') ?>
+    <div class="col-lg-6 col-lg-offset-3">
+        <h2 align="center">
+            <span class="d-ib">Select Company</span>
+        </h2>
+
+        <div class="form-group">
+            <?= $this->render('_select-company') ?>
+        </div>
+    </div>
     <div class="clearfix"></div>
     <hr/>
     <div class="row">

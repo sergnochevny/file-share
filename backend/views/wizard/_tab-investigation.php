@@ -12,31 +12,7 @@
         </h5>
 
         <div class="form-group">
-            <select id="demo-select2-1-3" class="form-control">
-                <option value=""> - - -</option>
-                <option value="">Stark Industries</option>
-                <option value="">Stark Industries2</option>
-                <option value="">Stark Industries</option>
-                <option value="">Stark Industries2</option>
-                <option value="">Stark Industries</option>
-                <option value="">Stark Industries2</option>
-                <option value="">Stark Industries</option>
-                <option value="">Stark Industries2</option>
-                <option value="">Stark Industries</option>
-                <option value="">Stark Industries2</option>
-                <option value="">Stark Industries</option>
-                <option value="">Stark Industries2</option>
-                <option value="">Stark Industries</option>
-                <option value="">Stark Industries2</option>
-                <option value="">Stark Industries</option>
-                <option value="">Stark Industries2</option>
-                <option value="">Stark Industries</option>
-                <option value="">Stark Industries2</option>
-                <option value="">Stark Industries</option>
-                <option value="">Stark Industries2</option>
-
-            </select>
-            <span class="help-block">For convenience, use the quick search</span>
+            <?= $this->render('_select-company') ?>
             <h5 align="center">
                 <span class="d-ib">Add Agents</span>
             </h5>
