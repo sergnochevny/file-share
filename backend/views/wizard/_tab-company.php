@@ -1,5 +1,15 @@
 <?php
 /** @var $this \yii\web\View */
+/** @var $companyForm $activeFormConfig */
+
+$activeFormConfig =[
+    'fieldConfig' => [
+        'template' => "{label}\n<div class=\"col-sm-8\">{input}</div>\n{hint}\n{error}",
+        'labelOptions' => ['class' => 'col-sm-4 control-label'],
+        'errorOptions' => ['class' => 'col-sm-8 col-sm-offset-4 help-block'],
+    ]
+];
+
 ?>
 
 <div id="tab-1" class="tab-pane active">
@@ -15,45 +25,22 @@
     <div class="clearfix"></div>
     <hr/>
     <div class="row">
+        <?php $form = \yii\widgets\ActiveForm::begin($activeFormConfig) ?>
         <div class="col-sm-6">
-            <div class="form-group">
-                <label class="col-sm-4 control-label" for="form-control-1">Company Name</label>
+            <?= $form->field($companyForm, 'name')->textInput() ?>
 
-                <div class="col-sm-8">
-                    <input id="form-control-1" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-4 control-label" for="form-control-1">City</label>
+            <?= $form->field($companyForm, 'city')->textInput() ?>
 
-                <div class="col-sm-8">
-                    <input id="form-control-1" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-4 control-label" for="form-control-1">zip</label>
+            <?= $form->field($companyForm, 'zip')->textInput() ?>
 
-                <div class="col-sm-8">
-                    <input id="form-control-1" class="form-control" type="text">
-                </div>
-            </div>
         </div>
         <div class="col-sm-6">
-            <div class="form-group">
-                <label class="col-sm-4 control-label" for="form-control-1">Company Address</label>
+            <?= $form->field($companyForm, 'address')->textInput() ?>
 
-                <div class="col-sm-8">
-                    <input id="form-control-1" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-4 control-label" for="form-control-1">State</label>
+            <?= $form->field($companyForm, 'state')->textInput() ?>
 
-                <div class="col-sm-8">
-                    <input id="form-control-1" class="form-control" type="text">
-                </div>
-            </div>
         </div>
+
         <div class="clearfix"></div>
         <hr/>
         <div align="center">
@@ -62,7 +49,7 @@
                                                             <span
                                                                 class="icon icon-check-square   icon-lg icon-fw"></span>
                                                         </span>
-                Create
+                Save
             </button>
             <button class="btn btn-sm btn-labeled  arrow-success" type="button">
                                                         <span class="btn-label">
@@ -72,5 +59,6 @@
                 Next
             </button>
         </div>
+        <?php \yii\widgets\ActiveForm::end() ?>
     </div>
 </div>

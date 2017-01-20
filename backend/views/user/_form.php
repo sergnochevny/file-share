@@ -12,6 +12,12 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'companyId')
+        ->dropDownList($model->getCompaniesList(), ['prompt' => '--'])
+        ->label('Company') ?>
+
+
+
     <?= $form->field($model, 'firstName')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'lastName')->textInput(['maxlength' => true]) ?>

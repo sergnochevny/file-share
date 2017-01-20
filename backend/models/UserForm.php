@@ -4,9 +4,9 @@
 namespace backend\models;
 
 
+use common\models\Company;
 use common\models\User;
 use yii\base\Model;
-use yii\web\JsExpression;
 
 /**
  * Class UserForm
@@ -19,6 +19,8 @@ class UserForm extends Model
     const SCENARIO_CREATE = 'create';
     //const SCENARIO_UPDATE = 'update';
 
+    public $companyId;
+    public $role;
     public $firstName;
     public $lastName;
     public $phoneNumber;
@@ -40,6 +42,7 @@ class UserForm extends Model
     {
         if (!$this->isNewRecord()) {
             $user = $this->user;
+            $this->companyId = $user->company_id;
             $this->firstName = $user->first_name;
             $this->lastName = $user->last_name;
             $this->phoneNumber = $user->phone_number;
@@ -58,6 +61,7 @@ class UserForm extends Model
                 ['email', 'username', 'password', 'passwordRepeat'], 'required',
                 'on' => self::SCENARIO_CREATE
             ],
+            ['companyId', 'integer'],
             [['firstName', 'lastName', 'phoneNumber'], 'string'],
             [['password', 'passwordRepeat'], 'string', 'min' => 6],
 
@@ -106,6 +110,7 @@ class UserForm extends Model
             $user->setPassword($this->password);
         }
 
+        $user->company_id = $this->companyId;
         $user->first_name = $this->firstName;
         $user->last_name = $this->lastName;
         $user->phone_number = $this->phoneNumber;
@@ -128,4 +133,29 @@ class UserForm extends Model
     {
         return $this->user;
     }
+
+    /**
+     * Gets list [id => name] of companies
+     *
+     * @return array
+     */
+    public function getCompaniesList()
+    {
+        $companies = Company::find()->select(['id', 'name'])->asArray()->all();
+        return array_column($companies, 'name', 'id');
+    }
+
+    /**
+     * Gets list [id => name] of roles
+     *
+     * @return array
+     */
+    public function getRolesList()
+    {
+        //var_dump(\Yii::$app->getAuthManager()->getRoles());exit;
+        //var_dump(\Yii::$app->getAuthManager());exit;
+       // $roles = AuthItem::find()->select(['name'])->asArray()->all();
+        //return array_column($roles, 'name', 'name');
+    }
+
 }

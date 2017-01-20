@@ -46,7 +46,7 @@
             <hr/>
             <div class="tab-content">
 
-                <?= $this->render('_tab-company') ?>
+                <?= $this->render('_tab-company', ['companyForm' => $companyForm]) ?>
                 <?= $this->render('_tab-user') ?>
                 <?= $this->render('_tab-investigation') ?>
 
