@@ -7,7 +7,7 @@ namespace backend\models\forms;
 use common\models\User;
 use yii\base\Model;
 
-class UserForm extends Model
+final class UserForm extends Model
 {
     /** @var string */
     public $firstName;

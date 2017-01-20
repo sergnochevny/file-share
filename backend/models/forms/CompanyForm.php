@@ -6,7 +6,7 @@ namespace backend\models\forms;
 
 use yii\base\Model;
 
-class CompanyForm extends Model
+final class CompanyForm extends Model
 {
     /** @var string */
     public $name;
