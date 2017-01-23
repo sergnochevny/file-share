@@ -8,6 +8,7 @@ use backend\models\CompanyService;
 use backend\models\forms\CompanyForm;
 use backend\models\forms\UserForm;
 use yii\web\Controller;
+use Yii;
 
 class WizardController extends Controller
 {
@@ -16,6 +17,7 @@ class WizardController extends Controller
      */
     public $defaultAction = 'company';
 
+
     /**
      * Shows Company tab
      *
@@ -23,9 +25,11 @@ class WizardController extends Controller
      */
     public function actionCompany()
     {
-        $companyForm = new CompanyForm();
+        /** @var CompanyForm $companyForm */
+        $companyForm = Yii::createObject(CompanyForm::class);
         if ($companyForm->load(\Yii::$app->getRequest()->post())) {
-            $companyService = new CompanyService();
+            /** @var CompanyService $companyService */
+            $companyService = Yii::createObject(CompanyService::class);
             $companyService->save($companyForm);
         }
 

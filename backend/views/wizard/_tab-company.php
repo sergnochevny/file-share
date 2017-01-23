@@ -44,12 +44,12 @@
                 </span>
                 Create
             </button>
-            <button class="btn btn-sm btn-labeled  arrow-success" type="button">
+            <a href="<?= \yii\helpers\Url::to(['user']) ?>" class="btn btn-sm btn-labeled  arrow-success" type="button">
                 <span class="btn-label">
                     <span class="icon icon-chevron-circle-right  icon-lg icon-fw"></span>
                 </span>
                 Next
-            </button>
+            </a>
         </div>
     </div>
     <?php \backend\widgets\ActiveForm::end() ?>

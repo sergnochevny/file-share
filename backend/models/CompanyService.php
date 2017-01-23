@@ -9,13 +9,22 @@ use backend\models\forms\CompanyForm;
 class CompanyService
 {
     /**
+     * @var Company AR
+     */
+    private $company;
+
+    public function __construct(Company $company)
+    {
+        $this->company = $company;
+    }
+
+    /**
      * @param CompanyForm $form
      * @return bool
      */
     public function save(CompanyForm $form)
     {
-        $company = new Company();
-        $company->setAttributes($form->getAttributes());
-        return $company->save();
+        $this->company->setAttributes($form->getAttributes());
+        return $this->company->save();
     }
 }
