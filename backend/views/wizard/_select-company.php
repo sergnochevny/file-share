@@ -6,9 +6,16 @@ use backend\models\Company;
 /** @var $this \yii\web\View */
 
 $user = Yii::$app->getUser();
+$model = isset($model) ? $model : null;
+$dropDown = function ($model = null, $name, $list, array $options) {
+    if ($model) {
+        return Html::activeDropDownList($model, $name, $list, $options);
+    }
+    return Html::dropDownList($name, null, $list, $options);
+}
 ?>
 <?php if ($user->can('admin')): ?>
-    <?= Html::dropDownList(null, null, Company::getList(), [
+    <?= $dropDown($model, 'company_id', Company::getList(), [
         'id' => 'demo-select2-1-3',
         'class' => 'form-control',
         'prompt' => ' - - -',
