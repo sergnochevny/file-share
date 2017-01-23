@@ -11,31 +11,53 @@ use yii\web\Controller;
 
 class WizardController extends Controller
 {
-    public function actionIndex()
+    /**
+     * @inheritdoc
+     */
+    public $defaultAction = 'company';
+
+    /**
+     * Shows Company tab
+     *
+     * @return string
+     */
+    public function actionCompany()
     {
-        $data = \Yii::$app->getRequest()->post();
-
         $companyForm = new CompanyForm();
-        $userForm = new UserForm();
-
-        if ($companyForm->load($data)) {
+        if ($companyForm->load(\Yii::$app->getRequest()->post())) {
             $companyService = new CompanyService();
             $companyService->save($companyForm);
         }
 
-        if ($userForm->load($data)) {
-
-        }
-
         return $this->render('index', [
-            'companyForm' => new CompanyForm(),
-            'userForm' => new UserForm(),
+            'isCompany' => true,
+            'companyForm' => $companyForm,
         ]);
     }
 
-
-    public function actionCompany()
+    /**
+     * Shows User tab
+     *
+     * @return string
+     */
+    public function actionUser()
     {
+        $userForm = new UserForm();
+        return $this->render('index', [
+            'isUser' => true,
+            'userForm' => $userForm
+        ]);
+    }
 
+    /**
+     * Shows Investigation(Applicant) tab
+     *
+     * @return string
+     */
+    public function actionInvestigation()
+    {
+        return $this->render('index', [
+            'isInvestigation' => true,
+        ]);
     }
 }

@@ -7,8 +7,7 @@ use yii\helpers\Html;
 
 ?>
 
-<div id="tab-2" class="tab-pane">
-    <?php \yii\widgets\Pjax::begin(['id' => 'user-manage', 'enablePushState' => false]) ?>
+<div id="tab-2" class="tab-pane active">
     <?php $form = \backend\widgets\ActiveForm::begin(['options' => ['data-pjax'=>'']]) ?>
     <div class="col-lg-6 col-lg-offset-3">
         <h2 align="center">
@@ -92,5 +91,4 @@ use yii\helpers\Html;
         </div>
     </div>
     <?php \backend\widgets\ActiveForm::end() ?>
-    <?php \yii\widgets\Pjax::end() ?>
 </div>

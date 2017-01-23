@@ -1,7 +1,7 @@
 <?php
 /** @var $this \yii\web\View */
 ?>
-<div id="tab-3" class="tab-pane">
+<div id="tab-3" class="tab-pane active">
     <div class="col-lg-6 col-lg-offset-3">
         <h2 align="center">
             <span class="d-ib">Create Investigation</span>

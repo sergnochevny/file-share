@@ -58,7 +58,6 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'wizard' => 'wizard/index',
             ],
         ],
     ],

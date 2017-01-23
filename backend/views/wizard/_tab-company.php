@@ -7,7 +7,6 @@
 ?>
 
 <div id="tab-1" class="tab-pane active">
-    <?php \yii\widgets\Pjax::begin(['id' => 'company-manage', 'enablePushState' => false]) ?>
     <?php $form = \backend\widgets\ActiveForm::begin(['options' => ['data-pjax'=>'']]) ?>
     <div class="col-lg-6 col-lg-offset-3">
         <h2 align="center">
@@ -54,5 +53,4 @@
         </div>
     </div>
     <?php \backend\widgets\ActiveForm::end() ?>
-    <?php \yii\widgets\Pjax::end() ?>
 </div>
