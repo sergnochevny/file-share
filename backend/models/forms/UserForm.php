@@ -9,14 +9,20 @@ use yii\base\Model;
 
 final class UserForm extends Model
 {
-    /** @var string */
-    public $firstName;
+    /** @var  */
+    public $role;
 
     /** @var string */
-    public $lastName;
+    public $company_id;
 
     /** @var string */
-    public $phoneNumber;
+    public $first_name;
+
+    /** @var string */
+    public $last_name;
+
+    /** @var string */
+    public $phone_number;
 
     /** @var string */
     public $email;
@@ -28,7 +34,7 @@ final class UserForm extends Model
     public $password;
 
     /** @var string */
-    public $passwordRepeat;
+    public $password_repeat;
 
     /**
      * @inheritdoc
@@ -36,10 +42,12 @@ final class UserForm extends Model
     public function rules()
     {
         return [
-            [['email', 'username', 'password', 'passwordRepeat'], 'required'],
-            [['firstName', 'lastName', 'phoneNumber'], 'string'],
-            [['password', 'passwordRepeat'], 'string', 'min' => 8],
-            ['passwordRepeat', 'compare', 'compareAttribute'=>'password', 'message' => "Passwords don't match"],
+            [['company_id', 'email', 'username', 'password', 'password_repeat'], 'required'],
+            [['company_id'], 'integer'],
+            [['role', 'first_name', 'last_name', 'phone_number'], 'string'],
+            [['email'], 'email'],
+            [['password', 'password_repeat'], 'string', 'min' => 8],
+            ['password_repeat', 'compare', 'compareAttribute'=>'password', 'message' => "Passwords don't match"],
             [
                 ['email', 'username'],
                 'unique',

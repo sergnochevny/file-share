@@ -32,6 +32,7 @@
                 'items' => [
                     //['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     ['label' => 'Home', 'icon' => 'fa fa-home', 'url' => ['/site/index']],
+                    ['label' => 'Wizard', 'icon' => 'fa fa-magic', 'url' => ['/wizard']],
                     ['label' => 'Companies', 'icon' => 'fa fa-contao', 'url' => ['/company/index']],
                     ['label' => 'Investigations', 'icon' => 'fa fa-folder-open-o', 'url' => ['/investigation/index']],
                     ['label' => 'History', 'icon' => 'fa fa-history', 'url' => ['/investigation/history']],
