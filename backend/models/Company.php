@@ -16,4 +16,9 @@ final class Company extends \common\models\Company
         $companies = self::find()->select(['id', 'name'])->asArray()->all();
         return array_column($companies, 'name', 'id');
     }
+
+    public static function getUserList()
+    {
+
+    }
 }

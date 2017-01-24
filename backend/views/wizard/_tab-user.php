@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /** @var $this \yii\web\View */
 /** @var $userForm \backend\models\forms\UserForm */
@@ -16,7 +17,7 @@ use yii\helpers\Html;
 
         <div class="form-group">
             <?= Html::activeDropDownList($userForm, 'role', [
-                'admin' => 'admin', 'client' => 'client'
+                'admin' => 'admin', 'client' => 'client' //@todo get this list from db
             ], ['id' => 'demo-select2-1', 'class' => 'form-control']); ?>
             <!--<span class="help-block">There is a choice of two or more people.</span>-->
         </div>
@@ -39,10 +40,15 @@ use yii\helpers\Html;
         </h2>
 
         <div class="form-group">
-            <select id="demo-select2-1" class="form-control" >
-                <option value="">Harry Potter</option>
-            </select>
-            <!--<span class="help-block">There is a choice of two or more people.</span>-->
+            <?= \kartik\depdrop\DepDrop::widget([
+                'name' => 'user',
+                'options' => ['id'=>'user-list', 'prompt' => ' - - -'],
+                'pluginOptions'=>[
+                    'depends'=>['company-list'],
+                    'placeholder' => 'Select...',
+                    'url' => Url::to(['company-users'])
+                ]
+            ]) ?>
         </div>
     </div>
 

@@ -7,7 +7,8 @@ after cloning run in shell
 ```
 composer install
 ```
-Composer will load dependencies and install DEV environment
+Composer will load dependencies and install DEV environment.
+Please delete frontend folder.
 
 After that run
 ```

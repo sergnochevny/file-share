@@ -16,7 +16,7 @@ $dropDown = function ($model = null, $name, $list, array $options) {
 ?>
 <?php if ($user->can('admin')): ?>
     <?= $dropDown($model, 'company_id', Company::getList(), [
-        'id' => 'demo-select2-1-3',
+        'id' => 'company-list',
         'class' => 'form-control',
         'prompt' => ' - - -',
     ]) ?>
