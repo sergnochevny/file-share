@@ -17,7 +17,11 @@ class m170103_134918_create_investigation_table extends \console\migrations\Abst
             'company_id' => $this->integer()->unsigned()->notNull(),
             'start_date' => $this->date(),
             'end_date' => $this->date(),
+            'title' => $this->string(),
             'description' => $this->string(2000),
+            'contact_person' => $this->string(),
+            'phone' => $this->string(),
+            'email' => $this->string(),
 
             'status' => $this->smallInteger()->unsigned()->notNull()->defaultValue(Investigation::STATUS_IN_PROGRESS),
             'created_at' => $this->integer()->unsigned()->notNull(),

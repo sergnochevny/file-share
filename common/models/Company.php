@@ -14,6 +14,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $city
  * @property string $state
  * @property string $zip
+ *
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at

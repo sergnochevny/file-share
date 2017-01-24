@@ -12,7 +12,6 @@ use yii\web\IdentityInterface;
  * This is the model class for table "{{%user}}".
  *
  * @property integer $id
- * @property integer $company_id
  *
  * @property string $first_name
  * @property string $last_name
@@ -237,4 +236,6 @@ class User extends AbstractUndeletableActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
+
 }

@@ -12,6 +12,12 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $company_id
  * @property string $start_date
  * @property string $end_date
+ * @property string $title
+ * @property string $description
+ * @property string $contact_person
+ * @property string $phone
+ * @property string $email
+ *
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
@@ -57,10 +63,11 @@ class Investigation extends AbstractUndeletableActiveRecord
             [['company_id'], 'required'],
             [['company_id'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
+            [['title', 'contact_person', 'phone', 'email'], 'string'],
             [['description'], 'string', 'max' => 2000],
-            ['status', 'default', 'value' => self::STATUS_IN_PROGRESS],
+            ['status', 'default', 'value' => self::STATUS_PENDING],
             ['status', 'in', 'range' => [
-                self::STATUS_COMPLETED, self::STATUS_IN_PROGRESS,
+                self::STATUS_COMPLETED, self::STATUS_IN_PROGRESS, self::STATUS_PENDING,
                 self::STATUS_IN_HISTORY, self::STATUS_CANCELLED, self::STATUS_DELETED
             ]],
             [
@@ -110,13 +117,5 @@ class Investigation extends AbstractUndeletableActiveRecord
     public function getCompany()
     {
         return $this->hasOne(Company::className(), ['id' => 'company_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUsers()
-    {
-        return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('investigation_user', ['investigation_id' => 'id']);
     }
 }

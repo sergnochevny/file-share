@@ -24,9 +24,6 @@ class m170103_120713_create_user_table extends console\migrations\AbstractBaseMi
             'password_hash' => $this->string()->notNull(),
             'password_reset_token' => $this->string()->unique(),
 
-            //fk added in company migration
-            'company_id' => $this->integer()->unsigned(),
-
             'status' => $this->smallInteger()->unsigned()->notNull()->defaultValue(User::STATUS_ACTIVE),
             'created_at' => $this->integer()->unsigned()->notNull(),
             'updated_at' => $this->integer()->unsigned()->notNull(),
