@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use Yii;
+use common\models\query\UndeletableActiveQuery;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -18,6 +18,9 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ *
+ * @property Investigation[] $investigations
+ * @property User[] $users
  */
 class Company extends AbstractUndeletableActiveRecord
 {
@@ -72,5 +75,21 @@ class Company extends AbstractUndeletableActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    /**
+     * @return UndeletableActiveQuery
+     */
+    public function getInvestigations()
+    {
+        return $this->hasMany(Investigation::className(), ['company_id' => 'id']);
+    }
+
+    /**
+     * @return UndeletableActiveQuery
+     */
+    public function getUsers()
+    {
+        return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('user_company', ['company_id' => 'id']);
     }
 }
