@@ -90,7 +90,7 @@ use yii\helpers\Url;
                                                         </span>
                 Create
             </button>
-            <a href="<?= \yii\helpers\Url::to(['investigation']) ?>" class="btn btn-sm btn-labeled  arrow-success" type="button">
+            <a href="<?= \yii\helpers\Url::to(['investigation'], true) ?>" class="btn btn-sm btn-labeled  arrow-success" type="button">
                                                         <span class="btn-label">
                                                             <span
                                                                 class="icon icon-chevron-circle-right  icon-lg icon-fw"></span>
