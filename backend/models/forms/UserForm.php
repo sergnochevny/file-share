@@ -4,7 +4,7 @@
 namespace backend\models\forms;
 
 
-use common\models\User;
+use backend\models\User;
 use yii\base\Model;
 
 final class UserForm extends Model

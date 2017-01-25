@@ -8,6 +8,7 @@ use backend\models\Company;
 use backend\models\CompanyService;
 use backend\models\forms\CompanyForm;
 use backend\models\forms\UserForm;
+use backend\models\UserService;
 use yii\web\Controller;
 use Yii;
 use yii\web\Response;
@@ -56,7 +57,24 @@ class WizardController extends Controller
      */
     public function actionUser()
     {
-        $userForm = new UserForm();
+        /** @var UserForm $userForm */
+        $userForm = Yii::createObject(UserForm::class);
+        if ($userForm->load(\Yii::$app->getRequest()->post())) {
+            if ($this->isClient()) {
+                //explicitly set role if client creates another user
+                $userForm->role = 'client';
+                //@todo set company id for another users works with client
+
+            } else {
+                //remove company id for admins if any
+                $userForm->company_id = null;
+            }
+
+            /** @var UserService $userService */
+            $userService = Yii::createObject(UserService::class);
+            $userService->save($userForm);
+        }
+
         return $this->render('index', [
             'isUser' => true,
             'userForm' => $userForm
@@ -78,20 +96,39 @@ class WizardController extends Controller
 
     /**
      * list users in company
+     *
+     * @return string JSON output
      */
     public function actionCompanyUsers()
     {
         Yii::$app->getResponse()->format = Response::FORMAT_JSON;
         $userList = [];
-        $companyId = (int) Yii::$app->getRequest()->post('company-list');
+        $depDrops = Yii::$app->getRequest()->post('depdrop_all_params');
+        $companyId = isset($depDrops['company-list']) ? (int) $depDrops['company-list'] : false;
+
         if ($companyId) {
             $company = Company::findOne($companyId);
             /** @var array $userList */
-            $userList = $company->getUsers()->select(['id', 'username'])->asArray()->all();
-            $userList = array_column($userList, 'username', 'id');
+            $userList = $company->getUsers()->select(['id', 'username as name'])->asArray()->all();
 
         }
 
-        return ['output' => $userList];
+        return ['output' => $userList, 'selected'=>''];
+    }
+
+    /**
+     * @return bool
+     */
+    private function isClient()
+    {
+        return Yii::$app->getUser()->can('client');
+    }
+
+    /**
+     * @return bool
+     */
+    private function isAdmin()
+    {
+        return Yii::$app->getUser()->can('admin');
     }
 }
