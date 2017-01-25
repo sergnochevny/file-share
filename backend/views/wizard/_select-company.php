@@ -20,7 +20,7 @@ $dropDown = function ($model = null, $name, $list, array $options) {
         'class' => 'form-control',
         'prompt' => ' - - -',
     ]) ?>
-<span class="help-block">For convenience, use the quick search</span>
+<!--<span class="help-block">For convenience, use the quick search</span>-->
 <?php elseif ($user->can('client')): ?>
     <?= $user->identity->comany_id ?>
 there is company already selected

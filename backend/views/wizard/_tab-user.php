@@ -9,7 +9,10 @@ use yii\helpers\Url;
 ?>
 
 <div id="tab-2" class="tab-pane active">
-    <?php $form = \backend\widgets\ActiveForm::begin(['options' => ['data-pjax'=>'']]) ?>
+    <?php $form = \backend\widgets\ActiveForm::begin([
+        'options' => ['data-pjax' => true],
+        'action' => ['user'],
+    ]) ?>
     <div class="col-lg-6 col-lg-offset-3">
         <h2 align="center">
             <span class="d-ib">Select Role</span>
