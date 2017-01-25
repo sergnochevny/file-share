@@ -55,6 +55,11 @@ class WizardController extends Controller
             if ($this->isClient()) {
                 //explicitly set role if client creates another user
                 $userForm->role = 'client';
+                //@todo set company id for another users works with client
+
+            } else {
+                //remove company id for admins if any
+                $userForm->company_id = null;
             }
 
             /** @var UserService $userService */
@@ -109,5 +114,13 @@ class WizardController extends Controller
     private function isClient()
     {
         return Yii::$app->getUser()->can('client');
+    }
+
+    /**
+     * @return bool
+     */
+    private function isAdmin()
+    {
+        return Yii::$app->getUser()->can('admin');
     }
 }
