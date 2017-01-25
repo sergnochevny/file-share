@@ -41,7 +41,7 @@ class Company extends AbstractUndeletableActiveRecord
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            TimestampBehavior::class,
         ];
     }
 
@@ -82,7 +82,7 @@ class Company extends AbstractUndeletableActiveRecord
      */
     public function getInvestigations()
     {
-        return $this->hasMany(Investigation::className(), ['company_id' => 'id']);
+        return $this->hasMany(Investigation::class, ['company_id' => 'id'])->inverseOf('company');
     }
 
     /**
@@ -90,6 +90,7 @@ class Company extends AbstractUndeletableActiveRecord
      */
     public function getUsers()
     {
-        return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('user_company', ['company_id' => 'id']);
+        return $this->hasMany(User::class, ['id' => 'user_id'])
+            ->viaTable('user_company', ['company_id' => 'id']);
     }
 }
