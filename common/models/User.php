@@ -3,6 +3,7 @@
 namespace common\models;
 
 
+use common\models\query\UndeletableActiveQuery;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -26,8 +27,6 @@ use yii\web\IdentityInterface;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
- *
- * @property Investigation[] $investigations
  */
 class User extends AbstractUndeletableActiveRecord implements IdentityInterface
 {
@@ -88,14 +87,6 @@ class User extends AbstractUndeletableActiveRecord implements IdentityInterface
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getInvestigations()
-    {
-        return $this->hasMany(Investigation::className(), ['id' => 'investigation_id'])->viaTable('investigation_user', ['user_id' => 'id']);
     }
 
     /**
@@ -237,5 +228,13 @@ class User extends AbstractUndeletableActiveRecord implements IdentityInterface
         $this->password_reset_token = null;
     }
 
+    /**
+     * @return UndeletableActiveQuery
+     */
+    public function getCompanies()
+    {
+        return $this->hasMany(Company::className(), ['id' => 'company_id'])
+            ->viaTable('user_company', ['user_id' => 'id']);
+    }
 
 }
