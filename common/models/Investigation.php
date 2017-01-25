@@ -2,7 +2,8 @@
 
 namespace common\models;
 
-use Yii;
+
+use common\models\query\UndeletableActiveQuery;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -112,10 +113,10 @@ class Investigation extends AbstractUndeletableActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return UndeletableActiveQuery
      */
     public function getCompany()
     {
-        return $this->hasOne(Company::className(), ['id' => 'company_id']);
+        return $this->hasOne(Company::className(), ['id' => 'company_id'])->inverseOf('investigations');
     }
 }
