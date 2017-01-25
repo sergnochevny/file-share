@@ -29,16 +29,24 @@ class WizardController extends Controller
     {
         /** @var CompanyForm $companyForm */
         $companyForm = Yii::createObject(CompanyForm::class);
-        if ($companyForm->load(\Yii::$app->getRequest()->post())) {
-            /** @var CompanyService $companyService */
-            $companyService = Yii::createObject(CompanyService::class);
-            $companyService->save($companyForm);
-        }
-
-        return $this->render('index', [
+        $options = [
             'isCompany' => true,
             'companyForm' => $companyForm,
-        ]);
+        ];
+        if (Yii::$app->request->isPost && $companyForm->load(\Yii::$app->getRequest()->post())) {
+            /** @var CompanyService $companyService */
+            $companyService = Yii::createObject(CompanyService::class);
+            if ($companyService->save($companyForm)){
+                unset($companyForm );
+                $companyForm = Yii::createObject(CompanyForm::class);
+                $options['companyForm'] = $companyForm;
+                $options['selected'] = $companyService->getCompany()->id;
+            } else {
+                // set error msg
+            }
+        }
+
+        return $this->render('index', $options);
     }
 
     /**

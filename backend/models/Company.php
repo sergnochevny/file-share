@@ -4,8 +4,11 @@
 namespace backend\models;
 
 
+use backend\behaviors\CitrixFolderBehavior;
+
 final class Company extends \common\models\Company
 {
+
     /**
      * Gets list [id => name] of companies
      *
@@ -20,5 +23,25 @@ final class Company extends \common\models\Company
     public static function getUserList()
     {
 
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors[] = [
+            'class' => CitrixFolderBehavior::className(),
+            'attribute' => 'id',
+            'folder' => 'name',
+            'subdomain' => \Yii::$app->keyStorage->get('citrix.subdomain'),
+            'user' => \Yii::$app->keyStorage->get('citrix.user'),
+            'pass' => \Yii::$app->keyStorage->get('citrix.pass'),
+            'id' => \Yii::$app->keyStorage->get('citrix.id'),
+            'secret' => \Yii::$app->keyStorage->get('citrix.secret'),
+        ];
+
+        return $behaviors;
     }
 }

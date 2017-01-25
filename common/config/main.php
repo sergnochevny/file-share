@@ -8,5 +8,9 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+        'keyStorage' => [
+            'class' => 'keystorage\components\KeyStorage',
+        ],
+
     ],
 ];
