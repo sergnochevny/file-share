@@ -48,7 +48,7 @@
                 </span>
                 Create
             </button>
-            <a href="<?= \yii\helpers\Url::to(['user'], true) ?>" class="btn btn-sm btn-labeled  arrow-success" type="button">
+            <a href="<?= \yii\helpers\Url::to(['user'], true) ?>" class="hidden btn btn-sm btn-labeled  arrow-success" type="button">
                 <span class="btn-label">
                     <span class="icon icon-chevron-circle-right  icon-lg icon-fw"></span>
                 </span>
