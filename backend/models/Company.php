@@ -28,12 +28,22 @@ final class Company extends \common\models\Company
     /**
      * @inheritdoc
      */
+    public function rules()
+    {
+        $rules = parent::rules();
+        $rules[] = [['name'], 'unique'];
+        return $rules;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         $behaviors = parent::behaviors();
         $behaviors[] = [
             'class' => CitrixFolderBehavior::className(),
-            'attribute' => 'id',
+            'attribute' => 'citrix_id',
             'folder' => 'name',
             'subdomain' => \Yii::$app->keyStorage->get('citrix.subdomain'),
             'user' => \Yii::$app->keyStorage->get('citrix.user'),

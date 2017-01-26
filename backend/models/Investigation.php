@@ -14,6 +14,17 @@ use common\models\Company;
  */
 class Investigation extends \common\models\Investigation
 {
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        $rules = parent::rules();
+        $rules[] = [['title'], 'unique'];
+        return $rules;
+    }
+
     /**
      * @return array
      */

@@ -10,6 +10,7 @@ namespace backend\behaviors;
 
 
 use Citrix\CitrixApi;
+use Citrix\Endpoints\Items;
 use Citrix\ShareFile\Api\Models\Folder;
 use yii\base\Behavior;
 use yii\base\InvalidParamException;
@@ -25,40 +26,31 @@ class CitrixFolderBehavior extends Behavior
     private $user;
     private $pass;
     private $subdomain;
+    private $parent;
 
     /**
-     * @inheritdoc
+     * @return mixed
      */
-    protected function getValue($event)
+    public function getParent()
     {
-        if ($this->owner->getIsNewRecord()) {
-
-            $Citrix = new CitrixApi();
-            $Citrix->setSubdomain($this->subdomain)
-                ->setUsername($this->user)
-                ->setPassword($this->pass)
-                ->setClientId($this->id)
-                ->setClientSecret($this->secret)
-                ->Initialize();
-
-            $items = $Citrix->Items;
-            $folder = new Folder(
-                [
-                    'Name' => $this->owner->name,
-                    'Description' => 'Company ' . $this->owner->name
-                ]
-            );
-            $create_folder = $items
-                ->setOverwrite(CitrixApi::TRUE)
-                ->CreateFolder($folder);
-            /* @var Folder $create_folder
-             **/
-            $value = $create_folder->Id;
-
-        } else $value = parent::getValue($event);
-
-        return $value;
+        return $this->parent;
     }
+
+    /**
+     * @param mixed $parent
+     */
+    public function setParent($parent)
+    {
+        if ( $parent instanceof \Closure){
+            $parent = call_user_func($parent);
+        }
+        $this->parent = $parent;
+    }
+
+    /**
+     * @var CitrixApi $Citrix
+     */
+    private $Citrix;
 
     /**
      * @return mixed
@@ -176,6 +168,8 @@ class CitrixFolderBehavior extends Behavior
     {
         return [
             ActiveRecord::EVENT_BEFORE_VALIDATE => 'beforeValidate',
+            ActiveRecord::EVENT_BEFORE_INSERT => 'beforeInsert',
+            ActiveRecord::EVENT_BEFORE_UPDATE => 'beforeUpdate',
         ];
     }
 
@@ -190,7 +184,58 @@ class CitrixFolderBehavior extends Behavior
         if (empty($this->id)) throw new InvalidParamException("Identity id parameter");
         if (empty($this->secret)) throw new InvalidParamException("Identity secret parameter");
         if (empty($this->subdomain)) throw new InvalidParamException("Identity subdomain parameter");
+
+        $this->Citrix = CitrixApi::getInstance();
+        $this->Citrix->setSubdomain($this->subdomain)
+            ->setUsername($this->user)
+            ->setPassword($this->pass)
+            ->setClientId($this->id)
+            ->setClientSecret($this->secret)
+            ->Initialize();
     }
 
+    public function beforeInsert($event)
+    {
+        try {
+            $items = $this->Citrix->Items;
+            $folder = new Folder(
+                [
+                    'Name' => $this->owner->{$this->folder},
+                    'Description' => 'Company ' . $this->owner->{$this->folder}
+                ]
+            );
+            if(!empty($this->parent)) $items->setId($this->parent);
+            $create_folder = $items
+                ->setOverwrite(CitrixApi::FALSE)
+                ->CreateFolder($folder);
+            /* @var Folder $create_folder
+             **/
+            $this->owner->{$this->attribute} = $create_folder->Id;
+        } catch (\Exception $e) {
+            $event->isValid = false;
+        }
+    }
+
+    public function beforeUpdate($event)
+    {
+        /**
+         * @var Folder $folder
+         * @var Items $items
+         */
+
+        try {
+            $items = $this->Citrix->Items;
+            $item = $items
+                ->setExpandChildren(CitrixApi::FALSE)
+                ->setId($this->owner->{$this->id})
+                ->Items;
+            $item->Name = $this->owner->{$this->folder};
+            $item->Description = 'Company ' . $this->owner->{$this->folder};
+            $folder = $items->UpdateItem($item);
+            $this->owner->{$this->attribute} = $folder->Id;
+        } catch (\Exception $e) {
+            $event->isValid = false;
+        }
+    }
 
 }
