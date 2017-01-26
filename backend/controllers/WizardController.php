@@ -44,7 +44,7 @@ class WizardController extends Controller
                 $options['companyForm'] = $companyForm;
                 $options['selected'] = $companyService->getCompany()->id;
             } else {
-                // set error msg
+                $this->setFlash('error', 'The company was not saved');
             }
         }
 
@@ -64,16 +64,21 @@ class WizardController extends Controller
             if ($this->isClient()) {
                 //explicitly set role if client creates another user
                 $userForm->role = 'client';
-                //@todo set company id for another users works with client
+                //@todo set company id for another users who works with current user (client)
+            }
 
-            } else {
-                //remove company id for admins if any
+            //new user with admin role can't have company
+            if ($userForm->role == 'admin') {
                 $userForm->company_id = null;
             }
 
             /** @var UserService $userService */
             $userService = Yii::createObject(UserService::class);
-            $userService->save($userForm);
+            if ($userService->save($userForm)) {
+                $userForm = Yii::createObject(UserForm::class);
+            } else {
+                //set errors
+            }
         }
 
         return $this->render('index', [
@@ -122,7 +127,7 @@ class WizardController extends Controller
      */
     private function isClient()
     {
-        return Yii::$app->getUser()->can('client');
+        return !Yii::$app->getUser()->can('admin');
     }
 
     /**
@@ -131,5 +136,10 @@ class WizardController extends Controller
     private function isAdmin()
     {
         return Yii::$app->getUser()->can('admin');
+    }
+
+    private function setFlash($type, $message)
+    {
+        Yii::$app->getSession()->setFlash($type, $message);
     }
 }

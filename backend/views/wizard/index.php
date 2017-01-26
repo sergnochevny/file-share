@@ -20,7 +20,6 @@ $investigationActive = isset($isInvestigation) ? $activeClass : '';
             </p>
         </div>
 
-        <?php \yii\widgets\Pjax::begin(['enablePushState' => false]) ?>
         <div class="demo-form-wrapper">
             <div id="demo-form-wizard-1" class="form form-horizontal">
                 <hr/>
@@ -67,5 +66,4 @@ $investigationActive = isset($isInvestigation) ? $activeClass : '';
                 </div>
             </div>
         </div>
-        <?php \yii\widgets\Pjax::end() ?>
     </div>
