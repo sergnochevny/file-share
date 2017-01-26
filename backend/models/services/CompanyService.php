@@ -7,7 +7,7 @@ namespace backend\models\services;
 use backend\models\Company;
 use backend\models\forms\CompanyForm;
 
-class CompanyService
+final class CompanyService
 {
     /**
      * @var Company AR

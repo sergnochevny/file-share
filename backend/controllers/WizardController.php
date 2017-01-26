@@ -5,9 +5,11 @@ namespace backend\controllers;
 
 
 use backend\models\Company;
+use backend\models\forms\InvestigationForm;
 use backend\models\services\CompanyService;
 use backend\models\forms\CompanyForm;
 use backend\models\forms\UserForm;
+use backend\models\services\InvestigationService;
 use backend\models\services\UserService;
 use yii\web\Controller;
 use Yii;
@@ -60,7 +62,8 @@ class WizardController extends Controller
     {
         /** @var UserForm $userForm */
         $userForm = Yii::createObject(UserForm::class);
-        if ($userForm->load(\Yii::$app->getRequest()->post())) {
+        $request = Yii::$app->getRequest();
+        if ($request->isPost && $userForm->load($request->post())) {
             if ($this->isClient()) {
                 //explicitly set role if client creates another user
                 $userForm->role = 'client';
@@ -94,6 +97,18 @@ class WizardController extends Controller
      */
     public function actionInvestigation()
     {
+        /** @var InvestigationForm $investigationForm */
+        $investigationForm = Yii::createObject(InvestigationForm::class);
+        $request = Yii::$app->getRequest();
+        if ($request->isPost && $investigationForm->load($request->post())) {
+            /** @var InvestigationService $service */
+            $service = Yii::createObject(InvestigationService::class);
+            if ($service->save($investigationForm)) {
+                $investigationForm = Yii::createObject(InvestigationForm::class);
+            } else {
+                $this->setFlash('error', 'The applicant was not saved');
+            }
+        }
         return $this->render('index', [
             'isInvestigation' => true,
         ]);
