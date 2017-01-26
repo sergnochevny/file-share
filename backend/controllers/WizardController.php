@@ -5,10 +5,12 @@ namespace backend\controllers;
 
 
 use backend\models\Company;
-use backend\models\CompanyService;
+use backend\models\forms\InvestigationForm;
+use backend\models\services\CompanyService;
 use backend\models\forms\CompanyForm;
 use backend\models\forms\UserForm;
-use backend\models\UserService;
+use backend\models\services\InvestigationService;
+use backend\models\services\UserService;
 use yii\web\Controller;
 use Yii;
 use yii\web\Response;
@@ -33,6 +35,7 @@ class WizardController extends Controller
         $options = [
             'isCompany' => true,
             'companyForm' => $companyForm,
+            'selected' => null,
         ];
         if (Yii::$app->request->isPost && $companyForm->load(\Yii::$app->getRequest()->post())) {
             /** @var CompanyService $companyService */
@@ -43,7 +46,7 @@ class WizardController extends Controller
                 $options['companyForm'] = $companyForm;
                 $options['selected'] = $companyService->getCompany()->id;
             } else {
-                // set error msg
+                $this->setFlash('error', 'The company was not saved');
             }
         }
 
@@ -59,20 +62,26 @@ class WizardController extends Controller
     {
         /** @var UserForm $userForm */
         $userForm = Yii::createObject(UserForm::class);
-        if ($userForm->load(\Yii::$app->getRequest()->post())) {
+        $request = Yii::$app->getRequest();
+        if ($request->isPost && $userForm->load($request->post())) {
             if ($this->isClient()) {
                 //explicitly set role if client creates another user
                 $userForm->role = 'client';
-                //@todo set company id for another users works with client
+                //@todo set company id for another users who works with current user (client)
+            }
 
-            } else {
-                //remove company id for admins if any
+            //new user with admin role can't have company
+            if ($userForm->role == 'admin') {
                 $userForm->company_id = null;
             }
 
             /** @var UserService $userService */
             $userService = Yii::createObject(UserService::class);
-            $userService->save($userForm);
+            if ($userService->save($userForm)) {
+                $userForm = Yii::createObject(UserForm::class);
+            } else {
+                $this->setFlash('error', 'The user was not created');
+            }
         }
 
         return $this->render('index', [
@@ -88,6 +97,18 @@ class WizardController extends Controller
      */
     public function actionInvestigation()
     {
+        /** @var InvestigationForm $investigationForm */
+        $investigationForm = Yii::createObject(InvestigationForm::class);
+        $request = Yii::$app->getRequest();
+        if ($request->isPost && $investigationForm->load($request->post())) {
+            /** @var InvestigationService $service */
+            $service = Yii::createObject(InvestigationService::class);
+            if ($service->save($investigationForm)) {
+                $investigationForm = Yii::createObject(InvestigationForm::class);
+            } else {
+                $this->setFlash('error', 'The applicant was not saved');
+            }
+        }
         return $this->render('index', [
             'isInvestigation' => true,
         ]);
@@ -121,7 +142,7 @@ class WizardController extends Controller
      */
     private function isClient()
     {
-        return Yii::$app->getUser()->can('client');
+        return !Yii::$app->getUser()->can('admin');
     }
 
     /**
@@ -130,5 +151,15 @@ class WizardController extends Controller
     private function isAdmin()
     {
         return Yii::$app->getUser()->can('admin');
+    }
+
+    /**
+     * @param $type
+     * @param $message
+     * @return void
+     */
+    private function setFlash($type, $message)
+    {
+        Yii::$app->getSession()->setFlash($type, $message);
     }
 }

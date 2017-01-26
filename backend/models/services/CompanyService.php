@@ -1,15 +1,13 @@
 <?php
 
 
-namespace backend\models;
+namespace backend\models\services;
 
 
+use backend\models\Company;
 use backend\models\forms\CompanyForm;
-use yii\base\Object;
 
-;
-
-class CompanyService
+final class CompanyService
 {
     /**
      * @var Company AR

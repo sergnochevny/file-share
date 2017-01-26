@@ -2,7 +2,8 @@
 
 namespace backend\controllers;
 
-use backend\models\CompanyService;
+
+use backend\models\services\CompanyService;
 use backend\models\forms\CompanyForm;
 use Yii;
 use common\models\Company;

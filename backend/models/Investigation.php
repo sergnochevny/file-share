@@ -12,7 +12,7 @@ use common\models\Company;
  * @property array $statusesList
  * @property array $allCompaniesList
  */
-class Investigation extends \common\models\Investigation
+final class Investigation extends \common\models\Investigation
 {
 
     /**

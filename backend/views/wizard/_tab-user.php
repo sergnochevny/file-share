@@ -21,7 +21,7 @@ use yii\helpers\Url;
         <div class="form-group">
             <?= Html::activeDropDownList($userForm, 'role', [
                 'admin' => 'admin', 'client' => 'client' //@todo get this list from db
-            ], ['id' => 'demo-select2-1', 'class' => 'form-control']); ?>
+            ], ['id' => 'user-role', 'class' => 'form-control']); ?>
             <!--<span class="help-block">There is a choice of two or more people.</span>-->
         </div>
     </div>

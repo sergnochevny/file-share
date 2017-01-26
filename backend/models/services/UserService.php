@@ -1,10 +1,12 @@
 <?php
 
 
-namespace backend\models;
+namespace backend\models\services;
 
 
+use backend\models\Company;
 use backend\models\forms\UserForm;
+use backend\models\User;
 use yii\base\Exception;
 use yii\rbac\DbManager;
 
