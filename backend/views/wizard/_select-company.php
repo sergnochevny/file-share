@@ -26,7 +26,6 @@ $dropDown = function ($model = null, $name, $list, array $options) {
     }
     ?>
     <?= $dropDown($model, 'company_id', Company::getList(), $options ) ?>
-    ]) ?>
 <!--<span class="help-block">For convenience, use the quick search</span>-->
 <?php elseif ($user->can('client')): ?>
     <?= $user->identity->comany_id ?>
