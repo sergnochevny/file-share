@@ -33,6 +33,7 @@ class WizardController extends Controller
         $options = [
             'isCompany' => true,
             'companyForm' => $companyForm,
+            'selected' => null,
         ];
         if (Yii::$app->request->isPost && $companyForm->load(\Yii::$app->getRequest()->post())) {
             /** @var CompanyService $companyService */
