@@ -22,6 +22,31 @@ class WizardController extends Controller
      */
     public $defaultAction = 'company';
 
+    /**
+     * @return bool
+     */
+    private function isClient()
+    {
+        return !Yii::$app->getUser()->can('admin');
+    }
+
+    /**
+     * @return bool
+     */
+    private function isAdmin()
+    {
+        return Yii::$app->getUser()->can('admin');
+    }
+
+    /**
+     * @param $type
+     * @param $message
+     * @return void
+     */
+    private function setFlash($type, $message)
+    {
+        Yii::$app->getSession()->setFlash($type, $message);
+    }
 
     /**
      * Shows Company tab
@@ -39,14 +64,27 @@ class WizardController extends Controller
         ];
         if (Yii::$app->request->isPost && $companyForm->load(\Yii::$app->getRequest()->post())) {
             /** @var CompanyService $companyService */
-            $companyService = Yii::createObject(CompanyService::class);
-            if ($companyService->save($companyForm)){
-                unset($companyForm );
-                $companyForm = Yii::createObject(CompanyForm::class);
-                $options['companyForm'] = $companyForm;
-                $options['selected'] = $companyService->getCompany()->id;
-            } else {
-                $this->setFlash('error', 'The company was not saved');
+            try {
+                $companyService = Yii::createObject(CompanyService::class);
+                if ($companyService->save($companyForm)) {
+                    unset($companyForm);
+                    $companyForm = Yii::createObject(CompanyForm::class);
+                    $options['companyForm'] = $companyForm;
+                    $options['selected'] = $companyService->getCompany()->id;
+                } else {
+                    if (!empty($companyService->getCompany()->errors)) {
+                        $msg = '';
+                        foreach ($companyService->getCompany()->errors as $field_error) {
+                            foreach ($field_error as $error) {
+                                if (!empty($msg)) $msg .= '<br>';
+                                $msg .= $error;
+                            }
+                        }
+                    } else $msg = 'The company was not saved';
+                    $this->setFlash('error', $msg);
+                }
+            } catch (\Exception $e) {
+                $this->setFlash('error', $e->getMessage());
             }
         }
 
@@ -114,7 +152,6 @@ class WizardController extends Controller
         ]);
     }
 
-
     /**
      * list users in company
      *
@@ -125,7 +162,7 @@ class WizardController extends Controller
         Yii::$app->getResponse()->format = Response::FORMAT_JSON;
         $userList = [];
         $depDrops = Yii::$app->getRequest()->post('depdrop_all_params');
-        $companyId = isset($depDrops['company-list']) ? (int) $depDrops['company-list'] : false;
+        $companyId = isset($depDrops['company-list']) ? (int)$depDrops['company-list'] : false;
 
         if ($companyId) {
             $company = Company::findOne($companyId);
@@ -134,32 +171,6 @@ class WizardController extends Controller
 
         }
 
-        return ['output' => $userList, 'selected'=>''];
-    }
-
-    /**
-     * @return bool
-     */
-    private function isClient()
-    {
-        return !Yii::$app->getUser()->can('admin');
-    }
-
-    /**
-     * @return bool
-     */
-    private function isAdmin()
-    {
-        return Yii::$app->getUser()->can('admin');
-    }
-
-    /**
-     * @param $type
-     * @param $message
-     * @return void
-     */
-    private function setFlash($type, $message)
-    {
-        Yii::$app->getSession()->setFlash($type, $message);
+        return ['output' => $userList, 'selected' => ''];
     }
 }
