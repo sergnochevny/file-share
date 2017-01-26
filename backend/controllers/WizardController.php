@@ -5,10 +5,10 @@ namespace backend\controllers;
 
 
 use backend\models\Company;
-use backend\models\CompanyService;
+use backend\models\services\CompanyService;
 use backend\models\forms\CompanyForm;
 use backend\models\forms\UserForm;
-use backend\models\UserService;
+use backend\models\services\UserService;
 use yii\web\Controller;
 use Yii;
 use yii\web\Response;
@@ -77,7 +77,7 @@ class WizardController extends Controller
             if ($userService->save($userForm)) {
                 $userForm = Yii::createObject(UserForm::class);
             } else {
-                //set errors
+                $this->setFlash('error', 'The user was not created');
             }
         }
 
@@ -138,6 +138,11 @@ class WizardController extends Controller
         return Yii::$app->getUser()->can('admin');
     }
 
+    /**
+     * @param $type
+     * @param $message
+     * @return void
+     */
     private function setFlash($type, $message)
     {
         Yii::$app->getSession()->setFlash($type, $message);
