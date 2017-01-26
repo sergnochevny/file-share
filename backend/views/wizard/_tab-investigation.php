@@ -7,7 +7,7 @@ use backend\models\Company;
 <div id="tab-3" class="tab-pane active">
     <?php $form = \backend\widgets\ActiveForm::begin([
         'id' => 'investigation-form',
-        'options' => ['data-pjax' => true],
+        'options' => ['data-pjax' => 'content-container'],
         'action' => ['investigation'],
     ]) ?>
     <div class="col-lg-6 col-lg-offset-3">

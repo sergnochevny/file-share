@@ -38,7 +38,8 @@ final class InvestigationForm extends Model
     public function rules()
     {
         return [
-            [['company_id', 'title'], 'required'],
+            ['company_id', 'required', 'message' => 'Please choose the company'],
+            [['title'], 'required'],
             [['company_id'], 'integer'],
             [['title', 'description', 'contact_person', 'phone'], 'string'],
             [['email'], 'email'],

@@ -11,7 +11,7 @@ use yii\helpers\Url;
 <div id="tab-2" class="tab-pane active">
     <?php $form = \backend\widgets\ActiveForm::begin([
         'id' => 'user-form',
-        'options' => ['data-pjax' => true],
+        'options' => ['data-pjax' => 'content-container'],
         'action' => ['user'],
     ]) ?>
     <div class="col-lg-6 col-lg-offset-3">

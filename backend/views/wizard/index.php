@@ -62,7 +62,7 @@ $investigationActive = isset($isInvestigation) ? $activeClass : '';
                             <?php elseif ($userActive): ?>
                                 <?= $this->render('_tab-user', compact('userForm')) ?>
                             <?php elseif ($investigationActive): ?>
-                                <?= $this->render('_tab-investigation') ?>
+                                <?= $this->render('_tab-investigation', compact('investigationForm')) ?>
                             <?php endif ?>
 
                         </div>
