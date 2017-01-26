@@ -15,9 +15,9 @@ use backend\models\Company;
             <span class="d-ib">Select Company</span>
         </h2>
 
-        <div class="form-group">
-            <?= $this->render('_select-company', ['model' => $investigationForm])  ?>
-        </div>
+
+        <?= $this->render('_select-company', ['form' => $form, 'model' => $investigationForm])  ?>
+
     </div>
     <div class="clearfix"></div>
     <hr/>

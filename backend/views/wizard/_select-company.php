@@ -4,11 +4,17 @@ use yii\helpers\Html;
 use backend\models\Company;
 
 /** @var $this \yii\web\View */
+/** @var $form \backend\widgets\ActiveForm */
 
 $user = Yii::$app->getUser();
 $model = isset($model) ? $model : null;
-$dropDown = function ($model = null, $name, $list, array $options) {
+$form = isset($form) ? $form : null;
+$dropDown = function ($model = null, $name, $list, array $options) use ($form) {
     if ($model) {
+        if ($form) {
+            return $form->field($model, $name, ['template' => "{input}\n{hint}\n{error}"])
+                ->dropDownList($list, $options);
+        }
         return Html::activeDropDownList($model, $name, $list, $options);
     }
     return Html::dropDownList($name, null, $list, $options);
