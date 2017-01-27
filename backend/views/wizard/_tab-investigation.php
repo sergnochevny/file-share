@@ -1,13 +1,12 @@
 <?php
 /** @var $this \yii\web\View */
-use backend\models\Company;
 
 /** @var $investigationForm \backend\models\forms\InvestigationForm */
 ?>
 <div id="tab-3" class="tab-pane active">
     <?php $form = \backend\widgets\ActiveForm::begin([
         'id' => 'investigation-form',
-        'options' => ['data-pjax' => 'content-container'],
+        'options' => ['data-pjax' => 'wizard-container'],
         'action' => ['investigation'],
     ]) ?>
     <div class="col-lg-6 col-lg-offset-3">
