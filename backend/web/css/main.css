@@ -1,66 +1,92 @@
 /*FONTS*/
 @import url(https://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,700);
 /*GLOBAL*/
-body{
-    font-family: Roboto,sans-serif;
-    background-color: #eee;
+body {
+    font-family: Roboto, sans-serif;
+    background-color: #FFF;
 }
+
 a {
     color: #a8976f;
     text-decoration: none;
 }
+
 a:focus, a:hover {
     color: #87764e;
     text-decoration: underline;
 }
+
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-    font-family: Roboto,sans-serif;
+    font-family: Roboto, sans-serif;
 }
-.clear{clear:both}
-/*BOTSTRAP*/
+
+.clear {
+    clear: both
+}
+
+.logo.in-header-line{
+    display: none;
+}
+
+/*BOOTSTRAP*/
 .btn-primary {
     background-color: #87764e;
     border-color: #87764e;
     color: #fff;
 }
+
 /*HEADER*/
-.skin-purple .main-header{
+.skin-purple .main-header {
     background-color: #33103f;
     box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.5);
 }
+
 .skin-purple a.logo img {
-    height: 46px;
+    height: 40px;
     width: auto;
-    margin: 3px auto 0;
+    margin: 5px auto 0;
 }
-.skin-purple a.logo .logo-mini img{
+
+.skin-purple a.logo .logo-mini img {
     height: auto;
     margin: 14px 0 0;
     width: 100%;
 }
-.skin-purple .main-header .logo, .skin-purple .main-header .navbar{background-color: #33103f;}
-.skin-purple .main-header .logo:hover {
-    background-color:inherit;
+
+.skin-purple .main-header .logo, .skin-purple .main-header .navbar {
+    background-color: #33103f;
 }
+
+.skin-purple .main-header .logo:hover {
+    background-color: inherit;
+}
+
 /*SIDEBAR*/
-.skin-purple .wrapper, .skin-purple .main-sidebar, .skin-purple .left-side{background-color: #431f4d;}
+.skin-purple .wrapper, .skin-purple .main-sidebar, .skin-purple .left-side {
+    background-color: #431f4d;
+}
+
 /*FOOTER*/
-.skin-purple .main-footer{
+.skin-purple .main-footer {
     background-color: #431f4d;
     border-top: 1px solid #431f4d;
     padding: 5px 15px;
-    color: #ccc;}
-
+    color: #ccc;
+}
 
 /*LOGIN*/
-.login-page{background-color: #eee;}
-.login-page .login-box{
+.login-page {
+    background-color: #eee;
+}
+
+.login-page .login-box {
     background-color: #431f4d;
     margin-left: auto;
     margin-right: auto;
     max-width: 360px;
     padding: 30px;
 }
+
 .login-page .login-logo {
     display: block;
     margin-left: auto;
@@ -68,19 +94,23 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     margin-bottom: 0;
     width: 140px;
 }
-.login-page .login-box-body{
+
+.login-page .login-box-body {
     background-color: inherit;
 }
-.login-page .login-box-msg{
-    color:#87764E;
+
+.login-page .login-box-msg {
+    color: #87764E;
     font-weight: 300;
 }
+
 .login-page .login-footer {
     font-size: 11px;
     text-align: center;
     width: 100%;
     color: #999;
 }
+
 /* site.css yii2 */
 .wrap {
     min-height: 100%;
@@ -180,12 +210,24 @@ a.desc:after {
     border: none;
 }
 
-@media(max-width:767px) {
+@media (max-width: 767px) {
+    .logo:not(.in-header-line){
+        display: none;
+    }
+    .logo.in-header-line{
+        display: block;
+    }
     .nav li > form > button.logout {
-        display:block;
+        display: block;
         text-align: left;
         width: 100%;
         padding: 10px 15px;
+    }
+    .menu-open .logo.in-header-line{
+        display: block !important;
+    }
+    .menu-open .sidebar-toggle{
+        margin-left: 0 !important;
     }
 }
 
@@ -197,14 +239,131 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
 /* /site.css yii2 */
 
 /* menu hide */
 .sidenav > li > ul.treeview-menu {
     display: none;
     list-style: none;
+    padding-left: 0;
+}
+.sidenav > li > ul.treeview-menu a {
+    color: #87764e;
+    font-size: 13px;
+    line-height: 18px;
+    padding: 10px 15px 10px 30px;
+    position: relative;
+    text-decoration: none;
+    display: block;
+}
+.sidenav > li > ul.treeview-menu a:hover {
+    background-color: #7b6087;
+    color: #fff;
 }
 
-.no-outer-offset-top{
-    margin-top: 0;
+.no-outer-offset-top {
+    margin-top: 0 !important;
+}
+
+.sidebar-toggle {
+    width: 50px;
+    padding-left: 13px !important;
+    background-color: rgba(255, 255, 255, .2) !important;
+}
+
+.menu-open .logo {
+    display: none;
+    transition: all .3s;
+}
+
+.menu-open .sidebar-toggle {
+    background: rgba(255, 255, 255, 1) !important;
+    margin-left: -50px;
+}
+
+.hamburger {
+    position: relative;
+    width: 25px;
+    height: 20px;
+    transition: transform 750ms ease-in-out;
+}
+
+#menu-button:active .hamburger {
+    transition: transform 50ms;
+    transform: scale(.95);
+}
+
+.hamburger::before, .hamburger::after, .hamburger .inner {
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 2px;
+    background: #ccc;
+    transform-origin: 100% 50%;
+    transition: all 750ms ease-in-out;
+}
+
+.hamburger::before {
+    top: -1px;
+}
+
+.hamburger .inner {
+    top: 9px;
+    transform-origin: 50% 50%;
+}
+
+.hamburger::after {
+    top: 19px;
+}
+
+.menu-open .hamburger {
+    transform: rotateY(-180deg);
+}
+
+.menu-open #menu-button:active .hamburger {
+    transform: scale(.95) rotateY(-180deg);
+}
+
+.menu-open .hamburger::before,
+.menu-open .hamburger::after,
+.menu-open .hamburger .inner {
+    background: rgb(211, 163, 5) !important;
+}
+
+.sidenav .pull-right-container .fa{
+    margin-top: 2px;
+}
+
+.sidenav > .heading {
+    display: block;
+    color: rgba(255,255,255,.4);
+    padding: 16px 20px;
+    text-transform: uppercase;
+}
+
+.sidenav > .sidenav-item > a {
+    padding-left: 20px;
+    color: #87764e;
+}
+
+.sidenav-item .fa-sys {
+    width: 20px;
+}
+
+.menu-open .hamburger::before {
+    transform: translate3d(-4px, 1px, 0) rotateZ(-45deg);
+}
+
+.menu-open .hamburger .inner {
+    transform: rotateY(-90deg);
+    transition: transform 375ms, background-color 750ms ease-in-out;
+}
+
+.menu-open .hamburger::after {
+    transform: translate3d(-4px, -1px, 0) rotateZ(45deg);
+}
+
+.sidebar-toggle:before {
+    display: none;
 }

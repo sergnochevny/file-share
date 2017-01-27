@@ -34,14 +34,14 @@ use dmstr\widgets\Menu;
             [
                 'options' => ['class' => 'sidenav'],
                 'items' => [
-                    //['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
-                    ['label' => 'Home', 'icon' => 'fa fa-home', 'url' => ['/site/index']],
-                    ['label' => 'Wizard', 'icon' => 'fa fa-magic', 'url' => ['/wizard']],
-                    ['label' => 'Companies', 'icon' => 'fa fa-contao', 'url' => ['/company/index']],
-                    ['label' => 'Applicants', 'icon' => 'fa fa-folder-open-o', 'url' => ['/investigation/index']],
-                    ['label' => 'History', 'icon' => 'fa fa-history', 'url' => ['/investigation/history']],
-                    ['label' => 'Users', 'icon' => 'fa fa-users', 'url' => ['/user/index']],
-                    ['label' => 'Files', 'icon' => 'fa fa-save', 'url' => ['/file/index']],
+                    ['label' => 'Navigation', 'options' => ['class' => 'heading']],
+                    ['label' => 'Home', 'icon' => 'fa fa-sys fa-home', 'url' => ['/site/index']],
+                    ['label' => 'Wizard', 'icon' => 'fa fa-sys fa-magic', 'url' => ['/wizard']],
+                    ['label' => 'Companies', 'icon' => 'fa fa-sys fa-contao', 'url' => ['/company/index']],
+                    ['label' => 'Applicants', 'icon' => 'fa fa-sys fa-folder-open-o', 'url' => ['/investigation/index']],
+                    ['label' => 'History', 'icon' => 'fa fa-sys fa-history', 'url' => ['/investigation/history']],
+                    ['label' => 'Users', 'icon' => 'fa fa-sys fa-users', 'url' => ['/user/index']],
+                    ['label' => 'Files', 'icon' => 'fa fa-sys fa-save', 'url' => ['/file/index']],
                     ['label' => 'Roles & Access', 'url' => '#',
                         'items' => [
                             ['label' => 'Role', 'icon' => 'fa fa-users', 'url' => ['/admin/role']],
