@@ -52,26 +52,27 @@ $this->params['breadcrumbs'][] = $this->title;
                         <h3 class="m-b-0">All files</h3>
                         <small>All downloaded files that relate to the present case</small>
                         <br/>
-                        <?php \backend\widgets\ActiveForm::begin(
+                        <?php $uploadForm = \backend\widgets\ActiveForm::begin(
                             [
                                 'id' => "upload-file",
                                 'method' => 'post',
-                                'action' => 'upload',
+                                'action' => 'file/upload',
                                 'options' => ['data-pjax' => true]
                             ]
                         ); ?>
-                        <input name="file" id="file" type="file" style="background-color: #fff;
-    border-radius: 5px;
-    display: block;
-    margin: 10px auto 15px;
-    padding: 5px;">
-
-                        <button class="btn btn-sm btn-labeled  arrow-warning" id="send" type="submit">
-                                <span class="btn-label">
+                        <?= Html::activeFileInput($uploadModel, 'name', [
+                            'id' => "file",
+                            'style' => "background-color: #fff;border-radius: 5px;display: block;margin: 10px auto 15px;padding: 5px;"
+                        ]); ?>
+                        <?= Html::submitButton(
+                            '<span class="btn-label">
                                     <span class="icon icon-upload  icon-lg icon-fw"></span>
-                                </span>
-                            Upload
-                        </button>
+                                </span>Upload',
+                            [
+                                'id' => "send",
+                                'class' => 'btn btn-sm btn-labeled  arrow-warning'
+                            ]
+                        ); ?>
                         <?php \backend\widgets\ActiveForm::end(); ?>
 
                         <div class="panel panel-body hidden" data-toggle="match-height" style="height: 84px;">
@@ -153,6 +154,20 @@ $this->params['breadcrumbs'][] = $this->title;
                                         [
                                             'class' => 'yii\grid\ActionColumn',
                                             'template' => '{delete}',
+                                            'buttons' => [
+                                                'delete' => function ($url, $model) {
+                                                    return Html::a('Delete', $url,
+                                                        [
+                                                            'class' => "btn btn-danger btn-xs",
+                                                            'title' => 'Delete',
+                                                            'aria-label' => "Delete",
+                                                            'data-confirm' => "Are you sure you want to delete this item?",
+                                                            'data-method' => "post",
+                                                            'data-pjax' => "0",
+                                                        ]
+                                                    );
+                                                },
+                                            ],
                                         ],
                                     ],
                                 ]) ?>

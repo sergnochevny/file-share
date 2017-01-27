@@ -34,7 +34,6 @@ use yii\widgets\ActiveForm;
                         'type' => 'search',
                         'class' => "form-control input-sm",
                         'placeholder' => "Search…",
-                        'data-submit' => true
                     ]
                 ]
             ); ?>

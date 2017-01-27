@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\FileUpload;
 use Yii;
 use common\models\File;
 use backend\models\FileSearch;
@@ -36,12 +37,14 @@ class FileController extends Controller
     public function actionIndex()
     {
         $searchModel = new FileSearch();
+        $uploadModel = new FileUpload();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'uploadModel' => $uploadModel,
         ]);
     }
 
