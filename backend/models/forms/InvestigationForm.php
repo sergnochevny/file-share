@@ -4,6 +4,8 @@
 namespace backend\models\forms;
 
 
+use common\models\Company;
+use common\models\Investigation;
 use yii\base\Model;
 
 final class InvestigationForm extends Model
@@ -41,9 +43,21 @@ final class InvestigationForm extends Model
             ['company_id', 'required', 'message' => 'Please choose the company'],
             [['title'], 'required'],
             [['company_id'], 'integer'],
-            [['title', 'description', 'contact_person', 'phone'], 'string'],
+            [['title', 'contact_person', 'phone'], 'string', 'max' => 255],
+            [['description'], 'string', 'max' => 2000],
             [['email'], 'email'],
             [['start_date', 'end_date'], 'safe'], //or change to date validator
+            [
+                ['company_id'], 'exist', 'skipOnError' => true,
+                'targetClass' => Company::class,
+                'targetAttribute' => ['company_id' => 'id']
+            ],
+            [
+                ['title'],
+                'unique',
+                'targetClass' => Investigation::class,
+                'message' => 'Sorry, the applicant with the same name has already been created',
+            ],
         ];
     }
 }

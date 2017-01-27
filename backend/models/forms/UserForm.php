@@ -49,10 +49,16 @@ final class UserForm extends Model
             [['password', 'password_repeat'], 'string', 'min' => 8],
             ['password_repeat', 'compare', 'compareAttribute'=>'password', 'message' => "Passwords don't match"],
             [
-                ['email', 'username'],
+                ['username'],
                 'unique',
                 'targetClass' => User::class,
-                'message' => 'Sorry, this username or email has already been taken',
+                'message' => 'Sorry, this username has already been taken',
+            ],
+            [
+                ['email'],
+                'unique',
+                'targetClass' => User::class,
+                'message' => 'Sorry, this email has already been taken',
             ],
         ];
     }

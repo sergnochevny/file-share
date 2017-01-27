@@ -63,7 +63,10 @@ class WizardController extends Controller
             'companyForm' => $companyForm,
             'selected' => null,
         ];
-        if (Yii::$app->request->isPost && $companyForm->load(\Yii::$app->getRequest()->post())) {
+        if (Yii::$app->request->isPost
+            && $companyForm->load(\Yii::$app->getRequest()->post())
+            && $companyForm->validate()
+        ) {
             /** @var CompanyService $companyService */
             try {
                 $companyService = Yii::createObject(CompanyService::class);
@@ -129,7 +132,11 @@ class WizardController extends Controller
         /** @var UserForm $userForm */
         $userForm = Yii::createObject(UserForm::class);
         $request = Yii::$app->getRequest();
-        if ($request->isPost && $userForm->load($request->post())) {
+
+        if ($request->isPost
+            && $userForm->load($request->post())
+            && $userForm->validate()
+        ) {
             if ($this->isClient()) {
                 //explicitly set role if client creates another user
                 $userForm->role = 'client';
@@ -166,7 +173,12 @@ class WizardController extends Controller
         /** @var InvestigationForm $investigationForm */
         $investigationForm = Yii::createObject(InvestigationForm::class);
         $request = Yii::$app->getRequest();
-        if ($request->isPost && $investigationForm->load($request->post())) {
+
+        if (
+            $request->isPost
+            && $investigationForm->load($request->post())
+            && $investigationForm->validate()
+        ) {
             /** @var InvestigationService $service */
             $service = Yii::createObject(InvestigationService::class);
             if ($service->save($investigationForm)) {
@@ -175,6 +187,7 @@ class WizardController extends Controller
                 $this->setFlash('error', 'The applicant was not saved');
             }
         }
+
         return $this->smartRender('index', [
             'isInvestigation' => true,
             'investigationForm' => $investigationForm,
