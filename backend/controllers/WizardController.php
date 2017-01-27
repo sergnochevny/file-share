@@ -63,7 +63,10 @@ class WizardController extends Controller
             'companyForm' => $companyForm,
             'selected' => null,
         ];
-        if (Yii::$app->request->isPost && $companyForm->load(\Yii::$app->getRequest()->post())) {
+        if (Yii::$app->request->isPost
+            && $companyForm->load(\Yii::$app->getRequest()->post())
+            && $companyForm->validate()
+        ) {
             /** @var CompanyService $companyService */
             try {
                 $companyService = Yii::createObject(CompanyService::class);
