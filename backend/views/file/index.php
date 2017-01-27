@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'id' => "upload-file",
                                 'method' => 'post',
-                                'action' => 'file/upload',
+                                'action' => Url::to(['/file/upload'], true),
                                 'options' => ['data-pjax' => true]
                             ]
                         ); ?>
@@ -139,7 +139,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'aria-controls' => "file-list",
                                                 'rowspan' => "1",
                                                 'colspan' => "1",
-                                                'style' => "width: 583px;",
                                             ]
                                         ],
                                         [
