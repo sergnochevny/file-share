@@ -231,6 +231,22 @@ a.desc:after {
     }
 }
 
+.sidebar-collapse .sidenav li.heading{
+    display: none;
+}
+.sidebar-collapse .sidenav{
+    padding-top: 52px;
+}
+.sidebar-collapse .sidenav .sidenav-item > a{
+    padding-left: 16px;
+}
+.sidebar-collapse .sidenav .sidenav-item span{
+    display: none;
+}
+.sidebar-collapse .sidenav .sidenav-item i{
+    font-size: 1.65em;
+}
+
 .nav > li > form > button.logout:focus,
 .nav > li > form > button.logout:hover {
     text-decoration: none;
