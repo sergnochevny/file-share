@@ -1,20 +1,20 @@
 <?php
-
-
 namespace backend\assets;
-
 
 use yii\base\Exception;
 
 class AppAsset extends \yii\web\AssetBundle
 {
     public $sourcePath = '@vendor/almasaeed2010/adminlte/dist';
+
     public $css = [
         'css/AdminLTE.min.css',
     ];
+
     public $js = [
         'js/app.min.js'
     ];
+
     public $depends = [
         'rmrevin\yii\fontawesome\AssetBundle',
         'yii\web\YiiAsset',
