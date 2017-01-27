@@ -59,10 +59,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     'options' => ['data-pjax' => true, 'class' => 'text-center']
                 ]
             ); ?>
-            <?= Html::activeFileInput($uploadModel, 'name', [
+            <?= $uploadForm->field($uploadModel, 'name')->fileInput([
                 'id' => "file",
                 'style' => "background-color: #fff;border-radius: 5px;display: block;margin: 10px auto 15px;padding: 5px;"
-            ]); ?>
+            ])->label(false); ?>
             <?= Html::submitButton(
                 '<span class="btn-label">
                                         <span class="icon icon-upload  icon-lg icon-fw"></span>
