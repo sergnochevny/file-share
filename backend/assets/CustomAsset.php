@@ -11,11 +11,10 @@ class CustomAsset extends AssetBundle
 
     public $css = [
         'css/main.css',
-        'css/elephant.min.css'
+
     ];
 
     public $js = [
-        'js/main.js',
 
     ];
 

@@ -1,5 +1,9 @@
-<aside class="main-sidebar">
+<?php
 
+use dmstr\widgets\Menu;
+
+?>
+<aside class="main-sidebar">
     <section class="sidebar">
 
         <!-- Sidebar user panel -->
@@ -26,7 +30,7 @@
         </form>
         <!-- /.search form -->
 
-        <?= dmstr\widgets\Menu::widget(
+        <?= Menu::widget(
             [
                 'options' => ['class' => 'sidenav'],
                 'items' => [
@@ -39,16 +43,16 @@
                     ['label' => 'Users', 'icon' => 'fa fa-users', 'url' => ['/user/index']],
                     ['label' => 'Files', 'icon' => 'fa fa-save', 'url' => ['/file/index']],
                     ['label' => 'Roles & Access', 'url' => '#',
-
                         'items' => [
-
                             ['label' => 'Role', 'icon' => 'fa fa-users', 'url' => ['/admin/role']],
                             ['label' => 'Route', 'icon' => 'fa fa-users', 'url' => ['/admin/route']],
                             ['label' => 'Permission', 'icon' => 'fa fa-users', 'url' => ['/admin/permission']],
                             ['label' => 'Assignment', 'icon' => 'fa fa-users', 'url' => ['/admin/assignment']],
-                    ]],
+                        ]
+                    ],
 
                 ],
+                'itemOptions' => ['class' => 'sidenav-item']
             ]
         ) ?>
 

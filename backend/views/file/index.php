@@ -28,18 +28,16 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 <?php endif ?>
 
-
 <div class="col-xs-12">
     <div class="row">
-        <div class="col-xs-2">
-            <?= Html::a('<span class="btn-label"><span class="icon icon-chevron-circle-left icon-lg icon-fw"></span></span> Back', Url::previous(), ['class' => 'btn btn-labeled arrow-default']) ?>
-        </div>
-        <div class="col-xs-8 text-center">
-            <div class="title-bar-title h2">
+        <div class="col-sm-10">
+            <div class="title-bar-title h2 no-outer-offset-top">
                 <span class="icon icon-save"></span> <?= Html::encode($this->title) ?>
             </div>
         </div>
-        <div class="col-xs-2"></div>
+        <div class="col-sm-2 text-right">
+            <?= Html::a('<span class="btn-label"><span class="icon icon-chevron-circle-left icon-lg icon-fw"></span></span> Back', Url::previous(), ['class' => 'btn btn-labeled arrow-default']) ?>
+        </div>
     </div>
     <div class="row">
         <div class="col-xs-12">

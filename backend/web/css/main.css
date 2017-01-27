@@ -204,3 +204,7 @@ a.desc:after {
     display: none;
     list-style: none;
 }
+
+.no-outer-offset-top{
+    margin-top: 0;
+}
