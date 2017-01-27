@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2b26658cff81dcce4b2e51db0aab95aa",
+    "content-hash": "3bdf9e251dca1288fbe02eb0015de6d9",
     "packages": [
         {
             "name": "ait/keystorage",
@@ -122,16 +122,6 @@
                 "responsive",
                 "web"
             ]
-        },
-        {
-            "name": "bower-asset/ext-lib",
-            "version": "1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://gitlab.ait.com/ait/extlib",
-                "reference": "1.0.1"
-            },
-            "type": "library"
         },
         {
             "name": "bower-asset/jquery",
@@ -298,6 +288,16 @@
             ]
         },
         {
+            "name": "bower/ext-lib",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.ait.com/ait/extlib",
+                "reference": "1.0.1"
+            },
+            "type": "library"
+        },
+        {
             "name": "cebe/markdown",
             "version": "1.1.1",
             "source": {
@@ -459,16 +459,6 @@
                 "yii2"
             ],
             "time": "2016-10-21T02:03:45+00:00"
-        },
-        {
-            "name": "ext-lib",
-            "version": "1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://gitlab.ait.com/ait/extlib",
-                "reference": "1.0.1"
-            },
-            "type": "library"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -3685,8 +3675,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.5.9",
-        "ext-lib": "^1.0"
+        "php": ">=5.5.9"
     },
     "platform-dev": []
 }
