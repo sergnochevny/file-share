@@ -1,15 +1,19 @@
 <?php
 
+/* @var $this \yii\web\View */
+
 use dmstr\widgets\Alert;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
+use yii\web\JqueryAsset;
 
-\backend\assets\WizardAsset::register($this);
 
 $activeClass = ' active';
 $companyActive = isset($isCompany) ? $activeClass : '';
 $userActive = isset($isUser) ? $activeClass : '';
 $investigationActive = isset($isInvestigation) ? $activeClass : '';
+
+$this->registerJsFile('@web/js/wizard.js', ['depends' => JqueryAsset::class]);
 
 ?>
 
