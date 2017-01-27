@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use yii\behaviors\TimestampBehavior;
+
 /**
  * This is the model class for table "file".
  *
@@ -19,6 +21,7 @@ namespace common\models;
 class File extends AbstractUndeletableActiveRecord
 {
 
+
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 100;
 
@@ -28,6 +31,15 @@ class File extends AbstractUndeletableActiveRecord
     public static function tableName()
     {
         return 'file';
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+            ],
+        ];
     }
 
     /**

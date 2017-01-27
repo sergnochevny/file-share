@@ -3,6 +3,8 @@
 namespace backend\behaviors;
 
 use Citrix\CitrixApi;
+use Citrix\ShareFile\Api\Models\File;
+use Citrix\ShareFile\Api\Models\Item;
 use yii\base\Behavior;
 use yii\base\InvalidParamException;
 use yii\db\ActiveRecord;
@@ -78,32 +80,31 @@ class UploadBehavior extends Behavior
      */
     protected function saveFile($attribute, $insert = true)
     {
+        $id = null;
         if (empty($this->owner->$attribute)) {
             if ($insert !== true) {
                 $this->deleteFile($this->oldFile($attribute));
             }
         } else {
-            $tempFile = $this->tempFile($attribute);
-
-            if (is_file($tempFile)) {
-
-//                if (rename($tempFile, $file)) {
-//                    if ($insert === false && $this->unlinkOnSave === true && $this->owner->getOldAttribute(
-//                            $attribute
-//                        )
-//                    ) {
-//                        $this->deleteFile($this->oldFile($attribute));
-//                    }
-//                    $this->triggerEventAfterUpload();
-//                } else {
-//                    unset($this->owner->$attribute);
-//                }
-            } elseif ($insert === true) {
-                unset($this->owner->$attribute);
-            } else {
-                $this->owner->setAttribute($attribute, $this->owner->getOldAttribute($attribute));
+            foreach ($this->attributes as $attribute => $config) {
+                $tempFile = $this->tempPath($attribute);
+                if (is_file($tempFile)) {
+                    $items = $this->Citrix->Items;
+                    if (!empty($parent = $this->getParentId($attribute))) $items->setId($parent);
+                    $upload_file = $items->UploadFile($tempFile);
+                    /**
+                     * @var Item $upload_file
+                     */
+                    $id = $upload_file->Id;
+                } elseif ($insert === true) {
+                    unset($this->owner->$attribute);
+                } else {
+                    $this->owner->setAttribute($attribute, $this->owner->getOldAttribute($attribute));
+                }
             }
+            $this->triggerEventAfterUpload();
         }
+        return $id;
     }
 
     /**
@@ -227,13 +228,16 @@ class UploadBehavior extends Behavior
             throw new InvalidParamException('Invalid or empty attributes array.');
         } else {
             foreach ($this->attributes as $attribute => $config) {
-//                if (!isset($config['tempPath']) || empty($config['tempPath'])) {
-//                    throw new InvalidParamException('Temporary path must be set for all attributes.');
-//                }
+                if (!isset($config['tempPath']) || empty($config['tempPath'])) {
+                    throw new InvalidParamException('Temporary path must be set for all attributes.');
+                }
                 if (!isset($config['citrix_id_field']) || empty($config['citrix_id_field'])) {
                     throw new InvalidParamException('citrix_id_field field name must be set for all attributes.');
                 }
-                $this->attributes[$attribute]['tempPath'] = FileHelper::normalizePath(Yii::getAlias($config['tempPath'])) . DIRECTORY_SEPARATOR;
+                if (!isset($config['parent']) && ($config['parent'] instanceof \Closure)) {
+                    $fn = $config['parent'];
+                    $config['parent'] = call_user_func($fn);
+                }
 
                 $validator = Validator::createValidator('string', $this->owner, $attribute);
                 $this->owner->validators[] = $validator;
@@ -257,6 +261,10 @@ class UploadBehavior extends Behavior
 
     public function beforeValidate($event)
     {
+        foreach ($this->attributes as $attribute => $config) {
+            $this->attributes[$attribute]['tempPath'] = FileHelper::normalizePath(Yii::getAlias($this->owner->{$config['tempPath']}));
+        }
+
         $this->Citrix = CitrixApi::getInstance();
         $this->Citrix->setSubdomain($this->subdomain)
             ->setUsername($this->user)
@@ -292,21 +300,16 @@ class UploadBehavior extends Behavior
     /**
      * @param string $attribute Attribute name
      *
-     * @return string Temporary file path
-     */
-    public function tempFile($attribute)
-    {
-        return $this->tempPath($attribute) . $this->owner->$attribute;
-    }
-
-    /**
-     * @param string $attribute Attribute name
-     *
      * @return string Path to temporary file
      */
     public function tempPath($attribute)
     {
         return $this->attributes[$attribute]['tempPath'];
+    }
+
+    public function getParentId($attribute)
+    {
+        return $this->attributes[$attribute]['parent'];
     }
 
     /**
@@ -372,20 +375,6 @@ class UploadBehavior extends Behavior
     /**
      * @param string $attribute Attribute name
      *
-     * @return null|string Full attribute URL
-     */
-    public function urlAttribute($attribute)
-    {
-        if (isset($this->attributes[$attribute]) && $this->owner->$attribute) {
-            return $this->attributes[$attribute]['url'] . $this->owner->$attribute;
-        }
-
-        return null;
-    }
-
-    /**
-     * @param string $attribute Attribute name
-     *
      * @return string Attribute mime-type
      */
     public function getMimeType($attribute)
@@ -393,13 +382,4 @@ class UploadBehavior extends Behavior
         return FileHelper::getMimeType($this->file($attribute));
     }
 
-    /**
-     * @param string $attribute Attribute name
-     *
-     * @return boolean Whether file exist or not
-     */
-    public function fileExists($attribute)
-    {
-        return file_exists($this->file($attribute));
-    }
 }

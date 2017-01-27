@@ -54,10 +54,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'id' => "upload-file",
                     'method' => 'post',
                     'action' => Url::to(['/file/upload'], true),
-                    'options' => ['data-pjax' => true, 'class' => 'text-center']
+                    'options' => [
+                        'data-pjax' => true,
+                        'class' => 'text-center',
+                        'enctype' => 'multipart/form-data'
+                    ]
                 ]
             ); ?>
-            <?= $uploadForm->field($uploadModel, 'name')->fileInput([
+            <?= $uploadForm->field($uploadModel, 'file')->fileInput([
                 'id' => "file",
                 'style' => "background-color: #fff;border-radius: 5px;display: block;margin: 10px auto 15px;padding: 5px;"
             ])->label(false); ?>

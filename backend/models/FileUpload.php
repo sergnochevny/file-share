@@ -6,40 +6,32 @@ use backend\behaviors\UploadBehavior;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\web\UploadedFile;
 
-class FileUpload extends File
+class FileUpload extends Model
 {
+    public $file;
+    public $description;
+    public $parent;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['name'], 'file', 'skipOnEmpty' => false],
+            [['file'], 'file', 'skipOnEmpty' => false],
             [['description','parent'], 'safe']
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'uploadBehavior' => [
-                'class' => UploadBehavior::className(),
-                'subdomain' => \Yii::$app->keyStorage->get('citrix.subdomain'),
-                'user' => \Yii::$app->keyStorage->get('citrix.user'),
-                'pass' => \Yii::$app->keyStorage->get('citrix.pass'),
-                'id' => \Yii::$app->keyStorage->get('citrix.id'),
-                'secret' => \Yii::$app->keyStorage->get('citrix.secret'),
-                'attributes' => [
-                    'name' => [
-                        'attribute' => 'name',
-                        'citrix_id_field' => 'citrix_id',
-                    ],
-                ],
-            ],
-        ];
+    public function save(){
+        $model = new File();
+        $this->file = UploadedFile::getInstance($this, 'file');
+        $model->name = $this->file->name;
+        $model->size = $this->file->size;
+        $model->tmp = $this->file->tempName;
+        $model->type = $this->file->extension;
+
+        return $model->save();
     }
 }
