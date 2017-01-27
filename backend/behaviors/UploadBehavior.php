@@ -2,6 +2,7 @@
 
 namespace backend\behaviors;
 
+use Citrix\CitrixApi;
 use yii\base\Behavior;
 use yii\base\InvalidParamException;
 use yii\db\ActiveRecord;
@@ -86,17 +87,17 @@ class UploadBehavior extends Behavior
 
             if (is_file($tempFile)) {
 
-                if (rename($tempFile, $file)) {
-                    if ($insert === false && $this->unlinkOnSave === true && $this->owner->getOldAttribute(
-                            $attribute
-                        )
-                    ) {
-                        $this->deleteFile($this->oldFile($attribute));
-                    }
-                    $this->triggerEventAfterUpload();
-                } else {
-                    unset($this->owner->$attribute);
-                }
+//                if (rename($tempFile, $file)) {
+//                    if ($insert === false && $this->unlinkOnSave === true && $this->owner->getOldAttribute(
+//                            $attribute
+//                        )
+//                    ) {
+//                        $this->deleteFile($this->oldFile($attribute));
+//                    }
+//                    $this->triggerEventAfterUpload();
+//                } else {
+//                    unset($this->owner->$attribute);
+//                }
             } elseif ($insert === true) {
                 unset($this->owner->$attribute);
             } else {
@@ -226,9 +227,9 @@ class UploadBehavior extends Behavior
             throw new InvalidParamException('Invalid or empty attributes array.');
         } else {
             foreach ($this->attributes as $attribute => $config) {
-                if (!isset($config['tempPath']) || empty($config['tempPath'])) {
-                    throw new InvalidParamException('Temporary path must be set for all attributes.');
-                }
+//                if (!isset($config['tempPath']) || empty($config['tempPath'])) {
+//                    throw new InvalidParamException('Temporary path must be set for all attributes.');
+//                }
                 if (!isset($config['citrix_id_field']) || empty($config['citrix_id_field'])) {
                     throw new InvalidParamException('citrix_id_field field name must be set for all attributes.');
                 }

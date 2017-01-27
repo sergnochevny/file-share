@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use backend\behaviors\UploadBehavior;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -14,17 +15,31 @@ class FileUpload extends File
     public function rules()
     {
         return [
-            [['name', 'description', 'parent'], 'safe'],
+            [['name'], 'file', 'skipOnEmpty' => false],
+            [['description','parent'], 'safe']
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function scenarios()
+    public function behaviors()
     {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
+        return [
+            'uploadBehavior' => [
+                'class' => UploadBehavior::className(),
+                'subdomain' => \Yii::$app->keyStorage->get('citrix.subdomain'),
+                'user' => \Yii::$app->keyStorage->get('citrix.user'),
+                'pass' => \Yii::$app->keyStorage->get('citrix.pass'),
+                'id' => \Yii::$app->keyStorage->get('citrix.id'),
+                'secret' => \Yii::$app->keyStorage->get('citrix.secret'),
+                'attributes' => [
+                    'name' => [
+                        'attribute' => 'name',
+                        'citrix_id_field' => 'citrix_id',
+                    ],
+                ],
+            ],
+        ];
     }
-
 }

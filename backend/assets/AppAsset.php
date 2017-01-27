@@ -25,5 +25,6 @@ class AppAsset extends AssetBundle
     public $depends = [
         'yii\web\YiiAsset',
         'backend\assets\AdminLTEAsset',
+        'common\assets\ExtLibAsset'
     ];
 }
