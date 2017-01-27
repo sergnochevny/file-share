@@ -2,6 +2,8 @@
 
 use yii\helpers\Url;
 
+\backend\assets\WizardAsset::register($this);
+
 $activeClass = ' active';
 $companyActive = isset($isCompany) ? $activeClass : '';
 $userActive = isset($isUser) ? $activeClass : '';

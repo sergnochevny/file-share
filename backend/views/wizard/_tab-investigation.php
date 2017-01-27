@@ -41,7 +41,7 @@ use backend\models\Company;
 
             <?= $form->field($investigationForm, 'start_date')->widget(\yii\jui\DatePicker::class) ?>
 
-            <?= $form->field($investigationForm, 'end_date')->widget(\yii\jui\DatePicker::class, []) ?>
+            <?= $form->field($investigationForm, 'end_date')->widget(\yii\jui\DatePicker::class) ?>
 
         </div>
         <div class="col-sm-6">

@@ -2,7 +2,7 @@
 
 namespace backend\models;
 
-use Yii;
+use common\models\Investigation;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 

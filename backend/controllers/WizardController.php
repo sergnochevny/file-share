@@ -11,6 +11,7 @@ use backend\models\forms\CompanyForm;
 use backend\models\forms\UserForm;
 use backend\models\services\InvestigationService;
 use backend\models\services\UserService;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use Yii;
 use yii\web\Response;
@@ -89,6 +90,33 @@ class WizardController extends Controller
         }
 
         return $this->smartRender('index', $options);
+    }
+
+    /**
+     * Gets info about company by id
+     *
+     * @param null $id
+     * @return string
+     * @throws BadRequestHttpException
+     */
+    public function actionCompanyInfo($id = null)
+    {
+        $request = Yii::$app->getRequest();
+        $id = (int) $id;
+        if ($id > 0 && $request->isPjax && $company = Company::findOne($id)) {
+            $service = Yii::createObject(CompanyService::class, [$company]);
+            $form = Yii::createObject(CompanyForm::class);
+            $service->populateForm($form);
+
+
+            return $this->renderAjax('index', [
+                'isCompany' => true,
+                'companyForm' => $form,
+                'selected' => $company->id
+            ]);
+        }
+
+        throw new BadRequestHttpException();
     }
 
     /**

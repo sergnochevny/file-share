@@ -24,6 +24,7 @@ $dropDown = function ($model = null, $name, $list, array $options) use ($form) {
     <?php
     $options = [
         'id' => 'company-list',
+        'data-info-url' => \yii\helpers\Url::to(['company-info'], true),
         'class' => 'form-control',
         'prompt' => ' - - -',
     ];
