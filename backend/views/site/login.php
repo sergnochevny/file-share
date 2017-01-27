@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
@@ -21,7 +22,7 @@ $fieldOptions2 = [
 
 <div class="login-box">
     <div class="login-logo">
-        <a href="#"><img class="img-responsive" src="images/logo.png" /></a>
+        <?= Html::a(Html::img(Url::to('/images/logo.png'), ['class' => 'img-responsive']), ['/']) ?>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
@@ -64,7 +65,6 @@ $fieldOptions2 = [
                 in using Google+</a>
         </div>
          /.social-auth-links -->
-
 
 
     </div>

@@ -13,6 +13,8 @@ $companyActive = isset($isCompany) ? $activeClass : '';
 $userActive = isset($isUser) ? $activeClass : '';
 $investigationActive = isset($isInvestigation) ? $activeClass : '';
 
+$isUpdate = isset($isUpdate) ? $isUpdate : false;
+
 $this->registerJsFile('@web/js/wizard.js', ['depends' => JqueryAsset::class]);
 
 ?>
@@ -70,11 +72,11 @@ $this->registerJsFile('@web/js/wizard.js', ['depends' => JqueryAsset::class]);
 
                                 <?php
                                 if ($companyActive) {
-                                    echo $this->render('_tab-company', compact('companyForm', 'selected'));
+                                    echo $this->render('_tab-company', compact('companyForm', 'selected', 'isUpdate'));
                                 } else if ($userActive) {
-                                    echo $this->render('_tab-user', compact('userForm'));
+                                    echo $this->render('_tab-user', compact('userForm', 'isUpdate'));
                                 } else if ($investigationActive) {
-                                    echo $this->render('_tab-investigation', compact('investigationForm'));
+                                    echo $this->render('_tab-investigation', compact('investigationForm', 'isUpdate'));
                                 }
                                 ?>
 

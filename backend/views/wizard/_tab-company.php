@@ -1,16 +1,21 @@
 <?php
 /** @var $this \yii\web\View */
 /** @var $companyForm \backend\models\forms\CompanyForm */
+/** @var $isUpdate bool */
 ///** @var $companyId int|bool If user is not client then false */
 
+use yii\helpers\Url;
 
 ?>
 
 <div id="tab-1" class="tab-pane active">
     <?php $form = \backend\widgets\ActiveForm::begin([
+        'action' => [$isUpdate ? 'company-update' : 'company'],
         'id' => 'company-form',
-        'options' => ['data-pjax' => 'wizard-container'],
-        'action' => ['company'],
+        'options' => [
+            'data-pjax' => 'wizard-container',
+            'data-create-url' => Url::to(['company'], true), //when select prompt send request to create url
+        ],
     ]) ?>
     <div class="col-lg-6 col-lg-offset-3">
         <h2 align="center">
@@ -42,11 +47,11 @@
         <div class="clearfix"></div>
         <hr/>
         <div align="center">
-            <button id="company-create" class="btn btn-sm btn-labeled  arrow-warning" type="submit">
+            <button class="btn btn-sm btn-labeled arrow-warning" type="submit">
                 <span class="btn-label">
-                    <span class="icon icon-check-square   icon-lg icon-fw"></span>
+                    <span class="icon icon-check-square icon-lg icon-fw"></span>
                 </span>
-                Create
+                <?= $isUpdate ? 'Update' : 'Create' ?>
             </button>
             <a href="<?= \yii\helpers\Url::to(['user'], true) ?>" class="hidden btn btn-sm btn-labeled  arrow-success" type="button">
                 <span class="btn-label">
