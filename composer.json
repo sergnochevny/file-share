@@ -35,7 +35,7 @@
       "type": "package",
       "package": {
         "version": "1.0.1",
-        "name": "ext-lib",
+        "name": "bower/ext-lib",
         "source": {
           "type": "git",
           "url": "https://gitlab.ait.com/ait/extlib",
@@ -54,7 +54,7 @@
     "mdmsoft/yii2-admin": "~2.0",
     "kartik-v/yii2-widget-depdrop": "^1.0.0",
     "ait/keystorage": "0.0.2",
-    "bower/ext-lib": "^1.0"
+    "bower/ext-lib": "^1.0.1"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.0.0",

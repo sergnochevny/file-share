@@ -7,7 +7,7 @@ use yii\web\AssetBundle;
 
 class ExtLibAsset extends AssetBundle
 {
-    public $sourcePath = '@bower/lib-ext';
+    public $sourcePath = '@bower/ext-lib';
     public $js = [
         'js/library.extends.js',
     ];
