@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "682a6978789fb0cf29013ab9c4e91563",
+    "content-hash": "2b26658cff81dcce4b2e51db0aab95aa",
     "packages": [
         {
             "name": "ait/keystorage",
@@ -122,6 +122,16 @@
                 "responsive",
                 "web"
             ]
+        },
+        {
+            "name": "bower-asset/ext-lib",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.ait.com/ait/extlib",
+                "reference": "1.0.1"
+            },
+            "type": "library"
         },
         {
             "name": "bower-asset/jquery",
@@ -449,6 +459,16 @@
                 "yii2"
             ],
             "time": "2016-10-21T02:03:45+00:00"
+        },
+        {
+            "name": "ext-lib",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.ait.com/ait/extlib",
+                "reference": "1.0.1"
+            },
+            "type": "library"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -1670,16 +1690,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.5.5",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "399c1f9781e222f6eb6cc238796f5200d1b7f108"
+                "reference": "5a5a9fc8025a08d8919be87d6884d5a92520cefe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/399c1f9781e222f6eb6cc238796f5200d1b7f108",
-                "reference": "399c1f9781e222f6eb6cc238796f5200d1b7f108",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/5a5a9fc8025a08d8919be87d6884d5a92520cefe",
+                "reference": "5a5a9fc8025a08d8919be87d6884d5a92520cefe",
                 "shasum": ""
             },
             "require": {
@@ -1708,7 +1728,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2016-10-31T17:19:45+00:00"
+            "time": "2017-01-26T22:05:40+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -2203,16 +2223,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.7.7",
+            "version": "5.7.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "e52551bbc229c6cee26c7a00deef80c2108c5b15"
+                "reference": "bee7755d964f8e56d6ecb79046480fd0320b686d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/e52551bbc229c6cee26c7a00deef80c2108c5b15",
-                "reference": "e52551bbc229c6cee26c7a00deef80c2108c5b15",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/bee7755d964f8e56d6ecb79046480fd0320b686d",
+                "reference": "bee7755d964f8e56d6ecb79046480fd0320b686d",
                 "shasum": ""
             },
             "require": {
@@ -2281,7 +2301,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-01-25T19:19:41+00:00"
+            "time": "2017-01-26T15:28:51+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -3665,7 +3685,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.5.9"
+        "php": ">=5.5.9",
+        "ext-lib": "^1.0"
     },
     "platform-dev": []
 }
