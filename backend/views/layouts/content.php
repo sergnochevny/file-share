@@ -6,12 +6,7 @@ use dmstr\widgets\Alert;
 <div class="content-wrapper">
 
     <section class="content">
-        <?php \yii\widgets\Pjax::begin(['enablePushState' => false]) ?>
-
-        <?= Alert::widget() ?>
         <?= $content ?>
-
-        <?php \yii\widgets\Pjax::end() ?>
     </section>
 </div>
 

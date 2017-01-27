@@ -27,6 +27,10 @@ class CitrixFolderBehavior extends Behavior
     private $pass;
     private $subdomain;
     private $parent;
+    /**
+     * @var CitrixApi $Citrix
+     */
+    private $Citrix;
 
     /**
      * @return mixed
@@ -41,16 +45,11 @@ class CitrixFolderBehavior extends Behavior
      */
     public function setParent($parent)
     {
-        if ( $parent instanceof \Closure){
+        if ($parent instanceof \Closure) {
             $parent = call_user_func($parent);
         }
         $this->parent = $parent;
     }
-
-    /**
-     * @var CitrixApi $Citrix
-     */
-    private $Citrix;
 
     /**
      * @return mixed
@@ -173,8 +172,10 @@ class CitrixFolderBehavior extends Behavior
         ];
     }
 
-    public function beforeValidate($event)
+    public function attach($owner)
     {
+        parent::attach($owner);
+
         if (empty($this->attribute)) throw new InvalidParamException("Identity attribute parameter");
         if (!is_string($this->attribute)) throw new InvalidParamException("Attribute parameter is a table field name");
         if (empty($this->folder)) throw new InvalidParamException("Identity folder parameter");
@@ -185,6 +186,10 @@ class CitrixFolderBehavior extends Behavior
         if (empty($this->secret)) throw new InvalidParamException("Identity secret parameter");
         if (empty($this->subdomain)) throw new InvalidParamException("Identity subdomain parameter");
 
+    }
+
+    public function beforeValidate($event)
+    {
         $this->Citrix = CitrixApi::getInstance();
         $this->Citrix->setSubdomain($this->subdomain)
             ->setUsername($this->user)
@@ -204,13 +209,13 @@ class CitrixFolderBehavior extends Behavior
                     'Description' => 'Company ' . $this->owner->{$this->folder}
                 ]
             );
-            if(!empty($this->parent)) $items->setId($this->parent);
+            if (!empty($this->parent)) $items->setId($this->parent);
             $create_folder = $items
                 ->setOverwrite(CitrixApi::FALSE)
                 ->CreateFolder($folder);
             /* @var Folder $create_folder
              **/
-            $this->owner->{$this->attribute} = $create_folder->Id;
+            $this->owner->setAttribute($this->attribute, $create_folder->Id);
         } catch (\Exception $e) {
             $event->isValid = false;
         }
@@ -232,7 +237,7 @@ class CitrixFolderBehavior extends Behavior
             $item->Name = $this->owner->{$this->folder};
             $item->Description = 'Company ' . $this->owner->{$this->folder};
             $folder = $items->UpdateItem($item);
-            $this->owner->{$this->attribute} = $folder->Id;
+            $this->owner->setAttribute($this->attribute, $folder->Id);
         } catch (\Exception $e) {
             $event->isValid = false;
         }
