@@ -129,7 +129,11 @@ class WizardController extends Controller
         /** @var UserForm $userForm */
         $userForm = Yii::createObject(UserForm::class);
         $request = Yii::$app->getRequest();
-        if ($request->isPost && $userForm->load($request->post())) {
+
+        if ($request->isPost
+            && $userForm->load($request->post())
+            && $userForm->validate()
+        ) {
             if ($this->isClient()) {
                 //explicitly set role if client creates another user
                 $userForm->role = 'client';
