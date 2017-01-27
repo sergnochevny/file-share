@@ -88,7 +88,7 @@ class WizardController extends Controller
             }
         }
 
-        return $this->render('index', $options);
+        return $this->smartRender('index', $options);
     }
 
     /**
@@ -122,7 +122,7 @@ class WizardController extends Controller
             }
         }
 
-        return $this->render('index', [
+        return $this->smartRender('index', [
             'isUser' => true,
             'userForm' => $userForm
         ]);
@@ -147,8 +147,9 @@ class WizardController extends Controller
                 $this->setFlash('error', 'The applicant was not saved');
             }
         }
-        return $this->render('index', [
+        return $this->smartRender('index', [
             'isInvestigation' => true,
+            'investigationForm' => $investigationForm,
         ]);
     }
 
@@ -172,5 +173,17 @@ class WizardController extends Controller
         }
 
         return ['output' => $userList, 'selected' => ''];
+    }
+
+    /**
+     * @param $view
+     * @param array $viewData
+     * @return string
+     */
+    private function smartRender($view, array $viewData)
+    {
+        return Yii::$app->getRequest()->isPjax
+            ? $this->renderAjax($view, $viewData)
+            : $this->render($view, $viewData);
     }
 }

@@ -10,7 +10,8 @@ use yii\helpers\Url;
 
 <div id="tab-2" class="tab-pane active">
     <?php $form = \backend\widgets\ActiveForm::begin([
-        'options' => ['data-pjax' => true],
+        'id' => 'user-form',
+        'options' => ['data-pjax' => 'content-container'],
         'action' => ['user'],
     ]) ?>
     <div class="col-lg-6 col-lg-offset-3">
@@ -90,7 +91,7 @@ use yii\helpers\Url;
                                                         </span>
                 Create
             </button>
-            <a href="<?= \yii\helpers\Url::to(['investigation'], true) ?>" class="btn btn-sm btn-labeled  arrow-success" type="button">
+            <a href="<?= \yii\helpers\Url::to(['investigation'], true) ?>" class="hidden btn btn-sm btn-labeled  arrow-success">
                                                         <span class="btn-label">
                                                             <span
                                                                 class="icon icon-chevron-circle-right  icon-lg icon-fw"></span>
