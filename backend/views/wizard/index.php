@@ -1,6 +1,9 @@
 <?php
 
+use yii\bootstrap\Alert;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use yii\widgets\Pjax;
 
 \backend\assets\WizardAsset::register($this);
 
@@ -10,6 +13,15 @@ $userActive = isset($isUser) ? $activeClass : '';
 $investigationActive = isset($isInvestigation) ? $activeClass : '';
 
 ?>
+
+<?php Pjax::begin(['id' => 'wizard-container', 'enablePushState' => false, 'timeout' => 0]); ?>
+
+<?php if (Yii::$app->request->isAjax && Yii::$app->session->hasFlash('alert')): ?>
+    <?= Alert::widget([
+        'body' => ArrayHelper::getValue(Yii::$app->session->getFlash('alert'), 'body'),
+        'options' => ArrayHelper::getValue(Yii::$app->session->getFlash('alert'), 'options'),
+    ]) ?>
+<?php endif ?>
 <div class="row gutter-xs">
     <div class="col-xs-12">
         <div class="panel">
@@ -74,3 +86,4 @@ $investigationActive = isset($isInvestigation) ? $activeClass : '';
         </div>
     </div>
 </div>
+<?php \yii\widgets\Pjax::end() ?>
