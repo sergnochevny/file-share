@@ -126,23 +126,23 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'attribute' => 'name',
                                             'format' => 'html',
                                             'value' => function ($model, $key, $index, $column) {
-                                                    $image = Html::tag('div', '', [
-                                                            'class' => 'file-thumbnail file-thumbnail-' . $model->type
-                                                        ]) . Html::tag('div',
-                                                            Html::tag('span', $model->type, ['class' => 'file-ext']).
-                                                            Html::tag('span', $model->{$column->attribute}, ['class' => 'file-name']),
-                                                            ['class' => 'file-info']
-                                                        );
-
-                                                    $button = Html::button(
-                                                        Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-remove']), [
-                                                            'class' => 'file-delete-btn delete',
-                                                            'title' => 'Delete',
-                                                        ])
+                                                $image = Html::tag('div', '', [
+                                                        'class' => 'file-thumbnail file-thumbnail-' . $model->type
+                                                    ]) . Html::tag('div',
+                                                        Html::tag('span', $model->type, ['class' => 'file-ext']) .
+                                                        Html::tag('span', $model->{$column->attribute}, ['class' => 'file-name']),
+                                                        ['class' => 'file-info']
                                                     );
 
+                                                $button = Html::button(
+                                                    Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-remove']), [
+                                                        'class' => 'file-delete-btn delete',
+                                                        'title' => 'Delete',
+                                                    ])
+                                                );
+
                                                 return Html::tag('div',
-                                                    Html::a($image, Url::to(['/']),[
+                                                    Html::a($image, Url::to(['/']), [
                                                         'class' => 'file-link',
                                                         'title' => $model->{$column->attribute},
                                                         'file-link' => '#'
