@@ -20,6 +20,7 @@ class AppAsset extends \yii\web\AssetBundle
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
         'yii\bootstrap\BootstrapPluginAsset',
+        'common\assets\ExtLibAsset'
     ];
 
     /**

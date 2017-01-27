@@ -19,7 +19,7 @@ $this->title = 'Files';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?php Pjax::begin(['id' => 'file_search', 'enablePushState' => false, 'scrollTo' => 0, 'timeout' => 0]); ?>
+<?php Pjax::begin(['id' => 'file_search', 'enablePushState' => false, 'timeout' => 0]); ?>
 
 <?php if (Yii::$app->request->isAjax && Yii::$app->session->hasFlash('alert')): ?>
     <?= Alert::widget([
@@ -118,8 +118,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'width' => "100%"
                                     ],
                                     'rowOptions' => [
-                                        'role' => "row",
-                                        'class' => 'odd'
+                                        'role' => "row"
                                     ],
                                     'columns' => [
                                         [

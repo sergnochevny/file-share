@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "682a6978789fb0cf29013ab9c4e91563",
+    "content-hash": "2b26658cff81dcce4b2e51db0aab95aa",
     "packages": [
         {
             "name": "ait/keystorage",
@@ -122,6 +122,16 @@
                 "responsive",
                 "web"
             ]
+        },
+        {
+            "name": "bower-asset/ext-lib",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.ait.com/ait/extlib",
+                "reference": "1.0.1"
+            },
+            "type": "library"
         },
         {
             "name": "bower-asset/jquery",
@@ -449,6 +459,16 @@
                 "yii2"
             ],
             "time": "2016-10-21T02:03:45+00:00"
+        },
+        {
+            "name": "ext-lib",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.ait.com/ait/extlib",
+                "reference": "1.0.1"
+            },
+            "type": "library"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -3665,7 +3685,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.5.9"
+        "php": ">=5.5.9",
+        "ext-lib": "^1.0"
     },
     "platform-dev": []
 }
