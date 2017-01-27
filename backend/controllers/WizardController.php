@@ -170,7 +170,12 @@ class WizardController extends Controller
         /** @var InvestigationForm $investigationForm */
         $investigationForm = Yii::createObject(InvestigationForm::class);
         $request = Yii::$app->getRequest();
-        if ($request->isPost && $investigationForm->load($request->post())) {
+
+        if (
+            $request->isPost
+            && $investigationForm->load($request->post())
+            && $investigationForm->validate()
+        ) {
             /** @var InvestigationService $service */
             $service = Yii::createObject(InvestigationService::class);
             if ($service->save($investigationForm)) {
@@ -179,6 +184,7 @@ class WizardController extends Controller
                 $this->setFlash('error', 'The applicant was not saved');
             }
         }
+
         return $this->smartRender('index', [
             'isInvestigation' => true,
             'investigationForm' => $investigationForm,
