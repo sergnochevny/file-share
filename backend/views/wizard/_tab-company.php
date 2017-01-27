@@ -9,7 +9,7 @@
 <div id="tab-1" class="tab-pane active">
     <?php $form = \backend\widgets\ActiveForm::begin([
         'id' => 'company-form',
-        'options' => ['data-pjax' => 'content-container'],
+        'options' => ['data-pjax' => 'wizard-container'],
         'action' => ['company'],
     ]) ?>
     <div class="col-lg-6 col-lg-offset-3">
