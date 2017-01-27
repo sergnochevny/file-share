@@ -12,7 +12,7 @@ class AppAsset extends \yii\web\AssetBundle
     ];
 
     public $js = [
-        'js/app.min.js'
+        'js/app.min.js',
     ];
 
     public $depends = [
