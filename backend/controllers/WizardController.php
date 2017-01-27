@@ -56,35 +56,41 @@ class WizardController extends Controller
      */
     public function actionCompany()
     {
-        /** @var CompanyForm $companyForm */
-        $companyForm = Yii::createObject(CompanyForm::class);
+        $companyForm = new CompanyForm();
+        $request = Yii::$app->getRequest();
+
         $options = [
             'isCompany' => true,
             'companyForm' => $companyForm,
             'selected' => null,
+            'isUpdate' => false,
         ];
-        if (Yii::$app->request->isPost
-            && $companyForm->load(\Yii::$app->getRequest()->post())
+
+        if ($request->isPost
+            && $companyForm->load($request->post())
             && $companyForm->validate()
         ) {
             /** @var CompanyService $companyService */
             try {
                 $companyService = Yii::createObject(CompanyService::class);
                 if ($companyService->save($companyForm)) {
-                    unset($companyForm);
-                    $companyForm = Yii::createObject(CompanyForm::class);
                     $options['companyForm'] = $companyForm;
                     $options['selected'] = $companyService->getCompany()->id;
+                    $options['isUpdate'] = true;
                 } else {
                     if (!empty($companyService->getCompany()->errors)) {
                         $msg = '';
                         foreach ($companyService->getCompany()->errors as $field_error) {
                             foreach ($field_error as $error) {
-                                if (!empty($msg)) $msg .= '<br>';
+                                if (!empty($msg)) {
+                                    $msg .= '<br>';
+                                }
                                 $msg .= $error;
                             }
                         }
-                    } else $msg = 'The company was not saved';
+                    } else {
+                        $msg = 'The company was not saved';
+                    }
                     $this->setFlash('error', $msg);
                 }
             } catch (\Exception $e) {
@@ -115,7 +121,8 @@ class WizardController extends Controller
             return $this->renderAjax('index', [
                 'isCompany' => true,
                 'companyForm' => $form,
-                'selected' => $company->id
+                'selected' => $company->id,
+                'isUpdate' => true,
             ]);
         }
 

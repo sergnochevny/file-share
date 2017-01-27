@@ -1,27 +1,36 @@
-(function ($, undefined) {
+"use strict";
+(function ($) {
     var companyList = '#company-list',
+        companyForm = '#company-form',
         pjaxContainer = '#wizard-container';
 
 
+    function pjaxSendRequest(url, type, data) {
+        $.pjax({
+            url: url,
+            container: pjaxContainer,
+            type: type,
+            push: false,
+            replace: false,
+            timeout: 0,
+            scrollTo: false,
+            data: data
+        });
+    }
 
-    $(companyList).on('change', function (ev) {
-        var companyId,
-            url;
 
-        companyId = $(this).val();
-        url = $(this).data('infoUrl');
-        if (url && companyId) {
-            $.pjax({
-                url: url,
-                container: pjaxContainer,
-                type:'get',
-                push:false,
-                replace:false,
-                timeout:0,
-                scrollTo:0,
-                data: {'id': companyId}
-            });
 
+    $(document).on('change', companyList, function (e) {
+        e.preventDefault();
+        var companyId = $(this).val(),
+            infoUrl = $(this).data('infoUrl'),
+            createUrl = $(companyForm).data('createUrl');
+
+        if (infoUrl && companyId) {
+            pjaxSendRequest(infoUrl, 'get', {'id': companyId});
+
+        } else if (!companyId && createUrl) {
+            pjaxSendRequest(createUrl, 'get');
         }
     });
 
