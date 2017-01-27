@@ -18,7 +18,8 @@ final class InvestigationService
 
     public function save(InvestigationForm $form)
     {
-        $this->investigation->setAttributes($form->getAttributes());
+        $this->investigation->setAttributes($form->getAttributes(null, ['start_date', 'end_date']));
+
         return $this->investigation->save();
     }
 }

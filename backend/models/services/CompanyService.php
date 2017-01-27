@@ -19,6 +19,11 @@ final class CompanyService
         $this->company = $company;
     }
 
+    public function populateForm(CompanyForm $form)
+    {
+        $form->setAttributes($this->company->getAttributes());
+    }
+
     /**
      * @param CompanyForm $form
      * @return bool
