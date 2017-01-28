@@ -22,6 +22,7 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ * @property string $citrix_id
  *
  * @property array $statusLabels
  *

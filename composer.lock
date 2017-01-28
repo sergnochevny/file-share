@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e06a711f6744345b31410b1f7f64b524",
+    "content-hash": "667c9f05a4d28d1db95357becd8f8e0c",
     "packages": [
         {
             "name": "ait/keystorage",
@@ -1159,11 +1159,11 @@
     "packages-dev": [
         {
             "name": "ait/citrix",
-            "version": "1.0.8",
+            "version": "1.0.9",
             "source": {
                 "type": "git",
                 "url": "https://gitlab.ait.com/ait/citrix",
-                "reference": "93d52f5e8401daf21ba1c7d0f663574537f5ca44"
+                "reference": "c29b81c42b22d0927f7c8f48dffb4aca988e4f4e"
             },
             "require": {
                 "ait/guzzle": "6.2.2",
@@ -1195,7 +1195,7 @@
                 }
             ],
             "description": "Citrix Share File API implementation the class wrapper",
-            "time": "2017-01-28T11:47:17+00:00"
+            "time": "2017-01-28T17:16:55+00:00"
         },
         {
             "name": "ait/guzzle",

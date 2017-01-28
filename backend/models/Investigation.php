@@ -3,6 +3,7 @@
 
 namespace backend\models;
 
+use backend\behaviors\CitrixFolderBehavior;
 use common\models\Company;
 
 /**
@@ -24,6 +25,32 @@ final class Investigation extends \common\models\Investigation
         $rules = parent::rules();
         $rules[] = [['name'], 'unique'];
         return $rules;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors[] = [
+            'class' => CitrixFolderBehavior::className(),
+            'attribute' => 'citrix_id',
+            'folder' => 'name',
+            'subdomain' => \Yii::$app->keyStorage->get('citrix.subdomain'),
+            'user' => \Yii::$app->keyStorage->get('citrix.user'),
+            'pass' => \Yii::$app->keyStorage->get('citrix.pass'),
+            'id' => \Yii::$app->keyStorage->get('citrix.id'),
+            'secret' => \Yii::$app->keyStorage->get('citrix.secret'),
+            'parent' => function(Investigation $model){
+                /**
+                 * @var Investigation $model
+                 */
+                return $model->company->citrix_id;
+            }
+        ];
+
+        return $behaviors;
     }
 
     /**
