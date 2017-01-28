@@ -9,15 +9,16 @@ use yii\helpers\Url;
             <?=
             Html::a(
                 Html::img(
-                    Url::to(['/images/logo.png']), [
+                    Url::to(['/images/logo.png'], true), [
                         'alt' => 'Plan. Protect. Prosper.',
                         'class' => 'navbar-brand-logo'
                     ]
-                ), Url::to('/'), [
+                ), Url::to(['/'], true), [
                     'class' => 'navbar-brand navbar-brand-center'
                 ]
             )
             ?>
+            </a>
             <button class="navbar-toggler visible-xs-block collapsed" type="button" data-toggle="collapse"
                     data-target="#sidenav">
                 <span class="sr-only">Toggle navigation</span>
