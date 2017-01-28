@@ -9,7 +9,7 @@ use yii\helpers\Url;
             <?=
             Html::a(
                 Html::img(
-                    Url::to('/images/logo.png'), [
+                    Url::to(['/images/logo.png']), [
                         'alt' => 'Plan. Protect. Prosper.',
                         'class' => 'navbar-brand-logo'
                     ]
