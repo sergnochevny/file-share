@@ -20,12 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::a('Create Company', ['create'], ['class' => 'btn btn-success']) ?>
         </div>
     </div>
-    <div class="row">
-        <hr>
-    </div>
-
     <?= $this->render('partials/_search', ['model' => $searchModel]); ?>
-
     <?php Pjax::begin(['options' => ['class' => 'row']]); ?>
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
@@ -44,7 +39,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 // 'status',
                 // 'created_at',
                 // 'updated_at',
-
                 ['class' => 'yii\grid\ActionColumn'],
             ],
         ]); ?>
