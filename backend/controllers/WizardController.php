@@ -102,6 +102,7 @@ class WizardController extends Controller
     /**
      * Shows User tab
      *
+     * @param null $id
      * @return string
      */
     public function actionUser($id = null)
