@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `investigation` (
   `company_id` int(11) unsigned NOT NULL,
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
-  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `description` varchar(2000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contact_person` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
