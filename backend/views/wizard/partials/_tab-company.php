@@ -1,6 +1,6 @@
 <?php
 /** @var $this \yii\web\View */
-/** @var $companyForm \backend\models\forms\CompanyForm */
+/** @var $companyForm \backend\models\Company */
 /** @var $isUpdate bool */
 ///** @var $companyId int|bool If user is not client then false */
 
@@ -10,7 +10,7 @@ use yii\helpers\Url;
 
 <div id="tab-1" class="tab-pane active">
     <?php $form = \backend\widgets\ActiveForm::begin([
-        'action' => ['company'],//[$isUpdate ? 'company-update' : 'company'],
+        'action' => ['company', 'id' => $companyForm->id],//[$isUpdate ? 'company-update' : 'company'],
         'id' => 'company-form',
         'options' => [
             'data-pjax' => 'wizard-container',
