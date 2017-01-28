@@ -60,16 +60,6 @@ class Investigation extends AbstractUndeletableActiveRecord
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::className(),
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -88,6 +78,16 @@ class Investigation extends AbstractUndeletableActiveRecord
                 'targetClass' => Company::className(),
                 'targetAttribute' => ['company_id' => 'id']
             ],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
         ];
     }
 
