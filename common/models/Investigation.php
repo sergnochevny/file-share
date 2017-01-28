@@ -13,7 +13,7 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $company_id
  * @property string $start_date
  * @property string $end_date
- * @property string $title
+ * @property string $name
  * @property string $description
  * @property string $contact_person
  * @property string $phone
@@ -64,7 +64,7 @@ class Investigation extends AbstractUndeletableActiveRecord
             [['company_id'], 'required'],
             [['company_id'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
-            [['title', 'contact_person', 'phone', 'email'], 'string'],
+            [['name', 'contact_person', 'phone', 'email'], 'string'],
             [['description'], 'string', 'max' => 2000],
             ['status', 'default', 'value' => self::STATUS_PENDING],
             ['status', 'in', 'range' => [
@@ -79,7 +79,7 @@ class Investigation extends AbstractUndeletableActiveRecord
         ];
     }
 
-    final public static function getStatusesList(){
+    public static function getStatusesList(){
         return [
             self::STATUS_DELETED => 'Deleted',
             self::STATUS_CANCELLED => 'Cancelled',
@@ -100,6 +100,11 @@ class Investigation extends AbstractUndeletableActiveRecord
             'company_id' => 'Company ID',
             'start_date' => 'Start Date',
             'end_date' => 'End Date',
+            'name' => 'Name',
+            'description' => 'Description',
+            'contact_person' => 'Contact Person',
+            'phone' => 'Phone',
+            'email' => 'Email',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

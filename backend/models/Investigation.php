@@ -22,14 +22,14 @@ final class Investigation extends \common\models\Investigation
     public function rules()
     {
         $rules = parent::rules();
-        $rules[] = [['title'], 'unique'];
+        $rules[] = [['name'], 'unique'];
         return $rules;
     }
 
     /**
      * @return array
      */
-    public function getStatusesList()
+    public static function getStatusesList()
     {
         return array_slice(parent::getStatusLabels(), 1, null, true);
     }
