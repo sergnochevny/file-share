@@ -141,7 +141,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 );
 
                                                 return Html::tag('div',
-                                                    Html::a($image, Url::to(['/']), [
+                                                    Html::a($image, Url::to(['/file/download', 'id'=>$model->citrix_id], true), [
                                                         'class' => 'file-link',
                                                         'title' => $model->{$column->attribute},
                                                         'file-link' => '#'
