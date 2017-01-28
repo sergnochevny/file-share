@@ -4,6 +4,7 @@ namespace backend\behaviors;
 
 use Citrix\CitrixApi;
 use Citrix\ShareFile\Api\Models\File;
+use Citrix\ShareFile\Api\Models\Folder;
 use Citrix\ShareFile\Api\Models\Item;
 use yii\base\Behavior;
 use yii\base\InvalidParamException;
@@ -86,19 +87,36 @@ class UploadBehavior extends Behavior
                 $this->deleteFile($this->oldFile($attribute));
             }
         } else {
-            $tempFile = $this->tempPath($attribute);
-            if (is_file($tempFile)) {
+            if (empty($this->owner->type) || ($this->owner->type !== 'folder')) {
+                $tempFile = $this->tempPath($attribute);
+                if (is_file($tempFile)) {
+                    $items = $this->Citrix->Items;
+                    $parent = $this->ParentId($attribute);
+                    if (!empty($parent) && ($parent !== 'root')) $items->setId($parent);
+                    $upload_file = $items->UploadFile($tempFile);
+                    /**
+                     * @var Item $upload_file
+                     */
+                    $id = $upload_file->Id;
+                } elseif ($insert === true) {
+                    unset($this->owner->$attribute);
+                } else {
+                    $this->owner->setAttribute($attribute, $this->owner->getOldAttribute($attribute));
+                }
+            } elseif (($this->owner->type == 'folder')) {
                 $items = $this->Citrix->Items;
-                if (!empty($parent = $this->getParentId($attribute))) $items->setId($parent);
-                $upload_file = $items->UploadFile($tempFile);
-                /**
-                 * @var Item $upload_file
-                 */
-                $id = $upload_file->Id;
-            } elseif ($insert === true) {
-                unset($this->owner->$attribute);
-            } else {
-                $this->owner->setAttribute($attribute, $this->owner->getOldAttribute($attribute));
+                $folder = new Folder(
+                    [
+                        'Name' => $this->owner->{$attribute},
+                        'Description' => $this->owner->description
+                    ]
+                );
+                $create_folder = $items
+                    ->setOverwrite(CitrixApi::FALSE)
+                    ->CreateFolder($folder);
+                /* @var Folder $create_folder
+                 **/
+                $id = $create_folder->Id;
             }
             $this->triggerEventAfterUpload();
         }
@@ -229,12 +247,8 @@ class UploadBehavior extends Behavior
                 if (!isset($config['tempPath']) || empty($config['tempPath'])) {
                     throw new InvalidParamException('Temporary path must be set for all attributes.');
                 }
-                if (!isset($config['citrix_id_field']) || empty($config['citrix_id_field'])) {
-                    throw new InvalidParamException('citrix_id_field field name must be set for all attributes.');
-                }
-                if (!isset($config['parent']) && ($config['parent'] instanceof \Closure)) {
-                    $fn = $config['parent'];
-                    $config['parent'] = call_user_func($fn);
+                if (!isset($config['id']) || empty($config['id'])) {
+                    throw new InvalidParamException('id field name must be set for all attributes.');
                 }
 
                 $validator = Validator::createValidator('string', $this->owner, $attribute);
@@ -270,6 +284,11 @@ class UploadBehavior extends Behavior
             ->setClientId($this->id)
             ->setClientSecret($this->secret)
             ->Initialize();
+
+        if ($config['parent'] instanceof \Closure) {
+            $fn = $config['parent'];
+            $config['parent'] = call_user_func($fn, $this->owner);
+        }
     }
 
     /**
@@ -305,7 +324,7 @@ class UploadBehavior extends Behavior
         return $this->attributes[$attribute]['tempPath'];
     }
 
-    public function getParentId($attribute)
+    public function ParentId($attribute)
     {
         return $this->attributes[$attribute]['parent'];
     }

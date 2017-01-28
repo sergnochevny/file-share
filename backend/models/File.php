@@ -41,9 +41,26 @@ class File extends \common\models\File
             'attributes' => [
                 'name' => [
                     'attribute' => 'name',
-                    'citrix_id_field' => 'citrix_id',
-                    'tempPath' => 'tmp'
-
+                    'id' => 'citrix_id',
+                    'tempPath' => 'tmp',
+                    'parent' => function (File $model) {
+                        if (empty($model->parent)) {
+                            $allfiles = File::findOne(['parent' => 'root']);
+                            if ($allfiles) $model->parent = $allfiles->citrix_id;
+                            else {
+                                $allfiles = new File(
+                                    [
+                                        'name' => 'AllFiles',
+                                        'description' => 'Shared files root directory',
+                                        'type' => 'folder',
+                                        'parent' => 'root',
+                                    ]
+                                );
+                                if ($allfiles->save()) $model->parent = $allfiles->citrix_id;
+                            }
+                        }
+                        return $model->parent;
+                    }
                 ],
             ],
         ];
