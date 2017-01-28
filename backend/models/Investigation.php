@@ -4,6 +4,8 @@
 namespace backend\models;
 
 use common\models\Company;
+use yii\db\ActiveQuery;
+use yii\db\Query;
 
 /**
  * Class Investigation
@@ -23,8 +25,23 @@ final class Investigation extends \common\models\Investigation
     {
         $rules = parent::rules();
         $rules[] = ['name', 'match', 'pattern' => '/^\w*$/'];
-        $rules[] = [['name'], 'unique'];
+        $rules[] = [['name'], 'unique', 'when' => function ($model, $attribute) {
+            /** @var $model Investigation */
+            return $model->isAttributeChanged($attribute, false);
+
+        }, 'filter' => $this->filterName()];
+
         return $rules;
+    }
+
+    public function filterName()
+    {
+        $company_id = $this->company_id;
+
+        return function ($query) use ($company_id) {
+            /** @var Query $query */
+            $query->where(['company_id' => $company_id]);
+        };
     }
 
     /**
