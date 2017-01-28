@@ -97,8 +97,10 @@ CREATE TABLE IF NOT EXISTS `company` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Дамп данных таблицы protus.company: ~3 rows (приблизительно)
+-- Дамп данных таблицы protus.company: ~0 rows (приблизительно)
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
+INSERT INTO `company` (`id`, `name`, `address`, `city`, `state`, `zip`, `status`, `created_at`, `updated_at`, `citrix_id`) VALUES
+	(19, 'Test_Upd', '', '', '', '', 100, 1485609638, 1485610710, 'fo2da890-e919-4f98-94dd-b1d2e65defe3');
 /*!40000 ALTER TABLE `company` ENABLE KEYS */;
 
 -- Дамп структуры для таблица protus.file
@@ -119,11 +121,12 @@ CREATE TABLE IF NOT EXISTS `file` (
   KEY `parent` (`parent`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы protus.file: ~1 rows (приблизительно)
+-- Дамп данных таблицы protus.file: ~2 rows (приблизительно)
 /*!40000 ALTER TABLE `file` DISABLE KEYS */;
 INSERT INTO `file` (`id`, `name`, `description`, `size`, `parent`, `type`, `citrix_id`, `created_at`, `updated_at`, `status`) VALUES
 	(1, 'file-name.pdf', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', 12000, '', 'pdf', '', 0, 0, 100),
-	(7, 'AllFiles', 'Shared files root directory', 0, 'root', 'folder', 'fob4f466-3fd1-4d95-b567-8ac02bdd1eef', 1485600094, 1485600094, 100);
+	(7, 'AllFiles', 'Shared files root directory', 0, 'root', 'folder', 'fob4f466-3fd1-4d95-b567-8ac02bdd1eef', 1485600094, 1485600094, 100),
+	(8, 'drag_img1.jpg', '', 13791, 'fob4f466-3fd1-4d95-b567-8ac02bdd1eef', 'jpg', 'fif44d98-d427-f689-0d3c-2ba2245767a1', 1485609057, 1485609057, 100);
 /*!40000 ALTER TABLE `file` ENABLE KEYS */;
 
 -- Дамп структуры для таблица protus.investigation

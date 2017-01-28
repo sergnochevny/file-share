@@ -6,6 +6,7 @@ use Citrix\CitrixApi;
 use Citrix\ShareFile\Api\Models\File;
 use Citrix\ShareFile\Api\Models\Folder;
 use Citrix\ShareFile\Api\Models\Item;
+use Citrix\ShareFile\Api\Models\SimpleSearchQuery;
 use yii\base\Behavior;
 use yii\base\InvalidParamException;
 use yii\db\ActiveRecord;
@@ -82,22 +83,31 @@ class UploadBehavior extends Behavior
     protected function saveFile($attribute, $insert = true)
     {
         $id = null;
-        if (empty($this->owner->$attribute)) {
-            if ($insert !== true) {
-                $this->deleteFile($this->oldFile($attribute));
-            }
-        } else {
+        if (!empty($this->owner->$attribute)) {
             if (empty($this->owner->type) || ($this->owner->type !== 'folder')) {
                 $tempFile = $this->tempPath($attribute);
-                if (is_file($tempFile)) {
+                $file = $this->file($attribute);
+                if (is_file($tempFile) && rename($tempFile, $file)) {
                     $items = $this->Citrix->Items;
                     $parent = $this->ParentId($attribute);
                     if (!empty($parent) && ($parent !== 'root')) $items->setId($parent);
-                    $upload_file = $items->UploadFile($tempFile);
+                    $upload_file = $items->UploadFile($file);
+                    if($upload_file == 'OK'){
+                        $query = new SimpleSearchQuery();
+                        $query->Query
+                            ->setParentID($parent)
+                            ->setSearchQuery($this->owner->$attribute)
+                            ->setItemType('file');
+                        $search = $items->AdvansedSimpleSearch($query);
+                        if(!empty($search->Results)){
+                            $res = $search->Results[0];
+                            $id = $res->ItemID;
+                        }
+                    }
                     /**
                      * @var Item $upload_file
                      */
-                    $id = $upload_file->Id;
+                    $this->deleteFile($file);
                 } elseif ($insert === true) {
                     unset($this->owner->$attribute);
                 } else {
@@ -273,9 +283,6 @@ class UploadBehavior extends Behavior
 
     public function afterValidate($event)
     {
-        foreach ($this->attributes as $attribute => $config) {
-            $this->attributes[$attribute]['tempPath'] = FileHelper::normalizePath(Yii::getAlias($this->owner->{$config['tempPath']}));
-        }
 
         $this->Citrix = CitrixApi::getInstance();
         $this->Citrix->setSubdomain($this->subdomain)
@@ -285,9 +292,12 @@ class UploadBehavior extends Behavior
             ->setClientSecret($this->secret)
             ->Initialize();
 
-        if ($config['parent'] instanceof \Closure) {
-            $fn = $config['parent'];
-            $config['parent'] = call_user_func($fn, $this->owner);
+        foreach ($this->attributes as $attribute => $config) {
+            $this->attributes[$attribute]['tempPath'] = FileHelper::normalizePath(Yii::getAlias($this->owner->{$config['tempPath']}));
+            if ($config['parent'] instanceof \Closure) {
+                $fn = $config['parent'];
+                $this->attributes[$attribute]['parent'] = call_user_func($fn, $this->owner);
+            }
         }
     }
 
@@ -322,6 +332,11 @@ class UploadBehavior extends Behavior
     public function tempPath($attribute)
     {
         return $this->attributes[$attribute]['tempPath'];
+    }
+
+    public function file($attribute)
+    {
+        return dirname($this->attributes[$attribute]['tempPath']) . DIRECTORY_SEPARATOR . $this->owner->$attribute;
     }
 
     public function ParentId($attribute)

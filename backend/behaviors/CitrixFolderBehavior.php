@@ -201,24 +201,20 @@ class CitrixFolderBehavior extends Behavior
 
     public function beforeInsert($event)
     {
-        try {
-            $items = $this->Citrix->Items;
-            $folder = new Folder(
-                [
-                    'Name' => $this->owner->{$this->folder},
-                    'Description' => 'Company ' . $this->owner->{$this->folder}
-                ]
-            );
-            if (!empty($this->parent)) $items->setId($this->parent);
-            $create_folder = $items
-                ->setOverwrite(CitrixApi::FALSE)
-                ->CreateFolder($folder);
-            /* @var Folder $create_folder
-             **/
-            $this->owner->setAttribute($this->attribute, $create_folder->Id);
-        } catch (\Exception $e) {
-            $event->isValid = false;
-        }
+        $items = $this->Citrix->Items;
+        $folder = new Folder(
+            [
+                'Name' => $this->owner->{$this->folder},
+                'Description' => 'Company ' . $this->owner->{$this->folder}
+            ]
+        );
+        if (!empty($this->parent)) $items->setId($this->parent);
+        $create_folder = $items
+            ->setOverwrite(CitrixApi::FALSE)
+            ->CreateFolder($folder);
+        /* @var Folder $create_folder
+         **/
+        $this->owner->setAttribute($this->attribute, $create_folder->Id);
     }
 
     public function beforeUpdate($event)
@@ -228,19 +224,16 @@ class CitrixFolderBehavior extends Behavior
          * @var Items $items
          */
 
-        try {
-            $items = $this->Citrix->Items;
-            $item = $items
-                ->setExpandChildren(CitrixApi::FALSE)
-                ->setId($this->owner->{$this->id})
-                ->Items;
-            $item->Name = $this->owner->{$this->folder};
-            $item->Description = 'Company ' . $this->owner->{$this->folder};
-            $folder = $items->UpdateItem($item);
-            $this->owner->setAttribute($this->attribute, $folder->Id);
-        } catch (\Exception $e) {
-            $event->isValid = false;
-        }
+        $items = $this->Citrix->Items;
+        $item = $items
+            ->setExpandChildren(CitrixApi::FALSE)
+            ->setOverwrite(CitrixApi::TRUE)
+            ->setId($this->owner->{$this->attribute})
+            ->Items;
+        $item->Name = $this->owner->{$this->folder};
+        $item->Description = 'Company ' . $this->owner->{$this->folder};
+        $folder = $items->UpdateItem($item);
+        $this->owner->setAttribute($this->attribute, $folder->Id);
     }
 
 }
