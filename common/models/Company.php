@@ -77,6 +77,13 @@ class Company extends AbstractUndeletableActiveRecord
         ];
     }
 
+    final public static function getStatusesList(){
+        return [
+            self::STATUS_DELETED => 'Deleted',
+            self::STATUS_ACTIVE => 'Active'
+        ];
+    }
+
     /**
      * @return UndeletableActiveQuery
      */

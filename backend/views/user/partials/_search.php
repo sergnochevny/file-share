@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\jui\DatePicker;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -8,42 +9,62 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="user-search">
+<?php $form = ActiveForm::begin([
+    'action' => ['index'],
+    'method' => 'get',
+    'options' => ['class' => 'col-sm-12']
+]); ?>
+    <div class="panel panel-default">
+        <div class="panel-heading">Search <?= $this->title ?></div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-3">
+                    <?= $form->field($model, 'first_name') ?>
+                </div>
 
-    <?php $form = ActiveForm::begin([
-        'action' => ['index'],
-        'method' => 'get',
-    ]); ?>
+                <div class="col-sm-3">
+                    <?= $form->field($model, 'last_name') ?>
+                </div>
 
-    <?= $form->field($model, 'id') ?>
+                <div class="col-sm-3">
+                    <?= $form->field($model, 'phone_number') ?>
+                </div>
 
-    <?= $form->field($model, 'first_name') ?>
+                <div class="col-sm-3">
+                    <?= $form->field($model, 'email') ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <?= $form->field($model, 'username') ?>
+                </div>
 
-    <?= $form->field($model, 'last_name') ?>
+                <div class="col-sm-3">
+                    <?= $form->field($model, 'status')->dropDownList($model::getStatusesList()) ?>
+                </div>
 
-    <?= $form->field($model, 'phone_number') ?>
+                <div class="col-sm-3">
+                    <?= $form->field($model, 'created_at')->widget(DatePicker::class) ?>
+                </div>
 
-    <?= $form->field($model, 'email') ?>
+                <div class="col-sm-3">
+                    <?= $form->field($model, 'updated_at')->widget(DatePicker::class) ?>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="row">
 
-    <?php // echo $form->field($model, 'username') ?>
+                <div class="col-sm-6">
+                    <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+                </div>
 
-    <?php // echo $form->field($model, 'auth_key') ?>
-
-    <?php // echo $form->field($model, 'password_hash') ?>
-
-    <?php // echo $form->field($model, 'password_reset_token') ?>
-
-    <?php // echo $form->field($model, 'status') ?>
-
-    <?php // echo $form->field($model, 'created_at') ?>
-
-    <?php // echo $form->field($model, 'updated_at') ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+            </div>
+        </div>
     </div>
 
-    <?php ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
 
-</div>
