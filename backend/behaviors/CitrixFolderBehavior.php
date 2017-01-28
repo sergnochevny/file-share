@@ -166,7 +166,7 @@ class CitrixFolderBehavior extends Behavior
     public function events()
     {
         return [
-            ActiveRecord::EVENT_BEFORE_VALIDATE => 'beforeValidate',
+            ActiveRecord::EVENT_AFTER_VALIDATE => 'afterValidate',
             ActiveRecord::EVENT_BEFORE_INSERT => 'beforeInsert',
             ActiveRecord::EVENT_BEFORE_UPDATE => 'beforeUpdate',
         ];
@@ -188,7 +188,7 @@ class CitrixFolderBehavior extends Behavior
 
     }
 
-    public function beforeValidate($event)
+    public function afterValidate($event)
     {
         $this->Citrix = CitrixApi::getInstance();
         $this->Citrix->setSubdomain($this->subdomain)
