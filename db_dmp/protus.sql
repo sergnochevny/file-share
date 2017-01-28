@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `company` (
   `updated_at` int(11) unsigned NOT NULL,
   `citrix_id` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Дамп данных таблицы protus.company: ~1 rows (приблизительно)
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
@@ -119,9 +119,9 @@ CREATE TABLE IF NOT EXISTS `file` (
   PRIMARY KEY (`id`),
   KEY `type` (`type`),
   KEY `parent` (`parent`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы protus.file: ~3 rows (приблизительно)
+-- Дамп данных таблицы protus.file: ~4 rows (приблизительно)
 /*!40000 ALTER TABLE `file` DISABLE KEYS */;
 INSERT INTO `file` (`id`, `name`, `description`, `size`, `parent`, `type`, `citrix_id`, `created_at`, `updated_at`, `status`) VALUES
 	(1, 'file-name.pdf', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', 12000, '', 'pdf', '', 0, 0, 100),
@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `investigation` (
   `company_id` int(11) unsigned NOT NULL,
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
-  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `description` varchar(2000) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contact_person` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
