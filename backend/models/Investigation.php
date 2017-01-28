@@ -22,6 +22,7 @@ final class Investigation extends \common\models\Investigation
     public function rules()
     {
         $rules = parent::rules();
+        $rules[] = ['name', 'match', 'pattern' => '/^\w*$/'];
         $rules[] = [['name'], 'unique'];
         return $rules;
     }
