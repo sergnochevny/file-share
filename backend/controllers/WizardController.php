@@ -7,6 +7,7 @@ namespace backend\controllers;
 use backend\models\Company;
 use backend\models\forms\InvestigationForm;
 use backend\models\forms\UserForm;
+use backend\models\Investigation;
 use backend\models\services\InvestigationService;
 use backend\models\services\UserService;
 use backend\models\User;
@@ -56,29 +57,27 @@ class WizardController extends Controller
      */
     public function actionCompany($id = null)
     {
+        /** @var Company $company */
         $company = Company::create($id);
         $request = Yii::$app->getRequest();
 
-        $options = [
-            'isCompany' => true,
-            'companyForm' => $company,
-            'selected' => null,
-            'isUpdate' => false,
-        ];
-
-        if ($request->isPost && $company->load($request->post()) && $company->save()) {
-            $options['companyForm'] = $company;
-            $options['selected'] = $company->id;
-            $options['isUpdate'] = true;
+        if ($request->isPost) {
+            $company->load($request->post());
+            $company->save();
         }
 
-        return $this->smartRender('index', $options);
+        return $this->smartRender('index', [
+            'isCompany' => true,
+            'companyForm' => $company,
+            'selected' => $company->id,
+            'isUpdate' => $company->id > 0 ? true : false,
+        ]);
     }
 
     /**
      * Gets info about company by id
      *
-     * @param null $id
+     * @param string $id
      * @return string
      * @throws BadRequestHttpException
      */
@@ -102,6 +101,7 @@ class WizardController extends Controller
     /**
      * Shows User tab
      *
+     * @param string $id
      * @return string
      */
     public function actionUser($id = null)
@@ -143,32 +143,27 @@ class WizardController extends Controller
     /**
      * Shows Investigation(Applicant) tab
      *
+     * @param string $id
      * @return string
      */
-    public function actionInvestigation()
+    public function actionInvestigation($id = null)
     {
-        /** @var InvestigationForm $investigationForm */
-        $investigationForm = Yii::createObject(InvestigationForm::class);
+        /** @var Investigation $investigation */
+        $investigation = Investigation::create($id);
         $request = Yii::$app->getRequest();
 
-        if (
-            $request->isPost
-            && $investigationForm->load($request->post())
-            && $investigationForm->validate()
-        ) {
-            /** @var InvestigationService $service */
-            $service = Yii::createObject(InvestigationService::class);
-            if ($service->save($investigationForm)) {
-                $investigationForm = Yii::createObject(InvestigationForm::class);
-            } else {
-                $this->setFlash('error', 'The applicant was not saved');
-            }
+        $options = [
+            'isInvestigation' => true,
+            'investigationForm' => $investigation,
+        ];
+
+        if ($request->isPost && $investigation->load($request->post()) && $investigation->save()) {
+            $options['investigationForm'] = $investigation;
+            $options['selected'] = $investigation->company_id;
+            $options['isUpdate'] = true;
         }
 
-        return $this->smartRender('index', [
-            'isInvestigation' => true,
-            'investigationForm' => $investigationForm,
-        ]);
+        return $this->smartRender('index', $options);
     }
 
     /**

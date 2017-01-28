@@ -23,15 +23,9 @@
     $(document).on('change', companyList, function (e) {
         e.preventDefault();
         var companyId = $(this).val(),
-            infoUrl = $(this).data('infoUrl'),
             createUrl = $(companyForm).data('createUrl');
 
-        if (infoUrl && companyId) {
-            pjaxSendRequest(infoUrl, 'get', {'id': companyId});
-
-        } else if (!companyId && createUrl) {
-            pjaxSendRequest(createUrl, 'get');
-        }
+        pjaxSendRequest(createUrl, 'get', {'id': companyId});
     });
 
 
