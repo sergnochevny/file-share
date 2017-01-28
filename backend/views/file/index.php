@@ -103,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="panel-body panel-collapse">
 
                     <div id="file-list_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-                        <?= $this->render('_search', ['model' => $searchModel]); ?>
+                        <?= $this->render('partials/_search', ['model' => $searchModel]); ?>
                         <div class="row">
                             <div class="col-sm-12">
                                 <?= GridView::widget([

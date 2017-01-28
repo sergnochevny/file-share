@@ -12,10 +12,11 @@ $activeClass = ' active';
 $companyActive = isset($isCompany) ? $activeClass : '';
 $userActive = isset($isUser) ? $activeClass : '';
 $investigationActive = isset($isInvestigation) ? $activeClass : '';
-
 $isUpdate = isset($isUpdate) ? $isUpdate : false;
 
 $this->registerJsFile('@web/js/wizard.js', ['depends' => JqueryAsset::class]);
+
+$this->title = 'Wizard';
 
 ?>
 
@@ -27,7 +28,7 @@ $this->registerJsFile('@web/js/wizard.js', ['depends' => JqueryAsset::class]);
                 <div class="panel-body panel-collapse">
                     <div align="center">
                         <h1>
-                            <span class="d-ib"><span class="icon icon-magic"></span>Wizard form</span>
+                            <span class="d-ib"><i class="fa fa-magic" aria-hidden="true"></i> Wizard form</span>
                         </h1>
 
                         <p>
@@ -72,11 +73,11 @@ $this->registerJsFile('@web/js/wizard.js', ['depends' => JqueryAsset::class]);
 
                                 <?php
                                 if ($companyActive) {
-                                    echo $this->render('_tab-company', compact('companyForm', 'selected', 'isUpdate'));
+                                    echo $this->render('partials/_tab-company', compact('companyForm', 'selected', 'isUpdate'));
                                 } else if ($userActive) {
-                                    echo $this->render('_tab-user', compact('userForm', 'isUpdate'));
+                                    echo $this->render('partials/_tab-user', compact('userForm', 'isUpdate'));
                                 } else if ($investigationActive) {
-                                    echo $this->render('_tab-investigation', compact('investigationForm', 'isUpdate'));
+                                    echo $this->render('partials/_tab-investigation', compact('investigationForm', 'isUpdate'));
                                 }
                                 ?>
 
