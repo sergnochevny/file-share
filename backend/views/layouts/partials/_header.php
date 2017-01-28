@@ -18,7 +18,6 @@ use yii\helpers\Url;
                 ]
             )
             ?>
-            </a>
             <button class="navbar-toggler visible-xs-block collapsed" type="button" data-toggle="collapse"
                     data-target="#sidenav">
                 <span class="sr-only">Toggle navigation</span>
