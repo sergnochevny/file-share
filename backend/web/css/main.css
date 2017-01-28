@@ -383,3 +383,12 @@ a.desc:after {
 .sidebar-toggle:before {
     display: none;
 }
+
+.btn{
+    border-radius: 2px !important;
+    text-transform: uppercase !important;
+}
+
+.navbar-nav>.user-menu>.dropdown-menu>.user-footer .btn-default{
+    color: #FFF;
+}

@@ -8,22 +8,31 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="company-search">
-
+<div class="row">
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-3">
+                <?= $form->field($model, 'name') ?>
+            </div>
 
-    <?= $form->field($model, 'name') ?>
+            <div class="col-sm-3">
+                <?= $form->field($model, 'address') ?>
+            </div>
 
-    <?= $form->field($model, 'address') ?>
+            <div class="col-sm-3">
+                <?= $form->field($model, 'city') ?>
+            </div>
 
-    <?= $form->field($model, 'city') ?>
-
-    <?= $form->field($model, 'state') ?>
+            <div class="col-sm-3">
+                <?= $form->field($model, 'state') ?>
+            </div>
+        </div>
+    </div>
 
     <?php // echo $form->field($model, 'zip') ?>
 
@@ -33,9 +42,17 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'updated_at') ?>
 
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+    <div class="col-sm-12">
+        <div class="row">
+
+            <div class="col-sm-6">
+                <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
+            </div>
+            <div class="col-sm-6 text-right">
+                <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+            </div>
+
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>
