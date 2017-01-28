@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use backend\models\Investigation;
 use backend\models\InvestigationSearch;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -37,7 +38,7 @@ class InvestigationController extends Controller
     {
         $searchModel = new InvestigationSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        Url::remember();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -51,6 +52,7 @@ class InvestigationController extends Controller
      */
     public function actionView($id)
     {
+        Url::remember();
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -65,7 +67,6 @@ class InvestigationController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
         return $this->redirect(['index']);
     }
 
