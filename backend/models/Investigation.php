@@ -14,6 +14,7 @@ use common\models\Company;
  */
 final class Investigation extends \common\models\Investigation
 {
+    use FactoryTrait;
 
     /**
      * @inheritdoc

@@ -36,6 +36,9 @@ final class UserForm extends Model
     /** @var string */
     public $password_repeat;
 
+    /** @var  User */
+    private $user;
+
     /**
      * @inheritdoc
      */
@@ -53,13 +56,27 @@ final class UserForm extends Model
                 'unique',
                 'targetClass' => User::class,
                 'message' => 'Sorry, this username has already been taken',
+                'when' => function($model, $attribute) {
+                    /** @var $model UserForm */
+                    return $model->user ? $model->user->isAttributeChanged($attribute, false) : true;
+                }
             ],
             [
                 ['email'],
                 'unique',
                 'targetClass' => User::class,
                 'message' => 'Sorry, this email has already been taken',
+                'when' => function($model, $attribute) {
+                    /** @var $model UserForm */
+                    return $model->user ? $model->user->isAttributeChanged($attribute, false) : true;
+
+                }
             ],
         ];
+    }
+
+    public function setUser(User $user)
+    {
+        $this->user = $user;
     }
 }

@@ -9,6 +9,7 @@ use backend\models\forms\InvestigationForm;
 use backend\models\forms\UserForm;
 use backend\models\services\InvestigationService;
 use backend\models\services\UserService;
+use backend\models\User;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use Yii;
@@ -103,10 +104,12 @@ class WizardController extends Controller
      *
      * @return string
      */
-    public function actionUser()
+    public function actionUser($id = null)
     {
         /** @var UserForm $userForm */
         $userForm = Yii::createObject(UserForm::class);
+        /** @var UserService $userService */
+        $userService = Yii::createObject(UserService::class, [User::create($id)]);
         $request = Yii::$app->getRequest();
 
         if ($request->isPost
@@ -124,8 +127,6 @@ class WizardController extends Controller
                 $userForm->company_id = null;
             }
 
-            /** @var UserService $userService */
-            $userService = Yii::createObject(UserService::class);
             if ($userService->save($userForm)) {
                 $userForm = Yii::createObject(UserForm::class);
             } else {
