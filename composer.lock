@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3bdf9e251dca1288fbe02eb0015de6d9",
+    "content-hash": "e06a711f6744345b31410b1f7f64b524",
     "packages": [
         {
             "name": "ait/keystorage",
@@ -1159,11 +1159,11 @@
     "packages-dev": [
         {
             "name": "ait/citrix",
-            "version": "1.0.7",
+            "version": "1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://gitlab.ait.com/ait/citrix",
-                "reference": "7a69adda475a353b563038a1588ad89489b9f0fe"
+                "reference": "93d52f5e8401daf21ba1c7d0f663574537f5ca44"
             },
             "require": {
                 "ait/guzzle": "6.2.2",
@@ -1195,7 +1195,7 @@
                 }
             ],
             "description": "Citrix Share File API implementation the class wrapper",
-            "time": "2017-01-26T11:52:18+00:00"
+            "time": "2017-01-28T11:47:17+00:00"
         },
         {
             "name": "ait/guzzle",
@@ -2213,16 +2213,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.7.8",
+            "version": "5.7.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "bee7755d964f8e56d6ecb79046480fd0320b686d"
+                "reference": "69f832b87c731d5cacad7f91948778fe98335fdd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/bee7755d964f8e56d6ecb79046480fd0320b686d",
-                "reference": "bee7755d964f8e56d6ecb79046480fd0320b686d",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/69f832b87c731d5cacad7f91948778fe98335fdd",
+                "reference": "69f832b87c731d5cacad7f91948778fe98335fdd",
                 "shasum": ""
             },
             "require": {
@@ -2291,7 +2291,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-01-26T15:28:51+00:00"
+            "time": "2017-01-28T06:14:33+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",

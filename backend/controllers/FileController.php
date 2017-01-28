@@ -87,11 +87,11 @@ class FileController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionUpload()
+    public function actionUpload($parent=null)
     {
-        $model = new FileUpload();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $model = new FileUpload();
+        if ($model->load(Yii::$app->request->post()) && $model->save($parent)) {
         }
         return $this->actionIndex();
     }
