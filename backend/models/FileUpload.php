@@ -13,6 +13,7 @@ class FileUpload extends Model
     public $file;
     public $description;
     public $parent;
+
     /**
      * @inheritdoc
      */
@@ -20,17 +21,28 @@ class FileUpload extends Model
     {
         return [
             [['file'], 'file', 'skipOnEmpty' => false],
-            [['description','parent'], 'safe']
+            [['description', 'parent'], 'safe']
         ];
     }
 
-    public function save(){
-        $model = new File();
+    public function save($parent = null)
+    {
+
+        if (empty($parent)) {
+            $parent = File::findOne(['parent' => 'root']);
+            if (!empty($parent)) {
+                $parent = $parent->citrix_id;
+            } else return false;
+        }
+
         $this->file = UploadedFile::getInstance($this, 'file');
+        $model = File::findOne(['name' => $this->file->name, 'parent' => $parent]);
+        if (empty($model)) $model = new File();
         $model->name = $this->file->name;
         $model->size = $this->file->size;
         $model->tmp = $this->file->tempName;
         $model->type = $this->file->extension;
+        $model->parent = $parent;
 
         return $model->save();
     }

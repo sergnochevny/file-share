@@ -92,14 +92,14 @@ class UploadBehavior extends Behavior
                     $parent = $this->ParentId($attribute);
                     if (!empty($parent) && ($parent !== 'root')) $items->setId($parent);
                     $upload_file = $items->UploadFile($file);
-                    if($upload_file == 'OK'){
+                    if ($upload_file == 'OK') {
                         $query = new SimpleSearchQuery();
                         $query->Query
                             ->setParentID($parent)
                             ->setSearchQuery($this->owner->$attribute)
                             ->setItemType('file');
                         $search = $items->AdvansedSimpleSearch($query);
-                        if(!empty($search->Results)){
+                        if (!empty($search->Results)) {
                             $res = $search->Results[0];
                             $id = $res->ItemID;
                         }
@@ -365,10 +365,8 @@ class UploadBehavior extends Behavior
     public function beforeUpdate()
     {
         foreach ($this->attributes as $attribute => $config) {
-            if ($this->owner->isAttributeChanged($attribute)) {
-                $id = $this->saveFile($attribute, false);
-                $this->owner->setAttribute($config['id'], $id);
-            }
+            $id = $this->saveFile($attribute, false);
+            $this->owner->setAttribute($config['id'], $id);
         }
     }
 
