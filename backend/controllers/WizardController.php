@@ -5,10 +5,8 @@ namespace backend\controllers;
 
 
 use backend\models\Company;
-use backend\models\forms\InvestigationForm;
 use backend\models\forms\UserForm;
 use backend\models\Investigation;
-use backend\models\services\InvestigationService;
 use backend\models\services\UserService;
 use backend\models\User;
 use yii\web\BadRequestHttpException;
@@ -71,30 +69,6 @@ class WizardController extends Controller
             'selected' => $company->id,
             'isUpdate' => $company->id > 0 ? true : false,
         ]);
-    }
-
-    /**
-     * Gets info about company by id
-     *
-     * @param string $id
-     * @return string
-     * @throws BadRequestHttpException
-     */
-    public function actionCompanyInfo($id = null)
-    {
-        $request = Yii::$app->getRequest();
-        $id = (int) $id;
-        if ($id > 0 && $request->isPjax && $company = Company::findOne($id)) {
-
-            return $this->renderAjax('index', [
-                'isCompany' => true,
-                'companyForm' => $company,
-                'selected' => $company->id,
-                'isUpdate' => true,
-            ]);
-        }
-
-        throw new BadRequestHttpException();
     }
 
     /**
