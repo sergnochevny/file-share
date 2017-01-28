@@ -30,19 +30,13 @@ final class Investigation extends \common\models\Investigation
             /** @var $model Investigation */
             return $model->isAttributeChanged($attribute, false);
 
-        }, 'filter' => $this->filterName()];
+        }, 'filter' => function(Query $query) {
+            if ($this->company_id) {
+                $query->where(['company_id' => $this->company_id]);
+            }
+        }];
 
         return $rules;
-    }
-
-    public function filterName()
-    {
-        $company_id = $this->company_id;
-
-        return function ($query) use ($company_id) {
-            /** @var Query $query */
-            $query->where(['company_id' => $company_id]);
-        };
     }
 
     /**
