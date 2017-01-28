@@ -1,6 +1,6 @@
 "use strict";
 (function ($) {
-    var companyList = '#company-list',
+    var companyList = '#company-form select',
         companyForm = '#company-form',
         pjaxContainer = '#wizard-container';
 
