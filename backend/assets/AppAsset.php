@@ -22,7 +22,6 @@ class AppAsset extends AssetBundle
     ];
 
     public $js = [
-        'js/theme/vendor.min.js',
         'js/theme/elephant.min.js',
         'js/theme/application.min.js',
         'js/theme/main.min.js',
