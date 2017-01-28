@@ -61,8 +61,7 @@ class WizardController extends Controller
         $company = Company::create($id);
         $request = Yii::$app->getRequest();
 
-        if ($request->isPost) {
-            $company->load($request->post());
+        if ($request->isPost && $company->load($request->post())) {
             $company->save();
         }
 
