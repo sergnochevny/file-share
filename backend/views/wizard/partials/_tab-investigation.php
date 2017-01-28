@@ -24,7 +24,7 @@ use yii\jui\DatePicker;
     <div class="row">
         <div class="col-sm-6">
 
-            <?= $form->field($investigationForm, 'name')->textInput() ?>
+            <?= $form->field($investigationForm, 'title')->textInput() ?>
 
             <?= $form->field($investigationForm, 'description')->textarea() ?>
 
