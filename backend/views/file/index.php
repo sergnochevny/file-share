@@ -19,7 +19,7 @@ $this->title = 'Files';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?php Pjax::begin(['id' => 'file_search', 'enablePushState' => false, 'timeout' => 0]); ?>
+<?php Pjax::begin(['id' => 'file_search', 'enablePushState' => false, 'timeout' => 0, 'options' => ['class' => 'row']]); ?>
 
 <?php if (Yii::$app->request->isAjax && Yii::$app->session->hasFlash('alert')): ?>
     <?= Alert::widget([
@@ -31,77 +31,75 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="col-xs-12">
     <div class="row">
         <div class="col-sm-10">
-            <div class="title-bar-title h2 no-outer-offset-top">
-                <span class="icon icon-save"></span> <?= Html::encode($this->title) ?>
+            <div class="title-bar-title h3 no-outer-offset-top">
+                <span class="icon icon-save"></span> <?= Html::encode($this->title) ?> <br><small>All files</small>
             </div>
         </div>
         <div class="col-sm-2 text-right">
             <?= Html::a('<span class="btn-label"><span class="icon icon-chevron-circle-left icon-lg icon-fw"></span></span> Back', Url::previous(), ['class' => 'btn btn-labeled arrow-default']) ?>
         </div>
     </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="h3 text-center">
-                All files<br>
-                <small>All downloaded files that relate to the present case</small>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <?php $uploadForm = ActiveForm::begin(
-                [
-                    'id' => "upload-file",
-                    'method' => 'post',
-                    'action' => Url::to(['/file/upload'], true),
-                    'options' => [
-                        'data-pjax' => true,
-                        'class' => 'text-center',
-                        'enctype' => 'multipart/form-data'
-                    ]
-                ]
-            ); ?>
-            <?= $uploadForm->field($uploadModel, 'file')->fileInput([
-                'id' => "file",
-                'style' => "background-color: #fff;border-radius: 5px;display: block;margin: 10px auto 15px;padding: 5px;"
-            ])->label(false); ?>
-            <?= Html::submitButton(
-                '<span class="btn-label">
-                                        <span class="icon icon-upload  icon-lg icon-fw"></span>
-                                    </span>Upload',
-                [
-                    'id' => "send",
-                    'class' => 'btn btn-sm btn-labeled  arrow-warning'
-                ]
-            ); ?>
-            <?php \backend\widgets\ActiveForm::end(); ?>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="text-center m-b">
-
-                <div class="panel panel-body hidden" data-toggle="match-height" style="height: 84px;">
-                    <h5>Loading...</h5>
-                    <div class="progress progress-xs">
-                        <div class="progress-bar progress-bar-indicating progress-bar-warning"
-                             role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
-                             style="width: 100%">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
-<div class="file-index">
-
+<div class="col-sm-12">
     <div class="row gutter-xs">
         <div class="col-xs-12">
             <div class="panel">
                 <div class="panel-body panel-collapse">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="h3 text-center">
+                                All files<br>
+                                <small>All downloaded files that relate to the present case</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <?php $uploadForm = ActiveForm::begin(
+                                [
+                                    'id' => "upload-file",
+                                    'method' => 'post',
+                                    'action' => Url::to(['/file/upload'], true),
+                                    'options' => [
+                                        'data-pjax' => true,
+                                        'class' => 'text-center',
+                                        'enctype' => 'multipart/form-data'
+                                    ]
+                                ]
+                            ); ?>
+                            <?= $uploadForm->field($uploadModel, 'file')->fileInput([
+                                'id' => "file",
+                                'style' => "background-color: #fff;border-radius: 5px;display: block;margin: 10px auto 15px;padding: 5px;"
+                            ])->label(false); ?>
+                            <?= Html::submitButton(
+                                '<span class="btn-label">
+                                        <span class="icon icon-upload  icon-lg icon-fw"></span>
+                                    </span>Upload',
+                                [
+                                    'id' => "send",
+                                    'class' => 'btn btn-sm btn-labeled  arrow-warning'
+                                ]
+                            ); ?>
+                            <?php \backend\widgets\ActiveForm::end(); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="text-center m-b">
 
+                                <div class="panel panel-body hidden" data-toggle="match-height" style="height: 84px;">
+                                    <h5>Loading...</h5>
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar progress-bar-indicating progress-bar-warning"
+                                             role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
+                                             style="width: 100%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div id="file-list_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
                         <?= $this->render('partials/_search', ['model' => $searchModel]); ?>
                         <div class="row">

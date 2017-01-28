@@ -5,9 +5,7 @@ use dmstr\widgets\Alert;
 ?>
 <div class="content-wrapper">
     <section class="content">
-        <div class="row">
-            <?= $content ?>
-        </div>
+        <?= $content ?>
     </section>
 </div>
 

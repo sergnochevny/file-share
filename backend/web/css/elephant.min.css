@@ -382,11 +382,21 @@ hr {
 
 .h1, .h2, .h3, h1, h2, h3 {
     margin-top: 20px;
-    margin-bottom: 10px
+    margin-bottom: 10px;
 }
 
 .h1 .small, .h1 small, .h2 .small, .h2 small, .h3 .small, .h3 small, h1 .small, h1 small, h2 .small, h2 small, h3 .small, h3 small {
-    font-size: 65%
+    font-size: 60%;
+    display: block;
+    margin-top: 5px;
+}
+
+.h1 .fa, .h2 .fa, .h3 .fa{
+    font-size: 80%;
+}
+
+h1 .fa, h2 .fa, h3 .fa{
+    font-size: 80%;
 }
 
 .h4, .h5, .h6, h4, h5, h6 {
