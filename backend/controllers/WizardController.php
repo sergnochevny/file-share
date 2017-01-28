@@ -6,8 +6,6 @@ namespace backend\controllers;
 
 use backend\models\Company;
 use backend\models\forms\InvestigationForm;
-use backend\models\services\CompanyService;
-use backend\models\forms\CompanyForm;
 use backend\models\forms\UserForm;
 use backend\models\services\InvestigationService;
 use backend\models\services\UserService;
@@ -52,50 +50,25 @@ class WizardController extends Controller
     /**
      * Shows Company tab
      *
+     * @param string $id
      * @return string
      */
-    public function actionCompany()
+    public function actionCompany($id = null)
     {
-        $companyForm = new CompanyForm();
+        $company = Company::create($id);
         $request = Yii::$app->getRequest();
 
         $options = [
             'isCompany' => true,
-            'companyForm' => $companyForm,
+            'companyForm' => $company,
             'selected' => null,
             'isUpdate' => false,
         ];
 
-        if ($request->isPost
-            && $companyForm->load($request->post())
-            && $companyForm->validate()
-        ) {
-            /** @var CompanyService $companyService */
-            try {
-                $companyService = Yii::createObject(CompanyService::class);
-                if ($companyService->save($companyForm)) {
-                    $options['companyForm'] = $companyForm;
-                    $options['selected'] = $companyService->getCompany()->id;
-                    $options['isUpdate'] = true;
-                } else {
-                    if (!empty($companyService->getCompany()->errors)) {
-                        $msg = '';
-                        foreach ($companyService->getCompany()->errors as $field_error) {
-                            foreach ($field_error as $error) {
-                                if (!empty($msg)) {
-                                    $msg .= '<br>';
-                                }
-                                $msg .= $error;
-                            }
-                        }
-                    } else {
-                        $msg = 'The company was not saved';
-                    }
-                    $this->setFlash('error', $msg);
-                }
-            } catch (\Exception $e) {
-                $this->setFlash('error', $e->getMessage());
-            }
+        if ($request->isPost && $company->load($request->post()) && $company->save()) {
+            $options['companyForm'] = $company;
+            $options['selected'] = $company->id;
+            $options['isUpdate'] = true;
         }
 
         return $this->smartRender('index', $options);
@@ -113,14 +86,10 @@ class WizardController extends Controller
         $request = Yii::$app->getRequest();
         $id = (int) $id;
         if ($id > 0 && $request->isPjax && $company = Company::findOne($id)) {
-            $service = Yii::createObject(CompanyService::class, [$company]);
-            $form = Yii::createObject(CompanyForm::class);
-            $service->populateForm($form);
-
 
             return $this->renderAjax('index', [
                 'isCompany' => true,
-                'companyForm' => $form,
+                'companyForm' => $company,
                 'selected' => $company->id,
                 'isUpdate' => true,
             ]);

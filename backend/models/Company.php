@@ -8,6 +8,21 @@ use backend\behaviors\CitrixFolderBehavior;
 
 final class Company extends \common\models\Company
 {
+    /**
+     * Find model by id or creates one
+     *
+     * @param $id
+     * @return Company|static
+     */
+    public static function create($id)
+    {
+        $id = (int) $id;
+        if ($id > 0) {
+            return self::findOne($id);
+        }
+
+        return new self();
+    }
 
     /**
      * Gets list [id => name] of companies
@@ -20,18 +35,16 @@ final class Company extends \common\models\Company
         return array_column($companies, 'name', 'id');
     }
 
-    public static function getUserList()
-    {
-
-    }
-
     /**
      * @inheritdoc
      */
     public function rules()
     {
         $rules = parent::rules();
-        $rules[] = [['name'], 'unique'];
+        $rules[] = [['name'], 'unique', 'when' => function ($model, $attribute) {
+            /** @var $model Company */
+            return $model->isAttributeChanged($attribute, false);
+        }];
         return $rules;
     }
 
