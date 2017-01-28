@@ -27,7 +27,7 @@ final class Company extends \common\models\Company
     public function rules()
     {
         $rules = parent::rules();
-        //$rules[] = ['name', 'match', 'pattern' => ['']];
+        $rules[] = ['name', 'match', 'pattern' => '/^\w*$/'];
         $rules[] = [['name'], 'unique', 'when' => function ($model, $attribute) {
             /** @var $model Company */
             return $model->isAttributeChanged($attribute, false);
