@@ -125,8 +125,8 @@ class WizardController extends Controller
         $investigation = Investigation::create($id);
         $request = Yii::$app->getRequest();
 
-        if ($request->isPost && $investigation->load($request->post())) {
-            $investigation->save();
+        if ($request->isPost && $investigation->load($request->post()) && $investigation->save()) {
+            return $this->redirect(['investigation/view', 'id' => $investigation->id]);
         }
 
         return $this->smartRender('index', [
