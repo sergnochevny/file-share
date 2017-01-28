@@ -125,22 +125,20 @@ class WizardController extends Controller
         $investigation = Investigation::create($id);
         $request = Yii::$app->getRequest();
 
-        $options = [
-            'isInvestigation' => true,
-            'investigationForm' => $investigation,
-        ];
-
-        if ($request->isPost && $investigation->load($request->post()) && $investigation->save()) {
-            $options['investigationForm'] = $investigation;
-            $options['selected'] = $investigation->company_id;
-            $options['isUpdate'] = true;
+        if ($request->isPost && $investigation->load($request->post())) {
+            $investigation->save();
         }
 
-        return $this->smartRender('index', $options);
+        return $this->smartRender('index', [
+            'isInvestigation' => true,
+            'investigationForm' => $investigation,
+            'selected' => $investigation->company_id,
+            'isUpdate' => $investigation->id > 0 ? true : false,
+        ]);
     }
 
     /**
-     * list users in company
+     * list users in company for dep dropdown
      *
      * @return string JSON output
      */
