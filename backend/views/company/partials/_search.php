@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 <?php $form = ActiveForm::begin([
     'action' => ['index'],
     'method' => 'get',
-    'options' => ['class' => 'col-sm-12']
+    'options' => ['class' => 'col-sm-12 hidden']
 ]); ?>
     <div class="panel panel-default">
         <div class="panel-heading">Search <?= $this->title ?></div>
@@ -65,6 +65,5 @@ use yii\widgets\ActiveForm;
             </div>
         </div>
     </div>
-
 <?php ActiveForm::end(); ?>
 

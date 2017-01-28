@@ -6,6 +6,7 @@ use backend\models\FileUpload;
 use Yii;
 use common\models\File;
 use backend\models\FileSearch;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -15,21 +16,6 @@ use yii\filters\VerbFilter;
  */
 class FileController extends Controller
 {
-    /**
-     * Finds the File model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return \common\models\File the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = File::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
 
     /**
      * @inheritdoc
@@ -57,7 +43,7 @@ class FileController extends Controller
         $uploadModel = new FileUpload();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
-
+        Url::remember();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -72,6 +58,7 @@ class FileController extends Controller
      */
     public function actionView($id)
     {
+        Url::remember();
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -140,4 +127,21 @@ class FileController extends Controller
 
         return $this->redirect(['index']);
     }
+
+    /**
+     * Finds the File model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param string $id
+     * @return \common\models\File the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = File::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
 }

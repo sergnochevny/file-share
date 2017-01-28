@@ -9,13 +9,12 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="row">
 
-    <?php $form = ActiveForm::begin([
-        'action' => ['index'],
-        'method' => 'get',
-        'options' => ['class' => 'col-sm-12']
-    ]); ?>
+<?php $form = ActiveForm::begin([
+    'action' => ['index'],
+    'method' => 'get',
+    'options' => ['class' => 'col-sm-12 hidden']
+]); ?>
 
     <div class="panel panel-default">
         <div class="panel-heading">Search <?= $this->title ?></div>
@@ -60,5 +59,4 @@ use yii\widgets\ActiveForm;
         </div>
     </div>
 
-    <?php ActiveForm::end(); ?>
-</div>
+<?php ActiveForm::end(); ?>

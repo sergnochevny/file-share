@@ -8,6 +8,7 @@ use backend\models\forms\CompanyForm;
 use Yii;
 use common\models\Company;
 use backend\models\CompanySearch;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -41,7 +42,7 @@ class CompanyController extends Controller
     {
         $searchModel = new CompanySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        Url::remember();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -55,6 +56,7 @@ class CompanyController extends Controller
      */
     public function actionView($id)
     {
+        Url::remember();
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -69,7 +71,6 @@ class CompanyController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
         return $this->redirect(['index']);
     }
 

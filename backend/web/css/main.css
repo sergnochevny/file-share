@@ -24,7 +24,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     clear: both
 }
 
-.logo.in-header-line{
+.logo.in-header-line {
     display: none;
 }
 
@@ -211,39 +211,47 @@ a.desc:after {
 }
 
 @media (max-width: 767px) {
-    .logo:not(.in-header-line){
+    .logo:not(.in-header-line) {
         display: none;
     }
-    .logo.in-header-line{
+
+    .logo.in-header-line {
         display: block;
     }
+
     .nav li > form > button.logout {
         display: block;
         text-align: left;
         width: 100%;
         padding: 10px 15px;
     }
-    .menu-open .logo.in-header-line{
+
+    .menu-open .logo.in-header-line {
         display: block !important;
     }
-    .menu-open .sidebar-toggle{
+
+    .menu-open .sidebar-toggle {
         margin-left: 0 !important;
     }
 }
 
-.sidebar-collapse .sidenav li.heading{
+.sidebar-collapse .sidenav li.heading {
     display: none;
 }
-.sidebar-collapse .sidenav{
+
+.sidebar-collapse .sidenav {
     padding-top: 52px;
 }
-.sidebar-collapse .sidenav .sidenav-item > a{
+
+.sidebar-collapse .sidenav .sidenav-item > a {
     padding-left: 16px;
 }
-.sidebar-collapse .sidenav .sidenav-item span{
+
+.sidebar-collapse .sidenav .sidenav-item span {
     display: none;
 }
-.sidebar-collapse .sidenav .sidenav-item i{
+
+.sidebar-collapse .sidenav .sidenav-item i {
     font-size: 1.65em;
 }
 
@@ -264,6 +272,7 @@ a.desc:after {
     list-style: none;
     padding-left: 0;
 }
+
 .sidenav > li > ul.treeview-menu a {
     color: #87764e;
     font-size: 13px;
@@ -273,6 +282,7 @@ a.desc:after {
     text-decoration: none;
     display: block;
 }
+
 .sidenav > li > ul.treeview-menu a:hover {
     background-color: #7b6087;
     color: #fff;
@@ -347,13 +357,13 @@ a.desc:after {
     background: rgb(211, 163, 5) !important;
 }
 
-.sidenav .pull-right-container .fa{
+.sidenav .pull-right-container .fa {
     margin-top: 2px;
 }
 
 .sidenav > .heading {
     display: block;
-    color: rgba(255,255,255,.4);
+    color: rgba(255, 255, 255, .4);
     padding: 16px 20px;
     text-transform: uppercase;
 }
@@ -384,11 +394,11 @@ a.desc:after {
     display: none;
 }
 
-.btn{
+.btn {
     border-radius: 2px !important;
     text-transform: uppercase !important;
 }
 
-.navbar-nav>.user-menu>.dropdown-menu>.user-footer .btn-default{
+.navbar-nav > .user-menu > .dropdown-menu > .user-footer .btn-default {
     color: #FFF;
 }
