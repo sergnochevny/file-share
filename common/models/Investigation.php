@@ -45,6 +45,18 @@ class Investigation extends AbstractUndeletableActiveRecord
         return '{{%investigation}}';
     }
 
+    public static function getStatusesList()
+    {
+        return [
+            self::STATUS_DELETED => 'Deleted',
+            self::STATUS_CANCELLED => 'Cancelled',
+            self::STATUS_PENDING => 'Pending',
+            self::STATUS_IN_HISTORY => 'In history',
+            self::STATUS_IN_PROGRESS => 'In progress',
+            self::STATUS_COMPLETED => 'Completed',
+        ];
+    }
+
     /**
      * @inheritdoc
      */
@@ -76,17 +88,6 @@ class Investigation extends AbstractUndeletableActiveRecord
                 'targetClass' => Company::className(),
                 'targetAttribute' => ['company_id' => 'id']
             ],
-        ];
-    }
-
-    final public static function getStatusesList(){
-        return [
-            self::STATUS_DELETED => 'Deleted',
-            self::STATUS_CANCELLED => 'Cancelled',
-            self::STATUS_PENDING => 'Pending',
-            self::STATUS_IN_HISTORY => 'In history',
-            self::STATUS_IN_PROGRESS => 'In progress',
-            self::STATUS_COMPLETED => 'Completed',
         ];
     }
 
