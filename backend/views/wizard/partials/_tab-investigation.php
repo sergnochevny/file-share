@@ -1,5 +1,6 @@
 <?php
 /** @var $this \yii\web\View */
+use yii\jui\DatePicker;
 
 /** @var $investigationForm \backend\models\forms\InvestigationForm */
 ?>
@@ -27,20 +28,9 @@
 
             <?= $form->field($investigationForm, 'description')->textarea() ?>
 
-            <!--orig view-->
-            <!--<div class="form-group">
-                <label class="col-sm-4 control-label" for="form-control-1">Start date</label>
-                <div class="col-sm-8">
-                    <div class="input-with-icon">
-                        <input class="form-control" data-provide="datepicker" type="text">
-                        <span class="icon icon-calendar input-icon"></span>
-                    </div>
-                </div>
-            </div>-->
+            <?= $form->field($investigationForm, 'start_date')->widget(DatePicker::class) ?>
 
-            <?= $form->field($investigationForm, 'start_date')->widget(\yii\jui\DatePicker::class) ?>
-
-            <?= $form->field($investigationForm, 'end_date')->widget(\yii\jui\DatePicker::class) ?>
+            <?= $form->field($investigationForm, 'end_date')->widget(DatePicker::class) ?>
 
         </div>
         <div class="col-sm-6">
@@ -57,7 +47,7 @@
         <div align="center">
             <button id="company-create" class="btn btn-sm btn-labeled  arrow-warning" type="submit">
                 <span class="btn-label">
-                    <span class="icon icon-check-square   icon-lg icon-fw"></span>
+                    <span class="icon icon-check-square icon-lg icon-fw"></span>
                 </span>
                 Create
             </button>

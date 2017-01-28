@@ -19,8 +19,7 @@ class FileSearch extends File
     public function rules()
     {
         return [
-            [['id', 'size', 'created_at', 'updated_at', 'status', 'pagesize'], 'integer'],
-            [['name', 'description', 'parent', 'type', 'citrix_id'], 'safe'],
+            [['name'], 'safe'],
         ];
     }
 

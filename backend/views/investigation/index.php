@@ -10,30 +10,33 @@ use yii\widgets\Pjax;
 $this->title = 'Investigations';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="investigation-index">
+<div class="col-sm-12">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="h2 no-outer-offset-top"><?= Html::encode($this->title) ?></div>
+        </div>
+        <div class="col-sm-6 text-right"></div>
+    </div>
     <?= $this->render('partials/_search', ['model' => $searchModel]); ?>
+    <?php Pjax::begin(); ?>
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
 
-    <p>
-        <?= Html::a('Create Investigation', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-<?php Pjax::begin(); ?>    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+                'id',
+                'company_id',
+                'start_date',
+                'end_date',
+                'description',
+                // 'status',
+                // 'created_at',
+                // 'updated_at',
 
-            'id',
-            'company_id',
-            'start_date',
-            'end_date',
-            'description',
-            // 'status',
-            // 'created_at',
-            // 'updated_at',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-<?php Pjax::end(); ?></div>
+                ['class' => 'yii\grid\ActionColumn'],
+            ],
+        ]); ?>
+    <?php Pjax::end(); ?>
+</div>

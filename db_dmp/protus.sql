@@ -99,10 +99,6 @@ CREATE TABLE IF NOT EXISTS `company` (
 
 -- Дамп данных таблицы protus.company: ~3 rows (приблизительно)
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
-INSERT INTO `company` (`id`, `name`, `address`, `city`, `state`, `zip`, `status`, `created_at`, `updated_at`, `citrix_id`) VALUES
-	(16, 'Test', '', '', '', '', 100, 1485423512, 1485423512, 'fo9b918c-2ffb-409f-a24d-c035cfa661f5'),
-	(17, 'Test1', '', '', '', '', 100, 1485424105, 1485424105, 'fo32c0a5-dbbc-431b-9ac5-0424d08d5aef'),
-	(18, 'Test2', '', '', '', '', 100, 1485440759, 1485440759, 'fo9c7d66-b565-4c66-a671-331612456643');
 /*!40000 ALTER TABLE `company` ENABLE KEYS */;
 
 -- Дамп структуры для таблица protus.file
@@ -123,10 +119,11 @@ CREATE TABLE IF NOT EXISTS `file` (
   KEY `parent` (`parent`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы protus.file: ~0 rows (приблизительно)
+-- Дамп данных таблицы protus.file: ~1 rows (приблизительно)
 /*!40000 ALTER TABLE `file` DISABLE KEYS */;
 INSERT INTO `file` (`id`, `name`, `description`, `size`, `parent`, `type`, `citrix_id`, `created_at`, `updated_at`, `status`) VALUES
-	(1, 'file-name.pdf', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', 12000, '', 'pdf', '', 0, 0, 100);
+	(1, 'file-name.pdf', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', 12000, '', 'pdf', '', 0, 0, 100),
+	(7, 'AllFiles', 'Shared files root directory', 0, 'root', 'folder', 'fob4f466-3fd1-4d95-b567-8ac02bdd1eef', 1485600094, 1485600094, 100);
 /*!40000 ALTER TABLE `file` ENABLE KEYS */;
 
 -- Дамп структуры для таблица protus.investigation
