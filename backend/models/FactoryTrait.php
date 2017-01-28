@@ -3,7 +3,7 @@
 
 namespace backend\models;
 
-use yii\db\ActiveRecordInterface;
+use yii\db\ActiveRecord;
 
 
 trait FactoryTrait
@@ -12,7 +12,7 @@ trait FactoryTrait
      * Find model by id or creates new one
      *
      * @param $id
-     * @return ActiveRecordInterface
+     * @return ActiveRecord
      */
     public static function create($id)
     {
