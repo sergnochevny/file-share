@@ -86,21 +86,19 @@ class UploadBehavior extends Behavior
                 $this->deleteFile($this->oldFile($attribute));
             }
         } else {
-            foreach ($this->attributes as $attribute => $config) {
-                $tempFile = $this->tempPath($attribute);
-                if (is_file($tempFile)) {
-                    $items = $this->Citrix->Items;
-                    if (!empty($parent = $this->getParentId($attribute))) $items->setId($parent);
-                    $upload_file = $items->UploadFile($tempFile);
-                    /**
-                     * @var Item $upload_file
-                     */
-                    $id = $upload_file->Id;
-                } elseif ($insert === true) {
-                    unset($this->owner->$attribute);
-                } else {
-                    $this->owner->setAttribute($attribute, $this->owner->getOldAttribute($attribute));
-                }
+            $tempFile = $this->tempPath($attribute);
+            if (is_file($tempFile)) {
+                $items = $this->Citrix->Items;
+                if (!empty($parent = $this->getParentId($attribute))) $items->setId($parent);
+                $upload_file = $items->UploadFile($tempFile);
+                /**
+                 * @var Item $upload_file
+                 */
+                $id = $upload_file->Id;
+            } elseif ($insert === true) {
+                unset($this->owner->$attribute);
+            } else {
+                $this->owner->setAttribute($attribute, $this->owner->getOldAttribute($attribute));
             }
             $this->triggerEventAfterUpload();
         }
@@ -252,14 +250,14 @@ class UploadBehavior extends Behavior
     public function events()
     {
         return [
-            ActiveRecord::EVENT_BEFORE_VALIDATE => 'beforeValidate',
+            ActiveRecord::EVENT_AFTER_VALIDATE => 'afterValidate',
             ActiveRecord::EVENT_BEFORE_INSERT => 'beforeInsert',
             ActiveRecord::EVENT_BEFORE_UPDATE => 'beforeUpdate',
             ActiveRecord::EVENT_BEFORE_DELETE => 'beforeDelete'
         ];
     }
 
-    public function beforeValidate($event)
+    public function afterValidate($event)
     {
         foreach ($this->attributes as $attribute => $config) {
             $this->attributes[$attribute]['tempPath'] = FileHelper::normalizePath(Yii::getAlias($this->owner->{$config['tempPath']}));
