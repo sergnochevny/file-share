@@ -8,21 +8,7 @@ use backend\behaviors\CitrixFolderBehavior;
 
 final class Company extends \common\models\Company
 {
-    /**
-     * Find model by id or creates one
-     *
-     * @param $id
-     * @return Company|static
-     */
-    public static function create($id)
-    {
-        $id = (int) $id;
-        if ($id > 0) {
-            return self::findOne($id);
-        }
-
-        return new self();
-    }
+    use FactoryTrait;
 
     /**
      * Gets list [id => name] of companies
@@ -41,6 +27,7 @@ final class Company extends \common\models\Company
     public function rules()
     {
         $rules = parent::rules();
+        //$rules[] = ['name', 'match', ];
         $rules[] = [['name'], 'unique', 'when' => function ($model, $attribute) {
             /** @var $model Company */
             return $model->isAttributeChanged($attribute, false);
