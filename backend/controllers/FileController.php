@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\actions\DownloadAction;
 use backend\models\FileUpload;
 use Yii;
 use common\models\File;
@@ -33,6 +34,13 @@ class FileController extends Controller
         ];
     }
 
+    public function actions()
+    {
+        $actions = parent::actions();
+        $actions['download'] = DownloadAction::className();
+        return $actions;
+    }
+
     /**
      * Lists all File models.
      * @return mixed
@@ -42,7 +50,7 @@ class FileController extends Controller
         $searchModel = new FileSearch;
         $uploadModel = new FileUpload;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->pagination->pageSize = FileSearch::$output_size;
+        $dataProvider->pagination->pageSize = $searchModel->pagesize;
         Url::remember();
         return $this->render('index', [
             'searchModel' => $searchModel,

@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\HistorySearch;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
@@ -36,6 +37,10 @@ class HistoryController extends Controller
      */
     public function actionIndex()
     {
+        $searchModel = new HistorySearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination->pageSize = $searchModel->pagesize;
+        Url::remember();
 
         return $this->render('index', [
             'searchModel' => $searchModel,

@@ -2,10 +2,10 @@
 
 namespace backend\models\search;
 
+use backend\models\File;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\File;
 
 /**
  * FileSearch represents the model behind the search form about `backend\models\File`.
