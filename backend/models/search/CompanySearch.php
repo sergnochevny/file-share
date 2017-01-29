@@ -22,7 +22,7 @@ class CompanySearch extends Company
     {
         return [
             [['id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'address', 'city', 'state', 'zip'], 'safe'],
+            [['name', 'pagesize', 'address', 'city', 'state', 'zip'], 'safe'],
         ];
     }
 
@@ -46,7 +46,10 @@ class CompanySearch extends Company
     {
         $query = Company::find();
 
-        // add conditions that should always apply here
+        if (!\Yii::$app->user->can('admin')){
+            $query->joinWith('users');
+            $query->andWhere(['user.id' => \Yii::$app->user->id]);
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

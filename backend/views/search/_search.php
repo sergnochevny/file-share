@@ -1,15 +1,19 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\FileSearch */
 /* @var $form yii\widgets\ActiveForm */
 
+$this->registerJsFile(YII_ENV_DEV ? '@web/js/form_search.js' : '@web/js/form_search.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+
 ?>
 <?php $form = ActiveForm::begin([
-    'action' => ['index'],
+    'id' => 'form_search',
+    'action' => Url::to(['index'], true),
     'method' => 'get',
     'fieldConfig' => [
         'template' => '<label>{input}</label>',

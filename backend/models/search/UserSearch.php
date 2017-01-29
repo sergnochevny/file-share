@@ -6,12 +6,14 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\User;
+use yii\rbac\Role;
 
 /**
  * UserSearch represents the model behind the search form about `common\models\User`.
  */
 class UserSearch extends User
 {
+    private $role;
     public $pagesize = 10;
     public $name;
 
@@ -22,7 +24,7 @@ class UserSearch extends User
     {
         return [
             [['id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['first_name', 'last_name', 'phone_number', 'email', 'username', 'auth_key', 'password_hash', 'password_reset_token'], 'safe'],
+            [['name', 'pagesize', 'first_name', 'last_name', 'phone_number', 'email', 'username', 'auth_key', 'password_hash', 'password_reset_token'], 'safe'],
         ];
     }
 
@@ -44,7 +46,7 @@ class UserSearch extends User
      */
     public function search($params)
     {
-        $query = User::find();
+        $query = static::find();
 
         // add conditions that should always apply here
 
@@ -78,5 +80,12 @@ class UserSearch extends User
             ->andFilterWhere(['like', 'password_reset_token', $this->password_reset_token]);
 
         return $dataProvider;
+    }
+
+    public function getRole()
+    {
+        $roles = \Yii::$app->authManager->getRolesByUser($this->id);
+        if (!empty($roles)) return array_keys($roles)[0];
+        return null;
     }
 }
