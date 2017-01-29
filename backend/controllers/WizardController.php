@@ -10,6 +10,7 @@ use backend\models\Investigation;
 use backend\models\services\UserService;
 use backend\models\User;
 use Yii;
+use yii\base\UserException;
 use yii\web\Controller;
 use yii\web\Response;
 
@@ -51,12 +52,16 @@ class WizardController extends Controller
      *
      * @param string $id
      * @return string
+     * @throws UserException
      */
     public function actionCompany($id = null)
     {
+        $request = Yii::$app->getRequest();
         /** @var Company $company */
         $company = Company::create($id);
-        $request = Yii::$app->getRequest();
+        if (null === $company) {
+            throw new UserException('The company does not exists');
+        }
 
         if ($request->isPost && $company->load($request->post())) {
             $company->save();
@@ -75,14 +80,20 @@ class WizardController extends Controller
      *
      * @param string $id
      * @return string
+     * @throws UserException
      */
     public function actionUser($id = null)
     {
+        $request = Yii::$app->getRequest();
+        $user = User::create($id);
+        if (null === $user) {
+            throw new UserException('The user does not exists');
+        }
+
         /** @var UserForm $userForm */
         $userForm = Yii::createObject(UserForm::class);
         /** @var UserService $userService */
         $userService = Yii::createObject(UserService::class, [User::create($id)]);
-        $request = Yii::$app->getRequest();
 
         if ($request->isPost
             && $userForm->load($request->post())
@@ -117,12 +128,16 @@ class WizardController extends Controller
      *
      * @param string $id
      * @return string
+     * @throws UserException
      */
     public function actionInvestigation($id = null)
     {
+        $request = Yii::$app->getRequest();
         /** @var Investigation $investigation */
         $investigation = Investigation::create($id);
-        $request = Yii::$app->getRequest();
+        if (null === $investigation) {
+            throw new UserException('The investigation does not exits');
+        }
 
         if ($request->isPost && $investigation->load($request->post()) && $investigation->save()) {
             return $this->redirect(['investigation/view', 'id' => $investigation->id]);
