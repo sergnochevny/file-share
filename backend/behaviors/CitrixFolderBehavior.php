@@ -45,9 +45,6 @@ class CitrixFolderBehavior extends Behavior
      */
     public function setParent($parent)
     {
-        if ($parent instanceof \Closure) {
-            $parent = call_user_func($parent);
-        }
         $this->parent = $parent;
     }
 
@@ -197,6 +194,11 @@ class CitrixFolderBehavior extends Behavior
             ->setClientId($this->id)
             ->setClientSecret($this->secret)
             ->Initialize();
+
+        if ($this->parent instanceof \Closure) {
+            $this->parent = call_user_func($this->parent, $this->owner);
+        }
+
     }
 
     public function beforeInsert($event)
