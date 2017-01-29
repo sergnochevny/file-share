@@ -33,16 +33,6 @@ class CompanyController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-//            'access' => [
-//                'class' => AccessControl::className(),
-//                'ruleConfig'=>['class'=>CompanyEmployeeRule::className()],
-//                'rules' => [
-//                    [
-//                        'actions' => ['index'],
-//                    ],
-//                ],
-//            ],
-
         ];
     }
 

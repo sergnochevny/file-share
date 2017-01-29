@@ -401,3 +401,29 @@ pre {
 .il {
     color: #40a070
 }
+
+.field-file #file{
+    width: 90px;
+    height: 30px;
+    margin-left: -15px;
+    cursor: pointer;
+}
+
+.has-success.field-file{
+    z-index: 97;
+}
+
+.field-file{
+    width: 90px;
+    height: 30px;
+    position: absolute;
+    left: 50%;
+    margin-left: -45px;
+    opacity: 0;
+    z-index: 999;
+}
+
+.send-file-button{
+    z-index: 98;
+    position: relative;
+}
