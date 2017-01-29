@@ -1,43 +1,41 @@
 <?php
 
-use backend\models\search\InvestigationSearch;
+use backend\models\FileSearch;
 use yii\helpers\Html;
-use yii\jui\DatePicker;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\InvestigationSearch */
+/* @var $model backend\models\FileSearch */
 /* @var $form yii\widgets\ActiveForm */
-?>
 
+?>
 <?php $form = ActiveForm::begin([
     'action' => ['index'],
     'method' => 'get',
     'fieldConfig' => [
         'template' => '<label>{input}</label>',
     ],
-    'options' => ['class' => 'row']
+    'options' => [
+        'class' => 'row',
+        'data-pjax' => true
+    ]
 ]); ?>
-<div class="col-sm-6">
-    <?= $form->field($model, 'name', [
-        'options' => [
-            'class' => 'dataTables_length'
-        ],
-        'template' => '<label>Show {input} entries</label>',
-    ])->dropDownList(InvestigationSearch::$output_size, [
-        'class' => 'form-control input-sm',
-        'placeholder' => 'Search',
-    ])->label(false) ?>
-</div>
-<div class="col-sm-6">
-    <?= $form->field($model, 'name', [
-        'options' => [
-            'class' => 'dataTables_filter'
-        ]
-    ])->textInput([
-        'class' => 'form-control input-sm',
-        'placeholder' => 'Search',
-    ])->label(false) ?>
-</div>
+    <div class="col-sm-6">
+        <?= $form->field($model, 'pagesize', [
+            'options' => [
+                'id' => 'pagesize',
+                'data-submit' => true
+            ],
+            'template' => '<label>Show {input} entries</label>',
+        ])->dropDownList(FileSearch::$output_size, [
+            'class' => 'form-control input-sm',
+            'placeholder' => 'Search',
+        ])->label(false) ?>
+    </div>
+    <div class="col-sm-6">
+        <?= $form->field($model, 'name')->textInput([
+            'class' => 'form-control input-sm',
+            'placeholder' => 'Search',
+        ])->label(false) ?>
+    </div>
 <?php ActiveForm::end(); ?>
-

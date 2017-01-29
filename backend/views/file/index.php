@@ -68,33 +68,24 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]); ?>
                     <?php \backend\widgets\ActiveForm::end(); ?>
                     <div class="panel panel-body" data-toggle="match-height">
-                        <h5>Success progress bar</h5>
                         <div class="progress progress-xs">
                             <div class="progress-bar progress-bar-indicating progress-bar-warning" role="progressbar"
-                                 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+                                 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
                             </div>
                         </div>
                     </div>
                 </div>
-                <div id="file-list_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-                    <?php $this->render('partials/_search', ['model' => $searchModel]); ?>
+                <div class="form-inline no-footer">
+                    <?= $this->render('partials/_search', ['model' => $searchModel]); ?>
 
                     <?= GridView::widget([
                         'dataProvider' => $dataProvider,
                         'tableOptions' => [
-                            'id' => 'file-list',
-                            'class' => "table table-hover table-striped dataTable",
-                            'role' => "grid",
-                            'aria-describedby' => "file-list_info",
+                            'class' => "table table-hover table-striped",
                             'cellspacing' => "0",
                             'width' => "100%"
                         ],
                         'summaryOptions' => ['class' => 'col-sm-6'],
-                        'pager' => [
-                            'options' => [
-                                'class' => 'col-sm-6',
-                            ]
-                        ],
                         'options' => ['class' => 'row'],
                         'layout'=>"<div class='col-sm-12'>{items}</div>\n{summary}{pager}",
                         'columns' => [
@@ -136,7 +127,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'description',
                                 'headerOptions' => [
                                     'tabindex' => "0",
-                                    'aria-controls' => "file-list",
                                     'rowspan' => "1",
                                     'colspan' => "1",
                                 ]

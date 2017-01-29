@@ -15,12 +15,14 @@ use yii\widgets\ActiveForm;
     'fieldConfig' => [
         'template' => '<label>{input}</label>',
     ],
-    'options' => ['class' => 'row']
+    'options' => [
+        'class' => 'row',
+        'data-pjax' => true
+    ]
 ]); ?>
     <div class="col-sm-6">
         <?= $form->field($model, 'pagesize', [
             'options' => [
-                'class' => 'dataTables_length',
                 'id' => 'pagesize',
                 'data-submit' => true
             ],
@@ -31,11 +33,7 @@ use yii\widgets\ActiveForm;
         ])->label(false) ?>
     </div>
     <div class="col-sm-6">
-        <?= $form->field($model, 'name', [
-            'options' => [
-                'class' => 'dataTables_filter'
-            ]
-        ])->textInput([
+        <?= $form->field($model, 'name')->textInput([
             'class' => 'form-control input-sm',
             'placeholder' => 'Search',
         ])->label(false) ?>
