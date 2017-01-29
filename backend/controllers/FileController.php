@@ -42,7 +42,7 @@ class FileController extends Controller
         $searchModel = new FileSearch;
         $uploadModel = new FileUpload;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->pagination->pageSize = FileSearch::$output_size;
+        $dataProvider->pagination->pageSize =  $searchModel->pagesize;
         Url::remember();
         return $this->render('index', [
             'searchModel' => $searchModel,

@@ -11,7 +11,7 @@ use yii\data\ActiveDataProvider;
  */
 class FileSearch extends File
 {
-    public $output_amount;
+    public $pagesize = 10;
 
     public static $output_size = [
         10 => 10,
