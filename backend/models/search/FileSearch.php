@@ -20,7 +20,7 @@ class FileSearch extends File
     public function rules()
     {
         return [
-            [['name'], 'safe'],
+            [['name', 'pagesize'], 'safe'],
         ];
     }
 

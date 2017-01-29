@@ -14,7 +14,7 @@ class InvestigationSearch extends Investigation
 
     public $pagesize = 10;
     public $name;
-    public $applicant;
+    public $company_name;
 
     /**
      * @inheritdoc
@@ -23,7 +23,7 @@ class InvestigationSearch extends Investigation
     {
         return [
             [['id', 'company_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['start_date', 'end_date', 'description'], 'safe'],
+            [['name', 'pagesize', 'start_date', 'end_date', 'description'], 'safe'],
         ];
     }
 
@@ -45,12 +45,18 @@ class InvestigationSearch extends Investigation
      */
     public function search($params)
     {
-        $query = Investigation::find();
+        $query = Investigation::find()->joinWith('company');
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+        ]);
+
+        $dataProvider->sort->attributes['company_name'] = ([
+            'asc' => ['company.name' => SORT_ASC],
+            'desc' => ['company.name' => SORT_DESC],
+            'label' => 'Company',
         ]);
 
         $this->load($params);
@@ -73,7 +79,10 @@ class InvestigationSearch extends Investigation
         ]);
 
         $query->andFilterWhere(['like', 'description', $this->description]);
-
+        $query->andFilterWhere(['OR',
+            ['like', 'company.name', $this->name],
+            ['like', 'investigation.name', $this->name],
+        ]);
         return $dataProvider;
     }
 }

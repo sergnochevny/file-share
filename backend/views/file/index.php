@@ -13,13 +13,11 @@ use yii\helpers\ArrayHelper;
 /* @var $searchModel backend\models\FileSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->registerJsFile(YII_ENV_DEV ? '@web/js/file_search.js' : '@web/js/file_search.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
-
 $this->title = 'Files';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?php Pjax::begin(['id' => 'file_search', 'enablePushState' => false, 'timeout' => 0]); ?>
+<?php Pjax::begin(['id' => 'file_index', 'enablePushState' => false, 'timeout' => 0]); ?>
 
 <?php if (Yii::$app->request->isAjax && Yii::$app->session->hasFlash('alert')): ?>
     <?= Alert::widget([
@@ -89,7 +87,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             'cellspacing' => "0",
                             'width' => "100%"
                         ],
-                        'summaryOptions' => ['class' => 'col-sm-6'],
                         'options' => ['class' => 'row'],
                         'layout' => "<div class='col-sm-12'>{items}</div>\n{summary}{pager}",
                         'columns' => [

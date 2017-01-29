@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="panel-heading">
                 <?= Html::a(Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-plus icon-lg icon-fw']), ['class' => 'btn-label']) . ' Create a new company', Url::to(['/wizard/company']), ['class' => 'btn btn-sm btn-labeled arrow-success']) ?>
             </div>
-            <?php Pjax::begin(['options' => ['class' => 'panel-body panel-collapse']]); ?>
+            <?php Pjax::begin(['id' => 'history_index', 'enablePushState' => false, 'timeout' => 0, 'options' => ['class' => 'panel-body panel-collapse']]); ?>
             <?= $this->render('/search/_search', ['model' => $searchModel]); ?>
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,

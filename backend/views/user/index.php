@@ -30,28 +30,46 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="panel-heading">
                 <?= Html::a(Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-plus icon-lg icon-fw']), ['class' => 'btn-label']) . ' Add a new user', Url::to(['/wizard/user']), ['class' => 'btn btn-sm btn-labeled arrow-success']) ?>
             </div>
-            <?php Pjax::begin(['options' => ['class' => 'panel-body panel-collapse']]); ?>
+            <div class="form-inline no-footer">
 
-                    <?= $this->render('/search/_search', ['model' => $searchModel]); ?>
-                    <?= GridView::widget([
-                        'dataProvider' => $dataProvider,
-                        'tableOptions' => ['class' => 'table table-hover table-striped  dataTable no-footer dtr-inline'],
-                        'options' => ['class' => ''],
-                        'columns' => [
-                            ['class' => 'yii\grid\SerialColumn'],
-                            'first_name',
-                            'last_name',
-                            'phone_number',
-                            'email:email',
-                            'username',
-                            'created_at:date',
-                            'updated_at:date',
+                <?php Pjax::begin(['id' => 'user_index', 'enablePushState' => false, 'timeout' => 0, 'options' => ['class' => 'panel-body panel-collapse']]); ?>
 
-                            ['class' => 'yii\grid\ActionColumn'],
+                <?= $this->render('/search/_search', ['model' => $searchModel]); ?>
+                <?= GridView::widget([
+                    'dataProvider' => $dataProvider,
+                    'tableOptions' => [
+                        'class' => "table table-hover table-striped",
+                        'cellspacing' => "0",
+                        'width' => "100%"
+                    ],
+                    'layout' => "<div>{items}</div>\n{summary}{pager}",
+                    'columns' => [
+                        'first_name',
+                        'last_name',
+                        'phone_number',
+                        'email:email',
+                        [
+                            'attribute' => 'role',
+                            'label' => 'Position Status',
+                            'format' => 'html',
+                            'value' => function ($model, $key, $index, $column) {
+                                $suff = [
+                                    'admin' => 'success',
+                                    'client' => 'warning'
+                                ];
+                                $value = '<span class="label label-' . $suff[$model->{$column->attribute}] . '" >' .
+                                    $model->{$column->attribute} .
+                                    '</span >';
+                                return $value;
+                            }
                         ],
-                    ]); ?>
+                        ['class' => 'yii\grid\ActionColumn'],
+                    ],
+                ]); ?>
 
-            <?php Pjax::end(); ?>
+                <?php Pjax::end(); ?>
+
+            </div>
         </div>
     </div>
 </div>

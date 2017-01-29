@@ -14,7 +14,7 @@ use yii\db\Query;
  * @property array $statusesList
  * @property array $allCompaniesList
  */
-final class Investigation extends \common\models\Investigation
+class Investigation extends \common\models\Investigation
 {
     use FactoryTrait;
 

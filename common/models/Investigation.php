@@ -3,7 +3,6 @@
 namespace common\models;
 
 
-use common\models\query\UndeletableActiveQuery;
 use yii\behaviors\TimestampBehavior;
 
 /**

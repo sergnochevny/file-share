@@ -29,28 +29,94 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="panel-heading">
                 <?= Html::a(Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-plus icon-lg icon-fw']), ['class' => 'btn-label']) . ' Create a new applicant', Url::to(['/wizard/investigation']), ['class' => 'btn btn-sm btn-labeled arrow-success']) ?>
             </div>
-            <?php Pjax::begin(['options' => ['class' => 'panel-body panel-collapse']]); ?>
-                <?= $this->render('/search/_search', ['model' => $searchModel]); ?>
-                <?= GridView::widget([
-                    'dataProvider' => $dataProvider,
-                    'tableOptions' => ['class' => 'table table-hover table-striped  dataTable no-footer dtr-inline'],
-                    'summaryOptions' => ['class' => 'col-sm-6'],
-                    'pager' => [
-                        'options' => [
-                            'class' => 'col-sm-6',
-                        ]
+            <?php Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout' => 0, 'options' => ['class' => 'panel-body panel-collapse']]); ?>
+            <?= $this->render('/search/_search', ['model' => $searchModel]); ?>
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                'tableOptions' => ['class' => 'table table-hover table-striped  dataTable no-footer dtr-inline'],
+                'summaryOptions' => ['class' => 'col-sm-6'],
+                'pager' => [
+                    'options' => [
+                        'class' => 'col-sm-6',
+                    ]
+                ],
+                'options' => ['class' => 'row'],
+                'layout' => "<div class='col-sm-12'>{items}</div>\n{summary}{pager}",
+                'columns' => [
+                    [
+                        'attribute' => 'company_name',
+                        'value' => 'company.name',
+                        'label' => 'Company'
                     ],
-                    'options' => ['class' => 'row'],
-                    'layout'=>"<div class='col-sm-12'>{items}</div>\n{summary}{pager}",
-                    'columns' => [
-                        'name',
-                        'applicant',
-                        'start_date',
-                        'end_date',
-                        'status',
-                        ['class' => 'yii\grid\ActionColumn'],
+                    'name',
+                    [
+                        'attribute' => 'start_date',
+                        'label' => 'Start date',
+                        'contentOptions' => [
+                            'width' => 80,
+                        ],
+                        'format' => 'html',
+                        'value' => function ($model, $key, $index, $column) {
+                            $value = '<span class="label label-warning" >' . date('m.d.Y', $model->{$column->attribute}) . '</span >';
+                            return $value;
+                        }
                     ],
-                ]); ?>
+                    [
+                        'attribute' => 'end_date',
+                        'label' => 'Start date',
+                        'format' => 'html',
+                        'contentOptions' => [
+                            'width' => 80,
+                        ],
+                        'value' => function ($model, $key, $index, $column) {
+                            $value = '<span class="label label-warning" >' . date('m.d.Y', $model->{$column->attribute}) . '</span >';
+                            return $value;
+                        }
+                    ],
+                    'status',
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'template' => '{edit}{delete}{details}',
+                        'contentOptions' => [
+                            'width' => 150,
+                        ],
+                        'buttons' => [
+                            'edit' => function ($url, $model) {
+                                return Html::a('Edit', Url::to(['/wizard/investigation', 'id' => $model->id], true),
+                                    [
+                                        'class' => "btn btn-primary btn-xs",
+                                        'title' => 'Edit',
+                                        'aria-label' => "Edit",
+                                        'data-pjax' => "0",
+                                    ]
+                                );
+                            },
+                            'delete' => function ($url, $model) {
+                                return Html::a('Delete', $url,
+                                    [
+                                        'class' => "btn btn-danger btn-xs",
+                                        'title' => 'Delete',
+                                        'aria-label' => "Delete",
+                                        'data-confirm' => "Are you sure you want to delete this item?",
+                                        'data-method' => "post",
+                                        'data-pjax' => "0",
+                                    ]
+                                );
+                            },
+                            'details' => function ($url, $model) {
+                                return Html::a('Details', $url,
+                                    [
+                                        'class' => "btn btn-success btn-xs",
+                                        'title' => 'Details',
+                                        'aria-label' => "Details",
+                                        'data-pjax' => "0",
+                                    ]
+                                );
+                            },
+                        ],
+                    ],
+                ],
+            ]); ?>
             <?php Pjax::end(); ?>
         </div>
     </div>

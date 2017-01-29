@@ -281,7 +281,7 @@ use yii\helpers\Url;
                             <li class="divider"></li>
                             <li><a href="#">Contacts</a></li>
                             <li><a href="#">Profile</a></li>
-                            <li><a href="<?= Url::to(['/site/logout'], true) ?>" requset-method="POST">Sign out</a></li>
+                            <li><a href="<?= Url::to(['/site/logout'], true) ?>" data-method="POST">Sign out</a></li>
                         </ul>
                     </li>
                     <li class="visible-xs-block">
@@ -297,7 +297,7 @@ use yii\helpers\Url;
                         </a>
                     </li>
                     <li class="visible-xs-block">
-                        <a href="<?= Url::to(['/site/logout'], true) ?>" requset-method="POST">
+                        <a href="<?= Url::to(['/site/logout'], true) ?>" data-method="POST">
                             <span class="icon icon-power-off icon-lg icon-fw"></span>
                             Sign out
                         </a>

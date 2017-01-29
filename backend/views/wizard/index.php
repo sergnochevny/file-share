@@ -14,7 +14,7 @@ $investigationActive = isset($isInvestigation) ? $activeClass : '';
 $isUpdate = isset($isUpdate) ? $isUpdate : false;
 
 $this->registerJsFile('@web/js/wizard.js', ['depends' => JqueryAsset::class]);
-
+\yii\jui\JuiAsset::register($this);
 $this->title = 'Wizard';
 
 ?>

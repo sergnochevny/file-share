@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="panel-heading">
                 <?= Html::a(Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-plus icon-lg icon-fw']), ['class' => 'btn-label']) . ' Create a new company', Url::to(['/wizard/company']), ['class' => 'btn btn-sm btn-labeled arrow-success']) ?>
             </div>
-            <?php Pjax::begin(['options' => ['id'=>'company', 'class' => 'panel-body panel-collapse']]); ?>
+            <?php Pjax::begin(['id' => 'company_index', 'enablePushState' => false, 'timeout' => 0, 'options' => ['class' => 'panel-body panel-collapse']]); ?>
                 <?= $this->render('/search/_search', ['model' => $searchModel]); ?>
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
@@ -42,10 +42,37 @@ $this->params['breadcrumbs'][] = $this->title;
                         'city',
                         'state',
                          'zip',
-                        // 'status',
-                        // 'created_at',
-                        // 'updated_at',
-                        ['class' => 'yii\grid\ActionColumn'],
+                        [
+                            'class' => 'yii\grid\ActionColumn',
+                            'template' => '{edit}{delete}',
+                            'contentOptions' => [
+                                'width' => 90,
+                            ],
+                            'buttons' => [
+                                'edit' => function ($url, $model) {
+                                    return Html::a('Edit', Url::to(['/wizard/company', 'id' => $model->id], true),
+                                        [
+                                            'class' => "btn btn-primary btn-xs",
+                                            'title' => 'Edit',
+                                            'aria-label' => "Edit",
+                                            'data-pjax' => "0",
+                                        ]
+                                    );
+                                },
+                                'delete' => function ($url, $model) {
+                                    return Html::a('Delete', $url,
+                                        [
+                                            'class' => "btn btn-danger btn-xs",
+                                            'title' => 'Delete',
+                                            'aria-label' => "Delete",
+                                            'data-confirm' => "Are you sure you want to delete this item?",
+                                            'data-method' => "post",
+                                            'data-pjax' => "0",
+                                        ]
+                                    );
+                                },
+                            ],
+                        ],
                     ],
                 ]); ?>
             <?php Pjax::end(); ?>

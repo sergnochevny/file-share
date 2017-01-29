@@ -29,18 +29,51 @@ return [
                 ],
             ],
         ],
-        'as access' => [
-            'class' => 'mdm\admin\components\AccessControl',
-            'allowActions' => [
-                'site/*',
-                'admin/*',
-                'some-controller/some-action',
-                // The actions listed here will be allowed to everyone including guests.
-                // So, 'admin/*' should not appear here in the production, of course.
-                // But in the earlier stages of your development, you may probably want to
-                // add a lot of actions here until you finally completed setting up rbac,
-                // otherwise you may not even take a first step.
-            ]
+        'as globalAccess' => [
+            'class' => 'common\behaviors\GlobalAccessBehavior',
+            'rules' => [
+                [
+                    'controllers' => ['file', 'history', 'investigation', 'wizard'],
+                    'allow' => true,
+                    'roles' => ['@'],
+                ],
+                [
+                    'controllers' => ['company', 'user'],
+                    'allow' => true,
+                    'roles' => ['admin'],
+                ],
+                [
+                    'controllers' => ['company'],
+                    'actions' => ['view'],
+                    'allow' => true,
+                    'roles' => ['client'],
+                ],
+                [
+                    'controllers' => ['site'],
+                    'allow' => true,
+                    'actions' => ['login'],
+                    'roles' => ['?'],
+                ],
+                [
+                    'controllers' => ['site'],
+                    'allow' => true,
+                    'actions' => ['logout'],
+                    'roles' => ['@'],
+                ],
+                [
+                    'controllers' => ['site'],
+                    'allow' => true,
+                    'actions' => ['error'],
+                    'roles' => ['?', '@'],
+                ],
+                [
+                    'allow' => true,
+                    'roles' => ['admin'],
+                ],
+                [
+                    'allow' => false,
+                ],
+            ],
         ],
         'request' => [
             'csrfParam' => '_csrf-backend',

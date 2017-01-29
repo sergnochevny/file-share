@@ -20,7 +20,9 @@ class HistorySearch extends Company
      */
     public function rules()
     {
-        return [];
+        return [
+            [['name', 'pagesize',], 'safe']
+        ];
     }
 
     /**
