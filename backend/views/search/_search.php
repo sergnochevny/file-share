@@ -23,7 +23,8 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'pagesize', [
             'options' => [
                 'id' => 'pagesize',
-                'data-submit' => true
+                'data-submit' => true,
+                'class' => 'search-select'
             ],
             'template' => '<label>Show {input} entries</label>',
         ])->dropDownList([10 => 10, 25 => 25, 50 => 50, 100 => 100,],
@@ -34,7 +35,11 @@ use yii\widgets\ActiveForm;
         )->label(false) ?>
     </div>
     <div class="col-sm-6">
-        <?= $form->field($model, 'name')->textInput([
+        <?= $form->field($model, 'name', [
+            'options' => [
+                'class' => 'search-line'
+            ]
+        ])->textInput([
             'class' => 'form-control input-sm',
             'placeholder' => 'Search',
         ])->label(false) ?>
