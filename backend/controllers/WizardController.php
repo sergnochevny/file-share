@@ -5,14 +5,12 @@ namespace backend\controllers;
 
 
 use backend\models\Company;
-use backend\models\forms\InvestigationForm;
 use backend\models\forms\UserForm;
-use backend\models\services\InvestigationService;
+use backend\models\Investigation;
 use backend\models\services\UserService;
 use backend\models\User;
-use yii\web\BadRequestHttpException;
-use yii\web\Controller;
 use Yii;
+use yii\web\Controller;
 use yii\web\Response;
 
 class WizardController extends Controller
@@ -56,53 +54,26 @@ class WizardController extends Controller
      */
     public function actionCompany($id = null)
     {
+        /** @var Company $company */
         $company = Company::create($id);
         $request = Yii::$app->getRequest();
 
-        $options = [
+        if ($request->isPost && $company->load($request->post())) {
+            $company->save();
+        }
+
+        return $this->smartRender('index', [
             'isCompany' => true,
             'companyForm' => $company,
-            'selected' => null,
-            'isUpdate' => false,
-        ];
-
-        if ($request->isPost && $company->load($request->post()) && $company->save()) {
-            $options['companyForm'] = $company;
-            $options['selected'] = $company->id;
-            $options['isUpdate'] = true;
-        }
-
-        return $this->smartRender('index', $options);
-    }
-
-    /**
-     * Gets info about company by id
-     *
-     * @param null $id
-     * @return string
-     * @throws BadRequestHttpException
-     */
-    public function actionCompanyInfo($id = null)
-    {
-        $request = Yii::$app->getRequest();
-        $id = (int) $id;
-        if ($id > 0 && $request->isPjax && $company = Company::findOne($id)) {
-
-            return $this->renderAjax('index', [
-                'isCompany' => true,
-                'companyForm' => $company,
-                'selected' => $company->id,
-                'isUpdate' => true,
-            ]);
-        }
-
-        throw new BadRequestHttpException();
+            'selected' => $company->id,
+            'isUpdate' => $company->id > 0 ? true : false,
+        ]);
     }
 
     /**
      * Shows User tab
      *
-     * @param null $id
+     * @param string $id
      * @return string
      */
     public function actionUser($id = null)
@@ -144,36 +115,29 @@ class WizardController extends Controller
     /**
      * Shows Investigation(Applicant) tab
      *
+     * @param string $id
      * @return string
      */
-    public function actionInvestigation()
+    public function actionInvestigation($id = null)
     {
-        /** @var InvestigationForm $investigationForm */
-        $investigationForm = Yii::createObject(InvestigationForm::class);
+        /** @var Investigation $investigation */
+        $investigation = Investigation::create($id);
         $request = Yii::$app->getRequest();
 
-        if (
-            $request->isPost
-            && $investigationForm->load($request->post())
-            && $investigationForm->validate()
-        ) {
-            /** @var InvestigationService $service */
-            $service = Yii::createObject(InvestigationService::class);
-            if ($service->save($investigationForm)) {
-                $investigationForm = Yii::createObject(InvestigationForm::class);
-            } else {
-                $this->setFlash('error', 'The applicant was not saved');
-            }
+        if ($request->isPost && $investigation->load($request->post()) && $investigation->save()) {
+            return $this->redirect(['investigation/view', 'id' => $investigation->id]);
         }
 
         return $this->smartRender('index', [
             'isInvestigation' => true,
-            'investigationForm' => $investigationForm,
+            'investigationForm' => $investigation,
+            'selected' => $investigation->company_id,
+            'isUpdate' => $investigation->id > 0 ? true : false,
         ]);
     }
 
     /**
-     * list users in company
+     * list users in company for dep dropdown
      *
      * @return string JSON output
      */
@@ -205,5 +169,4 @@ class WizardController extends Controller
             ? $this->renderAjax($view, $viewData)
             : $this->render($view, $viewData);
     }
-
 }
