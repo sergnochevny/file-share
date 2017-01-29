@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\models;
+namespace backend\models\search;
 
 use Yii;
 use yii\base\Model;
@@ -12,6 +12,15 @@ use common\models\User;
  */
 class UserSearch extends User
 {
+    public $pagesize = 10;
+    public $name;
+    public static $output_size = [
+        10 => 10,
+        25 => 25,
+        50 => 50,
+        100 => 100,
+    ];
+
     /**
      * @inheritdoc
      */

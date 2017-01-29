@@ -13,7 +13,7 @@ use common\models\Company;
 class CompanySearch extends Company
 {
 
-    public $output_amount;
+    public $pagesize = 10;
 
     public static $output_size = [
         10 => 10,

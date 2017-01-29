@@ -5,7 +5,7 @@ namespace backend\controllers;
 use backend\models\FileUpload;
 use Yii;
 use common\models\File;
-use backend\models\FileSearch;
+use backend\models\search\FileSearch;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -42,7 +42,7 @@ class FileController extends Controller
         $searchModel = new FileSearch;
         $uploadModel = new FileUpload;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->pagination->pageSize =  $searchModel->pagesize;
+        $dataProvider->pagination->pageSize = FileSearch::$output_size;
         Url::remember();
         return $this->render('index', [
             'searchModel' => $searchModel,

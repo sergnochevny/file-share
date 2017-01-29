@@ -12,7 +12,7 @@ use yii\data\ActiveDataProvider;
 class InvestigationSearch extends Investigation
 {
 
-    public $output_amount;
+    public $pagesize = 10;
     public $name;
     public $applicant;
 

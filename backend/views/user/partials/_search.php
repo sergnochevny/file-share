@@ -1,8 +1,8 @@
 <?php
 
-use backend\models\FileSearch;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use backend\models\search\FileSearch;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\FileSearch */

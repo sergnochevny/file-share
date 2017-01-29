@@ -5,7 +5,7 @@ namespace backend\controllers;
 use backend\models\forms\UserForm;
 use Yii;
 use common\models\User;
-use backend\models\UserSearch;
+use backend\models\search\UserSearch;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

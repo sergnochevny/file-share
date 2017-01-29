@@ -16,7 +16,7 @@ use common\widgets\Menu;
                         'items' => [
                             ['label' => 'Navigation', 'options' => ['class' => 'sidenav-heading']],
                             ['label' => 'Home', 'url' => ['/site/index'], 'options' => ['icon' => 'icon-home']],
-                            ['label' => 'Wizard', 'url' => ['/wizard/company'], 'options' => ['icon' => 'icon-magic']],
+//                            ['label' => 'Wizard', 'url' => ['/wizard/company'], 'options' => ['icon' => 'icon-magic']],
                             ['label' => 'Companies', 'url' => ['/company/index'], 'options' => ['icon' => 'icon-contao']],
                             ['label' => 'Applicants','url' => ['/investigation/index'],'options' => ['icon' => 'icon-folder-open-o']],
                             ['label' => 'History', 'url' => ['/investigation/history'], 'options' => ['icon' => 'icon-history']],
