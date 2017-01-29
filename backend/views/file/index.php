@@ -89,20 +89,22 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     <?= GridView::widget([
                         'dataProvider' => $dataProvider,
-//                                    'summary' => $dataProvider->totalCount < 2 ? "" : "<div class='col-md-12 helper-counter'><div class='row'>Showing {begin} &mdash; {end} of {totalCount} items</div></div>",
-//                                    'layout' => "{items}\n<div align='left'>{summary}</div><div align='right'>{pager}</div>",
-
                         'tableOptions' => [
                             'id' => 'file-list',
-                            'class' => "table table-hover table-striped  dataTable",
+                            'class' => "table table-hover table-striped dataTable",
                             'role' => "grid",
                             'aria-describedby' => "file-list_info",
                             'cellspacing' => "0",
                             'width' => "100%"
                         ],
-                        'rowOptions' => [
-                            'role' => "row"
+                        'summaryOptions' => ['class' => 'col-sm-6'],
+                        'pager' => [
+                            'options' => [
+                                'class' => 'col-sm-6',
+                            ]
                         ],
+                        'options' => ['class' => 'row'],
+                        'layout'=>"<div class='col-sm-12'>{items}</div>\n{summary}{pager}",
                         'columns' => [
                             [
                                 'attribute' => 'name',

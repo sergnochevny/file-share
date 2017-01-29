@@ -2,23 +2,34 @@
 
 namespace backend\models;
 
-use common\models\Investigation;
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use common\models\Company;
 
 /**
- * InvestigationSearch represents the model behind the search form about `common\models\Investigation`.
+ * CompanySearch represents the model behind the search form about `common\models\Company`.
  */
-class InvestigationSearch extends Investigation
+class HistorySearch extends Company
 {
+
+    public $output_amount;
+
+    public static $output_size = [
+        10 => 10,
+        25 => 25,
+        50 => 50,
+        100 => 100,
+    ];
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'company_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['start_date', 'end_date', 'description'], 'safe'],
+            [['id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['name', 'address', 'city', 'state', 'zip'], 'safe'],
         ];
     }
 
@@ -40,12 +51,13 @@ class InvestigationSearch extends Investigation
      */
     public function search($params)
     {
-        $query = Investigation::find();
+        $query = Company::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            //'pagination' => ['defaultPageSize' => 1]
         ]);
 
         $this->load($params);
@@ -59,15 +71,16 @@ class InvestigationSearch extends Investigation
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'company_id' => $this->company_id,
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'description', $this->description]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'address', $this->address])
+            ->andFilterWhere(['like', 'city', $this->city])
+            ->andFilterWhere(['like', 'state', $this->state])
+            ->andFilterWhere(['like', 'zip', $this->zip]);
 
         return $dataProvider;
     }

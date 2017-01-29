@@ -3,12 +3,12 @@
 namespace backend\controllers;
 
 
-use backend\models\rbac\rules\CompanyEmployeeRule;
+use backend\components\rbac\rules\CompanyEmployeeRule;
+use backend\models\search\CompanySearch;
 use backend\models\services\CompanyService;
 use backend\models\forms\CompanyForm;
 use Yii;
 use common\models\Company;
-use backend\models\CompanySearch;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
 use yii\web\Controller;
@@ -33,15 +33,15 @@ class CompanyController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            'access' => [
-                'class' => AccessControl::className(),
-                'ruleConfig'=>['class'=>CompanyEmployeeRule::className()],
-                'rules' => [
-                    [
-                        'actions' => ['index'],
-                    ],
-                ],
-            ],
+//            'access' => [
+//                'class' => AccessControl::className(),
+//                'ruleConfig'=>['class'=>CompanyEmployeeRule::className()],
+//                'rules' => [
+//                    [
+//                        'actions' => ['index'],
+//                    ],
+//                ],
+//            ],
 
         ];
     }

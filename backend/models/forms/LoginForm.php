@@ -1,7 +1,7 @@
 <?php
 
 
-namespace backend\models;
+namespace backend\models\forms;
 
 
 use common\models\User;

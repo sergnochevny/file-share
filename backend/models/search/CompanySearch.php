@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\models;
+namespace backend\models\search;
 
 use Yii;
 use yii\base\Model;
@@ -12,6 +12,16 @@ use common\models\Company;
  */
 class CompanySearch extends Company
 {
+
+    public $output_amount;
+
+    public static $output_size = [
+        10 => 10,
+        25 => 25,
+        50 => 50,
+        100 => 100,
+    ];
+
     /**
      * @inheritdoc
      */

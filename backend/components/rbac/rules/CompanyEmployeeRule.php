@@ -1,7 +1,7 @@
 <?php
 
 
-namespace backend\models\rbac\rules;
+namespace backend\components\rbac\rules;
 
 
 use yii\filters\AccessRule;
