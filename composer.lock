@@ -4,14 +4,14 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f65e5e352483dd78a88e9ee9f909b459",
+    "content-hash": "dffda6552df84b51d678db74c39c1e4f",
     "packages": [
         {
             "name": "ait/keystorage",
             "version": "0.0.2",
             "source": {
                 "type": "git",
-                "url": "https://gitlab.ait.com/ait/keystorage",
+                "url": "git@gitlab.ait.com:ait/keystorage.git",
                 "reference": "fb9308252f3917931d5aeaacc9f6e1598ded8bdf"
             },
             "require": {
@@ -252,7 +252,7 @@
             "version": "1.0.1",
             "source": {
                 "type": "git",
-                "url": "https://gitlab.ait.com/ait/extlib",
+                "url": "git@gitlab.ait.com:ait/extlib.git",
                 "reference": "1.0.1"
             },
             "type": "library"
@@ -916,11 +916,11 @@
     "packages-dev": [
         {
             "name": "ait/citrix",
-            "version": "1.0.8",
+            "version": "1.0.9",
             "source": {
                 "type": "git",
-                "url": "https://gitlab.ait.com/ait/citrix",
-                "reference": "93d52f5e8401daf21ba1c7d0f663574537f5ca44"
+                "url": "git@gitlab.ait.com:ait/citrix.git",
+                "reference": "c29b81c42b22d0927f7c8f48dffb4aca988e4f4e"
             },
             "require": {
                 "ait/guzzle": "6.2.2",
@@ -952,14 +952,14 @@
                 }
             ],
             "description": "Citrix Share File API implementation the class wrapper",
-            "time": "2017-01-28T11:47:17+00:00"
+            "time": "2017-01-28T17:16:55+00:00"
         },
         {
             "name": "ait/guzzle",
             "version": "6.2.2",
             "source": {
                 "type": "git",
-                "url": "https://gitlab.ait.com/ait/guzzle",
+                "url": "git@gitlab.ait.com:ait/guzzle.git",
                 "reference": "9fc96bf9bc2b3966187f8fbf1ffcd38b475b7359"
             },
             "require": {
@@ -2253,16 +2253,16 @@
         },
         {
             "name": "sebastian/comparator",
-            "version": "1.2.2",
+            "version": "1.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "6a1ed12e8b2409076ab22e3897126211ff8b1f7f"
+                "reference": "2b7424b55f5047b47ac6e5ccb20b2aea4011d9be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/6a1ed12e8b2409076ab22e3897126211ff8b1f7f",
-                "reference": "6a1ed12e8b2409076ab22e3897126211ff8b1f7f",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/2b7424b55f5047b47ac6e5ccb20b2aea4011d9be",
+                "reference": "2b7424b55f5047b47ac6e5ccb20b2aea4011d9be",
                 "shasum": ""
             },
             "require": {
@@ -2313,7 +2313,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2016-11-19T09:18:40+00:00"
+            "time": "2017-01-29T09:50:25+00:00"
         },
         {
             "name": "sebastian/diff",
