@@ -2,19 +2,16 @@
 
 namespace backend\controllers;
 
-use backend\models\FileUpload;
 use Yii;
-use common\models\File;
-use backend\models\FileSearch;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * FileController implements the CRUD actions for File model.
+ * HistoryController implements the CRUD actions for File model.
  */
-class FileController extends Controller
+class HistoryController extends Controller
 {
 
     /**
@@ -39,15 +36,10 @@ class FileController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new FileSearch;
-        $uploadModel = new FileUpload;
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->pagination->pageSize = FileSearch::$output_size;
-        Url::remember();
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'uploadModel' => $uploadModel,
         ]);
     }
 

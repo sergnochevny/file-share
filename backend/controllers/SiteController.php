@@ -2,13 +2,13 @@
 namespace backend\controllers;
 
 
-use backend\models\PasswordResetRequestForm;
+use backend\models\forms\PasswordResetRequestForm;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use backend\models\LoginForm;
+use backend\models\forms\LoginForm;
 
 /**
  * Site controller
@@ -105,7 +105,7 @@ class SiteController extends Controller
     public function actionPasswordReset()
     {
         Url::remember();
-        $model = new PasswordResetRequestForm();
+        $model = new PasswordResetRequestForm;
         return $this->render('password-reset', ['model' => $model]);
     }
 

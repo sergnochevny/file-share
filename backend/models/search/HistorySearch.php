@@ -10,8 +10,18 @@ use common\models\Company;
 /**
  * CompanySearch represents the model behind the search form about `common\models\Company`.
  */
-class CompanySearch extends Company
+class HistorySearch extends Company
 {
+
+    public $output_amount;
+
+    public static $output_size = [
+        10 => 10,
+        25 => 25,
+        50 => 50,
+        100 => 100,
+    ];
+
     /**
      * @inheritdoc
      */

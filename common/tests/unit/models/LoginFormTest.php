@@ -3,13 +3,14 @@
 namespace common\tests\unit\models;
 
 use Yii;
-use common\models\LoginForm;
+use \Codeception\Test\Unit;
+use backend\models\forms\LoginForm;
 use common\fixtures\User as UserFixture;
 
 /**
  * Login form test
  */
-class LoginFormTest extends \Codeception\Test\Unit
+class LoginFormTest extends Unit
 {
     /**
      * @var \frontend\tests\UnitTester
