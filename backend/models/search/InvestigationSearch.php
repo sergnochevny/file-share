@@ -16,13 +16,6 @@ class InvestigationSearch extends Investigation
     public $name;
     public $applicant;
 
-    public static $output_size = [
-        10 => 10,
-        25 => 25,
-        50 => 50,
-        100 => 100,
-    ];
-
     /**
      * @inheritdoc
      */
