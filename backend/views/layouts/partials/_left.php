@@ -19,7 +19,7 @@ use common\widgets\Menu;
 //                            ['label' => 'Wizard', 'url' => ['/wizard/company'], 'options' => ['icon' => 'icon-magic']],
                             ['label' => 'Companies', 'url' => ['/company/index'], 'options' => ['icon' => 'icon-contao']],
                             ['label' => 'Applicants','url' => ['/investigation/index'],'options' => ['icon' => 'icon-folder-open-o']],
-                            ['label' => 'History', 'url' => ['/investigation/history'], 'options' => ['icon' => 'icon-history']],
+                            ['label' => 'History', 'url' => ['/history/index'], 'options' => ['icon' => 'icon-history']],
                             ['label' => 'Files', 'url' => ['/file/index'], 'options' => ['icon' => 'icon-users']],
                             ['label' => 'Users', 'url' => ['/user/index'], 'options' => ['icon' => 'icon-save']],
                         ],
