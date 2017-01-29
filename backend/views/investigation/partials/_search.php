@@ -1,6 +1,6 @@
 <?php
 
-use backend\models\InvestigationSearch;
+use backend\models\search\InvestigationSearch;
 use yii\helpers\Html;
 use yii\jui\DatePicker;
 use yii\widgets\ActiveForm;

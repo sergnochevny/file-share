@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\Investigation;
-use backend\models\InvestigationSearch;
+use backend\models\search\InvestigationSearch;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
