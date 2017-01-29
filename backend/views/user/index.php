@@ -12,37 +12,46 @@ use yii\widgets\Pjax;
 $this->title = 'Users';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="row">
+<div class="title-bar">
+    <div class="title-bar-actions">
+        <?= Html::a(Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-chevron-circle-left icon-lg icon-fw']), ['class' => 'btn-label']) . ' Back', Url::previous(), ['class' => 'btn btn-labeled arrow-default']) ?>
+    </div>
+    <h1 class="title-bar-title">
+        <span class="d-ib"><span class="icon icon-users"></span> <?= Html::encode($this->title) ?></span>
+    </h1>
+    <p class="title-bar-description">
+        <small>All files</small>
+    </p>
+</div>
+
+<div class="row gutter-xs">
     <div class="col-xs-12">
-        <div class="row">
-            <div class="col-sm-10">
-                <div class="h3 no-outer-offset-top"><i class="fa fa-users"></i> <?= Html::encode($this->title) ?><br><small>List of all users</small></div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <?= Html::a(Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-plus icon-lg icon-fw']), ['class' => 'btn-label']) . ' Add a new user', Url::to(['/wizard/user']), ['class' => 'btn btn-sm btn-labeled arrow-success']) ?>
             </div>
-            <div class="col-sm-2 text-right">
-                <?= Html::a('<span class="btn-label"><span class="icon icon-chevron-circle-left icon-lg icon-fw"></span></span> Back', Url::previous(), ['class' => 'btn btn-labeled arrow-default']) ?>
-            </div>
+            <?php Pjax::begin(['options' => ['class' => 'panel-body panel-collapse']]); ?>
+
+                    <?= $this->render('partials/_search', ['model' => $searchModel]); ?>
+                    <?= GridView::widget([
+                        'dataProvider' => $dataProvider,
+                        'tableOptions' => ['class' => 'table table-hover table-striped  dataTable no-footer dtr-inline'],
+                        'options' => ['class' => ''],
+                        'columns' => [
+                            ['class' => 'yii\grid\SerialColumn'],
+                            'first_name',
+                            'last_name',
+                            'phone_number',
+                            'email:email',
+                            'username',
+                            'created_at:date',
+                            'updated_at:date',
+
+                            ['class' => 'yii\grid\ActionColumn'],
+                        ],
+                    ]); ?>
+
+            <?php Pjax::end(); ?>
         </div>
-
-        <?php Pjax::begin(['options' => ['class' => 'row']]); ?>
-            <?= $this->render('partials/_search', ['model' => $searchModel]); ?>
-            <?= GridView::widget([
-                'dataProvider' => $dataProvider,
-//                'filterModel' => $searchModel,
-                'tableOptions' => ['class' => 'table table-hover table-striped  dataTable no-footer dtr-inline'],
-                'options' => ['class' => 'col-sm-12'],
-                'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
-                    'first_name',
-                    'last_name',
-                    'phone_number',
-                    'email:email',
-                    'username',
-                    'created_at:date',
-                    'updated_at:date',
-
-                    ['class' => 'yii\grid\ActionColumn'],
-                ],
-            ]); ?>
-        <?php Pjax::end(); ?>
     </div>
 </div>

@@ -5,8 +5,9 @@ namespace backend\controllers;
 
 
 use backend\models\Company;
+use backend\models\forms\InvestigationForm;
 use backend\models\forms\UserForm;
-use backend\models\Investigation;
+use backend\models\services\InvestigationService;
 use backend\models\services\UserService;
 use backend\models\User;
 use yii\web\BadRequestHttpException;
@@ -55,26 +56,53 @@ class WizardController extends Controller
      */
     public function actionCompany($id = null)
     {
-        /** @var Company $company */
         $company = Company::create($id);
         $request = Yii::$app->getRequest();
 
-        if ($request->isPost && $company->load($request->post())) {
-            $company->save();
-        }
-
-        return $this->smartRender('index', [
+        $options = [
             'isCompany' => true,
             'companyForm' => $company,
-            'selected' => $company->id,
-            'isUpdate' => $company->id > 0 ? true : false,
-        ]);
+            'selected' => null,
+            'isUpdate' => false,
+        ];
+
+        if ($request->isPost && $company->load($request->post()) && $company->save()) {
+            $options['companyForm'] = $company;
+            $options['selected'] = $company->id;
+            $options['isUpdate'] = true;
+        }
+
+        return $this->smartRender('index', $options);
+    }
+
+    /**
+     * Gets info about company by id
+     *
+     * @param null $id
+     * @return string
+     * @throws BadRequestHttpException
+     */
+    public function actionCompanyInfo($id = null)
+    {
+        $request = Yii::$app->getRequest();
+        $id = (int) $id;
+        if ($id > 0 && $request->isPjax && $company = Company::findOne($id)) {
+
+            return $this->renderAjax('index', [
+                'isCompany' => true,
+                'companyForm' => $company,
+                'selected' => $company->id,
+                'isUpdate' => true,
+            ]);
+        }
+
+        throw new BadRequestHttpException();
     }
 
     /**
      * Shows User tab
      *
-     * @param string $id
+     * @param null $id
      * @return string
      */
     public function actionUser($id = null)
@@ -116,29 +144,36 @@ class WizardController extends Controller
     /**
      * Shows Investigation(Applicant) tab
      *
-     * @param string $id
      * @return string
      */
-    public function actionInvestigation($id = null)
+    public function actionInvestigation()
     {
-        /** @var Investigation $investigation */
-        $investigation = Investigation::create($id);
+        /** @var InvestigationForm $investigationForm */
+        $investigationForm = Yii::createObject(InvestigationForm::class);
         $request = Yii::$app->getRequest();
 
-        if ($request->isPost && $investigation->load($request->post()) && $investigation->save()) {
-            return $this->redirect(['investigation/view', 'id' => $investigation->id]);
+        if (
+            $request->isPost
+            && $investigationForm->load($request->post())
+            && $investigationForm->validate()
+        ) {
+            /** @var InvestigationService $service */
+            $service = Yii::createObject(InvestigationService::class);
+            if ($service->save($investigationForm)) {
+                $investigationForm = Yii::createObject(InvestigationForm::class);
+            } else {
+                $this->setFlash('error', 'The applicant was not saved');
+            }
         }
 
         return $this->smartRender('index', [
             'isInvestigation' => true,
-            'investigationForm' => $investigation,
-            'selected' => $investigation->company_id,
-            'isUpdate' => $investigation->id > 0 ? true : false,
+            'investigationForm' => $investigationForm,
         ]);
     }
 
     /**
-     * list users in company for dep dropdown
+     * list users in company
      *
      * @return string JSON output
      */

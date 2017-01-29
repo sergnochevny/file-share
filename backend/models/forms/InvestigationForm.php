@@ -13,7 +13,7 @@ final class InvestigationForm extends Model
     public $company_id;
 
     /** @var string */
-    public $name;
+    public $title;
 
     /** @var string */
     public $description;
@@ -40,9 +40,9 @@ final class InvestigationForm extends Model
     {
         return [
             ['company_id', 'required', 'message' => 'Please choose the company'],
-            [['name'], 'required'],
+            [['title'], 'required'],
             [['company_id'], 'integer'],
-            [['name', 'contact_person', 'phone'], 'string', 'max' => 255],
+            [['title', 'contact_person', 'phone'], 'string', 'max' => 255],
             [['description'], 'string', 'max' => 2000],
             [['email'], 'email'],
             [['start_date', 'end_date'], 'safe'], //or change to date validator
@@ -52,7 +52,7 @@ final class InvestigationForm extends Model
                 'targetAttribute' => ['company_id' => 'id']
             ],
             [
-                ['name'],
+                ['title'],
                 'unique',
                 'targetClass' => Investigation::class,
                 'message' => 'Sorry, the applicant with the same name has already been created',

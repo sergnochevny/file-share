@@ -1,60 +1,41 @@
 <?php
 
-use dmstr\widgets\Menu;
+use common\widgets\Menu;
 
 ?>
-<aside class="main-sidebar">
-    <section class="sidebar">
-
-        <!-- Sidebar user panel -->
-<!--        <div class="user-panel">
-            <div class="pull-left image">
-                <img src="<?/*= $directoryAsset */?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
-            </div>
-            <div class="pull-left info">
-                <p>Alexander Pierce</p>
-
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-            </div>
-        </div>-->
-
-        <!-- search form
-        <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search..."/>
-              <span class="input-group-btn">
-                <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-            </div>
-        </form>
-        <!-- /.search form -->
-
-        <?= Menu::widget(
-            [
-                'options' => ['class' => 'sidenav'],
-                'items' => [
-                    ['label' => 'Navigation', 'options' => ['class' => 'heading']],
-                    ['label' => 'Home', 'icon' => 'fa fa-sys fa-home', 'url' => ['/site/index']],
-                    ['label' => 'Wizard', 'icon' => 'fa fa-sys fa-magic', 'url' => ['/wizard']],
-                    ['label' => 'Companies', 'icon' => 'fa fa-sys fa-contao', 'url' => ['/company/index']],
-                    ['label' => 'Applicants', 'icon' => 'fa fa-sys fa-folder-open-o', 'url' => ['/investigation/index']],
-                    ['label' => 'History', 'icon' => 'fa fa-sys fa-history', 'url' => ['/investigation/history']],
-                    ['label' => 'Users', 'icon' => 'fa fa-sys fa-users', 'url' => ['/user/index']],
-                    ['label' => 'Files', 'icon' => 'fa fa-sys fa-save', 'url' => ['/file/index']],
-//                    ['label' => 'Roles & Access', 'url' => '#',
-//                        'items' => [
-//                            ['label' => 'Role', 'icon' => 'fa fa-users', 'url' => ['/admin/role']],
-//                            ['label' => 'Route', 'icon' => 'fa fa-users', 'url' => ['/admin/route']],
-//                            ['label' => 'Permission', 'icon' => 'fa fa-users', 'url' => ['/admin/permission']],
-//                            ['label' => 'Assignment', 'icon' => 'fa fa-users', 'url' => ['/admin/assignment']],
-//                        ]
-//                    ],
-                ],
-                'itemOptions' => ['class' => 'sidenav-item']
-            ]
-        ) ?>
-
-    </section>
-
-</aside>
+<div class="layout-sidebar">
+    <div class="layout-sidebar-backdrop"></div>
+    <div class="layout-sidebar-body">
+        <div class="custom-scrollbar">
+            <nav id="sidenav" class="sidenav-collapse collapse">
+                <?= Menu::widget(
+                    [
+                        'options' => ['class' => 'sidenav'],
+                        'itemOptions' => ['class' => 'sidenav-item'],
+                        'linkTemplate' => '<a href="{url}"><span class="sidenav-icon icon {icon}"></span> <span class="sidenav-label">{label}</span></a>',
+                        'items' => [
+                            ['label' => 'Navigation', 'options' => ['class' => 'sidenav-heading']],
+                            ['label' => 'Home', 'url' => ['/site/index'], 'options' => ['icon' => 'icon-home']],
+                            ['label' => 'Wizard', 'url' => ['/wizard/company'], 'options' => ['icon' => 'icon-magic']],
+                            ['label' => 'Companies', 'url' => ['/company/index'], 'options' => ['icon' => 'icon-contao']],
+                            ['label' => 'Applicants','url' => ['/investigation/index'],'options' => ['icon' => 'icon-folder-open-o']],
+                            ['label' => 'History', 'url' => ['/investigation/history'], 'options' => ['icon' => 'icon-history']],
+                            ['label' => 'Files', 'url' => ['/file/index'], 'options' => ['icon' => 'icon-users']],
+                            ['label' => 'Users', 'url' => ['/user/index'], 'options' => ['icon' => 'icon-save']],
+                        ],
+                    ]
+                ) ?>
+                <!--ul class="sidenav">
+                    <li class="sidenav-item">
+                        <a href="investigation.php">
+                            <span class="badge badge-warning" title="Active">13</span>
+                            <span class="badge badge-danger" title="Cancelled">2</span>
+                            <span class="sidenav-icon icon icon-folder-open-o"></span>
+                            <span class="sidenav-label">Applicants</span>
+                        </a>
+                    </li>
+                </ul-->
+            </nav>
+        </div>
+    </div>
+</div>
