@@ -205,4 +205,5 @@ class WizardController extends Controller
             ? $this->renderAjax($view, $viewData)
             : $this->render($view, $viewData);
     }
+
 }

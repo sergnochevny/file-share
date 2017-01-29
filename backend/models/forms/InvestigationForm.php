@@ -59,4 +59,5 @@ final class InvestigationForm extends Model
             ],
         ];
     }
+
 }
