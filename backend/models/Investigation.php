@@ -5,7 +5,6 @@ namespace backend\models;
 
 use backend\behaviors\CitrixFolderBehavior;
 use common\models\Company;
-use yii\db\ActiveQuery;
 use yii\db\Query;
 
 /**
