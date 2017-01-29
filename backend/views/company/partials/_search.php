@@ -20,7 +20,9 @@ use yii\widgets\ActiveForm;
     <div class="col-sm-6">
         <?= $form->field($model, 'name', [
             'options' => [
-                'class' => 'dataTables_length'
+                'id' => 'pagesize',
+                'data-submit' => true,
+                'class' => 'search-select'
             ],
             'template' => '<label>Show {input} entries</label>',
         ])->dropDownList(FileSearch::$output_size, [
@@ -31,7 +33,7 @@ use yii\widgets\ActiveForm;
     <div class="col-sm-6">
         <?= $form->field($model, 'name', [
             'options' => [
-                'class' => 'dataTables_filter'
+                'class' => 'search-line'
             ]
         ])->textInput([
             'class' => 'form-control input-sm',

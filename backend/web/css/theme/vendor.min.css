@@ -5098,34 +5098,34 @@ html[xmlns] .flexslider .slides {
     content: "\f0dd"
 }
 
-.dataTables_length {
+.search-select {
     margin-bottom: 0;
     margin-top: 0;
     text-align: left
 }
 
-.dataTables_length > label {
+.search-select > label {
     font-weight: 400;
     text-align: left;
     white-space: nowrap
 }
 
-.dataTables_length > label > select {
+.search-select > label > select {
     display: inline-block;
     width: 75px
 }
 
 @media screen and (max-width: 767px) {
-    .dataTables_length {
+    .field-usersearch-pagesize {
         text-align: center
     }
 }
 
-.dataTables_filter {
+.search-line {
     text-align: right
 }
 
-.dataTables_filter > label {
+.search-line > label {
     background-color: transparent;
     border: 0;
     color: transparent;
@@ -5135,7 +5135,7 @@ html[xmlns] .flexslider .slides {
     text-shadow: none
 }
 
-.dataTables_filter > label:after {
+.search-line > label:after {
     color: #a3a3a3;
     content: "\f002";
     display: block;
@@ -5153,7 +5153,7 @@ html[xmlns] .flexslider .slides {
     z-index: 5
 }
 
-.dataTables_filter > label > input {
+.search-line > label > input {
     display: inline-block;
     font-family: Roboto, sans-serif;
     padding-left: 30px;
@@ -5161,13 +5161,13 @@ html[xmlns] .flexslider .slides {
 }
 
 @media screen and (max-width: 767px) {
-    .dataTables_filter > label {
+    .search-line > label {
         display: block;
         margin-bottom: 10px;
         margin-top: 10px
     }
 
-    .dataTables_filter > label > input {
+    .search-line > label > input {
         display: block;
         width: 100%
     }
