@@ -15,13 +15,6 @@ class CompanySearch extends Company
 
     public $pagesize = 10;
 
-    public static $output_size = [
-        10 => 10,
-        25 => 25,
-        50 => 50,
-        100 => 100,
-    ];
-
     /**
      * @inheritdoc
      */

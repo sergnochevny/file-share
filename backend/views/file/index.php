@@ -76,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                 </div>
                 <div class="form-inline no-footer">
-                    <?= $this->render('partials/_search', ['model' => $searchModel]); ?>
+                    <?= $this->render('/search/_search', ['model' => $searchModel]); ?>
 
                     <?= GridView::widget([
                         'dataProvider' => $dataProvider,

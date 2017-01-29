@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use backend\models\search\FileSearch;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\FileSearch */
@@ -27,10 +26,12 @@ use backend\models\search\FileSearch;
                 'data-submit' => true
             ],
             'template' => '<label>Show {input} entries</label>',
-        ])->dropDownList(FileSearch::$output_size, [
-            'class' => 'form-control input-sm',
-            'placeholder' => 'Search',
-        ])->label(false) ?>
+        ])->dropDownList([10 => 10, 25 => 25, 50 => 50, 100 => 100,],
+            [
+                'class' => 'form-control input-sm',
+                'placeholder' => 'Search',
+            ]
+        )->label(false) ?>
     </div>
     <div class="col-sm-6">
         <?= $form->field($model, 'name')->textInput([
