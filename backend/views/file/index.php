@@ -62,11 +62,15 @@ $this->params['breadcrumbs'][] = $this->title;
                         ]
                     ); ?>
                     <?= $uploadForm->field($uploadModel, 'file')->fileInput(['id' => "file"])->label(false); ?>
-                    <?= Html::submitButton('<span class="btn-label"><span class="icon icon-upload  icon-lg icon-fw"></span></span>Upload',[
+                    <?= Html::submitButton('<span class="btn-label"><span class="icon icon-upload  icon-lg icon-fw"></span></span>Upload', [
                         'id' => "send",
                         'class' => 'btn btn-sm btn-labeled arrow-warning send-file-button'
                     ]); ?>
-                    <?php \backend\widgets\ActiveForm::end(); ?>
+
+                    <?php
+                    $this->registerJsFile(YII_ENV_DEV ? '@web/js/input_upload_submit.js' : '@web/js/input_upload_submit.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+                    \backend\widgets\ActiveForm::end();
+                    ?>
                     <div class="panel panel-body" data-toggle="match-height">
                         <div class="progress progress-xs">
                             <div class="progress-bar progress-bar-indicating progress-bar-warning" role="progressbar"
@@ -87,7 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         'summaryOptions' => ['class' => 'col-sm-6'],
                         'options' => ['class' => 'row'],
-                        'layout'=>"<div class='col-sm-12'>{items}</div>\n{summary}{pager}",
+                        'layout' => "<div class='col-sm-12'>{items}</div>\n{summary}{pager}",
                         'columns' => [
                             [
                                 'attribute' => 'name',

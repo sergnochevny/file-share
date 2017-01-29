@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
                 'data-submit' => true,
                 'class' => 'search-select'
             ],
-            'template' => '<label>Show {input} entries</label>',
+            'template' => 'Show {input} entries',
         ])->dropDownList([10 => 10, 25 => 25, 50 => 50, 100 => 100,],
             [
                 'class' => 'form-control input-sm',

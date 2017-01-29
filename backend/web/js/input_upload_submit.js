@@ -1,5 +1,5 @@
 (function ($) {
-    $(document).on('change', '[data-submit]', function (event) {
+    $(document).on('change', '[type=file]', function (event) {
         event.preventDefault();
         $(this).closest('form').trigger('submit');
     });
