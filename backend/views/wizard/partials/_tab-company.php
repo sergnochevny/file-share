@@ -10,7 +10,7 @@ use yii\helpers\Url;
 
 <div id="tab-1" class="tab-pane active">
     <?php $form = \backend\widgets\ActiveForm::begin([
-        'action' => ['company', 'id' => $companyForm->id],//[$isUpdate ? 'company-update' : 'company'],
+        'action' => ['company', 'id' => $companyForm->id],
         'id' => 'company-form',
         'options' => [
             'data-pjax' => 'wizard-container',

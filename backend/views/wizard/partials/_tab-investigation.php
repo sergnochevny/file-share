@@ -2,13 +2,13 @@
 /** @var $this \yii\web\View */
 use yii\jui\DatePicker;
 
-/** @var $investigationForm \backend\models\forms\InvestigationForm */
+/** @var $investigationForm \backend\models\Investigation*/
 ?>
 <div id="tab-3" class="tab-pane active">
     <?php $form = \backend\widgets\ActiveForm::begin([
         'id' => 'investigation-form',
         'options' => ['data-pjax' => 'wizard-container'],
-        'action' => ['investigation'],
+        'action' => ['investigation', 'id' => $investigationForm->id],
     ]) ?>
     <div class="col-lg-6 col-lg-offset-3">
         <h2 align="center">
@@ -49,7 +49,7 @@ use yii\jui\DatePicker;
                 <span class="btn-label">
                     <span class="icon icon-check-square icon-lg icon-fw"></span>
                 </span>
-                Create
+                <?= $isUpdate ? 'Update' : 'Create' ?>
             </button>
         </div>
     </div>
