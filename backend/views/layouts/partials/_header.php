@@ -91,7 +91,7 @@ use yii\helpers\Url;
                                     <a class="list-group-item" href="messenger.php">
                                         <div class="notification">
                                             <div class="notification-media">
-                                                <?= Html::img(Url::to(['images/users/photo/1.jpg', true]), ['class' => 'rounded', 'width' => '40', 'height' => '40']) ?>
+                                                <?= Html::img(Url::to(['images/users/photo/1.jpg'], true), ['class' => 'rounded', 'width' => '40', 'height' => '40']) ?>
                                             </div>
                                             <div class="notification-content">
                                                 <small class="notification-timestamp">16 min</small>
@@ -107,7 +107,7 @@ use yii\helpers\Url;
                                     <a class="list-group-item" href="messenger.php">
                                         <div class="notification">
                                             <div class="notification-media">
-                                                <?= Html::img(Url::to(['images/users/photo/2.jpg', true]), ['class' => 'rounded', 'width' => '40', 'height' => '40']) ?>
+                                                <?= Html::img(Url::to(['images/users/photo/2.jpg'], true), ['class' => 'rounded', 'width' => '40', 'height' => '40']) ?>
                                             </div>
                                             <div class="notification-content">
                                                 <small class="notification-timestamp">2 hr</small>
@@ -123,7 +123,7 @@ use yii\helpers\Url;
                                     <a class="list-group-item" href="messenger.php">
                                         <div class="notification">
                                             <div class="notification-media">
-                                                <?= Html::img(Url::to(['images/users/photo/3.jpg', true]), ['class' => 'rounded', 'width' => '40', 'height' => '40']) ?>
+                                                <?= Html::img(Url::to(['images/users/photo/3.jpg'], true), ['class' => 'rounded', 'width' => '40', 'height' => '40']) ?>
                                             </div>
                                             <div class="notification-content">
                                                 <small class="notification-timestamp">Sep 20</small>
@@ -139,7 +139,7 @@ use yii\helpers\Url;
                                     <a class="list-group-item" href="messenger.php">
                                         <div class="notification">
                                             <div class="notification-media">
-                                                <?= Html::img(Url::to(['images/users/photo/1.jpg', true]), ['class' => 'rounded', 'width' => '40', 'height' => '40']) ?>
+                                                <?= Html::img(Url::to(['images/users/photo/1.jpg'], true), ['class' => 'rounded', 'width' => '40', 'height' => '40']) ?>
                                             </div>
                                             <div class="notification-content">
                                                 <small class="notification-timestamp">16 min</small>
@@ -155,7 +155,7 @@ use yii\helpers\Url;
                                     <a class="list-group-item" href="messenger.php">
                                         <div class="notification">
                                             <div class="notification-media">
-                                                <?= Html::img(Url::to(['images/users/photo/2.jpg', true]), ['class' => 'rounded', 'width' => '40', 'height' => '40']) ?>
+                                                <?= Html::img(Url::to(['images/users/photo/2.jpg'], true), ['class' => 'rounded', 'width' => '40', 'height' => '40']) ?>
                                             </div>
                                             <div class="notification-content">
                                                 <small class="notification-timestamp">2 hr</small>
@@ -171,7 +171,7 @@ use yii\helpers\Url;
                                     <a class="list-group-item" href="messenger.php">
                                         <div class="notification">
                                             <div class="notification-media">
-                                                <?= Html::img(Url::to(['images/users/photo/3.jpg', true]), ['class' => 'rounded', 'width' => '40', 'height' => '40']) ?>
+                                                <?= Html::img(Url::to(['images/users/photo/3.jpg'], true), ['class' => 'rounded', 'width' => '40', 'height' => '40']) ?>
                                             </div>
                                             <div class="notification-content">
                                                 <small class="notification-timestamp">Sep 20</small>
@@ -266,7 +266,7 @@ use yii\helpers\Url;
                     </li>
                     <li class="dropdown hidden-xs">
                         <button class="navbar-account-btn" data-toggle="dropdown" aria-haspopup="true">
-                            <?= Html::img(Url::to(['images/admin-foto.jpg', true]), ['class' => 'rounded', 'width' => '32', 'height' => '32']) ?> Admin
+                            <?= Html::img(Url::to(['images/admin-foto.jpg'], true), ['class' => 'rounded', 'width' => '32', 'height' => '32']) ?> Admin
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right">
@@ -281,7 +281,7 @@ use yii\helpers\Url;
                             <li class="divider"></li>
                             <li><a href="#">Contacts</a></li>
                             <li><a href="#">Profile</a></li>
-                            <li><a href="login.php">Sign out</a></li>
+                            <li><a href="<?= Url::to(['/site/logout'], true) ?>" requset-method="POST">Sign out</a></li>
                         </ul>
                     </li>
                     <li class="visible-xs-block">
@@ -297,7 +297,7 @@ use yii\helpers\Url;
                         </a>
                     </li>
                     <li class="visible-xs-block">
-                        <a href="#">
+                        <a href="<?= Url::to(['/site/logout'], true) ?>" requset-method="POST">
                             <span class="icon icon-power-off icon-lg icon-fw"></span>
                             Sign out
                         </a>
