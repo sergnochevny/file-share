@@ -1,8 +1,10 @@
 <?php
 /** @var $this \yii\web\View */
+/** @var $investigationForm \backend\models\Investigation*/
+/** @var bool $isUpdate */
+
 use yii\jui\DatePicker;
 
-/** @var $investigationForm \backend\models\Investigation*/
 ?>
 <div id="tab-3" class="tab-pane active">
     <?php $form = \backend\widgets\ActiveForm::begin([
@@ -14,7 +16,6 @@ use yii\jui\DatePicker;
         <h2 align="center">
             <span class="d-ib">Select Company</span>
         </h2>
-
 
         <?= $this->render('_select-company', ['form' => $form, 'model' => $investigationForm])  ?>
 
@@ -40,7 +41,6 @@ use yii\jui\DatePicker;
 
             <?= $form->field($investigationForm, 'email')->textInput() ?>
         </div>
-
 
         <div class="clearfix"></div>
         <hr/>
