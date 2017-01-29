@@ -27,5 +27,4 @@
         pjaxSendRequest(createUrl, 'get', {'id': companyId});
     });
 
-
 })(jQuery);

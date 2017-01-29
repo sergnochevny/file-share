@@ -81,5 +81,4 @@ final class Investigation extends \common\models\Investigation
         $companies = Company::find()->select(['id', 'name'])->asArray();
         return array_column($companies->all(), 'name', 'id');
     }
-
 }
