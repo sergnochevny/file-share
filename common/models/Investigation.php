@@ -13,7 +13,7 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $company_id
  * @property string $start_date
  * @property string $end_date
- * @property string $title
+ * @property string $name
  * @property string $description
  * @property string $contact_person
  * @property string $phone
@@ -22,6 +22,7 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ * @property string $citrix_id
  *
  * @property array $statusLabels
  *
@@ -45,15 +46,13 @@ class Investigation extends AbstractUndeletableActiveRecord
         return '{{%investigation}}';
     }
 
-    public static function getStatusesList()
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
     {
         return [
-            self::STATUS_DELETED => 'Deleted',
-            self::STATUS_CANCELLED => 'Cancelled',
-            self::STATUS_PENDING => 'Pending',
-            self::STATUS_IN_HISTORY => 'In history',
-            self::STATUS_IN_PROGRESS => 'In progress',
-            self::STATUS_COMPLETED => 'Completed',
+            TimestampBehavior::className(),
         ];
     }
 
@@ -66,7 +65,7 @@ class Investigation extends AbstractUndeletableActiveRecord
             [['company_id'], 'required'],
             [['company_id'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
-            [['title', 'contact_person', 'phone', 'email'], 'string'],
+            [['name', 'contact_person', 'phone', 'email'], 'string'],
             [['description'], 'string', 'max' => 2000],
             ['status', 'default', 'value' => self::STATUS_PENDING],
             ['status', 'in', 'range' => [
@@ -81,13 +80,14 @@ class Investigation extends AbstractUndeletableActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
+    public static function getStatusesList(){
         return [
-            TimestampBehavior::className(),
+            self::STATUS_DELETED => 'Deleted',
+            self::STATUS_CANCELLED => 'Cancelled',
+            self::STATUS_PENDING => 'Pending',
+            self::STATUS_IN_HISTORY => 'In history',
+            self::STATUS_IN_PROGRESS => 'In progress',
+            self::STATUS_COMPLETED => 'Completed',
         ];
     }
 
@@ -101,6 +101,11 @@ class Investigation extends AbstractUndeletableActiveRecord
             'company_id' => 'Company ID',
             'start_date' => 'Start Date',
             'end_date' => 'End Date',
+            'name' => 'Name',
+            'description' => 'Description',
+            'contact_person' => 'Contact Person',
+            'phone' => 'Phone',
+            'email' => 'Email',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
