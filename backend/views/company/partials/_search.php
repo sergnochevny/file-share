@@ -1,30 +1,26 @@
 <?php
 
-use backend\models\FileSearch;
+use backend\models\search\FileSearch;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\FileSearch */
+/* @var $model backend\models\CompanySearch */
 /* @var $form yii\widgets\ActiveForm */
-
 ?>
+
 <?php $form = ActiveForm::begin([
     'action' => ['index'],
     'method' => 'get',
     'fieldConfig' => [
         'template' => '<label>{input}</label>',
     ],
-    'options' => [
-        'class' => 'row',
-        'data-pjax' => true
-    ]
+    'options' => ['class' => 'row']
 ]); ?>
     <div class="col-sm-6">
-        <?= $form->field($model, 'pagesize', [
+        <?= $form->field($model, 'name', [
             'options' => [
-                'id' => 'pagesize',
-                'data-submit' => true
+                'class' => 'dataTables_length'
             ],
             'template' => '<label>Show {input} entries</label>',
         ])->dropDownList(FileSearch::$output_size, [
@@ -33,9 +29,14 @@ use yii\widgets\ActiveForm;
         ])->label(false) ?>
     </div>
     <div class="col-sm-6">
-        <?= $form->field($model, 'name')->textInput([
+        <?= $form->field($model, 'name', [
+            'options' => [
+                'class' => 'dataTables_filter'
+            ]
+        ])->textInput([
             'class' => 'form-control input-sm',
             'placeholder' => 'Search',
         ])->label(false) ?>
     </div>
 <?php ActiveForm::end(); ?>
+
