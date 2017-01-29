@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 
+use backend\models\rbac\rules\CompanyEmployeeRule;
 use backend\models\services\CompanyService;
 use backend\models\forms\CompanyForm;
 use Yii;
@@ -31,6 +32,22 @@ class CompanyController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'ruleConfig'=>['class'=>CompanyEmployeeRule::className()],
+                'rules' => [
+                    [
+                        'actions' => ['login', 'password-reset', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index', 'wizard'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+
         ];
     }
 
