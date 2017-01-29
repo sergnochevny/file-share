@@ -48,6 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <h3 class="m-b-0">All files</h3>
                     <small>All downloaded files that relate to the present case</small>
                     <br/>
+                    <br/>
                     <?php $uploadForm = ActiveForm::begin(
                         [
                             'id' => "upload-file",
@@ -60,21 +61,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             ]
                         ]
                     ); ?>
-                    <?= $uploadForm->field($uploadModel, 'file')->fileInput([
-                        'id' => "file",
-                        'style' => "background-color: #fff;border-radius: 5px;display: block;margin: 10px auto 15px;padding: 5px;"
-                    ])->label(false); ?>
-                    <?= Html::submitButton(
-                        '<span class="btn-label">
-                                        <span class="icon icon-upload  icon-lg icon-fw"></span>
-                                    </span>Upload',
-                        [
-                            'id' => "send",
-                            'class' => 'btn btn-sm btn-labeled  arrow-warning'
-                        ]
-                    ); ?>
+                    <?= $uploadForm->field($uploadModel, 'file')->fileInput(['id' => "file"])->label(false); ?>
+                    <?= Html::submitButton('<span class="btn-label"><span class="icon icon-upload  icon-lg icon-fw"></span></span>Upload',[
+                        'id' => "send",
+                        'class' => 'btn btn-sm btn-labeled arrow-warning send-file-button'
+                    ]); ?>
                     <?php \backend\widgets\ActiveForm::end(); ?>
-                    <div class="panel panel-body" data-toggle="match-height" style="height: 84px;">
+                    <div class="panel panel-body" data-toggle="match-height">
                         <h5>Success progress bar</h5>
                         <div class="progress progress-xs">
                             <div class="progress-bar progress-bar-indicating progress-bar-warning" role="progressbar"

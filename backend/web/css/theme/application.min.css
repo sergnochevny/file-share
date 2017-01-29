@@ -75,7 +75,7 @@ html {
 
 .navbar-search {
     display: block;
-    height: 50px;
+    height: 45px;
     overflow: hidden;
     position: relative;
     -webkit-transition-duration: .3s;
@@ -94,9 +94,9 @@ html {
     cursor: pointer;
     display: block;
     font-size: 13px;
-    height: 50px;
+    height: 45px;
     left: 0;
-    line-height: 50px;
+    line-height: 45px;
     outline: 0;
     padding: 0;
     position: absolute;
@@ -111,7 +111,7 @@ html {
     border: none;
     display: block;
     font-size: 13px;
-    height: 50px;
+    height: 45px;
     line-height: 50px;
     outline: 0;
     padding-left: 50px;
@@ -263,8 +263,8 @@ html {
     border: none;
     display: block;
     float: left;
-    height: 50px;
-    line-height: 50px;
+    height: 45px;
+    line-height: 45px;
     margin-left: -15px;
     outline: 0;
     overflow: hidden;

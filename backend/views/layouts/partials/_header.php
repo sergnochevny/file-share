@@ -36,7 +36,7 @@ use yii\helpers\Url;
                 <span class="sr-only">Toggle navigation</span>
                 <span class="arrow-up"></span>
                 <span class="ellipsis ellipsis-vertical">
-              <img class="ellipsis-object" width="32" height="32" src="images/admin-foto.jpg" alt="Admin">
+                <?= Html::img(Url::to(['images/admin-foto.jpg', true]), ['class' => 'ellipsis-object', 'width' => '32', 'height' => '32']) ?>
             </span>
             </button>
         </div>
@@ -91,8 +91,7 @@ use yii\helpers\Url;
                                     <a class="list-group-item" href="messenger.php">
                                         <div class="notification">
                                             <div class="notification-media">
-                                                <img class="rounded" width="40" height="40"
-                                                     src="images/users/photo/1.jpg" alt="Harry Jones">
+                                                <?= Html::img(Url::to(['images/users/photo/1.jpg', true]), ['class' => 'rounded', 'width' => '40', 'height' => '40']) ?>
                                             </div>
                                             <div class="notification-content">
                                                 <small class="notification-timestamp">16 min</small>
@@ -108,8 +107,7 @@ use yii\helpers\Url;
                                     <a class="list-group-item" href="messenger.php">
                                         <div class="notification">
                                             <div class="notification-media">
-                                                <img class="rounded" width="40" height="40"
-                                                     src="images/users/photo/2.jpg" alt="Daniel Taylor">
+                                                <?= Html::img(Url::to(['images/users/photo/2.jpg', true]), ['class' => 'rounded', 'width' => '40', 'height' => '40']) ?>
                                             </div>
                                             <div class="notification-content">
                                                 <small class="notification-timestamp">2 hr</small>
@@ -125,8 +123,7 @@ use yii\helpers\Url;
                                     <a class="list-group-item" href="messenger.php">
                                         <div class="notification">
                                             <div class="notification-media">
-                                                <img class="rounded" width="40" height="40"
-                                                     src="images/users/photo/3.jpg" alt="Charlotte Harrison">
+                                                <?= Html::img(Url::to(['images/users/photo/3.jpg', true]), ['class' => 'rounded', 'width' => '40', 'height' => '40']) ?>
                                             </div>
                                             <div class="notification-content">
                                                 <small class="notification-timestamp">Sep 20</small>
@@ -142,8 +139,7 @@ use yii\helpers\Url;
                                     <a class="list-group-item" href="messenger.php">
                                         <div class="notification">
                                             <div class="notification-media">
-                                                <img class="rounded" width="40" height="40"
-                                                     src="images/users/photo/1.jpg" alt="Harry Jones">
+                                                <?= Html::img(Url::to(['images/users/photo/1.jpg', true]), ['class' => 'rounded', 'width' => '40', 'height' => '40']) ?>
                                             </div>
                                             <div class="notification-content">
                                                 <small class="notification-timestamp">16 min</small>
@@ -159,8 +155,7 @@ use yii\helpers\Url;
                                     <a class="list-group-item" href="messenger.php">
                                         <div class="notification">
                                             <div class="notification-media">
-                                                <img class="rounded" width="40" height="40"
-                                                     src="images/users/photo/2.jpg" alt="Daniel Taylor">
+                                                <?= Html::img(Url::to(['images/users/photo/2.jpg', true]), ['class' => 'rounded', 'width' => '40', 'height' => '40']) ?>
                                             </div>
                                             <div class="notification-content">
                                                 <small class="notification-timestamp">2 hr</small>
@@ -176,8 +171,7 @@ use yii\helpers\Url;
                                     <a class="list-group-item" href="messenger.php">
                                         <div class="notification">
                                             <div class="notification-media">
-                                                <img class="rounded" width="40" height="40"
-                                                     src="images/users/photo/3.jpg" alt="Charlotte Harrison">
+                                                <?= Html::img(Url::to(['images/users/photo/3.jpg', true]), ['class' => 'rounded', 'width' => '40', 'height' => '40']) ?>
                                             </div>
                                             <div class="notification-content">
                                                 <small class="notification-timestamp">Sep 20</small>
@@ -272,7 +266,7 @@ use yii\helpers\Url;
                     </li>
                     <li class="dropdown hidden-xs">
                         <button class="navbar-account-btn" data-toggle="dropdown" aria-haspopup="true">
-                            <img class="rounded" width="36" height="36" src="images/admin-foto.jpg" alt="Admin"> Admin
+                            <?= Html::img(Url::to(['images/admin-foto.jpg', true]), ['class' => 'rounded', 'width' => '32', 'height' => '32']) ?> Admin
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right">
