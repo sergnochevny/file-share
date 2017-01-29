@@ -45,7 +45,7 @@ class CompanyController extends Controller
         $searchModel = new CompanySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
-        Url::remember();
+        Url::remember(Yii::$app->request->url, 'back');
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -59,7 +59,7 @@ class CompanyController extends Controller
      */
     public function actionView($id)
     {
-        Url::remember();
+        Url::remember(Yii::$app->request->url, 'back');
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);

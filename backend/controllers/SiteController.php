@@ -63,13 +63,13 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        Url::remember();
+        Url::remember(Yii::$app->request->url, 'back');
         return $this->render('index');
     }
 
     public function actionWizard()
     {
-        Url::remember();
+        Url::remember(Yii::$app->request->url, 'back');
         return $this->render('wizard');
     }
 
@@ -85,7 +85,7 @@ class SiteController extends Controller
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-        Url::remember();
+        Url::remember(Yii::$app->request->url, 'back');
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
@@ -104,7 +104,7 @@ class SiteController extends Controller
      */
     public function actionPasswordReset()
     {
-        Url::remember();
+        Url::remember(Yii::$app->request->url, 'back');
         $model = new PasswordResetRequestForm;
         return $this->render('password-reset', ['model' => $model]);
     }

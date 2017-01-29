@@ -51,7 +51,7 @@ class FileController extends Controller
         $uploadModel = new FileUpload;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
-        Url::remember();
+        Url::remember(Yii::$app->request->url, 'back');
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -66,7 +66,7 @@ class FileController extends Controller
      */
     public function actionView($id)
     {
-        Url::remember();
+        Url::remember(Yii::$app->request->url, 'back');
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);

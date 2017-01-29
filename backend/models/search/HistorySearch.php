@@ -20,10 +20,7 @@ class HistorySearch extends Company
      */
     public function rules()
     {
-        return [
-            [['id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'address', 'city', 'state', 'zip'], 'safe'],
-        ];
+        return [];
     }
 
     /**
@@ -31,7 +28,6 @@ class HistorySearch extends Company
      */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
