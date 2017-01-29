@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use backend\models\HistorySearch;
+use backend\models\search\HistorySearch;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;

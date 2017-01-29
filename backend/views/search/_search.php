@@ -26,19 +26,17 @@ use yii\widgets\ActiveForm;
                 'data-submit' => true,
                 'class' => 'search-select'
             ],
-            'template' => 'Show {input} entries',
-        ])->dropDownList([10 => 10, 25 => 25, 50 => 50, 100 => 100,],
-            [
-                'class' => 'form-control input-sm',
-                'placeholder' => 'Search',
-            ]
-        )->label(false) ?>
+            'template' => '<label>Show {input} entries</label>',
+        ])->dropDownList([10 => 10, 25 => 25, 50 => 50, 100 => 100], [
+            'class' => 'form-control input-sm',
+            'placeholder' => 'Search',
+        ])->label(false) ?>
     </div>
     <div class="col-sm-6">
         <?= $form->field($model, 'name', [
             'options' => [
-                'class' => 'search-line'
-            ]
+                'class' => 'search-line',
+            ],
         ])->textInput([
             'class' => 'form-control input-sm',
             'placeholder' => 'Search',
