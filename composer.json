@@ -21,15 +21,15 @@
   "repositories": {
     "ait-citrix": {
       "type": "git",
-      "url": "https://gitlab.ait.com/ait/citrix"
+      "url": "git@gitlab.ait.com:ait/citrix.git"
     },
     "ait-guzzle": {
       "type": "git",
-      "url": "https://gitlab.ait.com/ait/guzzle"
+      "url": "git@gitlab.ait.com:ait/guzzle.git"
     },
     "ait-keystorage": {
       "type": "git",
-      "url": "https://gitlab.ait.com/ait/keystorage"
+      "url": "git@gitlab.ait.com:ait/keystorage.git"
     },
     "ait-extlib": {
       "type": "package",
@@ -38,7 +38,7 @@
         "name": "bower/ext-lib",
         "source": {
           "type": "git",
-          "url": "https://gitlab.ait.com/ait/extlib",
+          "url": "git@gitlab.ait.com:ait/extlib.git",
           "reference": "1.0.1"
         }
       }
