@@ -54,4 +54,5 @@ final class Company extends \common\models\Company
 
         return $behaviors;
     }
+
 }
