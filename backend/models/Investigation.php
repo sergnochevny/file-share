@@ -31,7 +31,7 @@ final class Investigation extends \common\models\Investigation
 
         }, 'filter' => function(Query $query) {
             if ($this->company_id) {
-                $query->where(['company_id' => $this->company_id]);
+                $query->andWhere(['company_id' => $this->company_id]);
             }
         }];
 
