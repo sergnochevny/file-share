@@ -71,8 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <h5>Success progress bar</h5>
                         <div class="progress progress-xs">
                             <div class="progress-bar progress-bar-indicating progress-bar-warning" role="progressbar"
-                                 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                <span class="sr-only">60% Complete (success)</span>
+                                 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
                             </div>
                         </div>
                     </div>
