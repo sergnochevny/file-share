@@ -100,4 +100,5 @@ class Company extends AbstractUndeletableActiveRecord
         return $this->hasMany(User::class, ['id' => 'user_id'])
             ->viaTable('user_company', ['company_id' => 'id']);
     }
+
 }

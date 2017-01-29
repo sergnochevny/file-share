@@ -18,7 +18,6 @@
         });
     }
 
-
     //Update company
     $(document).on('change', companyList, function (e) {
         e.preventDefault();

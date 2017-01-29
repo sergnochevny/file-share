@@ -131,4 +131,5 @@ class Investigation extends AbstractUndeletableActiveRecord
     {
         return $this->hasOne(Company::className(), ['id' => 'company_id'])->inverseOf('investigations');
     }
+
 }

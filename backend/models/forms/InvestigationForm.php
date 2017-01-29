@@ -3,7 +3,6 @@
 
 namespace backend\models\forms;
 
-
 use common\models\Company;
 use common\models\Investigation;
 use yii\base\Model;
