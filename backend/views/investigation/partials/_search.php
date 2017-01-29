@@ -1,6 +1,6 @@
 <?php
 
-use backend\models\FileSearch;
+use backend\models\search\FileSearch;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
