@@ -4,6 +4,7 @@
 namespace console\controllers;
 
 
+use backend\components\rbac\rules\EmployeeRule;
 use common\models\User;
 use yii\console\Controller;
 use yii\helpers\Console;
@@ -48,6 +49,15 @@ class ProtusController extends Controller
         //add all client permissions to admin
         $manager->addChild($admin, $client);
 
+        $rule = new EmployeeRule();
+        $manager->add($rule);
+
+        $employee = $manager->createPermission('employee');
+        $employee->description = 'Employee';
+        $employee->ruleName = $rule->name;
+        $manager->add($employee);
+
+        $manager->addChild($client, $employee);
         $this->stdout('OK' . "\n");
     }
 
