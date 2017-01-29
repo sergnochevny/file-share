@@ -9,6 +9,7 @@ use backend\models\forms\CompanyForm;
 use Yii;
 use common\models\Company;
 use backend\models\CompanySearch;
+use yii\filters\AccessControl;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -37,13 +38,7 @@ class CompanyController extends Controller
                 'ruleConfig'=>['class'=>CompanyEmployeeRule::className()],
                 'rules' => [
                     [
-                        'actions' => ['login', 'password-reset', 'error'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => ['logout', 'index', 'wizard'],
-                        'allow' => true,
-                        'roles' => ['@'],
+                        'actions' => ['index'],
                     ],
                 ],
             ],

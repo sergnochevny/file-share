@@ -21,20 +21,20 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
+            'access' => array(
                 'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['login', 'password-reset', 'error'],
+                'rules' => array(
+                    array(
+                        'actions' => array('login', 'password-reset', 'error'),
                         'allow' => true,
-                    ],
-                    [
-                        'actions' => ['logout', 'index', 'wizard'],
+                    ),
+                    array(
+                        'actions' => array('logout', 'index', 'wizard'),
                         'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
+                        'roles' => array('@'),
+                    ),
+                ),
+            ),
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
