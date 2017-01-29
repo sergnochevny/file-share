@@ -10,21 +10,25 @@ use yii\web\AssetBundle;
 class AppAsset extends AssetBundle
 {
     public $basePath = '@webroot';
-
     public $baseUrl = '@web';
 
     public $css = [
-        'css/main.css',
-        'css/elephant.min.css',
+        'css/theme/application.min.css',
+        'css/theme/elephant.min.css',
+        'css/theme/login.min.css',
+        'css/theme/main.min.css',
+        'css/theme/profile.min.css',
+        'css/theme/vendor.min.css',
     ];
 
     public $js = [
-        'js/main.js',
+        'js/theme/elephant.min.js',
+        'js/theme/application.min.js',
+        'js/theme/main.min.js',
     ];
 
     public $depends = [
         'yii\web\YiiAsset',
-        'backend\assets\AdminLTEAsset',
         'common\assets\ExtLibAsset'
     ];
 }

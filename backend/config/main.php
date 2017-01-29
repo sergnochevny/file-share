@@ -17,6 +17,18 @@ return [
         ],
     ],
     'components' => [
+        'assetManager' => [
+            'bundles' => [
+                'yii\web\JqueryAsset' => [
+                    'sourcePath' => null,
+                    'basePath' => '@webroot',
+                    'baseUrl' => '@web',
+                    'js' => [
+                        'js/theme/vendor.min.js',
+                    ]
+                ],
+            ],
+        ],
         'as access' => [
             'class' => 'mdm\admin\components\AccessControl',
             'allowActions' => [
@@ -51,6 +63,7 @@ return [
                 ],
             ],
         ],
+
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],

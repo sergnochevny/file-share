@@ -20,24 +20,17 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed201
             <title><?= Html::encode($this->title) ?></title>
             <?php $this->head() ?>
         </head>
-        <body class="hold-transition skin-purple sidebar-mini">
+        <body class="layout layout-header-fixed">
             <?php $this->beginBody() ?>
-                <div class="wrapper">
-                    <?= $this->render(
-                        'partials/_header.php',
-                        ['directoryAsset' => $directoryAsset]
-                    ) ?>
-                    <?= $this->render(
-                        'partials/_left.php',
-                        ['directoryAsset' => $directoryAsset]
-                    )
-                    ?>
-                    <?= $this->render(
-                        'partials/_content.php',
-                        ['content' => $content, 'directoryAsset' => $directoryAsset]
-                    ) ?>
+            <?= $this->render('partials/_header.php') ?>
+            <div class="layout-main">
+                <?= $this->render('partials/_left.php') ?>
+                <div class="layout-content">
+                    <div class="layout-content-body">
+                        <?= $content ?>
+                    </div>
                 </div>
-
+            </div>
             <?php $this->endBody() ?>
         </body>
     </html>

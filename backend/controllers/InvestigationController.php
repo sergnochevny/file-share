@@ -81,7 +81,7 @@ class InvestigationController extends Controller
         $searchModel = new InvestigationSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
+        return $this->render('history', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

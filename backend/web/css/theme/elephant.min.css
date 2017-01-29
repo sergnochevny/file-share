@@ -382,21 +382,11 @@ hr {
 
 .h1, .h2, .h3, h1, h2, h3 {
     margin-top: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 10px
 }
 
 .h1 .small, .h1 small, .h2 .small, .h2 small, .h3 .small, .h3 small, h1 .small, h1 small, h2 .small, h2 small, h3 .small, h3 small {
-    font-size: 60%;
-    display: block;
-    margin-top: 5px;
-}
-
-.h1 .fa, .h2 .fa, .h3 .fa{
-    font-size: 80%;
-}
-
-h1 .fa, h2 .fa, h3 .fa{
-    font-size: 80%;
+    font-size: 65%
 }
 
 .h4, .h5, .h6, h4, h5, h6 {
@@ -1895,7 +1885,7 @@ output {
     color: #ccc
 }
 
-.form-control, .hasDatepicker {
+.form-control {
     display: block;
     width: 100%;
     height: 34px;
@@ -3365,7 +3355,7 @@ tbody.collapse.in {
 .navbar {
     position: relative;
     min-height: 50px;
-    margin-bottom: 20px;
+    margin-bottom: 0;
     border: 1px solid transparent
 }
 
@@ -4955,7 +4945,7 @@ a.list-group-item-danger.active, a.list-group-item-danger.active:focus, a.list-g
 }
 
 .panel-default {
-    border-color: #33103F
+    border: 0;
 }
 
 .panel-default > .panel-heading {
@@ -6158,6 +6148,14 @@ button.close {
     .hidden-print {
         display: none !important
     }
+}
+
+@font-face {
+    font-family: FontAwesome;
+    src: url(../fonts/fontawesome-webfont.eot?v=4.6.3);
+    src: url(../fonts/fontawesome-webfont.eot?#iefix&v=4.6.3) format("embedded-opentype"), url(../fonts/fontawesome-webfont.woff2?v=4.6.3) format("woff2"), url(../fonts/fontawesome-webfont.woff?v=4.6.3) format("woff"), url(../fonts/fontawesome-webfont.ttf?v=4.6.3) format("truetype"), url(../fonts/fontawesome-webfont.svg?v=4.6.3#fontawesomeregular) format("svg");
+    font-weight: 400;
+    font-style: normal
 }
 
 .icon {
@@ -10293,6 +10291,14 @@ button.collapsed .ellipsis-object {
     -webkit-background-size: 50% 50%;
     background-size: 50% 50%
 }
+
+.file-thumbnail-att {
+    background-color: #431f4d;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='%23fff'%3E%3Cpath d='M19.4 11.7l-1.5-1.5-7.6 7.6C9 19 9 21.1 10.2 22.3c1.3 1.3 3.3 1.3 4.6 0l9.1-9.1c2.1-2.1 2.1-5.5 0-7.6-2.1-2.1-5.5-2.1-7.6 0l-9.6 9.6c-2.9 2.9-2.9 7.7 0 10.6 2.9 2.9 7.7 2.9 10.6 0l6.5-6.5-1.5-1.5-6.5 6.5c-2.1 2.1-5.5 2.1-7.6 0-2.1-2.1-2.1-5.5 0-7.6l9.6-9.6c1.3-1.3 3.3-1.3 4.6 0 1.3 1.3 1.3 3.3 0 4.6l-9.1 9.1c-.4.4-1.1.4-1.5 0-.4-.4-.4-1.1 0-1.5l7.6-7.6z'/%3E%3C/svg%3E");
+    -webkit-background-size: 50% 50%;
+    background-size: 50% 50%
+}
+
 .file-thumbnail-jpg,.file-thumbnail-jpeg,.file-thumbnail-png,.file-thumbnail-bmp,
 .file-thumbnail-pic {
     background-color: #004bff;
@@ -10300,13 +10306,6 @@ button.collapsed .ellipsis-object {
     -webkit-background-size: 50% 50%;
     background-size: 50% 50%
 
-}
-
-.file-thumbnail-att {
-    background-color: #431f4d;
-    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='%23fff'%3E%3Cpath d='M19.4 11.7l-1.5-1.5-7.6 7.6C9 19 9 21.1 10.2 22.3c1.3 1.3 3.3 1.3 4.6 0l9.1-9.1c2.1-2.1 2.1-5.5 0-7.6-2.1-2.1-5.5-2.1-7.6 0l-9.6 9.6c-2.9 2.9-2.9 7.7 0 10.6 2.9 2.9 7.7 2.9 10.6 0l6.5-6.5-1.5-1.5-6.5 6.5c-2.1 2.1-5.5 2.1-7.6 0-2.1-2.1-2.1-5.5 0-7.6l9.6-9.6c1.3-1.3 3.3-1.3 4.6 0 1.3 1.3 1.3 3.3 0 4.6l-9.1 9.1c-.4.4-1.1.4-1.5 0-.4-.4-.4-1.1 0-1.5l7.6-7.6z'/%3E%3C/svg%3E");
-    -webkit-background-size: 50% 50%;
-    background-size: 50% 50%
 }
 
 @media (min-width: 768px) {
