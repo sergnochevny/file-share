@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `auth_assignment` (
 -- Дамп данных таблицы protus.auth_assignment: ~1 rows (приблизительно)
 /*!40000 ALTER TABLE `auth_assignment` DISABLE KEYS */;
 INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
-	('admin', '1', 1485278137);
+	('admin', '2', 1485692238);
 /*!40000 ALTER TABLE `auth_assignment` ENABLE KEYS */;
 
 -- Дамп структуры для таблица protus.auth_item
@@ -46,8 +46,9 @@ CREATE TABLE IF NOT EXISTS `auth_item` (
 -- Дамп данных таблицы protus.auth_item: ~2 rows (приблизительно)
 /*!40000 ALTER TABLE `auth_item` DISABLE KEYS */;
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-	('admin', 1, NULL, NULL, NULL, 1485278136, 1485278136),
-	('client', 1, NULL, NULL, NULL, 1485278136, 1485278136);
+	('admin', 1, NULL, NULL, NULL, 1485692237, 1485692237),
+	('client', 1, NULL, NULL, NULL, 1485692237, 1485692237),
+	('employee', 2, 'Employee', 'isEmployee', NULL, 1485692237, 1485692237);
 /*!40000 ALTER TABLE `auth_item` ENABLE KEYS */;
 
 -- Дамп структуры для таблица protus.auth_item_child
@@ -64,7 +65,8 @@ CREATE TABLE IF NOT EXISTS `auth_item_child` (
 -- Дамп данных таблицы protus.auth_item_child: ~1 rows (приблизительно)
 /*!40000 ALTER TABLE `auth_item_child` DISABLE KEYS */;
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
-	('admin', 'client');
+	('admin', 'client'),
+	('client', 'employee');
 /*!40000 ALTER TABLE `auth_item_child` ENABLE KEYS */;
 
 -- Дамп структуры для таблица protus.auth_rule
@@ -79,6 +81,8 @@ CREATE TABLE IF NOT EXISTS `auth_rule` (
 
 -- Дамп данных таблицы protus.auth_rule: ~0 rows (приблизительно)
 /*!40000 ALTER TABLE `auth_rule` DISABLE KEYS */;
+INSERT INTO `auth_rule` (`name`, `data`, `created_at`, `updated_at`) VALUES
+	('isEmployee', 'O:42:"backend\\components\\rbac\\rules\\EmployeeRule":3:{s:4:"name";s:10:"isEmployee";s:9:"createdAt";i:1485692237;s:9:"updatedAt";i:1485692237;}', 1485692237, 1485692237);
 /*!40000 ALTER TABLE `auth_rule` ENABLE KEYS */;
 
 -- Дамп структуры для таблица protus.company
@@ -124,10 +128,10 @@ CREATE TABLE IF NOT EXISTS `file` (
 -- Дамп данных таблицы protus.file: ~4 rows (приблизительно)
 /*!40000 ALTER TABLE `file` DISABLE KEYS */;
 INSERT INTO `file` (`id`, `name`, `description`, `size`, `parent`, `type`, `citrix_id`, `created_at`, `updated_at`, `status`) VALUES
-	(1, 'file-name.pdf', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', 12000, '', 'pdf', '', 0, 0, 100),
 	(7, 'AllFiles', 'Shared files root directory', 0, 'root', 'folder', 'fob4f466-3fd1-4d95-b567-8ac02bdd1eef', 1485600094, 1485600094, 100),
 	(8, 'drag_img1.jpg', '', 7178, 'fob4f466-3fd1-4d95-b567-8ac02bdd1eef', 'jpg', 'fif44d98-d427-f689-0d3c-2ba2245767a1', 1485609057, 1485613263, 100),
-	(9, 'drag_img2.jpg', '', 13681, 'fob4f466-3fd1-4d95-b567-8ac02bdd1eef', 'jpg', 'fi47e9a7-a84a-a3ed-75d8-200d41353e84', 1485613024, 1485613118, 100);
+	(9, 'drag_img2.jpg', '', 13681, 'fob4f466-3fd1-4d95-b567-8ac02bdd1eef', 'jpg', 'fi47e9a7-a84a-a3ed-75d8-200d41353e84', 1485613024, 1485613118, 100),
+	(10, '126_1455808234.jpg', '', 16107, 'fob4f466-3fd1-4d95-b567-8ac02bdd1eef', 'jpg', 'fi99851b-71db-49d6-6922-73e0379bed75', 1485693241, 1485693241, 100);
 /*!40000 ALTER TABLE `file` ENABLE KEYS */;
 
 -- Дамп структуры для таблица protus.investigation
@@ -153,6 +157,8 @@ CREATE TABLE IF NOT EXISTS `investigation` (
 
 -- Дамп данных таблицы protus.investigation: ~0 rows (приблизительно)
 /*!40000 ALTER TABLE `investigation` DISABLE KEYS */;
+INSERT INTO `investigation` (`id`, `company_id`, `start_date`, `end_date`, `name`, `description`, `contact_person`, `phone`, `email`, `status`, `created_at`, `updated_at`, `citrix_id`) VALUES
+	(1, 19, '2017-01-31', '2017-01-31', 'Test', 'Test', 'fdsagasdf', '6546345', 'dsfhg@dskfjh.df', 250, 1485617937, 1485617937, 'fo261afb-858a-48a6-933b-f05163e0831f');
 /*!40000 ALTER TABLE `investigation` ENABLE KEYS */;
 
 -- Дамп структуры для таблица protus.key_storage
@@ -238,7 +244,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Дамп данных таблицы protus.user: ~1 rows (приблизительно)
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `first_name`, `last_name`, `phone_number`, `email`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `status`, `created_at`, `updated_at`) VALUES
-	(1, NULL, NULL, NULL, 'email@email.com', 'admin', 'EKX2GnSJ3821ACaXKm58WpMDJf5exemy', '$2y$13$9kbsHS5qL28fPar3sI6XwOX9h8KmcH.J7A29LpGtiVtKz32JFYM5y', NULL, 100, 1485278137, 1485278137);
+	(2, NULL, NULL, NULL, 'email@email.com', 'admin', 's8fG050TnphotWkYFWB5VA_vr-6DJDEg', '$2y$13$9WhOdxpxqma7h/j1G/ZxJuS4mDe/OiFcokSaK8wx7kRCGDTI61wr.', NULL, 100, 1485692238, 1485692238);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 -- Дамп структуры для таблица protus.user_company
