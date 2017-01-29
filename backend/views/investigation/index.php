@@ -34,19 +34,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'tableOptions' => ['class' => 'table table-hover table-striped  dataTable no-footer dtr-inline'],
-                    'options' => ['class' => ''],
+                    'summaryOptions' => ['class' => 'col-sm-6'],
+                    'pager' => [
+                        'options' => [
+                            'class' => 'col-sm-6',
+                        ]
+                    ],
+                    'options' => ['class' => 'row'],
+                    'layout'=>"<div class='col-sm-12'>{items}</div>\n{summary}{pager}",
                     'columns' => [
-                        ['class' => 'yii\grid\SerialColumn'],
-
-                        'id',
-                        'company_id',
+                        'name',
+                        'applicant',
                         'start_date',
                         'end_date',
-                        'description',
-                        // 'status',
-                        // 'created_at',
-                        // 'updated_at',
-
+                        'status',
                         ['class' => 'yii\grid\ActionColumn'],
                     ],
                 ]); ?>

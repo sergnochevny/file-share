@@ -1,15 +1,12 @@
 <?php
-
-
 namespace backend\models\forms;
-
 
 use backend\models\User;
 use yii\base\Model;
 
 final class UserForm extends Model
 {
-    /** @var  */
+    /** @var string */
     public $role;
 
     /** @var string */
@@ -36,7 +33,7 @@ final class UserForm extends Model
     /** @var string */
     public $password_repeat;
 
-    /** @var  User */
+    /** @var User */
     private $user;
 
     /**

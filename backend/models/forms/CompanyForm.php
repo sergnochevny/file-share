@@ -1,8 +1,5 @@
 <?php
-
-
 namespace backend\models\forms;
-
 
 use common\models\Company;
 use yii\base\Model;

@@ -2,16 +2,19 @@
 
 namespace backend\models;
 
-use Yii;
+use common\models\Investigation;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * FileSearch represents the model behind the search form about `backend\models\File`.
+ * InvestigationSearch represents the model behind the search form about `common\models\Investigation`.
  */
-class FileSearch extends File
+class InvestigationSearch extends Investigation
 {
+
     public $output_amount;
+    public $name;
+    public $applicant;
 
     public static $output_size = [
         10 => 10,
@@ -26,7 +29,8 @@ class FileSearch extends File
     public function rules()
     {
         return [
-            [['name'], 'safe'],
+            [['id', 'company_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['start_date', 'end_date', 'description'], 'safe'],
         ];
     }
 
@@ -48,7 +52,7 @@ class FileSearch extends File
      */
     public function search($params)
     {
-        $query = File::find();
+        $query = Investigation::find();
 
         // add conditions that should always apply here
 
@@ -67,17 +71,15 @@ class FileSearch extends File
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'size' => $this->size,
+            'company_id' => $this->company_id,
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
+            'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'parent', $this->parent])
-            ->andFilterWhere(['like', 'type', $this->type])
-            ->andFilterWhere(['like', 'citrix_id', $this->citrix_id]);
+        $query->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }
