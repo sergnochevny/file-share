@@ -61,7 +61,11 @@ class SiteController extends Controller
     public function actionIndex()
     {
         Url::remember(Yii::$app->request->url, 'back');
-        return $this->render('index');
+        if(Yii::$app->user->can('admin')){
+            return $this->render('index');
+        }else{
+            return $this->render('client');
+        }
     }
 
     public function actionWizard()
