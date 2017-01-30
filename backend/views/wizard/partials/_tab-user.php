@@ -20,7 +20,8 @@ use yii\helpers\Url;
         </h2>
 
         <div class="form-group">                            <?php /*todo get this list from db */ ?>
-            <?= Html::activeDropDownList($userForm, 'role', ['admin' => 'admin', 'client' => 'client'], ['id' => 'user-role', 'class' => 'form-control']); ?>
+            <?= Html::activeDropDownList($userForm, 'role', ['admin' => 'admin', 'client' => 'client'],
+                ['id' => 'user-role', 'class' => 'form-control', 'prompt' => ' - - -']); ?>
             <!--<span class="help-block">There is a choice of two or more people.</span>-->
         </div>
     </div>
@@ -46,7 +47,7 @@ use yii\helpers\Url;
                 'name' => 'user',
                 'options' => ['id'=>'user-list', 'prompt' => ' - - -'],
                 'pluginOptions'=>[
-                    'depends'=>['company-list'],
+                    'depends'=>['company-list', 'user-role'],
                     'placeholder' => 'Select...',
                     'url' => Url::to(['company-users'])
                 ]

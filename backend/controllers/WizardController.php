@@ -152,7 +152,7 @@ class WizardController extends Controller
     }
 
     /**
-     * list users in company for dep dropdown
+     * list users in company || admins for dep dropdown
      *
      * @return string JSON output
      */
@@ -162,8 +162,12 @@ class WizardController extends Controller
         $userList = [];
         $depDrops = Yii::$app->getRequest()->post('depdrop_all_params');
         $companyId = isset($depDrops['company-list']) ? (int)$depDrops['company-list'] : false;
+        $userRole = isset($depDrops['user-role']) ? $depDrops['user-role'] : false;
 
-        if ($companyId) {
+        if ('admin' == $userRole) {
+            $userList = User::findByRole($userRole)->select(['id', 'username as name'])->asArray()->all();
+
+        } else if ($companyId) {
             $company = Company::findOne($companyId);
             /** @var array $userList */
             $userList = $company->getUsers()->select(['id', 'username as name'])->asArray()->all();
