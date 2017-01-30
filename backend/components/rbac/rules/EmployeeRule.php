@@ -25,7 +25,7 @@ class EmployeeRule extends Rule
         } else return false;
         if(isset($company))
             foreach ($company->users as $item)
-             if ($item == $user) return true;
+             if ($item->id == $user) return true;
         return false;
     }
 
