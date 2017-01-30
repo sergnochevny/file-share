@@ -11,15 +11,15 @@ use common\widgets\Menu;
                 <?php
                     $items = [];
                     $items[] = ['label' => 'Navigation', 'options' => ['class' => 'sidenav-heading']];
-                    $items[] = ['label' => 'Home', 'url' => ['/site/index'], 'options' => ['icon' => 'icon-home']];
+                    $items[] = ['label' => 'Home', 'url' => ['/site'], 'options' => ['icon' => 'icon-home']];
                     if(Yii::$app->user->can('admin')){
-                        $items[] = ['label' => 'Companies', 'url' => ['/company/index'], 'options' => ['icon' => 'icon-contao']];
+                        $items[] = ['label' => 'Companies', 'url' => ['/company'], 'options' => ['icon' => 'icon-contao']];
                     }
-                    $items[] = ['label' => 'Applicants', 'url' => ['/investigation/index'], 'options' => ['icon' => 'icon-folder-open-o']];
-                    $items[] = ['label' => 'History', 'url' => ['/history/index'], 'options' => ['icon' => 'icon-history']];
-                    $items[] = ['label' => 'Files', 'url' => ['/file/index'], 'options' => ['icon' => 'icon-save']];
+                    $items[] = ['label' => 'Applicants', 'url' => ['/investigation'], 'options' => ['icon' => 'icon-folder-open-o']];
+                    $items[] = ['label' => 'History', 'url' => ['/history'], 'options' => ['icon' => 'icon-history']];
+                    $items[] = ['label' => 'Files', 'url' => ['/file'], 'options' => ['icon' => 'icon-save']];
                     if(Yii::$app->user->can('admin')) {
-                        $items[] = ['label' => 'Users', 'url' => ['/user/index'], 'options' => ['icon' => 'icon-users']];
+                        $items[] = ['label' => 'Users', 'url' => ['/user'], 'options' => ['icon' => 'icon-users']];
                     }
 
                 ?>
