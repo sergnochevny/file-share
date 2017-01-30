@@ -15,6 +15,7 @@ class InvestigationSearch extends Investigation
     public $pagesize = 10;
     public $name;
     public $company_name;
+    public $parent;
 
     /**
      * @inheritdoc
@@ -46,6 +47,7 @@ class InvestigationSearch extends Investigation
     public function search($params)
     {
         $query = Investigation::find()->joinWith('company');
+        if(!empty($this->parent)) $query->andWhere(['company_id' => $this->parent]);
 
         // add conditions that should always apply here
 

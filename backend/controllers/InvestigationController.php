@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use common\models\Company;
+use common\models\User;
 use Yii;
 use backend\models\Investigation;
 use backend\models\search\InvestigationSearch;
@@ -35,16 +37,23 @@ class InvestigationController extends Controller
      * Lists all Investigation models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($parent = null)
     {
+        $company = null;
         $searchModel = new InvestigationSearch();
+        if (!(Yii::$app->user->can('admin'))) {
+            $searchModel->parent = User::findOne(Yii::$app->user->id)->company->id;
+            $company = Company::findOne($searchModel->parent);
+        }
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
         Url::remember(Yii::$app->request->url, 'back');
-        return $this->render('index', [
+        $renderParams = [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-        ]);
+        ];
+        if (!empty($company)) $renderParams['company'] = $company;
+        return $this->render('index', $renderParams);
     }
 
     /**

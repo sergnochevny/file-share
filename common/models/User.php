@@ -28,7 +28,7 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  *
- * @property Company[] $companies
+ * @property Company $company
  */
 class User extends AbstractUndeletableActiveRecord implements IdentityInterface
 {
@@ -241,9 +241,9 @@ class User extends AbstractUndeletableActiveRecord implements IdentityInterface
     /**
      * @return UndeletableActiveQuery
      */
-    public function getCompanies()
+    public function getCompany()
     {
-        return $this->hasMany(Company::className(), ['id' => 'company_id'])
+        return $this->hasOne(Company::className(), ['id' => 'company_id'])
             ->viaTable('user_company', ['user_id' => 'id']);
     }
 

@@ -49,7 +49,6 @@ class FileSearch extends File
             if ($this->scenario == self::SCENARIO_APP) {
                 if (!Yii::$app->user->can('admin'))
                     $query
-                        ->joinWith(['company'])
                         ->joinWith(['users'])
                         ->andWhere(['user.id' => Yii::$app->user->id]);
             }

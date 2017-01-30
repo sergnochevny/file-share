@@ -11,6 +11,7 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
+    'defaultRoute' => 'site',
     'modules' => [
         'admin' => [
             'class' => 'mdm\admin\Module',
@@ -26,52 +27,6 @@ return [
                     'js' => [
                         'js/theme/vendor.min.js',
                     ]
-                ],
-            ],
-        ],
-        'as globalAccess' => [
-            'class' => 'common\behaviors\GlobalAccessBehavior',
-            'rules' => [
-                [
-                    'controllers' => ['file', 'history', 'investigation', 'wizard'],
-                    'allow' => true,
-                    'roles' => ['@'],
-                ],
-                [
-                    'controllers' => ['company', 'user'],
-                    'allow' => true,
-                    'roles' => ['admin'],
-                ],
-                [
-                    'controllers' => ['company'],
-                    'actions' => ['view'],
-                    'allow' => true,
-                    'roles' => ['client'],
-                ],
-                [
-                    'controllers' => ['site'],
-                    'allow' => true,
-                    'actions' => ['login'],
-                    'roles' => ['?'],
-                ],
-                [
-                    'controllers' => ['site'],
-                    'allow' => true,
-                    'actions' => ['logout'],
-                    'roles' => ['@'],
-                ],
-                [
-                    'controllers' => ['site'],
-                    'allow' => true,
-                    'actions' => ['error'],
-                    'roles' => ['?', '@'],
-                ],
-                [
-                    'allow' => true,
-                    'roles' => ['admin'],
-                ],
-                [
-                    'allow' => false,
                 ],
             ],
         ],
@@ -101,9 +56,54 @@ return [
             'errorAction' => 'site/error',
         ],
         'urlManager' => [
+            'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [
+        ],
+    ],
+    'as globalAccess' => [
+        'class' => 'common\behaviors\GlobalAccessBehavior',
+        'rules' => [
+            [
+                'controllers' => ['file', 'history', 'investigation', 'wizard'],
+                'allow' => true,
+                'roles' => ['@'],
+            ],
+            [
+                'controllers' => ['company', 'user'],
+                'allow' => true,
+                'roles' => ['admin'],
+            ],
+            [
+                'controllers' => ['company'],
+                'actions' => ['view'],
+                'allow' => true,
+                'roles' => ['client'],
+            ],
+            [
+                'controllers' => ['site'],
+                'allow' => true,
+                'actions' => ['login'],
+                'roles' => ['?'],
+            ],
+            [
+                'controllers' => ['site'],
+                'allow' => true,
+                'actions' => ['logout'],
+                'roles' => ['@'],
+            ],
+            [
+                'controllers' => ['site'],
+                'allow' => true,
+                'actions' => ['error'],
+                'roles' => ['?', '@'],
+            ],
+            [
+                'allow' => true,
+                'roles' => ['admin'],
+            ],
+            [
+                'allow' => false,
             ],
         ],
     ],
