@@ -58,141 +58,20 @@ use yii\helpers\Url;
                         <h4 class="navbar-text text-center">Hi, Admin</h4>
                     </li>
                     <li class="hidden-xs hidden-sm">
-                        <form class="navbar-search navbar-search-collapsed">
-                            <div class="navbar-search-group">
-                                <input class="navbar-search-input" type="text"
-                                       placeholder="Search for people, companies">
-                                <button class="navbar-search-toggler" title="Expand search form ( S )"
-                                        aria-expanded="false" type="submit">
-                                    <span class="icon icon-search icon-lg"></span>
-                                </button>
-                            </div>
-                        </form>
+                        <?= Html::beginForm('', 'post', ['class' => 'navbar-search navbar-search-collapsed']); ?>
+                            <?= Html::input('string', 'global-search', null, [
+                                'class' => 'navbar-search-input',
+                                'placeholder' => 'Search for people, companies'
+                            ]); ?>
+                            <?= Html::button(
+                                Html::tag('span', '', ['class' => 'icon icon-search icon-lg']), [
+                                    'class' => 'navbar-search-toggler', 'title' => 'Expand search form ( S )', 'aria-expanded' => 'false'
+                                ]
+                            ); ?>
+                        <?= Html::endForm(); ?>
                     </li>
-                    <li class="dropdown" style="display: none;">
-                        <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true">
-                          <span class="icon-with-child hidden-xs">
-                            <span class="icon icon-envelope-o icon-lg"></span>
-                            <span class="badge badge-danger badge-above right">6</span>
-                          </span>
-                            <span class="visible-xs-block">
-                            <span class="icon icon-envelope icon-lg icon-fw"></span>
-                            <span class="badge badge-danger pull-right">6</span>
-                            Messages
-                          </span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg">
-                            <div class="dropdown-header">
-                                <a class="dropdown-link" href="messenger.php">New Message</a>
-                                <h5 class="dropdown-heading">Recent messages</h5>
-                            </div>
-                            <div class="dropdown-body">
-                                <div class="list-group list-group-divided custom-scrollbar">
-                                    <a class="list-group-item" href="messenger.php">
-                                        <div class="notification">
-                                            <div class="notification-media">
-                                                <?= Html::img(Url::to(['images/users/photo/1.jpg'], true), ['class' => 'rounded', 'width' => '40', 'height' => '40']) ?>
-                                            </div>
-                                            <div class="notification-content">
-                                                <small class="notification-timestamp">16 min</small>
-                                                <h5 class="notification-heading">Harry Jones</h5>
-                                                <p class="notification-text">
-                                                    <small class="truncate">Lorem Ipsum is simply dummy text of the
-                                                        printing and typesetting industry.
-                                                    </small>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="list-group-item" href="messenger.php">
-                                        <div class="notification">
-                                            <div class="notification-media">
-                                                <?= Html::img(Url::to(['images/users/photo/2.jpg'], true), ['class' => 'rounded', 'width' => '40', 'height' => '40']) ?>
-                                            </div>
-                                            <div class="notification-content">
-                                                <small class="notification-timestamp">2 hr</small>
-                                                <h5 class="notification-heading">Daniel Taylor</h5>
-                                                <p class="notification-text">
-                                                    <small class="truncate">Lorem Ipsum is simply dummy text of the
-                                                        printing and typesetting industry.
-                                                    </small>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="list-group-item" href="messenger.php">
-                                        <div class="notification">
-                                            <div class="notification-media">
-                                                <?= Html::img(Url::to(['images/users/photo/3.jpg'], true), ['class' => 'rounded', 'width' => '40', 'height' => '40']) ?>
-                                            </div>
-                                            <div class="notification-content">
-                                                <small class="notification-timestamp">Sep 20</small>
-                                                <h5 class="notification-heading">Charlotte Harrison</h5>
-                                                <p class="notification-text">
-                                                    <small class="truncate">Lorem Ipsum is simply dummy text of the
-                                                        printing and typesetting industry.
-                                                    </small>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="list-group-item" href="messenger.php">
-                                        <div class="notification">
-                                            <div class="notification-media">
-                                                <?= Html::img(Url::to(['images/users/photo/1.jpg'], true), ['class' => 'rounded', 'width' => '40', 'height' => '40']) ?>
-                                            </div>
-                                            <div class="notification-content">
-                                                <small class="notification-timestamp">16 min</small>
-                                                <h5 class="notification-heading">Harry Jones</h5>
-                                                <p class="notification-text">
-                                                    <small class="truncate">Lorem Ipsum is simply dummy text of the
-                                                        printing and typesetting industry.
-                                                    </small>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="list-group-item" href="messenger.php">
-                                        <div class="notification">
-                                            <div class="notification-media">
-                                                <?= Html::img(Url::to(['images/users/photo/2.jpg'], true), ['class' => 'rounded', 'width' => '40', 'height' => '40']) ?>
-                                            </div>
-                                            <div class="notification-content">
-                                                <small class="notification-timestamp">2 hr</small>
-                                                <h5 class="notification-heading">Daniel Taylor</h5>
-                                                <p class="notification-text">
-                                                    <small class="truncate">Lorem Ipsum is simply dummy text of the
-                                                        printing and typesetting industry.
-                                                    </small>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a class="list-group-item" href="messenger.php">
-                                        <div class="notification">
-                                            <div class="notification-media">
-                                                <?= Html::img(Url::to(['images/users/photo/3.jpg'], true), ['class' => 'rounded', 'width' => '40', 'height' => '40']) ?>
-                                            </div>
-                                            <div class="notification-content">
-                                                <small class="notification-timestamp">Sep 20</small>
-                                                <h5 class="notification-heading">Charlotte Harrison</h5>
-                                                <p class="notification-text">
-                                                    <small class="truncate">Lorem Ipsum is simply dummy text of the
-                                                        printing and typesetting industry.
-                                                    </small>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="dropdown-footer">
-                                <a class="dropdown-btn" href="messenger.php">See All</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="dropdown" style="display: none">
-                        <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" style="height: 45px">
                           <span class="icon-with-child hidden-xs">
                             <span class="icon icon-bell-o icon-lg"></span>
                             <span class="badge badge-danger badge-above right">3</span>
