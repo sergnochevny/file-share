@@ -23,4 +23,23 @@ class User extends \common\models\User
 
         return static::find()->andWhere(['id' => $ids]);
     }
+
+    /**
+     * @return bool
+     */
+    public function isClient()
+    {
+        return !\Yii::$app->user->can('admin');
+    }
+
+    /**
+     * @return array
+     */
+    public function getColleaguesList()
+    {
+        $query = $this->company ? $this->company->getUsers() : static::findByRole('admin');
+        $users = $query->select(['id', 'username'])->asArray()->all();
+
+        return array_column($users, 'username', 'id');
+    }
 }
