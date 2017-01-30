@@ -36,6 +36,12 @@ final class UserForm extends Model
     /** @var User */
     private $user;
 
+    public function __construct(User $user, array $config = [])
+    {
+        $this->user = $user;
+        parent::__construct($config);
+    }
+
     /**
      * @inheritdoc
      */
@@ -72,6 +78,17 @@ final class UserForm extends Model
         ];
     }
 
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
     public function setUser(User $user)
     {
         $this->user = $user;

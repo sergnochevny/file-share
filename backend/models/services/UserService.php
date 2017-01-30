@@ -42,14 +42,26 @@ final class UserService
         return $this->user;
     }
 
+    /**
+     * @param UserForm $form
+     */
     public function populateForm(UserForm $form)
     {
         $user = $this->user;
+        $form->setUser($this->user);
         $form->setAttributes($user->getAttributes());
 
-        $roles = array_keys($this->authManager->getRolesByUser($user->id));
         $form->company_id = isset($user->companies[0]) ? $user->companies[0] : null;
-        $form->role = isset($roles[0]) ? $roles[0] : null;
+        $form->role = $this->getUserRole();
+    }
+
+    /**
+     * @return string|null
+     */
+    private function getUserRole()
+    {
+        $roles = array_keys($this->authManager->getRolesByUser($this->user->id));
+        return isset($roles[0]) ? $roles[0] : null;
     }
 
     /**
