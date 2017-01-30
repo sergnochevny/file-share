@@ -5,14 +5,18 @@ use yii\helpers\Url;
 
 /** @var $this \yii\web\View */
 /** @var $userForm \backend\models\forms\UserForm */
+/** @var bool $isUpdate */
 
 ?>
 
 <div id="tab-2" class="tab-pane active">
     <?php $form = \backend\widgets\ActiveForm::begin([
         'id' => 'user-form',
-        'options' => ['data-pjax' => 'wizard-container'],
-        'action' => ['user'],
+        'action' => ['user', 'id' => $isUpdate ? $userForm->getUser()->id : null],
+        'options' => [
+            'data-pjax' => true,
+            'data-create-url' => Url::to(['user'], true), //when select prompt in user send request to create url
+        ],
     ]) ?>
     <div class="col-lg-6 col-lg-offset-3">
         <h2 align="center">
@@ -88,7 +92,7 @@ use yii\helpers\Url;
                                                             <span
                                                                 class="icon icon-check-square   icon-lg icon-fw"></span>
                                                         </span>
-                Create
+                <?= $isUpdate ? 'Update' : 'Create' ?>
             </button>
             <a href="<?= \yii\helpers\Url::to(['investigation'], true) ?>" class="hidden btn btn-sm btn-labeled  arrow-success">
                                                         <span class="btn-label">

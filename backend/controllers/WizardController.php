@@ -94,9 +94,17 @@ class WizardController extends Controller
         /** @var UserForm $userForm */
         $userForm = Yii::createObject(UserForm::class);
         /** @var UserService $userService */
-        $userService = Yii::createObject(UserService::class, [User::create($id)]);
+        $userService = Yii::createObject(UserService::class, [$user]);
+
+        $options = [
+            'isUser' => true,
+            'userForm' => $userForm,
+            'isUpdate' => false,
+            'selected' => null, //selected company
+        ];
         if ($user->id) {
             $userService->populateForm($userForm);
+            $options['isUpdate'] = true;
         }
 
         if ($request->isPost
@@ -115,16 +123,13 @@ class WizardController extends Controller
             }
 
             if ($userService->save($userForm)) {
-                $userForm = Yii::createObject(UserForm::class);
+                $options['isUpdate'] = true;
             } else {
                 $this->setFlash('error', 'The user was not created');
             }
         }
 
-        return $this->smartRender('index', [
-            'isUser' => true,
-            'userForm' => $userForm
-        ]);
+        return $this->smartRender('index', $options);
     }
 
     /**
