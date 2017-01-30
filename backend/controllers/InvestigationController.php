@@ -42,7 +42,7 @@ class InvestigationController extends Controller
         $company = null;
         $searchModel = new InvestigationSearch();
         if (!(Yii::$app->user->can('admin'))) {
-            $searchModel->parent = User::findOne(Yii::$app->user->id)->company->id;
+            $searchModel->parent = Yii::$app->user->identity->company->id;
             $company = Company::findOne($searchModel->parent);
         }
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);

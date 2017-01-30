@@ -157,7 +157,7 @@ if (!empty($investigation)) {
                                 'attribute' => 'created_at',
                                 'format' => 'html',
                                 'value' => function ($model, $key, $index, $column) {
-                                    $value = '<span class="label label-warning" >' . date('m.d.Y', $model->{$column->attribute}) . '</span >';
+                                    $value = '<span class="label label-warning" >' .  Yii::$app->formatter->asDate($model->{$column->attribute}) . '</span >';
                                     return $value;
                                 }
                             ],

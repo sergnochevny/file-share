@@ -12,6 +12,14 @@ class File extends \common\models\File
     public $tmp;
 
     /**
+     * @return mixed
+     */
+    public function getCompany_Id()
+    {
+        return \Yii::$app->user->identity->company->id;
+    }
+
+    /**
      * @inheritdoc
      */
     public function rules()
@@ -82,18 +90,10 @@ class File extends \common\models\File
      */
     public function getUserCompanies()
     {
-        return $this->hasMany(UserCompany::className(), ['company_id' => 'id'])
-            ->via('companies');
-    }
-
-    /**
-     * @return UndeletableActiveQuery
-     */
-    public function getCompanies()
-    {
-        return $this->hasMany(Company::className(), ['id' => 'company_id'])
+        return $this->hasMany(UserCompany::className(), ['company_id' => 'company_id'])
             ->via('investigations');
     }
+
 
     /**
      * @return UndeletableActiveQuery

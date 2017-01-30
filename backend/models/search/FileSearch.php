@@ -71,17 +71,17 @@ class FileSearch extends File
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'size' => $this->size,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'status' => $this->status,
-            'citrix_id' => $this->citrix_id,
+            'file.id' => $this->id,
+            'file.size' => $this->size,
+            'file.created_at' => $this->created_at,
+            'file.updated_at' => $this->updated_at,
+            'file.status' => $this->status,
+            'file.citrix_id' => $this->citrix_id,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'type', $this->type]);
+        $query->andFilterWhere(['like', 'file.name', $this->name])
+            ->andFilterWhere(['like', 'file.description', $this->description])
+            ->andFilterWhere(['like', 'file.type', $this->type]);
 
         return $dataProvider;
     }
