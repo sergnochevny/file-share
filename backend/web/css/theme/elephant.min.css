@@ -1,9 +1,11 @@
 @charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i');
 /*! normalize.css v3.0.3 */
 html {
-    font-family: sans-serif;
+    font-family: 'Roboto', sans-serif;
     -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%
+    -webkit-text-size-adjust: 100%;
+    font-weight: 500;
 }
 
 body {
@@ -277,7 +279,7 @@ html {
 }
 
 body {
-    font-family: Roboto, sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 13px;
     line-height: 1.538462;
     color: #666;
@@ -2367,8 +2369,8 @@ a.btn.disabled, fieldset[disabled] a.btn {
 }
 
 .btn-default {
-    background-color: #431f4d;
-    border-color: #431f4d;
+    background-color: transparent;
+    border-color: #FFF;
     color: #fff
 }
 
@@ -2379,9 +2381,9 @@ a.btn.disabled, fieldset[disabled] a.btn {
 }
 
 .btn-default:hover {
-    background-color: #341040;
-    border-color: #341040;
-    color: #fff
+    background-color: #FFF;
+    border-color: transparent;
+    color: #431f4d
 }
 
 .btn-default.active, .btn-default:active, .open > .btn-default.dropdown-toggle {
@@ -5175,7 +5177,8 @@ button.close {
     left: 0;
     z-index: 1050;
     -webkit-overflow-scrolling: touch;
-    outline: 0
+    outline: 0;
+    color: #FFF !important;
 }
 
 .modal.fade .modal-dialog {
@@ -5213,7 +5216,7 @@ button.close {
     background-color: #431f4d;
     border: 1px solid #33103F;
     border: 1px solid #33103F;
-    border-radius: 0;
+    border-radius: 0 !important;
     -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
     box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
     -webkit-background-clip: padding-box;
@@ -5261,7 +5264,8 @@ button.close {
 
 .modal-title {
     margin: 0;
-    line-height: 1.538462
+    line-height: 1.538462;
+    font-weight: 600;
 }
 
 .modal-body {
@@ -5331,7 +5335,7 @@ button.close {
     position: absolute;
     z-index: 1070;
     display: block;
-    font-family: Roboto, sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     letter-spacing: normal;
@@ -5465,7 +5469,7 @@ button.close {
     display: none;
     max-width: 276px;
     padding: 1px;
-    font-family: Roboto, sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 400;
     letter-spacing: normal;
