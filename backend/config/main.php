@@ -59,6 +59,9 @@ return [
             'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'rules' => [
+                '@<username:[\w-]+>/' => '/profile/index',
+            ]
         ],
     ],
     'as globalAccess' => [
