@@ -21,28 +21,28 @@ class FileUpload extends Model
     {
         return [
             [['file'], 'file', 'skipOnEmpty' => false],
-            [['description', 'parent'], 'safe']
+            [['description'], 'safe']
         ];
     }
 
-    public function save($parent = null)
+    public function save()
     {
 
-        if (empty($parent)) {
-            $parent = File::findOne(['parent' => 'root']);
+        if (empty($this->parent)) {
+            $this->parent = File::findOne(['parent' => 'root']);
             if (!empty($parent)) {
-                $parent = $parent->citrix_id;
+                $this->parent = $parent->citrix_id;
             } else return false;
         }
 
         $this->file = UploadedFile::getInstance($this, 'file');
-        $model = File::findOne(['name' => $this->file->name, 'parent' => $parent]);
+        $model = File::findOne(['name' => $this->file->name, 'parent' => $this->parent]);
         if (empty($model)) $model = new File();
         $model->name = $this->file->name;
         $model->size = $this->file->size;
         $model->tmp = $this->file->tempName;
         $model->type = $this->file->extension;
-        $model->parent = $parent;
+        $model->parent = $this->parent;
 
         return $model->save();
     }

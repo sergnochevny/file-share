@@ -135,9 +135,10 @@ class FileController extends Controller
      */
     public function actionUpload($parent = null)
     {
-
-        $model = new FileUpload();
-        if ($model->load(Yii::$app->request->post()) && $model->save($parent)) {
+        if(Yii::$app->user->can('admin') || (!Yii::$app->user->can('admin') && Yii::$app->user->can('employee',['parent'=>$parent]))){
+        $model = new FileUpload(['parent'=>$parent]);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        }
         }
         return $this->actionIndex();
     }

@@ -47,11 +47,11 @@ class FileSearch extends File
         $query = File::find();
         if (!empty($this->parent)) {
             if ($this->scenario == self::SCENARIO_APP) {
-//                if (!Yii::$app->user->can('admin'))
-                $query
-//                        ->joinWith(['company'])
-                    ->joinWith(['users'])
-                    ->andWhere(['user.id' => Yii::$app->user->id]);
+                if (!Yii::$app->user->can('admin'))
+                    $query
+                        ->joinWith(['company'])
+                        ->joinWith(['users'])
+                        ->andWhere(['user.id' => Yii::$app->user->id]);
             }
             $query->andWhere(['file.parent' => $this->parent]);
         }
