@@ -22,7 +22,7 @@ $fieldOptions2 = [
 <div class="login">
     <div class="login-body">
         <a class="login-brand" href="index.php">
-            <?= Html::a(Html::img(Url::to(['/images/logo.png'], true), ['class' => 'img-responsive']), ['/']) ?>
+            <?= Html::a(Html::img(Url::to(['@web/images/logo.png'], true), ['class' => 'img-responsive']), ['/']) ?>
         </a>
         <h3 class="login-heading">Sign in</h3>
         <div class="login-form">

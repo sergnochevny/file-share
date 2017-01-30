@@ -36,7 +36,7 @@ use yii\helpers\Url;
                 <span class="sr-only">Toggle navigation</span>
                 <span class="arrow-up"></span>
                 <span class="ellipsis ellipsis-vertical">
-                <?= Html::img(Url::to(['images/admin-foto.jpg', true]), ['class' => 'ellipsis-object', 'width' => '32', 'height' => '32']) ?>
+                <?= Html::img(Url::to(['@web/images/admin-foto.jpg'], true), ['class' => 'ellipsis-object', 'width' => '32', 'height' => '32']) ?>
             </span>
             </button>
         </div>
@@ -145,7 +145,7 @@ use yii\helpers\Url;
                     </li>
                     <li class="dropdown hidden-xs">
                         <button class="navbar-account-btn" data-toggle="dropdown" aria-haspopup="true">
-                            <?= Html::img(Url::to(['images/admin-foto.jpg'], true), ['class' => 'rounded', 'width' => '32', 'height' => '32']) ?> Admin
+                            <?= Html::img(Url::to(['@web/images/admin-foto.jpg'], true), ['class' => 'rounded', 'width' => '32', 'height' => '32']) ?> Admin
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right">
