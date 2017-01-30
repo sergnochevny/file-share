@@ -100,12 +100,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                 );
                             },
                             'delete' => function ($url, $model) {
-                                return Html::a('Delete', $url,
+                                return Html::a('To archive', Url::to(['/investigation/archive', 'id' => $model->id], true),
                                     [
                                         'class' => "btn btn-danger btn-xs",
-                                        'title' => 'Delete',
-                                        'aria-label' => "Delete",
-                                        'data-confirm' => "Are you sure you want to delete this item?",
+                                        'title' => 'To archive',
+                                        'aria-label' => "To archive",
+                                        'data-confirm' => "Confirm removal",
                                         'data-method' => "post",
                                         'data-pjax' => "0",
                                     ]

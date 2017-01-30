@@ -22,32 +22,6 @@ class WizardController extends Controller
     public $defaultAction = 'company';
 
     /**
-     * @return bool
-     */
-    private function isClient()
-    {
-        return !Yii::$app->getUser()->can('admin');
-    }
-
-    /**
-     * @return bool
-     */
-    private function isAdmin()
-    {
-        return Yii::$app->getUser()->can('admin');
-    }
-
-    /**
-     * @param $type
-     * @param $message
-     * @return void
-     */
-    private function setFlash($type, $message)
-    {
-        Yii::$app->getSession()->setFlash($type, $message);
-    }
-
-    /**
      * Shows Company tab
      *
      * @param string $id
@@ -93,6 +67,7 @@ class WizardController extends Controller
 
         /** @var UserForm $userForm */
         $userForm = Yii::createObject(UserForm::class);
+
         /** @var UserService $userService */
         $userService = Yii::createObject(UserService::class, [User::create($id)]);
         if ($user->id) {
@@ -103,7 +78,7 @@ class WizardController extends Controller
             && $userForm->load($request->post())
             && $userForm->validate()
         ) {
-            if ($this->isClient()) {
+            if (!Yii::$app->getUser()->can('admin')) {
                 //explicitly set role if client creates another user
                 $userForm->role = 'client';
                 //@todo set company id for another users who works with current user (client)
@@ -117,7 +92,7 @@ class WizardController extends Controller
             if ($userService->save($userForm)) {
                 $userForm = Yii::createObject(UserForm::class);
             } else {
-                $this->setFlash('error', 'The user was not created');
+                Yii::$app->getSession()->setFlash('error', 'The user was not created');
             }
         }
 

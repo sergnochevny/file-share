@@ -46,21 +46,16 @@ class HistoryController extends Controller
         ]);
     }
 
-
     /**
-     * Finds the File model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return \common\models\File the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
+     * Deletes an existing Company model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
      */
-//    protected function findModel($id)
-//    {
-//        if (($model = History::findOne($id)) !== null) {
-//            return $model;
-//        } else {
-//            throw new NotFoundHttpException('The requested page does not exist.');
-//        }
-//    }
+    public function actionDelete($id)
+    {
+        //$this->findModel($id)->delete();
+        return $this->redirect(['index']);
+    }
 
 }

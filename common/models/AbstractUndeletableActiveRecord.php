@@ -30,6 +30,16 @@ abstract class AbstractUndeletableActiveRecord extends ActiveRecord
     }
 
     /**
+     * Changes status of record to STATUS_IN_HISTORY
+     *
+     * @return void
+     */
+    public function archive(){
+        $this->status = static::STATUS_IN_HISTORY;
+        $this->save(false);
+    }
+
+    /**
      * Changes status of record to STATUS_DELETED
      *
      * @return void

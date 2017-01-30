@@ -15,21 +15,6 @@ use yii\filters\VerbFilter;
  */
 class InvestigationController extends Controller
 {
-    /**
-     * Finds the Investigation model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Investigation the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = \common\models\Investigation::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
 
     /**
      * @inheritdoc
@@ -63,31 +48,32 @@ class InvestigationController extends Controller
     }
 
     /**
-     * Deletes an existing Investigation model.
+     * Archive an existing Investigation model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionArchive($id)
     {
-        $this->findModel($id)->delete();
+        $this->findModel($id)->archive();
         return $this->redirect(['index']);
     }
 
-    /**
-     * Shows archived investigations
-     * @todo implement
-     *
-     * @return string
-     */
-    public function actionHistory()
-    {
-        $searchModel = new InvestigationSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('history', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+    /**
+     * Finds the Investigation model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Investigation the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Investigation::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
+
 }

@@ -42,7 +42,7 @@ class HistorySearch extends Company
      */
     public function search($params)
     {
-        $query = Company::find();
+        $query = Company::find()->andDeleted();
 
         // add conditions that should always apply here
 

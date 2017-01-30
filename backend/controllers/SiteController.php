@@ -21,20 +21,17 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
-            'access' => array(
+            'access' => [
                 'class' => AccessControl::className(),
-                'rules' => array(
-                    array(
-                        'actions' => array('login', 'password-reset', 'error'),
-                        'allow' => true,
-                    ),
-                    array(
-                        'actions' => array('logout', 'index', 'wizard'),
-                        'allow' => true,
-                        'roles' => array('@'),
-                    ),
-                ),
-            ),
+                'rules' => [[
+                    'actions' => ['login', 'password-reset', 'error'],
+                    'allow' => true,
+                ],[
+                    'actions' => ['logout', 'index', 'wizard'],
+                    'allow' => true,
+                    'roles' => ['@'],
+                ]]
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -117,7 +114,6 @@ class SiteController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
         return $this->goHome();
     }
 }

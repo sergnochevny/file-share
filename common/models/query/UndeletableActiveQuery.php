@@ -21,13 +21,25 @@ class UndeletableActiveQuery extends AbstractUndeletableActiveQuery
     }
 
     /**
-     * Exclude deleted statuses from hidden when search entity
+     * Exclude deleted status from hidden when search entity
      * @return $this
      */
     public function andDeleted()
     {
         $modelClass = $this->modelClass;
         $this->excludedHiddenStatuses[] = $modelClass::STATUS_DELETED;
+        return $this;
+    }
+
+    /**
+     * Exclude deleted & history statuses from hidden when search entity
+     * @return $this
+     */
+    public function andArchived()
+    {
+        $modelClass = $this->modelClass;
+        $this->excludedHiddenStatuses[] = $modelClass::STATUS_DELETED;
+        $this->excludedHiddenStatuses[] = $modelClass::STATUS_IN_HISTORY;
         return $this;
     }
 }

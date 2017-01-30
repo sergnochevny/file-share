@@ -33,6 +33,7 @@ use yii\web\IdentityInterface;
 class User extends AbstractUndeletableActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
+    const STATUS_IN_HISTORY = 200;
     const STATUS_ACTIVE = 100;
 
     /**

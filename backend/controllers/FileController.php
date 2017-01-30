@@ -163,15 +163,14 @@ class FileController extends Controller
     }
 
     /**
-     * Deletes an existing File model.
+     * Archive an existing File model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionArchive($id)
     {
-        $this->findModel($id)->delete();
-
+        $this->findModel($id)->archive();
         return $this->redirect(['index']);
     }
 
