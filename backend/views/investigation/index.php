@@ -104,7 +104,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 );
                             },
                             'view' => function ($url, $model) {
-                                return Html::a('Details', $url,
+                                return Html::a('Details', Url::to(['/file', 'id' => $model->id], true),
                                     [
                                         'class' => "btn btn-success btn-xs",
                                         'title' => 'Details',

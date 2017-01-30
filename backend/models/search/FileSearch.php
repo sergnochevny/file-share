@@ -46,12 +46,14 @@ class FileSearch extends File
     {
         $query = File::find();
         if (!empty($this->parent)) {
-            if($this->scenario == self::SCENARIO_APP ){
+            if ($this->scenario == self::SCENARIO_APP) {
+//                if (!Yii::$app->user->can('admin'))
                 $query
-                    ->joinWith(['investigation'])
-                    ->andWhere(['user.id'=>Yii::$app->user->id]);
+//                        ->joinWith(['company'])
+                    ->joinWith(['users'])
+                    ->andWhere(['user.id' => Yii::$app->user->id]);
             }
-            $query->andWhere(['parent' => $this->parent]);
+            $query->andWhere(['file.parent' => $this->parent]);
         }
 
         // add conditions that should always apply here
@@ -83,14 +85,6 @@ class FileSearch extends File
             ->andFilterWhere(['like', 'type', $this->type]);
 
         return $dataProvider;
-    }
-
-    /**
-     * @return UndeletableActiveQuery
-     */
-    public function getInvestigations()
-    {
-        return $this->hasMany(Investigation::class, ['parent' => 'citrix_id'])->inverseOf('file');
     }
 
 }
