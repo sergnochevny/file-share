@@ -3,6 +3,7 @@
 namespace common\models;
 
 
+use backend\models\UserProfile;
 use common\models\query\UndeletableActiveQuery;
 use Yii;
 use yii\base\NotSupportedException;
@@ -236,6 +237,14 @@ class User extends AbstractUndeletableActiveRecord implements IdentityInterface
             self::STATUS_DELETED => 'Deleted',
             self::STATUS_ACTIVE => 'Active'
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
     }
 
     /**

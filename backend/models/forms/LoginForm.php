@@ -1,8 +1,6 @@
 <?php
 
-
 namespace backend\models\forms;
-
 
 use common\models\User;
 use yii\base\Model;
@@ -56,11 +54,7 @@ class LoginForm extends Model
      */
     public function login()
     {
-        if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
-        } else {
-            return false;
-        }
+        return $this->validate() ? Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0) : false;
     }
 
     /**
@@ -71,13 +65,8 @@ class LoginForm extends Model
     protected function getUser()
     {
         if ($this->user === null) {
-            if ($this->isEmail()) {
-                $this->user = User::findByEmail($this->username);
-            } else {
-                $this->user = User::findByUsername($this->username);
-            }
+            $this->user = $this->isEmail() ? User::findByEmail($this->username) : User::findByUsername($this->username);
         }
-
         return $this->user;
     }
 

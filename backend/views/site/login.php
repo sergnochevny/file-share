@@ -21,10 +21,8 @@ $fieldOptions2 = [
 ?>
 <div class="login">
     <div class="login-body">
-        <a class="login-brand" href="index.php">
-            <?= Html::a(Html::img(Url::to(['/images/logo.png'], true), ['class' => 'img-responsive']), ['/']) ?>
-        </a>
-        <h3 class="login-heading">Sign in</h3>
+        <?= Html::a(Html::a(Html::img(Url::to(['/images/logo.png'], true), ['class' => 'img-responsive']), ['/']), Url::to(['/'], true), ['class' => 'login-brand']) ?>
+        <h3 class="login-heading"><b>Sign in</b></h3>
         <div class="login-form">
 
         <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
@@ -44,9 +42,7 @@ $fieldOptions2 = [
                 <!-- /.col -->
                 <div class="col-xs-12 text-center">
                     <?= $form->field($model, 'rememberMe')->checkbox() ?>
-                    <a href="#">Forgot username?</a>
-                    <span> · </span>
-                    <a href="register.html">Forgot password?</a>
+                    <a href="<?= Url::to(['/site/restore-password-request'], true) ?>">Forgot password?</a>
                 </div>
                 <!-- /.col -->
             </div>
@@ -66,7 +62,7 @@ $fieldOptions2 = [
             <li>|</li>
             <li><a  href="#">Cookie Policy</a></li>
             <li>|</li>
-            <li>© Protus3 2016</li>
+            <li>© <?= Yii::$app->name . ' ' . date('Y') ?></li>
         </ul>
     </div>
 </div>

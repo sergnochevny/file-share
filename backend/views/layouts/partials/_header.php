@@ -145,21 +145,22 @@ use yii\helpers\Url;
                     </li>
                     <li class="dropdown hidden-xs">
                         <button class="navbar-account-btn" data-toggle="dropdown" aria-haspopup="true">
-                            <?= Html::img(Url::to(['images/admin-foto.jpg'], true), ['class' => 'rounded', 'width' => '32', 'height' => '32']) ?> Admin
+                            <?= Html::img(Url::to(['images/admin-foto.jpg'], true), ['class' => 'rounded', 'width' => '32', 'height' => '32']) ?>
+                            <?= !is_null(Yii::$app->user->identity->username) ? ucfirst(Yii::$app->user->identity->username) : null; ?>
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <li>
                                 <a href="#">
                                     <h5 class="navbar-upgrade-heading">
-                                        Admin
+                                        <?= !is_null(Yii::$app->user->identity->username) ? ucfirst(Yii::$app->user->identity->username) : null; ?>
                                         <small class="navbar-upgrade-notification">Last Active 12.24.2016</small>
                                     </h5>
                                 </a>
                             </li>
                             <li class="divider"></li>
                             <li><a href="#">Contacts</a></li>
-                            <li><a href="#">Profile</a></li>
+                            <li><a href="<?= Url::to(['/profile/index', 'username' => isset(Yii::$app->user->identity->id) ? Yii::$app->user->identity->username : null], true) ?>">Profile</a></li>
                             <li><a href="<?= Url::to(['/site/logout'], true) ?>" data-method="POST">Sign out</a></li>
                         </ul>
                     </li>
