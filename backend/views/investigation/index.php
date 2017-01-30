@@ -76,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'status',
                     [
                         'class' => 'yii\grid\ActionColumn',
-                        'template' => '{edit}{delete}{details}',
+                        'template' => '{edit}{delete}{view}',
                         'contentOptions' => [
                             'width' => 150,
                         ],
@@ -103,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ]
                                 );
                             },
-                            'details' => function ($url, $model) {
+                            'view' => function ($url, $model) {
                                 return Html::a('Details', $url,
                                     [
                                         'class' => "btn btn-success btn-xs",

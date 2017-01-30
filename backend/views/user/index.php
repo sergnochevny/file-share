@@ -52,6 +52,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'role',
                             'label' => 'Position Status',
                             'format' => 'html',
+                            'contentOptions' => [
+                                'width' => 120,
+                            ],
                             'value' => function ($model, $key, $index, $column) {
                                 $suff = [
                                     'admin' => 'success',
@@ -63,7 +66,37 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return $value;
                             }
                         ],
-                        ['class' => 'yii\grid\ActionColumn'],
+                        [
+                            'class' => 'yii\grid\ActionColumn',
+                            'template' => '{edit}{delete}',
+                            'contentOptions' => [
+                                'width' => 100,
+                            ],
+                            'buttons' => [
+                                'edit' => function ($url, $model) {
+                                    return Html::a('Edit', Url::to(['/wizard/user', 'id' => $model->id], true),
+                                        [
+                                            'class' => "btn btn-primary btn-xs",
+                                            'title' => 'Edit',
+                                            'aria-label' => "Edit",
+                                            'data-pjax' => "0",
+                                        ]
+                                    );
+                                },
+                                'delete' => function ($url, $model) {
+                                    return Html::a('Delete', $url,
+                                        [
+                                            'class' => "btn btn-danger btn-xs",
+                                            'title' => 'Delete',
+                                            'aria-label' => "Delete",
+                                            'data-confirm' => "Are you sure you want to delete this item?",
+                                            'data-method' => "post",
+                                            'data-pjax' => "0",
+                                        ]
+                                    );
+                                },
+                            ],
+                        ],
                     ],
                 ]); ?>
 

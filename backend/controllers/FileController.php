@@ -4,9 +4,11 @@ namespace backend\controllers;
 
 use backend\actions\DownloadAction;
 use backend\models\FileUpload;
+use common\models\Investigation;
 use Yii;
 use common\models\File;
 use backend\models\search\FileSearch;
+use yii\base\InvalidParamException;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -17,6 +19,22 @@ use yii\filters\VerbFilter;
  */
 class FileController extends Controller
 {
+
+    /**
+     * Finds the File model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param string $id
+     * @return \common\models\File the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = File::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
 
     /**
      * @inheritdoc
@@ -45,10 +63,22 @@ class FileController extends Controller
      * Lists all File models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id = null)
     {
-        $searchModel = new FileSearch;
+        if (!empty($id)) {
+            $parent = Investigation::findOne($id);
+            if (!empty($parent)) {
+                $parent = $parent->citrix_id;
+            }
+        }
         $uploadModel = new FileUpload;
+        if (!empty($id) && !empty($parent)) {
+            $searchModel = new FileSearch(['scenario'=>FileSearch::SCENARIO_APP]);
+            $uploadModel->parent = $parent;
+            $searchModel->parent = $parent;
+        } else {
+            $searchModel = new FileSearch;
+        }
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
         Url::remember(Yii::$app->request->url, 'back');
@@ -95,7 +125,7 @@ class FileController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionUpload($parent=null)
+    public function actionUpload($parent = null)
     {
 
         $model = new FileUpload();
@@ -134,22 +164,6 @@ class FileController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the File model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return \common\models\File the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = File::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
 
 }

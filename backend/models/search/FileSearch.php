@@ -12,7 +12,18 @@ use yii\data\ActiveDataProvider;
  */
 class FileSearch extends File
 {
+    const SCENARIO_APP = 'app';
+    const SCENARIO_ALL = 'all';
+
     public $pagesize = 10;
+
+    public function scenarios()
+    {
+        return [
+            self::SCENARIO_LOGIN => ['name', 'pagesize'],
+            self::SCENARIO_REGISTER => ['name', 'pagesize'],
+        ];
+    }
 
     /**
      * @inheritdoc
@@ -25,15 +36,6 @@ class FileSearch extends File
     }
 
     /**
-     * @inheritdoc
-     */
-    public function scenarios()
-    {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
-    }
-
-    /**
      * Creates data provider instance with search query applied
      *
      * @param array $params
@@ -43,6 +45,12 @@ class FileSearch extends File
     public function search($params)
     {
         $query = File::find();
+        if (!empty($this->parent)) {
+            if($this->scenario == self::SCENARIO_APP ){
+                $query->joinWith(['u'])
+            }
+            $query->andWhere(['parent' => $this->parent]);
+        }
 
         // add conditions that should always apply here
 
@@ -65,13 +73,12 @@ class FileSearch extends File
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'status' => $this->status,
+            'citrix_id' => $this->citrix_id,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'parent', $this->parent])
-            ->andFilterWhere(['like', 'type', $this->type])
-            ->andFilterWhere(['like', 'citrix_id', $this->citrix_id]);
+            ->andFilterWhere(['like', 'type', $this->type]);
 
         return $dataProvider;
     }

@@ -59,11 +59,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             ]
                         ]
                     ); ?>
+                    <?php if(!isset($investigation) && Yii::$app->user->can('admin')): ?>
                     <?= $uploadForm->field($uploadModel, 'file')->fileInput(['id' => "file"])->label(false); ?>
                     <?= Html::submitButton('<span class="btn-label"><span class="icon icon-upload  icon-lg icon-fw"></span></span>Upload', [
                         'id' => "send",
                         'class' => 'btn btn-sm btn-labeled arrow-warning send-file-button'
                     ]); ?>
+                    <?php endif;?>
 
                     <?php
                     $this->registerJsFile(YII_ENV_DEV ? '@web/js/input_upload_submit.js' : '@web/js/input_upload_submit.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
