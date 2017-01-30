@@ -6,6 +6,8 @@ use yii\helpers\Url;
 /** @var $this \yii\web\View */
 /** @var $userForm \backend\models\forms\UserForm */
 /** @var bool $isUpdate */
+/** @var array|null $selectedUser */
+/** @var array $colleagues */
 
 ?>
 
@@ -49,12 +51,17 @@ use yii\helpers\Url;
         <div class="form-group">
             <?= \kartik\depdrop\DepDrop::widget([
                 'name' => 'user',
-                'options' => ['id'=>'user-list', 'prompt' => ' - - -'],
+                'data' => $colleagues,
                 'pluginOptions'=>[
                     'depends'=>['company-list', 'user-role'],
                     'placeholder' => 'Select...',
                     'url' => Url::to(['company-users'])
-                ]
+                ],
+                'options' => [
+                    'id'=>'user-list',
+                    'prompt' => ' - - -',
+                    'options' => [$selectedUser => ['selected'=>'selected']]
+                ],
             ]) ?>
         </div>
     </div>
