@@ -89,7 +89,7 @@ return [
             [
                 'controllers' => ['site'],
                 'allow' => true,
-                'actions' => ['logout'],
+                'actions' => ['logout','index'],
                 'roles' => ['@'],
             ],
             [
