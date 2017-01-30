@@ -8,6 +8,7 @@ $params = array_merge(
 
 return [
     'id' => 'app-backend',
+    'name' => 'Protus',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
@@ -86,7 +87,7 @@ return [
             [
                 'controllers' => ['site'],
                 'allow' => true,
-                'actions' => ['login'],
+                'actions' => ['login', 'restore-password-request'],
                 'roles' => ['?'],
             ],
             [

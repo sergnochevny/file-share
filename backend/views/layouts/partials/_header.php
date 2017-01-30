@@ -146,14 +146,14 @@ use yii\helpers\Url;
                     <li class="dropdown hidden-xs">
                         <button class="navbar-account-btn" data-toggle="dropdown" aria-haspopup="true">
                             <?= Html::img(Url::to(['images/admin-foto.jpg'], true), ['class' => 'rounded', 'width' => '32', 'height' => '32']) ?>
-                            <?= ucfirst(Yii::$app->user->identity->username); ?>
+                            <?= !is_null(Yii::$app->user->identity->username) ? ucfirst(Yii::$app->user->identity->username) : null; ?>
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <li>
                                 <a href="#">
                                     <h5 class="navbar-upgrade-heading">
-                                        <?= ucfirst(Yii::$app->user->identity->username); ?>
+                                        <?= !is_null(Yii::$app->user->identity->username) ? ucfirst(Yii::$app->user->identity->username) : null; ?>
                                         <small class="navbar-upgrade-notification">Last Active 12.24.2016</small>
                                     </h5>
                                 </a>
