@@ -14,8 +14,6 @@ use common\widgets\Menu;
                     $items[] = ['label' => 'Home', 'url' => ['/site/index'], 'options' => ['icon' => 'icon-home']];
                     if(Yii::$app->user->can('admin')){
                         $items[] = ['label' => 'Companies', 'url' => ['/company/index'], 'options' => ['icon' => 'icon-contao']];
-                    } else {
-                        $items[] = ['label' => 'My Company', 'url' => ['/company/view'], 'options' => ['icon' => 'icon-contao']];
                     }
                     $items[] = ['label' => 'Applicants', 'url' => ['/investigation/index'], 'options' => ['icon' => 'icon-folder-open-o']];
                     $items[] = ['label' => 'History', 'url' => ['/history/index'], 'options' => ['icon' => 'icon-history']];

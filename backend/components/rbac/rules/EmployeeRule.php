@@ -19,7 +19,7 @@ class EmployeeRule extends Rule
         if (isset($params['company'])) {
             $company = $params['company'];
         } elseif (isset($params['investigation'])) {
-
+            $company = $params['investigation']->company;
         } elseif (isset($params['allfiles'])) {
             return true;
         } else return false;
