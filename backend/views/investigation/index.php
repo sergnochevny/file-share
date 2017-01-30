@@ -4,6 +4,7 @@
 /* @var $searchModel backend\models\InvestigationSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+use backend\models\Investigation;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
@@ -57,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         'format' => 'html',
                         'value' => function ($model, $key, $index, $column) {
-                            $value = '<span class="label label-warning" >' . date('m.d.Y', $model->{$column->attribute}) . '</span >';
+                            $value = '<span class="label label-warning" >' . Yii::$app->formatter->asDate($model->{$column->attribute}) . '</span >';
                             return $value;
                         }
                     ],
@@ -69,11 +70,18 @@ $this->params['breadcrumbs'][] = $this->title;
                             'width' => 80,
                         ],
                         'value' => function ($model, $key, $index, $column) {
-                            $value = '<span class="label label-warning" >' . date('m.d.Y', $model->{$column->attribute}) . '</span >';
+                            $value = '<span class="label label-warning" >' . Yii::$app->formatter->asDate($model->{$column->attribute}) . '</span >';
                             return $value;
                         }
                     ],
-                    'status',
+                    [
+                        'attribute' => 'status',
+                        'format' => 'html',
+                        'value' => function ($model, $key, $index, $column) {
+                            $value = '<span class="label label-success" >' . Investigation::getStatusByCode($model->{$column->attribute}) . '</span >';
+                            return $value;
+                        }
+                    ],
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'template' => '{edit}{delete}{view}',

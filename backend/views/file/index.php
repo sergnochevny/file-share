@@ -39,7 +39,7 @@ if (!empty($investigation)) {
         <?php endif; ?>
     </p>
 </div>
-<?= !empty($investigation) ? $this->render('partials/_investigation', ['model' => $investigation]) : '' ?>;
+<?= !empty($investigation) ? $this->render('partials/_investigation', ['model' => $investigation]) : '' ?>
 
 <?php Pjax::begin(['id' => 'file_index', 'enablePushState' => false, 'timeout' => 0]); ?>
 
