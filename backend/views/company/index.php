@@ -11,7 +11,6 @@ use yii\widgets\Pjax;
 $this->title = 'Companies';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<?= $this->render('partials/_roof', ['model' => $searchModel]); ?>
 <div class="title-bar">
     <div class="title-bar-actions">
         <?= Html::a(Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-chevron-circle-left icon-lg icon-fw']), ['class' => 'btn-label']) . ' Back', Url::previous('back'), ['class' => 'btn btn-labeled arrow-default']) ?>
@@ -47,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'class' => 'yii\grid\ActionColumn',
                             'template' => '{edit}{delete}',
                             'contentOptions' => [
-                                'width' => 90,
+                                'width' => 100,
                             ],
                             'buttons' => [
                                 'edit' => function ($url, $model) {

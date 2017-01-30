@@ -25,6 +25,7 @@ use yii\behaviors\TimestampBehavior;
 class Company extends AbstractUndeletableActiveRecord
 {
     const STATUS_DELETED = 0;
+    const STATUS_ACTIVE = 100;
     const STATUS_IN_HISTORY = 200;
 
     /**
