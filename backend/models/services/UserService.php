@@ -51,7 +51,7 @@ final class UserService
         $form->setUser($this->user);
         $form->setAttributes($user->getAttributes());
 
-        $form->company_id = isset($user->companies[0]) ? $user->companies[0] : null;
+        $form->company_id = isset($user->company->id) ? $user->company->id : null;
         $form->role = $this->getUserRole();
     }
 

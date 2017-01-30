@@ -47,7 +47,7 @@ class InvestigationSearch extends Investigation
     public function search($params)
     {
         $query = Investigation::find()->joinWith('company');
-        if(!empty($this->parent)) $query->andWhere(['company_id' => $this->parent]);
+        if(!empty($this->parent)) $query->andWhere(['investigation.company_id' => $this->parent]);
 
         // add conditions that should always apply here
 

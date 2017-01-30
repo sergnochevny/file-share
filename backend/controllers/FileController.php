@@ -73,7 +73,9 @@ class FileController extends Controller
             }
         } else {
             $parent = File::findOne(['parent' => 'root']);
-            if (!empty($parent)) { $parent = $parent->citrix_id; }
+            if (!empty($parent)) {
+                $parent = $parent->citrix_id;
+            }
         }
         $uploadModel = new FileUpload;
         if (!empty($id) && !empty($parent)) {
@@ -81,7 +83,7 @@ class FileController extends Controller
         } else {
             $searchModel = new FileSearch;
         }
-        if(!empty($parent)){
+        if (!empty($parent)) {
             $uploadModel->parent = $parent;
             $searchModel->parent = $parent;
         }
@@ -93,7 +95,7 @@ class FileController extends Controller
             'dataProvider' => $dataProvider,
             'uploadModel' => $uploadModel,
         ];
-        if(!empty($investigation)) $renderParams['investigation'] = $investigation;
+        if (!empty($investigation)) $renderParams['investigation'] = $investigation;
         return $this->render('index', $renderParams);
     }
 
@@ -135,11 +137,14 @@ class FileController extends Controller
      */
     public function actionUpload($parent = null)
     {
-        if(Yii::$app->user->can('admin') || (!Yii::$app->user->can('admin') && Yii::$app->user->can('employee',['parent'=>$parent]))){
-        $model = new FileUpload(['parent'=>$parent]);
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if (Yii::$app->user->can('admin') || (!Yii::$app->user->can('admin') &&
+                Yii::$app->user->can('employee', ['investigation' => Investigation::findOne(['citrix_id' => $parent])]))
+        ) {
+            $model = new FileUpload(['parent' => $parent]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            }
         }
-        }
+        if(!empty($parent)) return $this->actionIndex(Investigation::findOne(['citrix_id' => $parent]));
         return $this->actionIndex();
     }
 
