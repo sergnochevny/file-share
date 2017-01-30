@@ -47,7 +47,9 @@ class FileSearch extends File
         $query = File::find();
         if (!empty($this->parent)) {
             if($this->scenario == self::SCENARIO_APP ){
-                $query->joinWith(['u'])
+                $query
+                    ->joinWith(['investigation'])
+                    ->andWhere(['user.id'=>Yii::$app->user->id]);
             }
             $query->andWhere(['parent' => $this->parent]);
         }
@@ -82,4 +84,13 @@ class FileSearch extends File
 
         return $dataProvider;
     }
+
+    /**
+     * @return UndeletableActiveQuery
+     */
+    public function getInvestigations()
+    {
+        return $this->hasMany(Investigation::class, ['parent' => 'citrix_id'])->inverseOf('file');
+    }
+
 }

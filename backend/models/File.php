@@ -9,7 +9,6 @@ class File extends \common\models\File
 
     public $tmp;
 
-
     /**
      * @inheritdoc
      */
@@ -66,4 +65,5 @@ class File extends \common\models\File
         ];
         return $behaviors;
     }
+
 }

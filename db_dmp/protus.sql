@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `auth_item` (
   CONSTRAINT `auth_item_ibfk_1` FOREIGN KEY (`rule_name`) REFERENCES `auth_rule` (`name`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Дамп данных таблицы protus.auth_item: ~2 rows (приблизительно)
+-- Дамп данных таблицы protus.auth_item: ~3 rows (приблизительно)
 /*!40000 ALTER TABLE `auth_item` DISABLE KEYS */;
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 	('admin', 1, NULL, NULL, NULL, 1485692237, 1485692237),
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `auth_item_child` (
   CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Дамп данных таблицы protus.auth_item_child: ~1 rows (приблизительно)
+-- Дамп данных таблицы protus.auth_item_child: ~2 rows (приблизительно)
 /*!40000 ALTER TABLE `auth_item_child` DISABLE KEYS */;
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 	('admin', 'client'),
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `auth_rule` (
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Дамп данных таблицы protus.auth_rule: ~0 rows (приблизительно)
+-- Дамп данных таблицы protus.auth_rule: ~1 rows (приблизительно)
 /*!40000 ALTER TABLE `auth_rule` DISABLE KEYS */;
 INSERT INTO `auth_rule` (`name`, `data`, `created_at`, `updated_at`) VALUES
 	('isEmployee', 'O:42:"backend\\components\\rbac\\rules\\EmployeeRule":3:{s:4:"name";s:10:"isEmployee";s:9:"createdAt";i:1485692237;s:9:"updatedAt";i:1485692237;}', 1485692237, 1485692237);
@@ -155,7 +155,7 @@ CREATE TABLE IF NOT EXISTS `investigation` (
   CONSTRAINT `fk-investigation-company_id` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Дамп данных таблицы protus.investigation: ~0 rows (приблизительно)
+-- Дамп данных таблицы protus.investigation: ~1 rows (приблизительно)
 /*!40000 ALTER TABLE `investigation` DISABLE KEYS */;
 INSERT INTO `investigation` (`id`, `company_id`, `start_date`, `end_date`, `name`, `description`, `contact_person`, `phone`, `email`, `status`, `created_at`, `updated_at`, `citrix_id`) VALUES
 	(1, 19, '2017-01-31', '2017-01-31', 'Test', 'Test', 'fdsagasdf', '6546345', 'dsfhg@dskfjh.df', 250, 1485617937, 1485617937, 'fo261afb-858a-48a6-933b-f05163e0831f');
