@@ -20,8 +20,8 @@ class FileSearch extends File
     public function scenarios()
     {
         return [
-            self::SCENARIO_LOGIN => ['name', 'pagesize'],
-            self::SCENARIO_REGISTER => ['name', 'pagesize'],
+            self::SCENARIO_APP => ['name', 'pagesize'],
+            self::SCENARIO_ALL => ['name', 'pagesize'],
         ];
     }
 
