@@ -14,27 +14,28 @@
 -- Дамп структуры для таблица protus.auth_assignment
 DROP TABLE IF EXISTS `auth_assignment`;
 CREATE TABLE IF NOT EXISTS `auth_assignment` (
-  `item_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `item_name` varchar(64) NOT NULL,
+  `user_id` varchar(64) NOT NULL,
   `created_at` int(11) DEFAULT NULL,
   PRIMARY KEY (`item_name`,`user_id`),
   CONSTRAINT `auth_assignment_ibfk_1` FOREIGN KEY (`item_name`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы protus.auth_assignment: ~1 rows (приблизительно)
+-- Дамп данных таблицы protus.auth_assignment: ~3 rows (приблизительно)
 /*!40000 ALTER TABLE `auth_assignment` DISABLE KEYS */;
 INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
-	('admin', '2', 1485692238);
+	('admin', '2', 1485692238),
+	('client', '4', 1485784036);
 /*!40000 ALTER TABLE `auth_assignment` ENABLE KEYS */;
 
 -- Дамп структуры для таблица protus.auth_item
 DROP TABLE IF EXISTS `auth_item`;
 CREATE TABLE IF NOT EXISTS `auth_item` (
-  `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `name` varchar(64) NOT NULL,
   `type` int(11) NOT NULL,
-  `description` text CHARACTER SET utf8 COLLATE utf8_general_ci,
-  `rule_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `data` text CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `description` text,
+  `rule_name` varchar(64) DEFAULT NULL,
+  `data` text,
   `created_at` int(11) DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
   PRIMARY KEY (`name`),
@@ -54,8 +55,8 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 -- Дамп структуры для таблица protus.auth_item_child
 DROP TABLE IF EXISTS `auth_item_child`;
 CREATE TABLE IF NOT EXISTS `auth_item_child` (
-  `parent` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `child` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `parent` varchar(64) NOT NULL,
+  `child` varchar(64) NOT NULL,
   PRIMARY KEY (`parent`,`child`),
   KEY `child` (`child`),
   CONSTRAINT `auth_item_child_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -72,8 +73,8 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 -- Дамп структуры для таблица protus.auth_rule
 DROP TABLE IF EXISTS `auth_rule`;
 CREATE TABLE IF NOT EXISTS `auth_rule` (
-  `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `data` text CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `name` varchar(64) NOT NULL,
+  `data` text,
   `created_at` int(11) DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
   PRIMARY KEY (`name`)
@@ -89,22 +90,23 @@ INSERT INTO `auth_rule` (`name`, `data`, `created_at`, `updated_at`) VALUES
 DROP TABLE IF EXISTS `company`;
 CREATE TABLE IF NOT EXISTS `company` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `city` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `state` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `zip` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `zip` varchar(10) DEFAULT NULL,
   `status` smallint(6) unsigned NOT NULL DEFAULT '100',
   `created_at` int(11) unsigned NOT NULL,
   `updated_at` int(11) unsigned NOT NULL,
-  `citrix_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `citrix_id` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 -- Дамп данных таблицы protus.company: ~1 rows (приблизительно)
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
-INSERT INTO `company` (`id`, `name`, `address`, `city`, `state`, `zip`, `status`, `created_at`, `updated_at`, `citrix_id`) VALUES
-	(19, 'Test_Upd', '', '', '', '', 100, 1485609638, 1485610710, 'fo2da890-e919-4f98-94dd-b1d2e65defe3');
+INSERT INTO `company` (`id`, `name`, `description`, `address`, `city`, `state`, `zip`, `status`, `created_at`, `updated_at`, `citrix_id`) VALUES
+	(19, 'Test_Upd', '', '', '', '', '', 100, 1485609638, 1485610710, 'fo2da890-e919-4f98-94dd-b1d2e65defe3');
 /*!40000 ALTER TABLE `company` ENABLE KEYS */;
 
 -- Дамп структуры для таблица protus.file
@@ -141,15 +143,15 @@ CREATE TABLE IF NOT EXISTS `investigation` (
   `company_id` int(11) unsigned NOT NULL,
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `description` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `contact_person` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `description` varchar(2000) DEFAULT NULL,
+  `contact_person` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
   `status` smallint(6) unsigned NOT NULL DEFAULT '300',
   `created_at` int(11) unsigned NOT NULL,
   `updated_at` int(11) unsigned NOT NULL,
-  `citrix_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `citrix_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `idx-investigation-company_id` (`company_id`),
   CONSTRAINT `fk-investigation-company_id` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON UPDATE CASCADE
@@ -224,14 +226,14 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `last_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `phone_number` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `auth_key` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `password_hash` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `password_reset_token` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `first_name` varchar(255) DEFAULT NULL,
+  `last_name` varchar(255) DEFAULT NULL,
+  `phone_number` varchar(255) DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `auth_key` varchar(32) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
+  `password_reset_token` varchar(255) DEFAULT NULL,
   `status` smallint(6) unsigned NOT NULL DEFAULT '100',
   `created_at` int(11) unsigned NOT NULL,
   `updated_at` int(11) unsigned NOT NULL,
@@ -239,12 +241,13 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `password_reset_token` (`password_reset_token`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы protus.user: ~1 rows (приблизительно)
+-- Дамп данных таблицы protus.user: ~2 rows (приблизительно)
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `first_name`, `last_name`, `phone_number`, `email`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `status`, `created_at`, `updated_at`) VALUES
-	(2, NULL, NULL, NULL, 'email@email.com', 'admin', 's8fG050TnphotWkYFWB5VA_vr-6DJDEg', '$2y$13$9WhOdxpxqma7h/j1G/ZxJuS4mDe/OiFcokSaK8wx7kRCGDTI61wr.', NULL, 100, 1485692238, 1485692238);
+	(2, NULL, NULL, NULL, 'email@email.com', 'admin', 's8fG050TnphotWkYFWB5VA_vr-6DJDEg', '$2y$13$9WhOdxpxqma7h/j1G/ZxJuS4mDe/OiFcokSaK8wx7kRCGDTI61wr.', NULL, 100, 1485692238, 1485692238),
+	(4, 'User', 'Test', '34543545', 'user@usr.us', 'user', 'AfUiJsf4AfsUHXMNSYfMpD2ddB-CGlZu', '$2y$13$jg9vW509INme6S60DbuUIOOTcX5weJneEJJbAAbz4DcIbElJrAxAy', NULL, 100, 1485784036, 1485784036);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 -- Дамп структуры для таблица protus.user_company
@@ -258,8 +261,10 @@ CREATE TABLE IF NOT EXISTS `user_company` (
   CONSTRAINT `fk-user_company-user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы protus.user_company: ~0 rows (приблизительно)
+-- Дамп данных таблицы protus.user_company: ~1 rows (приблизительно)
 /*!40000 ALTER TABLE `user_company` DISABLE KEYS */;
+INSERT INTO `user_company` (`user_id`, `company_id`) VALUES
+	(4, 19);
 /*!40000 ALTER TABLE `user_company` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
