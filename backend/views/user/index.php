@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'class' => 'yii\grid\ActionColumn',
                             'template' => '{edit}{delete}',
                             'contentOptions' => [
-                                'width' => 100,
+                                'width' => 120,
                             ],
                             'buttons' => [
                                 'edit' => function ($url, $model) {
