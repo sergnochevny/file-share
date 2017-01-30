@@ -3,6 +3,8 @@
 namespace backend\models;
 
 use backend\behaviors\UploadBehavior;
+use common\models\Investigation;
+use common\models\UserCompany;
 
 class File extends \common\models\File
 {
@@ -66,4 +68,38 @@ class File extends \common\models\File
         return $behaviors;
     }
 
+    /**
+     * @return UndeletableActiveQuery
+     */
+    public function getUsers()
+    {
+        return $this->hasMany(User::className(), ['id' => 'user_id'])
+            ->via('userCompanies');
+    }
+
+    /**
+     * @return UndeletableActiveQuery
+     */
+    public function getUserCompanies()
+    {
+        return $this->hasMany(UserCompany::className(), ['company_id' => 'id'])
+            ->via('companies');
+    }
+
+    /**
+     * @return UndeletableActiveQuery
+     */
+    public function getCompanies()
+    {
+        return $this->hasMany(Company::className(), ['id' => 'company_id'])
+            ->via('investigations');
+    }
+
+    /**
+     * @return UndeletableActiveQuery
+     */
+    public function getInvestigations()
+    {
+        return $this->hasMany(Investigation::className(), ['citrix_id' => 'parent']);
+    }
 }
