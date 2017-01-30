@@ -9,7 +9,7 @@
                     </div>
                     <div class="profile-overview">
                         <h1 class="profile-name"><?= $model->name ?></h1>
-                        <p><?= $model->description ?></p>
+                        <p><?php /* $model->description */ ?></p>
                     </div>
                     <div class="profile-info">
                         <ul class="profile-nav">

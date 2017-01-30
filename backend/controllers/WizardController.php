@@ -85,6 +85,7 @@ class WizardController extends Controller
     public function actionUser($id = null)
     {
         $request = Yii::$app->getRequest();
+        /** @var User $user */
         $user = User::create($id);
         if (null === $user) {
             throw new UserException('The user does not exists');
@@ -94,6 +95,9 @@ class WizardController extends Controller
         $userForm = Yii::createObject(UserForm::class);
         /** @var UserService $userService */
         $userService = Yii::createObject(UserService::class, [User::create($id)]);
+        if ($user->id) {
+            $userService->populateForm($userForm);
+        }
 
         if ($request->isPost
             && $userForm->load($request->post())

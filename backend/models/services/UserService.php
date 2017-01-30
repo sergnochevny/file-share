@@ -42,6 +42,16 @@ final class UserService
         return $this->user;
     }
 
+    public function populateForm(UserForm $form)
+    {
+        $user = $this->user;
+        $form->setAttributes($user->getAttributes());
+
+        $roles = array_keys($this->authManager->getRolesByUser($user->id));
+        $form->company_id = isset($user->companies[0]) ? $user->companies[0] : null;
+        $form->role = isset($roles[0]) ? $roles[0] : null;
+    }
+
     /**
      * @param UserForm $form
      * @return bool
