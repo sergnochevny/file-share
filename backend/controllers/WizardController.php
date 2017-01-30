@@ -59,6 +59,8 @@ class WizardController extends Controller
     public function actionUser($id = null)
     {
         $request = Yii::$app->getRequest();
+        /** @var User $identity current user */
+        $identity = Yii::$app->getUser()->getIdentity();
         /** @var User $user */
         $user = User::create($id);
         if (null === $user) {
@@ -67,7 +69,6 @@ class WizardController extends Controller
 
         /** @var UserForm $userForm */
         $userForm = Yii::createObject(UserForm::class);
-
         /** @var UserService $userService */
         $userService = Yii::createObject(UserService::class, [$user]);
 
@@ -75,30 +76,29 @@ class WizardController extends Controller
             'isUser' => true,
             'userForm' => $userForm,
             'isUpdate' => false,
-            'selected' => null, //selected company
+            'selectedUser' => null,
+            'colleagues' => [],
         ];
         if ($user->id) {
             $userService->populateForm($userForm);
             $options['isUpdate'] = true;
+            $options['selectedUser'] = $user->id;
+            $options['colleagues'] = $user->getColleaguesList();
         }
 
-        if ($request->isPost
-            && $userForm->load($request->post())
-            && $userForm->validate()
-        ) {
-            if (!Yii::$app->getUser()->can('admin')) {
+        if ($request->isPost && $userForm->load($request->post())) {
+            if ($identity->isClient()) {
                 //explicitly set role if client creates another user
                 $userForm->role = 'client';
-                //@todo set company id for another users who works with current user (client)
             }
-
             //new user with admin role can't have company
             if ($userForm->role == 'admin') {
                 $userForm->company_id = null;
             }
 
-            if ($userService->save($userForm)) {
+            if ($userForm->validate() && $userService->save($userForm)) {
                 $options['isUpdate'] = true;
+
             } else {
                 Yii::$app->getSession()->setFlash('error', 'The user was not created');
             }

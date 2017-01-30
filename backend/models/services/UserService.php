@@ -51,6 +51,7 @@ final class UserService
         $form->setUser($this->user);
         $form->setAttributes($user->getAttributes());
 
+                            //admin can't have company
         $form->company_id = isset($user->company->id) ? $user->company->id : null;
         $form->role = $this->getUserRole();
     }
@@ -87,7 +88,7 @@ final class UserService
 
         if ($user->save() && $this->assignRole($form->role)) {
             //drop old relations if company related
-            $user->unlinkAll('companies', true);
+            $user->unlinkAll('company', true);
 
             if ($form->company_id) {
                 $company = $this->getCompany($form->company_id);
