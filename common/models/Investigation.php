@@ -26,7 +26,6 @@ use yii\behaviors\TimestampBehavior;
  * @property array $statusLabels
  *
  * @property Company $company
- * @property User[] $users
  */
 class Investigation extends AbstractUndeletableActiveRecord
 {
@@ -79,7 +78,8 @@ class Investigation extends AbstractUndeletableActiveRecord
         ];
     }
 
-    public static function getStatusesList(){
+    public static function getStatusesList()
+    {
         return [
             self::STATUS_DELETED => 'Deleted',
             self::STATUS_CANCELLED => 'Cancelled',
@@ -88,6 +88,34 @@ class Investigation extends AbstractUndeletableActiveRecord
             self::STATUS_IN_PROGRESS => 'In progress',
             self::STATUS_COMPLETED => 'Completed',
         ];
+    }
+
+    public static function getStatusByCode($code)
+    {
+        if(isset($code) && $code !== null){
+            switch ($code) {
+                case self::STATUS_DELETED;
+                    return self::getStatusesList()[self::STATUS_DELETED];
+                    break;
+                case self::STATUS_CANCELLED;
+                    return self::getStatusesList()[self::STATUS_CANCELLED];
+                    break;
+                case self::STATUS_PENDING;
+                    return self::getStatusesList()[self::STATUS_PENDING];
+                    break;
+                case self::STATUS_IN_HISTORY;
+                    return self::getStatusesList()[self::STATUS_IN_HISTORY];
+                    break;
+                case self::STATUS_IN_PROGRESS;
+                    return self::getStatusesList()[self::STATUS_IN_PROGRESS];
+                    break;
+                case self::getStatusesList()[self::STATUS_COMPLETED];
+                    return self::STATUS_COMPLETED;
+                    break;
+            }
+        }else{
+            return null;
+        }
     }
 
     /**
