@@ -2,6 +2,8 @@
 (function ($) {
     var companyList = '#company-form select',
         companyForm = '#company-form',
+        userList = '#user-list',
+        userForm = '#user-form',
         pjaxContainer = '#wizard-container';
 
 
@@ -18,14 +20,21 @@
         });
     }
 
-    //Update company
-    $(document).on('change', companyList, function (e) {
-        e.preventDefault();
-        var companyId = $(this).val(),
-            createUrl = $(companyForm).data('createUrl');
+    function updateFormOnListChange(list, form) {
+        $(document).on('change', list, function (e) {
+            e.preventDefault();
+            var id = $(this).val(),
+                createUrl = $(form).data('createUrl');
 
-        pjaxSendRequest(createUrl, 'get', {'id': companyId});
-    });
+            pjaxSendRequest(createUrl, 'get', {'id': id});
+        });
+    }
+
+    //Update company
+    updateFormOnListChange(companyList, companyForm);
+
+    //update user
+    updateFormOnListChange(userList, userForm);
 
 
 })(jQuery);
