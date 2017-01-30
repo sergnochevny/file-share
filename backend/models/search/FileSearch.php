@@ -2,9 +2,8 @@
 
 namespace backend\models\search;
 
-use backend\models\File;
 use Yii;
-use yii\base\Model;
+use backend\models\File;
 use yii\data\ActiveDataProvider;
 
 /**
@@ -19,10 +18,11 @@ class FileSearch extends File
 
     public function scenarios()
     {
-        return [
+        $scenario = parent::scenarios();
+        return array_merge($scenario, [
             self::SCENARIO_APP => ['name', 'pagesize'],
             self::SCENARIO_ALL => ['name', 'pagesize'],
-        ];
+        ]);
     }
 
     /**

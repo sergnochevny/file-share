@@ -7,31 +7,13 @@ use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Investigation */
-
-$this->title = 'Investigation View | ' . Html::encode($model->company->name);
-$this->params['breadcrumbs'][] = ['label' => 'Investigations', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-
-<div class="title-bar">
-    <div class="title-bar-actions">
-        <?= Html::a(Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-chevron-circle-left icon-lg icon-fw']), ['class' => 'btn-label']) . ' Back', Url::previous('back'), ['class' => 'btn btn-labeled arrow-default']) ?>
-    </div>
-    <h1 class="title-bar-title">
-        <span class="d-ib"><span class="icon icon-folder-open-o"></span> Company Investigation</span>
-    </h1>
-    <p class="title-bar-description">
-        <small>General information about the company investigation</small>
-    </p>
-</div>
-
-
 
 <div class="row gutter-xs">
     <div class="col-xs-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Investigation ID-<?= strtoupper($model->id) ?>
+                <?= strtoupper($model->name) ?>
             </div>
             <div class="panel-body panel-collapse">
                 <div class="row">

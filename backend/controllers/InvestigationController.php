@@ -24,7 +24,7 @@ class InvestigationController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Investigation::findOne($id)) !== null) {
+        if (($model = \common\models\Investigation::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -59,19 +59,6 @@ class InvestigationController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single Investigation model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        Url::remember(Yii::$app->request->url, 'back');
-        return $this->render('view', [
-            'model' => $this->findModel($id),
         ]);
     }
 

@@ -63,30 +63,38 @@ class FileController extends Controller
      * Lists all File models.
      * @return mixed
      */
-    public function actionIndex($id = null)
+    public function actionIndex($id = null, $parent = null)
     {
-        if (!empty($id)) {
-            $parent = Investigation::findOne($id);
-            if (!empty($parent)) {
-                $parent = $parent->citrix_id;
+        $investigation = null;
+        if (!empty($id) && empty($parent)) {
+            $investigation = Investigation::findOne($id);
+            if (!empty($investigation)) {
+                $parent = $investigation->citrix_id;
             }
+        } else {
+            $parent = File::findOne(['parent' => 'root']);
+            if (!empty($parent)) { $parent = $parent->citrix_id; }
         }
         $uploadModel = new FileUpload;
         if (!empty($id) && !empty($parent)) {
-            $searchModel = new FileSearch(['scenario'=>FileSearch::SCENARIO_APP]);
-            $uploadModel->parent = $parent;
-            $searchModel->parent = $parent;
+            $searchModel = new FileSearch(['scenario' => FileSearch::SCENARIO_APP]);
         } else {
             $searchModel = new FileSearch;
+        }
+        if(!empty($parent)){
+            $uploadModel->parent = $parent;
+            $searchModel->parent = $parent;
         }
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
         Url::remember(Yii::$app->request->url, 'back');
-        return $this->render('index', [
+        $renderParams = [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'uploadModel' => $uploadModel,
-        ]);
+        ];
+        if(!empty($investigation)) $renderParams['investigation'] = $investigation;
+        return $this->render('index', $renderParams);
     }
 
     /**

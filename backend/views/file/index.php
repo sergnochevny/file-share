@@ -13,9 +13,33 @@ use yii\helpers\ArrayHelper;
 /* @var $searchModel backend\models\FileSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Files';
-$this->params['breadcrumbs'][] = $this->title;
+if (!empty($investigation)) {
+    $this->title = Html::encode($investigation->company->name) . ' | Investigation View | ' . Html::encode($investigation->name);
+    $this->params['breadcrumbs'][] = ['label' => 'Investigations', 'url' => ['index']];
+    $this->params['breadcrumbs'][] = $this->title;
+} else {
+    $this->title = 'Files';
+    $this->params['breadcrumbs'][] = $this->title;
+}
 ?>
+<div class="title-bar">
+
+    <div class="title-bar-actions">
+        <?= Html::a(Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-chevron-circle-left icon-lg icon-fw']), ['class' => 'btn-label']) . ' Back', Url::previous('back'), ['class' => 'btn btn-labeled arrow-default']) ?>
+    </div>
+    <h1 class="title-bar-title">
+        <span class="d-ib"><span class="icon icon-save"></span> <?= Html::encode($this->title) ?></span>
+    </h1>
+
+    <p class="title-bar-description">
+        <?php if (!empty($investigation)) : ?>
+            <small>General information about the investigation</small>
+        <?php else : ?>
+            <small>All files</small>
+        <?php endif; ?>
+    </p>
+</div>
+<?= !empty($investigation) ? $this->render('partials/_investigation', ['model' => $investigation]) : '' ?>;
 
 <?php Pjax::begin(['id' => 'file_index', 'enablePushState' => false, 'timeout' => 0]); ?>
 
@@ -25,18 +49,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'options' => ArrayHelper::getValue(Yii::$app->session->getFlash('alert'), 'options'),
     ]) ?>
 <?php endif ?>
-
-<div class="title-bar">
-    <div class="title-bar-actions">
-        <?= Html::a(Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-chevron-circle-left icon-lg icon-fw']), ['class' => 'btn-label']) . ' Back', Url::previous('back'), ['class' => 'btn btn-labeled arrow-default']) ?>
-    </div>
-    <h1 class="title-bar-title">
-        <span class="d-ib"><span class="icon icon-save"></span> <?= Html::encode($this->title) ?></span>
-    </h1>
-    <p class="title-bar-description">
-        <small>All files</small>
-    </p>
-</div>
 
 <div class="row gutter-xs">
     <div class="col-xs-12">
@@ -59,13 +71,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             ]
                         ]
                     ); ?>
-                    <?php if(!isset($investigation) && Yii::$app->user->can('admin')): ?>
-                    <?= $uploadForm->field($uploadModel, 'file')->fileInput(['id' => "file"])->label(false); ?>
-                    <?= Html::submitButton('<span class="btn-label"><span class="icon icon-upload  icon-lg icon-fw"></span></span>Upload', [
-                        'id' => "send",
-                        'class' => 'btn btn-sm btn-labeled arrow-warning send-file-button'
-                    ]); ?>
-                    <?php endif;?>
+                    <?php if (!isset($investigation) && Yii::$app->user->can('admin')): ?>
+                        <?= $uploadForm->field($uploadModel, 'file')->fileInput(['id' => "file"])->label(false); ?>
+                        <?= Html::submitButton('<span class="btn-label"><span class="icon icon-upload  icon-lg icon-fw"></span></span>Upload', [
+                            'id' => "send",
+                            'class' => 'btn btn-sm btn-labeled arrow-warning send-file-button'
+                        ]); ?>
+                    <?php endif; ?>
 
                     <?php
                     $this->registerJsFile(YII_ENV_DEV ? '@web/js/input_upload_submit.js' : '@web/js/input_upload_submit.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
