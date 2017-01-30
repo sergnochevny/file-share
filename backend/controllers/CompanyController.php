@@ -3,7 +3,6 @@
 namespace backend\controllers;
 
 
-use backend\components\rbac\rules\CompanyEmployeeRule;
 use backend\models\search\CompanySearch;
 use backend\models\services\CompanyService;
 use backend\models\forms\CompanyForm;

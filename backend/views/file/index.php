@@ -59,11 +59,18 @@ if (!empty($investigation)) {
                     <small>All downloaded files that relate to the present case</small>
                     <br/>
                     <br/>
-                    <?php $uploadForm = ActiveForm::begin(
+                    <?php
+                    /**
+                     * @var \common\models\Investigation $investigation
+                     */
+                    $url = (!empty($investigation)) ?
+                        Url::to(['/file/upload', 'parent' => $investigation->citrix_id], true) :
+                        Url::to(['/file/upload'], true);
+                    $uploadForm = ActiveForm::begin(
                         [
                             'id' => "upload-file",
                             'method' => 'post',
-                            'action' => Url::to(['/file/upload'], true),
+                            'action' => $url,
                             'options' => [
                                 'data-pjax' => true,
                                 'class' => 'text-center',
@@ -71,7 +78,7 @@ if (!empty($investigation)) {
                             ]
                         ]
                     ); ?>
-                    <?php if (!isset($investigation) && Yii::$app->user->can('admin')): ?>
+                    <?php if (!empty($investigation) || Yii::$app->user->can('admin')): ?>
                         <?= $uploadForm->field($uploadModel, 'file')->fileInput(['id' => "file"])->label(false); ?>
                         <?= Html::submitButton('<span class="btn-label"><span class="icon icon-upload  icon-lg icon-fw"></span></span>Upload', [
                             'id' => "send",
