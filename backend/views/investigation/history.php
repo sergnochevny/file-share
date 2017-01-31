@@ -6,7 +6,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\helpers\Url;
+use common\helpers\Url;
 use yii\widgets\Pjax;
 
 $this->title = 'History';
@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="title-bar">
     <div class="title-bar-actions">
-        <?= Html::a(Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-chevron-circle-left icon-lg icon-fw']), ['class' => 'btn-label']) . ' Back', Url::previous('back'), ['class' => 'btn btn-labeled arrow-default']) ?>
+        <?= Html::a(Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-chevron-circle-left icon-lg icon-fw']), ['class' => 'btn-label']) . ' Back', Url::previous(), ['class' => 'btn btn-labeled arrow-default']) ?>
     </div>
     <h1 class="title-bar-title">
         <span class="d-ib"><span class="icon icon-history"></span> <?= Html::encode($this->title) ?></span>

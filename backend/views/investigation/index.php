@@ -5,7 +5,7 @@
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 use yii\helpers\Html;
-use yii\helpers\Url;
+use common\helpers\Url;
 
 $this->title = 'Applicants';
 $this->params['breadcrumbs'][] = $this->title;
@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?= !empty($company) ? $this->render('partials/_company', ['model' => $company]) : '' ?>
 <div class="title-bar">
     <div class="title-bar-actions">
-        <?= Html::a(Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-chevron-circle-left icon-lg icon-fw']), ['class' => 'btn-label']) . ' Back', Url::previous('back'), ['class' => 'btn btn-labeled arrow-default']) ?>
+        <?= Html::a(Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-chevron-circle-left icon-lg icon-fw']), ['class' => 'btn-label']) . ' Back', Url::previous(), ['class' => 'btn btn-labeled arrow-default']) ?>
     </div>
     <h1 class="title-bar-title">
         <span class="d-ib"><span class="icon icon-folder-open-o"></span> <?= Html::encode($this->title) ?></span>

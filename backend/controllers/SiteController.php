@@ -6,7 +6,7 @@ use backend\models\forms\PasswordResetForm;
 use backend\models\forms\PasswordResetRequestForm;
 use backend\models\forms\RestorePasswordRequestForm;
 use Yii;
-use yii\helpers\Url;
+use common\helpers\Url;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -51,7 +51,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        Url::remember(Yii::$app->request->url, 'back');
+        Url::remember(Yii::$app->request->url);
         if(Yii::$app->user->can('admin')){
             return $this->render('index');
         }else{
@@ -62,7 +62,7 @@ class SiteController extends Controller
 
     public function actionWizard()
     {
-        Url::remember(Yii::$app->request->url, 'back');
+        Url::remember(Yii::$app->request->url);
         return $this->render('wizard');
     }
 
@@ -75,7 +75,7 @@ class SiteController extends Controller
     {
         $this->layout = 'main-login';
 
-        Url::remember(Yii::$app->request->url, 'back');
+        Url::remember(Yii::$app->request->url);
         $model = new LoginForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
@@ -112,7 +112,7 @@ class SiteController extends Controller
     public function actionPasswordReset($token)
     {
         $this->layout = 'main-login';
-        Url::remember(Yii::$app->request->url, 'back');
+        Url::remember(Yii::$app->request->url);
         $model = new PasswordResetForm;
 
         if($model->load(Yii::$app->request->post()) && $model->validate()){

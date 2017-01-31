@@ -1,11 +1,14 @@
-<?php use common\widgets\Menu; ?>
+<?php
+use common\widgets\Menu;
+use common\helpers\Url;
+?>
 <div class="profile">
     <div class="profile-header">
         <div class="profile-cover">
             <div class="profile-container">
                 <div class="profile-card">
                     <div class="profile-avetar">
-                        <img class="profile-avetar-img" src="<?=\yii\helpers\Url::to('@web/images/firmLogo.png',true);?>" alt="Company name" width="128" height="128">
+                        <img class="profile-avetar-img" src="<?= Url::to('@web/images/firmLogo.png',true);?>" alt="Company name" width="128" height="128">
                     </div>
                     <div class="profile-overview">
                         <h1 class="profile-name"><?= $model->name ?></h1>

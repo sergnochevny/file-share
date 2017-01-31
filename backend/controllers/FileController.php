@@ -9,7 +9,7 @@ use Yii;
 use common\models\File;
 use backend\models\search\FileSearch;
 use yii\base\InvalidParamException;
-use yii\helpers\Url;
+use common\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -89,7 +89,7 @@ class FileController extends Controller
         }
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
-        Url::remember(Yii::$app->request->url, 'back');
+        Url::remember(Yii::$app->request->url);
         $renderParams = [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -106,7 +106,7 @@ class FileController extends Controller
      */
     public function actionView($id)
     {
-        Url::remember(Yii::$app->request->url, 'back');
+        Url::remember(Yii::$app->request->url);
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
