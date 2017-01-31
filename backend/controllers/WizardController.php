@@ -77,13 +77,13 @@ class WizardController extends Controller
             'userForm' => $userForm,
             'isUpdate' => false,
             'selectedUser' => null,
-            'colleagues' => [],
         ];
         if ($user->id) {
             $userService->populateForm($userForm);
             $options['isUpdate'] = true;
             $options['selectedUser'] = $user->id;
-            $options['colleagues'] = $user->getColleaguesList();
+        } else {
+            $userForm->scenario = UserForm::SCENARIO_CREATE;
         }
 
         if ($request->isPost && $userForm->load($request->post())) {
