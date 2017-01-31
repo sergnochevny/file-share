@@ -4,6 +4,7 @@
 namespace backend\models;
 
 use backend\behaviors\CitrixFolderBehavior;
+use backend\behaviors\HistoryBehavior;
 use common\models\Company;
 use yii\db\Query;
 
@@ -59,6 +60,14 @@ class Investigation extends \common\models\Investigation
                  */
                 return $model->company->citrix_id;
             }
+        ];
+        $behaviors[] = [
+            'class' => HistoryBehavior::className(),
+            'parent' => function(Investigation $model){
+                $parent = $model->company_id;
+                return $parent;
+            },
+            'type' => 'investigation',
         ];
 
         return $behaviors;

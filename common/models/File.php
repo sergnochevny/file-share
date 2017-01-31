@@ -18,12 +18,9 @@ use yii\behaviors\TimestampBehavior;
  * @property string $updated_at
  * @property string $status
  */
-class File extends AbstractUndeletableActiveRecord
+class File extends UndeletableActiveRecord
 {
 
-    const STATUS_DELETED = 0;
-    const STATUS_IN_HISTORY = 200;
-    const STATUS_ACTIVE = 100;
     /**
      * @inheritdoc
      */
@@ -35,7 +32,7 @@ class File extends AbstractUndeletableActiveRecord
     public function behaviors()
     {
         return [
-            'timestamp' => [ TimestampBehavior::className()],
+            'timestamp' => ['class' => TimestampBehavior::class]
         ];
     }
 

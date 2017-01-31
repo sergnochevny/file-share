@@ -22,11 +22,8 @@ use yii\behaviors\TimestampBehavior;
  * @property Investigation[] $investigations
  * @property User[] $users
  */
-class Company extends AbstractUndeletableActiveRecord
+class Company extends UndeletableActiveRecord
 {
-    const STATUS_DELETED = 0;
-    const STATUS_ACTIVE = 100;
-    const STATUS_IN_HISTORY = 200;
 
     /**
      * @inheritdoc

@@ -27,7 +27,7 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property Company $company
  */
-class Investigation extends AbstractUndeletableActiveRecord
+class Investigation extends UndeletableActiveRecord
 {
     const STATUS_DELETED = 0;
     const STATUS_CANCELLED = 100;
@@ -50,7 +50,7 @@ class Investigation extends AbstractUndeletableActiveRecord
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            TimestampBehavior::class,
         ];
     }
 

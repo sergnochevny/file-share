@@ -47,6 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         [
                             'attribute' => 'created_at',
+                            'label' => 'Archived at',
                             'value' => function ($model, $key, $index, $column) {
                                 $value = '<span class="label label-warning" >' .  Yii::$app->formatter->asDate($model->{$column->attribute}) . '</span >';
                                 return $value;
