@@ -35,9 +35,7 @@ class File extends AbstractUndeletableActiveRecord
     public function behaviors()
     {
         return [
-            [
-                'class' => TimestampBehavior::className(),
-            ],
+            'timestamp' => [ TimestampBehavior::className()],
         ];
     }
 

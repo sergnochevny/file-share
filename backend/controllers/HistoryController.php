@@ -3,12 +3,9 @@
 namespace backend\controllers;
 
 use backend\models\search\HistorySearch;
-use SebastianBergmann\PHPLOC\Log\CSV\History;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * HistoryController implements the CRUD actions for File model.
@@ -54,7 +51,7 @@ class HistoryController extends Controller
      */
     public function actionDelete($id)
     {
-        //$this->findModel($id)->delete();
+        $this->findModel($id)->delete();
         return $this->redirect(['index']);
     }
 

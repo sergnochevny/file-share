@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "history".
@@ -33,6 +35,19 @@ class History extends \yii\db\ActiveRecord
             [['type', 'created_at'], 'required'],
             [['name'], 'string', 'max' => 255],
             [['type'], 'string', 'max' => 10],
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', false],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => false,
+                ],
+            ],
         ];
     }
 
