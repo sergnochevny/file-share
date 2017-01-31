@@ -77,9 +77,11 @@ use yii\helpers\Url;
 
             <?= $form->field($userForm, 'email')->textInput() ?>
 
+            <?php if (!$isUpdate): ?>
             <?= $form->field($userForm, 'password')->passwordInput() ?>
 
             <?= $form->field($userForm, 'password_repeat')->passwordInput() ?>
+            <?php endif ?>
         </div>
         <div class="col-sm-6">
             <?= $form->field($userForm, 'first_name')->textInput() ?>

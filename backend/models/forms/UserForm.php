@@ -6,6 +6,9 @@ use yii\base\Model;
 
 final class UserForm extends Model
 {
+    const SCENARIO_CREATE = 'create';
+    const SCENARIO_UPDATE = 'update';
+
     /** @var string */
     public $role;
 
@@ -48,12 +51,15 @@ final class UserForm extends Model
     public function rules()
     {
         return [
-            [['company_id', 'email', 'username', 'password', 'password_repeat'], 'required'],
+            [['company_id', 'email', 'username'], 'required'],
+            [['password', 'password_repeat'], 'required', 'on' => self::SCENARIO_CREATE],
             [['company_id'], 'integer'],
             [['role', 'first_name', 'last_name', 'phone_number'], 'string'],
             [['email'], 'email'],
-            [['password', 'password_repeat'], 'string', 'min' => 8],
-            ['password_repeat', 'compare', 'compareAttribute'=>'password', 'message' => "Passwords don't match"],
+
+            [['password', 'password_repeat'], 'string', 'min' => 8, 'on' => self::SCENARIO_CREATE],
+            ['password_repeat', 'compare', 'compareAttribute'=>'password', 'message' => "Passwords don't match", 'on' => self::SCENARIO_CREATE],
+
             [
                 ['username'],
                 'unique',
