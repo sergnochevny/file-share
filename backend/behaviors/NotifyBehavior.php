@@ -18,12 +18,32 @@ final class NotifyBehavior extends Behavior
     /** @var int|\Closure */
     private $companyId;
 
+    /** @var string */
+    public $createTemplate;
+
+    /** @var string */
+    public $updateTemplate;
+
+    /** @var string */
+    public $deleteTemplate;
+
+    /** @var string */
+    public $sendFrom;
+
+    //@todo subject ??
+
     /**
      * @inheritdoc
      */
     public function init()
     {
         $this->mailer = \Yii::$app->getMailer();
+
+        if (!isset($this->createTemplate, $this->updateTemplate, $this->deleteTemplate)) {
+            throw new \ErrorException('Need set createTemplate, updateTemplate, deleteTamplate for mails');
+        }
+
+        $this->sendFrom = isset($this->sendFrom) ? $this->sendFrom : 'noreply@' . \Yii::$app->getHomeUrl();
     }
 
     /**
@@ -60,7 +80,7 @@ final class NotifyBehavior extends Behavior
      */
     public function afterInsert()
     {
-
+        $this->sendMessagesWithTemplate($this->createTemplate);
     }
 
     /**
@@ -68,7 +88,7 @@ final class NotifyBehavior extends Behavior
      */
     public function afterUpdate()
     {
-
+        $this->sendMessagesWithTemplate($this->updateTemplate);
     }
 
     /**
@@ -76,13 +96,15 @@ final class NotifyBehavior extends Behavior
      */
     public function afterDelete()
     {
-
+        $this->sendMessagesWithTemplate($this->deleteTemplate);
     }
 
     /**
+     * Collects admin's emails
+     *
      * @return array
      */
-    private function collectAdminsMails()
+    private function collectAdminsEmails()
     {
         $emails =  User::findByRole('admin')->select(['email'])->asArray()->all();
 
@@ -90,10 +112,12 @@ final class NotifyBehavior extends Behavior
     }
 
     /**
+     * Collects client's emails
+     *
      * @return array
      * @throws ErrorException
      */
-    private function collectClientsMails()
+    private function collectClientsEmails()
     {
         $emails = User::findByRole('client')
             ->select(['email'])
@@ -103,5 +127,27 @@ final class NotifyBehavior extends Behavior
             ->all();
 
         return array_column($emails, 'email');
+    }
+
+    /**
+     * Collects required emails and sends emails with template
+     *
+     * @param string $template
+     */
+    private function sendMessagesWithTemplate($template)
+    {
+        $emails = array_merge($this->collectAdminsEmails(), $this->collectClientsEmails());
+
+        $messages = [];
+        foreach ($emails as $email) {
+            $messages[] = $this->mailer->compose([
+                'html' => $template . '-html',
+                'text' => $template . '-text'
+            ], [
+                'model' => $this->owner
+            ])->setTo($email);
+        }
+
+        $this->mailer->sendMultiple($messages);
     }
 }
