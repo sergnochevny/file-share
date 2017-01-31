@@ -23,17 +23,6 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [[
-                    'actions' => ['login', 'restore-password-request', 'error'],
-                    'allow' => true,
-                ],[
-                    'actions' => ['logout', 'index', 'wizard'],
-                    'allow' => true,
-                    'roles' => ['@'],
-                ]]
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -66,7 +55,8 @@ class SiteController extends Controller
         if(Yii::$app->user->can('admin')){
             return $this->render('index');
         }else{
-            return $this->render('client');
+            $renderParams = InvestigationController::prepareRenderInvestigations();
+            return $this->render('client', $renderParams);
         }
     }
 

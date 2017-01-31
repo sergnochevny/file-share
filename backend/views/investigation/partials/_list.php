@@ -1,4 +1,13 @@
-<?php Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout' => 0, 'options' => ['class' => 'panel-body panel-collapse']]); ?>
+<?php
+
+use backend\models\Investigation;
+use yii\grid\GridView;
+use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\widgets\Pjax;
+
+Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout' => 0, 'options' => ['class' => 'panel-body panel-collapse']]);
+?>
 <?= $this->render('/search/_search', ['model' => $searchModel]); ?>
 <?= GridView::widget([
     'dataProvider' => $dataProvider,

@@ -4,11 +4,8 @@
 /* @var $searchModel backend\models\InvestigationSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-use backend\models\Investigation;
 use yii\helpers\Html;
-use yii\grid\GridView;
 use yii\helpers\Url;
-use yii\widgets\Pjax;
 
 $this->title = 'Applicants';
 $this->params['breadcrumbs'][] = $this->title;
