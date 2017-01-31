@@ -5,6 +5,7 @@
 -- HeidiSQL Версия:              9.4.0.5125
 -- --------------------------------------------------------
 
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET NAMES utf8 */;
 /*!50503 SET NAMES utf8mb4 */;
