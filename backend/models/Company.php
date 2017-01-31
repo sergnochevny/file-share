@@ -5,6 +5,7 @@ namespace backend\models;
 
 
 use backend\behaviors\CitrixFolderBehavior;
+use backend\behaviors\NotifyBehavior;
 
 final class Company extends \common\models\Company
 {
@@ -50,6 +51,15 @@ final class Company extends \common\models\Company
             'pass' => \Yii::$app->keyStorage->get('citrix.pass'),
             'id' => \Yii::$app->keyStorage->get('citrix.id'),
             'secret' => \Yii::$app->keyStorage->get('citrix.secret'),
+        ];
+        $behaviors['notify'] = [
+            'class' => NotifyBehavior::class,
+            'companyId' => function(Company $model) {
+                return $model->id;
+            },
+            'createTemplate' => 'companyCreate',
+            'updateTemplate' => 'companyUpdate',
+            'deleteTemplate' => 'companyDelete',
         ];
 
         return $behaviors;
