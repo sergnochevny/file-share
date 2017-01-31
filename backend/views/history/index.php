@@ -5,7 +5,7 @@ use yii\grid\GridView;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\CompanySearch */
+/* @var $searchModel backend\models\search\HistorySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'History';
@@ -39,14 +39,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     'options' => ['class' => 'row'],
                     'layout'=>"<div class='col-sm-12'>{items}</div>\n{summary}{pager}",
                     'columns' => [
-                        'name',
-                        'address',
-                        'city',
-                        'state',
-                        'zip',
-                        // 'status',
-                        // 'created_at',
-                        // 'updated_at',
+                        [
+                            'attribute' => 'name',
+                            'value' => function ($model, $key, $index, $column) {
+                                $model->{$column->attribute};
+                            }
+                        ],
+                        [
+                            'attribute' => 'created_at',
+                            'value' => function ($model, $key, $index, $column) {
+                                $value = '<span class="label label-warning" >' .  Yii::$app->formatter->asDate($model->{$column->attribute}) . '</span >';
+                                return $value;
+                            }
+                        ],
                         ['class' => 'yii\grid\ActionColumn'],
                     ],
                 ]); ?>

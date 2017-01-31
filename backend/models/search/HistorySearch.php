@@ -5,12 +5,12 @@ namespace backend\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Company;
+use common\models\History;
 
 /**
  * CompanySearch represents the model behind the search form about `common\models\Company`.
  */
-class HistorySearch extends Company
+class HistorySearch extends History
 {
 
     public $pagesize = 10;
@@ -21,16 +21,8 @@ class HistorySearch extends Company
     public function rules()
     {
         return [
-            [['name', 'pagesize',], 'safe']
+            [['parent', 'created_at', 'type', 'created_at'], 'safe']
         ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function scenarios()
-    {
-        return Model::scenarios();
     }
 
     /**
@@ -42,7 +34,7 @@ class HistorySearch extends Company
      */
     public function search($params)
     {
-        $query = Company::find()->andDeleted();
+        $query = History::find();
 
         // add conditions that should always apply here
 
@@ -62,16 +54,11 @@ class HistorySearch extends Company
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'status' => $this->status,
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'address', $this->address])
-            ->andFilterWhere(['like', 'city', $this->city])
-            ->andFilterWhere(['like', 'state', $this->state])
-            ->andFilterWhere(['like', 'zip', $this->zip]);
+            ->andFilterWhere(['like', 'parent', $this->parent]);
 
         return $dataProvider;
     }
