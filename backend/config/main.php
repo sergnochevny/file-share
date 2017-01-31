@@ -86,7 +86,7 @@ return [
             [
                 'controllers' => ['site'],
                 'allow' => true,
-                'actions' => ['login', 'restore-password-request'],
+                'actions' => ['login', 'restore-password-request', 'password-reset'],
                 'roles' => ['?'],
             ],
             [

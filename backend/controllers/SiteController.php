@@ -7,6 +7,8 @@ use backend\models\forms\PasswordResetRequestForm;
 use backend\models\forms\RestorePasswordRequestForm;
 use Yii;
 use common\helpers\Url;
+use yii\base\Model;
+use yii\bootstrap\Html;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -99,6 +101,7 @@ class SiteController extends Controller
 
         if($model->load(Yii::$app->request->post()) && $model->validate()){
             $token = $model->generateRecoveryToken();
+            echo Url::to(['/site/password-reset', 'token' => $token], true);
         }
 
         return $this->render('restore-password-request', ['model' => $model]);
@@ -107,21 +110,19 @@ class SiteController extends Controller
     /**
      * Password reset action
      *
+     * @param $token
      * @return string
      */
     public function actionPasswordReset($token)
     {
         $this->layout = 'main-login';
-        Url::remember(Yii::$app->request->url);
-        $model = new PasswordResetForm;
+
+        // @TODO validate
+        $model = new PasswordResetForm($token);
 
         if($model->load(Yii::$app->request->post()) && $model->validate()){
-            $user = $model->getUserByRecoveryToken();
-            $user->setPassword($model->password);
-            $user->password_reset_token = null;
 
-            $user->save();
-
+            $model->resetPassword();
             $notification = 'You password has been updated!';
 
             Yii::$app->session->setFlash('alert', [
@@ -133,7 +134,7 @@ class SiteController extends Controller
 
         }
 
-        return $this->render('regenerate-password', ['model' => $model]);
+        return $this->render('password-reset', ['model' => $model]);
     }
 
     /**
