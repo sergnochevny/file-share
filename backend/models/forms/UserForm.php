@@ -51,7 +51,11 @@ final class UserForm extends Model
     public function rules()
     {
         return [
-            [['company_id', 'email', 'username'], 'required'],
+            [['email', 'username'], 'required'],
+            [['company_id'], 'required', 'when' => function($form) {
+                //only client role require company
+                return $form->role == 'client';
+            }],
             [['password', 'password_repeat'], 'required', 'on' => self::SCENARIO_CREATE],
             [['company_id'], 'integer'],
             [['role', 'first_name', 'last_name', 'phone_number'], 'string'],
