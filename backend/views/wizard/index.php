@@ -2,7 +2,7 @@
 
 /* @var $this \yii\web\View */
 
-use yii\helpers\Url;
+use common\helpers\Url;
 use yii\widgets\Pjax;
 use yii\web\JqueryAsset;
 

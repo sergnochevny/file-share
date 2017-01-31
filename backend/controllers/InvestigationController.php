@@ -7,7 +7,7 @@ use common\models\User;
 use Yii;
 use backend\models\Investigation;
 use backend\models\search\InvestigationSearch;
-use yii\helpers\Url;
+use common\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -28,7 +28,7 @@ class InvestigationController extends Controller
         }
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
-        Url::remember(Yii::$app->request->url, 'back');
+        Url::remember(Yii::$app->request->url);
         $renderParams = [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

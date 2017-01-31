@@ -36,6 +36,6 @@ $fieldOptions2 = [
             <?php ActiveForm::end(); ?>
         </div>
         <br>
-        <div class="text-center outer-offset-top"><?= Html::a('Go back', Url::previous('back')) ?></div>
+        <div class="text-center outer-offset-top"><?= Html::a('Go back', Url::previous()) ?></div>
     </div>
 </div>

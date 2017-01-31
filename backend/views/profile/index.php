@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\helpers\Url;
+use common\helpers\Url;
 
 $this->title = '@' . $model->username;
 

@@ -6,7 +6,7 @@ use backend\models\forms\UserForm;
 use Yii;
 use common\models\User;
 use backend\models\search\UserSearch;
-use yii\helpers\Url;
+use common\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -40,7 +40,7 @@ class UserController extends Controller
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
-        Url::remember(Yii::$app->request->url, 'back');
+        Url::remember(Yii::$app->request->url);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -54,7 +54,7 @@ class UserController extends Controller
      */
     public function actionView($id)
     {
-        Url::remember(Yii::$app->request->url, 'back');
+        Url::remember(Yii::$app->request->url);
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
