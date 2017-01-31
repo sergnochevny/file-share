@@ -43,7 +43,7 @@ final class NotifyBehavior extends Behavior
             throw new \ErrorException('Need set createTemplate, updateTemplate, deleteTamplate for mails');
         }
 
-        $this->sendFrom = isset($this->sendFrom) ? $this->sendFrom : 'noreply@' . \Yii::$app->getHomeUrl();
+        $this->sendFrom = isset($this->sendFrom) ? $this->sendFrom : 'noreply@example.com';
     }
 
     /**
@@ -100,6 +100,25 @@ final class NotifyBehavior extends Behavior
     }
 
     /**
+     * Collects required emails and sends emails with template
+     *
+     * @param string $template
+     */
+    private function sendMessagesWithTemplate($template)
+    {
+        $messages = [];
+        foreach ($this->collectAdminEmails() as $email) {
+            $messages[] = $this->composeMailer('admin/' . $template)->setTo($email);
+        }
+
+        foreach ($this->collectClientEmails() as $email) {
+            $messages[] = $this->composeMailer('client/' . $template)->setTo($email);
+        }
+
+        $this->mailer->sendMultiple($messages);
+    }
+
+    /**
      * Collects admin's emails
      *
      * @return array
@@ -127,25 +146,6 @@ final class NotifyBehavior extends Behavior
             ->all();
 
         return array_column($emails, 'email');
-    }
-
-    /**
-     * Collects required emails and sends emails with template
-     *
-     * @param string $template
-     */
-    private function sendMessagesWithTemplate($template)
-    {
-        $messages = [];
-        foreach ($this->collectAdminEmails() as $email) {
-            $messages[] = $this->composeMailer('admin/' . $template)->setTo($email);
-        }
-
-        foreach ($this->collectClientEmails() as $email) {
-            $messages[] = $this->composeMailer('client/' . $template)->setTo($email);
-        }
-
-        $this->mailer->sendMultiple($messages);
     }
 
     /**
