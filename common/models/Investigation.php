@@ -50,7 +50,7 @@ class Investigation extends UndeletableActiveRecord
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            TimestampBehavior::class,
         ];
     }
 
