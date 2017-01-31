@@ -175,6 +175,7 @@ class FileController extends Controller
      */
     public function actionArchive($id)
     {
+        if(!Yii::$app->user->can('admin'))
         $this->findModel($id)->archive();
         return $this->redirect(['index']);
     }
