@@ -104,7 +104,7 @@ final class NotifyBehavior extends Behavior
      *
      * @return array
      */
-    private function collectAdminsEmails()
+    private function collectAdminEmails()
     {
         $emails =  User::findByRole('admin')->select(['email'])->asArray()->all();
 
@@ -117,7 +117,7 @@ final class NotifyBehavior extends Behavior
      * @return array
      * @throws ErrorException
      */
-    private function collectClientsEmails()
+    private function collectClientEmails()
     {
         $emails = User::findByRole('client')
             ->select(['email'])
@@ -136,18 +136,29 @@ final class NotifyBehavior extends Behavior
      */
     private function sendMessagesWithTemplate($template)
     {
-        $emails = array_merge($this->collectAdminsEmails(), $this->collectClientsEmails());
-
         $messages = [];
-        foreach ($emails as $email) {
-            $messages[] = $this->mailer->compose([
-                'html' => $template . '-html',
-                'text' => $template . '-text'
-            ], [
-                'model' => $this->owner
-            ])->setTo($email);
+        foreach ($this->collectAdminEmails() as $email) {
+            $messages[] = $this->composeMailer('admin/' . $template)->setTo($email);
+        }
+
+        foreach ($this->collectClientEmails() as $email) {
+            $messages[] = $this->composeMailer('client/' . $template)->setTo($email);
         }
 
         $this->mailer->sendMultiple($messages);
+    }
+
+    /**
+     * @param $template
+     * @return \yii\mail\MessageInterface
+     */
+    private function composeMailer($template)
+    {
+        return $this->mailer->compose([
+            'html' => $template . '-html',
+            'text' => $template . '-text'
+        ], [
+            'model' => $this->owner
+        ]);
     }
 }
