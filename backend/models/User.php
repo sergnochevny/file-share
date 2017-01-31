@@ -4,12 +4,31 @@
 namespace backend\models;
 
 
+use backend\behaviors\NotifyBehavior;
 use common\models\query\UndeletableActiveQuery;
 
 class User extends \common\models\User
 {
     use FactoryTrait;
 
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors['notify'] = [
+            'class' => NotifyBehavior::class,
+            'companyId' => function(User $model) {
+                return $model->company->id;
+            },
+            'createTemplate' => 'user/create',
+            'updateTemplate' => 'user/update',
+            'deleteTemplate' => 'user/delete',
+        ];
+
+        return $behaviors;
+    }
 
     /**
      * Finds by role and returns ActiveQuery
