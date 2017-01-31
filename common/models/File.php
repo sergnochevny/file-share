@@ -18,7 +18,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $updated_at
  * @property string $status
  */
-class File extends AbstractUndeletableActiveRecord
+class File extends UndeletableActiveRecord
 {
 
     const STATUS_DELETED = 0;

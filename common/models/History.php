@@ -32,7 +32,7 @@ class History extends \yii\db\ActiveRecord
     {
         return [
             [['parent', 'created_at'], 'integer'],
-            [['type', 'created_at'], 'required'],
+            [['type'], 'required'],
             [['name'], 'string', 'max' => 255],
             [['type'], 'string', 'max' => 10],
         ];
@@ -64,4 +64,11 @@ class History extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
         ];
     }
+
+    public function formName()
+    {
+        return '';
+    }
+
+
 }

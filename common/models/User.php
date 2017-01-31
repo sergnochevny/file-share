@@ -31,7 +31,7 @@ use yii\web\IdentityInterface;
  *
  * @property Company $company
  */
-class User extends AbstractUndeletableActiveRecord implements IdentityInterface
+class User extends UndeletableActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_IN_HISTORY = 200;
