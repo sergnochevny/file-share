@@ -15,6 +15,9 @@ final class NotifyBehavior extends Behavior
     /** @var \yii\mail\MailerInterface */
     private $mailer;
 
+    /** @var User current user */
+    private $identity;
+
     /** @var int|\Closure */
     private $companyId;
 
@@ -38,9 +41,13 @@ final class NotifyBehavior extends Behavior
     public function init()
     {
         $this->mailer = \Yii::$app->getMailer();
+        $this->identity = \Yii::$app->getUser()->getIdentity();
+        if (null == $this->identity) {
+            throw new ErrorException('Current user (identity) NULL');
+        }
 
         if (!isset($this->createTemplate, $this->updateTemplate, $this->deleteTemplate)) {
-            throw new \ErrorException('Need set createTemplate, updateTemplate, deleteTamplate for mails');
+            throw new ErrorException('Need set createTemplate, updateTemplate, deleteTemplate for mails');
         }
 
         $this->sendFrom = isset($this->sendFrom) ? $this->sendFrom : 'noreply@example.com';
@@ -158,7 +165,8 @@ final class NotifyBehavior extends Behavior
             'html' => $template . '-html',
             'text' => $template . '-text'
         ], [
-            'model' => $this->owner
+            'model' => $this->owner,
+            'identity' => $this->identity,
         ]);
     }
 }
