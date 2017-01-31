@@ -1,25 +1,31 @@
 <?php
 
-
 namespace common\models;
-
 
 use common\models\query\UndeletableActiveQuery;
 use yii\db\ActiveRecord;
 use Yii;
 
 /**
- * Class AbstractUndeletableActiveRecord
+ * Class UndeletableActiveRecord
  * @package common\models
  *
  * @property int $status
  */
-abstract class AbstractUndeletableActiveRecord extends ActiveRecord
+class UndeletableActiveRecord extends ActiveRecord
 {
+
+    const EVENT_AFTER_ARCHIVE = 'afterArchive';
+    const EVENT_BEFORE_ARCHIVE = 'beforeArchive';
+
+    const STATUS_DELETED = 0;
+    const STATUS_ACTIVE = 100;
+    const STATUS_IN_HISTORY = 200;
+
     /**
      * If you are want override this method
      * you MUST extends yours Query class from UndeletableActiveQuery AND
-     * NOT from AbstractUndeletableAcitveQuery
+     * NOT from UndeletableAcitveQuery
      *
      * @inheritdoc
      * @return UndeletableActiveQuery
@@ -34,9 +40,10 @@ abstract class AbstractUndeletableActiveRecord extends ActiveRecord
      *
      * @return void
      */
-    public function archive(){
+    public function archive()
+    {
         $this->status = static::STATUS_IN_HISTORY;
-        $this->save(false);
+        if ($this->beforeArhive() && $this->save(false)) $this->afterArhive();
     }
 
     /**
@@ -47,6 +54,16 @@ abstract class AbstractUndeletableActiveRecord extends ActiveRecord
     public function delete()
     {
         $this->status = static::STATUS_DELETED;
-        $this->save(false);
+        if ($this->beforeDelete() && $this->save(false)) $this->afterDelete();
+    }
+
+    public function afterArhive()
+    {
+        $this->trigger(self::EVENT_AFTER_ARCHIVE);
+    }
+
+    public function beforeArhive()
+    {
+        $this->trigger(self::EVENT_BEFORE_ARCHIVE);
     }
 }
