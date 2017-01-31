@@ -8,6 +8,7 @@ use backend\models\Company;
 use backend\models\User;
 use yii\base\Behavior;
 use yii\base\ErrorException;
+use yii\base\Model;
 use yii\db\BaseActiveRecord;
 
 final class NotifyBehavior extends Behavior
@@ -36,24 +37,6 @@ final class NotifyBehavior extends Behavior
     //@todo subject ??
 
     /**
-     * @inheritdoc
-     */
-    public function init()
-    {
-        $this->mailer = \Yii::$app->getMailer();
-        $this->identity = \Yii::$app->getUser()->getIdentity();
-        if (null == $this->identity) {
-            throw new ErrorException('Current user (identity) NULL');
-        }
-
-        if (!isset($this->createTemplate, $this->updateTemplate, $this->deleteTemplate)) {
-            throw new ErrorException('Need set createTemplate, updateTemplate, deleteTemplate for mails');
-        }
-
-        $this->sendFrom = isset($this->sendFrom) ? $this->sendFrom : 'noreply@example.com';
-    }
-
-    /**
      * @param \Closure $companyId
      */
     public function setCompanyId(\Closure $companyId)
@@ -79,8 +62,28 @@ final class NotifyBehavior extends Behavior
             BaseActiveRecord::EVENT_AFTER_INSERT => 'afterInsert',
             BaseActiveRecord::EVENT_AFTER_UPDATE => 'afterUpdate',
             BaseActiveRecord::EVENT_AFTER_DELETE => 'afterDelete',
+            Model::EVENT_AFTER_VALIDATE => 'afterValidate',
         ];
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function afterValidate()
+    {
+        $this->mailer = \Yii::$app->getMailer();
+        $this->identity = \Yii::$app->getUser()->getIdentity();
+        if (null == $this->identity) {
+            throw new ErrorException('Current user (identity) NULL');
+        }
+
+        if (!isset($this->createTemplate, $this->updateTemplate, $this->deleteTemplate)) {
+            throw new ErrorException('Need set createTemplate, updateTemplate, deleteTemplate for mails');
+        }
+
+        $this->sendFrom = isset($this->sendFrom) ? $this->sendFrom : 'noreply@example.com';
+    }
+
 
     /**
      *
