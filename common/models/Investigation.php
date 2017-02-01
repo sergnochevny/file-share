@@ -95,44 +95,29 @@ class Investigation extends UndeletableActiveRecord
         }
     }
 
+    /**
+     * @return array
+     */
     public static function getStatusesList()
     {
         return [
-            self::STATUS_DELETED => 'Deleted',
-            self::STATUS_CANCELLED => 'Cancelled',
             self::STATUS_PENDING => 'Pending',
-            self::STATUS_IN_HISTORY => 'In history',
             self::STATUS_IN_PROGRESS => 'In progress',
             self::STATUS_COMPLETED => 'Completed',
+            self::STATUS_IN_HISTORY => 'In history',
+            self::STATUS_CANCELLED => 'Cancelled',
+            self::STATUS_DELETED => 'Deleted',
         ];
     }
 
+    /**
+     * @param $code
+     * @return string|null
+     */
     public static function getStatusByCode($code)
     {
-        if(isset($code) && $code !== null){
-            switch ($code) {
-                case self::STATUS_DELETED;
-                    return self::getStatusesList()[self::STATUS_DELETED];
-                    break;
-                case self::STATUS_CANCELLED;
-                    return self::getStatusesList()[self::STATUS_CANCELLED];
-                    break;
-                case self::STATUS_PENDING;
-                    return self::getStatusesList()[self::STATUS_PENDING];
-                    break;
-                case self::STATUS_IN_HISTORY;
-                    return self::getStatusesList()[self::STATUS_IN_HISTORY];
-                    break;
-                case self::STATUS_IN_PROGRESS;
-                    return self::getStatusesList()[self::STATUS_IN_PROGRESS];
-                    break;
-                case self::getStatusesList()[self::STATUS_COMPLETED];
-                    return self::STATUS_COMPLETED;
-                    break;
-            }
-        }else{
-            return null;
-        }
+        $statuses = static::getStatusesList();
+        return isset($statuses[$code]) ? $statuses[$code] : null;
     }
 
     /**
@@ -153,23 +138,6 @@ class Investigation extends UndeletableActiveRecord
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
-        ];
-    }
-
-    /**
-     * Gets labels of statuses
-     *
-     * @return array
-     */
-    public function getStatusLabels()
-    {
-        return [
-            self::STATUS_DELETED => 'Deleted',
-            self::STATUS_CANCELLED => 'Cancelled',
-            self::STATUS_IN_HISTORY => 'In history',
-            self::STATUS_IN_PROGRESS => 'In progress',
-            self::STATUS_PENDING => 'Pending',
-            self::STATUS_COMPLETED => 'Completed',
         ];
     }
 
