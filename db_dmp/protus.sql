@@ -1,3 +1,5 @@
+# noinspection SqlNoDataSourceInspectionForFile
+
 -- --------------------------------------------------------
 -- Хост:                         127.0.0.1
 -- Версия сервера:               5.6.34 - MySQL Community Server (GPL)
