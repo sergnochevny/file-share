@@ -6162,7 +6162,7 @@ button.close {
     font-style: normal
 }
 
-.icon {
+.fa, .icon {
     display: inline-block;
     font-family: FontAwesome;
     font-size: inherit;
@@ -6205,7 +6205,7 @@ button.close {
     font-size: 3em
 }
 
-.icon-4x {
+.fa-4x, .icon-4x {
     font-size: 4em
 }
 
@@ -7189,7 +7189,36 @@ button.close {
     content: "\f10e"
 }
 
-.icon-spinner:before {
+.fa-spin {
+    -webkit-animation: fa-spin 2s infinite linear;
+    animation: fa-spin 2s infinite linear;
+}
+.fa-pulse {
+    -webkit-animation: fa-spin 1s infinite steps(8);
+    animation: fa-spin 1s infinite steps(8);
+}
+@-webkit-keyframes fa-spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+@keyframes fa-spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+
+.fa-spinner:before , .icon-spinner:before {
     content: "\f110"
 }
 

@@ -65,6 +65,7 @@ return [
         ],
         'formatter' => [
             'dateFormat' => 'MM.dd.yyyy',
+            'sizeFormatBase' => 1000
         ],
     ],
     'as globalAccess' => [

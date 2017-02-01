@@ -164,18 +164,22 @@ if (!empty($investigation)) {
                             [
                                 'attribute' => 'size',
                                 'value' => function ($model, $key, $index, $column) {
-                                    return Yii::$app->formatter->asSize($model->{$column->attribute}, 0, [], []);
+                                    return Yii::$app->formatter->asShortSize($model->{$column->attribute}, 0, [], []);
                                 },
                                 'headerOptions' => [
                                     'class' => 'hidden-sm hidden-xs',
                                 ],
                                 'contentOptions' => [
+                                    'width' => 100,
                                     'class' => 'hidden-sm hidden-xs',
                                 ],
                             ],
                             [
                                 'class' => 'yii\grid\ActionColumn',
                                 'template' => '{delete}{download}',
+                                'contentOptions' => [
+                                    'width' => 150
+                                ],
                                 'buttons' => [
                                     'delete' => function ($url, $model) use ($investigation) {
                                         $content = '';
@@ -219,6 +223,12 @@ if (!empty($investigation)) {
                                     },
                                 ],
                             ],
+                        ],
+                        'pager' => [
+                            'options' => [
+                                'class' => 'pagination pull-right',
+                                'style' => 'margin-right:15px'
+                            ]
                         ],
                     ]) ?>
 

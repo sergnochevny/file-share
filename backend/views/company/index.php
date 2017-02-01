@@ -106,6 +106,12 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                         ],
                     ],
+                    'pager' => [
+                        'options' => [
+                            'class' => 'pagination pull-right',
+                            'style' => 'margin-right:15px'
+                        ]
+                    ],
                 ]); ?>
             <?php Pjax::end(); ?>
         </div>

@@ -13,11 +13,6 @@ Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout
     'dataProvider' => $dataProvider,
     'tableOptions' => ['class' => 'table table-hover table-striped  dataTable no-footer dtr-inline'],
     'summaryOptions' => ['class' => 'col-sm-6'],
-    'pager' => [
-        'options' => [
-            'class' => 'col-sm-6',
-        ]
-    ],
     'options' => ['class' => 'row'],
     'layout' => "<div class='col-sm-12'>{items}</div>\n{summary}{pager}",
     'columns' => [
@@ -120,6 +115,12 @@ Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout
                 },
             ],
         ],
+    ],
+    'pager' => [
+        'options' => [
+            'class' => 'pagination pull-right',
+            'style' => 'margin-right:15px'
+        ]
     ],
 ]); ?>
 <?php Pjax::end(); ?>

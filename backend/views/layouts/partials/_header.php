@@ -159,8 +159,8 @@ use common\helpers\Url;
                                 </a>
                             </li>
                             <li class="divider"></li>
-                            <li><a href="#">Contacts</a></li>
-                            <li><a href="<?= Url::to(['/profile', 'username' => isset(Yii::$app->user->identity->id) ? Yii::$app->user->identity->username : null], true) ?>">Profile</a></li>
+<!--                            <li><a href="#">Contacts</a></li>-->
+<!--                            <li><a href="--><?= ''//Url::to(['/profile', 'username' => isset(Yii::$app->user->identity->id) ? Yii::$app->user->identity->username : null], true) ?><!--">Profile</a></li>-->
                             <li><a href="<?= Url::to(['/site/logout'], true) ?>" data-method="POST">Sign out</a></li>
                         </ul>
                     </li>
