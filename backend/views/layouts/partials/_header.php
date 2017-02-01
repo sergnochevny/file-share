@@ -70,7 +70,7 @@ use common\helpers\Url;
                             ); ?>
                         <?= Html::endForm(); ?>
                     </li>
-                    <li class="dropdown">
+                    <li class="dropdown hidden">
                         <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" style="height: 45px">
                           <span class="icon-with-child hidden-xs">
                             <span class="icon icon-bell-o icon-lg"></span>
@@ -145,7 +145,7 @@ use common\helpers\Url;
                     </li>
                     <li class="dropdown hidden-xs">
                         <button class="navbar-account-btn" data-toggle="dropdown" aria-haspopup="true">
-                            <?= Html::img(Url::to('@web/images/admin-foto.jpg', true), ['class' => 'rounded', 'width' => '32', 'height' => '32']) ?> Admin
+                            <i class="icon icon-user" style="margin-top: 8px; font-size: 1.5em"></i>
                             <?= !is_null(Yii::$app->user->identity->username) ? ucfirst(Yii::$app->user->identity->username) : null; ?>
                             <span class="caret"></span>
                         </button>
