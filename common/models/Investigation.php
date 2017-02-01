@@ -62,7 +62,7 @@ class Investigation extends UndeletableActiveRecord
         return [
             [['company_id'], 'required'],
             [['company_id'], 'integer'],
-            [['start_date', 'end_date'], 'safe'],
+            [['start_date', 'end_date'], 'parseDates'],
             [['name', 'contact_person', 'phone', 'email'], 'string'],
             [['description'], 'string', 'max' => 2000],
             ['status', 'default', 'value' => self::STATUS_PENDING],
@@ -76,6 +76,23 @@ class Investigation extends UndeletableActiveRecord
                 'targetAttribute' => ['company_id' => 'id']
             ],
         ];
+    }
+
+    /**
+     * Validates and converts date from jUI to Y-m-d mysql date
+     *
+     * @param $attribute
+     * @param $params
+     */
+    public function parseDates($attribute, $params)
+    {
+        if (!$this->hasErrors() && !empty($this->$attribute)) {
+            try {
+                $this->$attribute = (new \DateTime($this->$attribute))->format('Y-m-d');
+            } catch (\Exception $e) {
+                $this->addError($attribute, $e->getMessage());
+            }
+        }
     }
 
     public static function getStatusesList()
