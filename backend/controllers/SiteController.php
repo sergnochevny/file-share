@@ -19,6 +19,10 @@ use backend\models\forms\LoginForm;
  */
 class SiteController extends Controller
 {
+
+    const EMAIL_USER = 'email_user';
+    private $resetUrl;
+
     /**
      * @inheritdoc
      */
@@ -100,8 +104,8 @@ class SiteController extends Controller
         $model = new RestorePasswordRequestForm;
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $token = $model->generateRecoveryToken();
-            echo Url::to(['/site/password-reset', 'token' => $token], true);
+            $this->resetUrl = Url::to(['/site/password-reset', 'token' => $model->generateRecoveryToken()], true);
+            $this->trigger(self::EMAIL_USER);
         }
 
         return $this->render('restore-password-request', ['model' => $model]);
@@ -118,7 +122,7 @@ class SiteController extends Controller
         $this->layout = 'main-login';
         $model = null;
         if (!empty($token)) {
-            try{
+            try {
                 $model = new PasswordResetForm($token);
 
                 if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -134,7 +138,7 @@ class SiteController extends Controller
                     return $this->redirect(['login']);
 
                 }
-            } catch (\Exception $e){
+            } catch (\Exception $e) {
                 Yii::$app->session->setFlash('alert', [
                     'body' => $e->getMessage(),
                     'options' => ['class' => 'error'],
@@ -157,4 +161,13 @@ class SiteController extends Controller
         Yii::$app->user->logout();
         return $this->goHome();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getResetUrl()
+    {
+        return $this->resetUrl;
+    }
+
 }
