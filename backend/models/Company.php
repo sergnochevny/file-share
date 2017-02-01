@@ -58,9 +58,9 @@ final class Company extends \common\models\Company
             'companyId' => function(Company $model) {
                 return $model->id;
             },
-            'createTemplate' => 'companyCreate',
-            'updateTemplate' => 'companyUpdate',
-            'deleteTemplate' => 'companyDelete',
+            'createTemplate' => 'create',
+            'updateTemplate' => 'update',
+            'deleteTemplate' => 'delete',
         ];
         $behaviors['historyBehavior'] = [
             'class' => HistoryBehavior::class,

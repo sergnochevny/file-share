@@ -4,7 +4,6 @@
 namespace backend\models;
 
 
-use backend\behaviors\HistoryBehavior;
 use common\models\query\UndeletableActiveQuery;
 
 class User extends \common\models\User
@@ -24,6 +23,15 @@ class User extends \common\models\User
             },
             'type' => 'user',
         ];
+        $behaviors['notify'] = [
+            'class' => NotifyBehavior::class,
+            'companyId' => function(User $model) {
+                return $model->company->id;
+            },
+            'createTemplate' => 'create',
+            'updateTemplate' => 'update',
+            'deleteTemplate' => 'delete',
+        ];
 
         return $behaviors;
     }
@@ -38,8 +46,9 @@ class User extends \common\models\User
     public static function findByRole($role)
     {
         $ids = \Yii::$app->getAuthManager()->getUserIdsByRole($role);
+        $userTbl = static::tableName();
 
-        return static::find()->andWhere(['id' => $ids]);
+        return static::find()->andWhere(["$userTbl.id" => $ids]);
     }
 
     /**

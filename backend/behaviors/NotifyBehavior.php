@@ -148,10 +148,11 @@ final class NotifyBehavior extends Behavior
      */
     private function collectClientEmails()
     {
+        $companyTbl = Company::tableName();
         $emails = User::findByRole('client')
-            ->select(['email'])
+            ->select(["$companyTbl.id", 'email'])
             ->joinWith('company')
-            ->where([Company::tableName() . '.id' => $this->getCompanyId()])
+            ->andWhere(["$companyTbl.id" => $this->getCompanyId()])
             ->asArray()
             ->all();
 
