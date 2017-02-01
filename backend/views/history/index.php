@@ -34,12 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'options' => ['class' => 'row'],
                     'layout'=>"<div class='col-sm-12'>{items}</div>\n{summary}{pager}",
                     'columns' => [
-                        [
-                            'attribute' => 'name',
-//                            'value' => function ($model, $key, $index, $column) {
-//                                $model->{$column->attribute};
-//                            }
-                        ],
+                        'name',
                         [
                             'attribute' => 'created_at',
                             'format' => 'html',
@@ -52,7 +47,25 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'width' => 80
                             ]
                         ],
-                        ['class' => 'yii\grid\ActionColumn'],
+                        [
+                            'class' => 'yii\grid\ActionColumn',
+                            'template' => '{details}',
+                            'buttons' => [
+                                'details' => function ($url, $model) {
+                                    $content = Html::a('Details', Url::to(['/hi/archive', 'id' => $model->id], true),
+                                        [
+                                            'class' => "btn btn-success btn-xs",
+                                            'title' => 'Details',
+                                            'aria-label' => "Details",
+                                        ]
+                                    );
+                                    return $content;
+                                },
+                            ],
+                            'contentOptions' => [
+                                'width' => 80
+                            ]
+                        ],
                     ],
                 ]); ?>
             <?php Pjax::end(); ?>

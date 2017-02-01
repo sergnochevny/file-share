@@ -63,6 +63,9 @@ return [
                 '@<username:[\w-]+>/' => '/profile/index',
             ]
         ],
+        'formatter' => [
+            'dateFormat' => 'MM.dd.yyyy',
+        ],
     ],
     'as globalAccess' => [
         'class' => 'common\behaviors\GlobalAccessBehavior',
