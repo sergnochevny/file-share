@@ -144,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `history` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT '0',
   `parent` int(11) DEFAULT NULL,
-  `type` varchar(10) NOT NULL,
+  `type` varchar(50) NOT NULL,
   `created_at` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `parent` (`parent`),
