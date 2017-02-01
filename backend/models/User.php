@@ -23,6 +23,7 @@ class User extends \common\models\User
             'parent' => function(User $model){
                 return $model->id;
             },
+            'attribute' => 'username',
             'type' => 'user',
         ];
         $behaviors['notify'] = [

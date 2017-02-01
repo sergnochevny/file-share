@@ -17,9 +17,27 @@ use yii\base\InvalidParamException;
 class HistoryBehavior extends Behavior
 {
 
+    private $attribute;
+
     private $type = null;
 
     private $parent = null;
+
+    /**
+     * @return mixed
+     */
+    public function getAttribute()
+    {
+        return $this->attribute;
+    }
+
+    /**
+     * @param mixed $attribute
+     */
+    public function setAttribute($attribute)
+    {
+        $this->attribute = $attribute;
+    }
 
     /**
      * @return null
@@ -64,6 +82,7 @@ class HistoryBehavior extends Behavior
     {
         parent::attach($owner);
 
+        if (empty($this->attribute)) throw new InvalidParamException("Identity attribute parameter");
         if (empty($this->type)) throw new InvalidParamException("Identity type parameter");
         if (empty($this->parent)) throw new InvalidParamException("Identity parent parameter");
     }
@@ -82,7 +101,7 @@ class HistoryBehavior extends Behavior
         $history = new History();
         if(!($history->load(
             [
-                'name' => $model->name,
+                'name' => $model->{$this->attribute},
                 'type' => $this->type,
                 'parent' => $this->parent
             ]

@@ -87,6 +87,6 @@ class UserController extends Controller
         if (Yii::$app->user->can('admin')) {
             $model->archive();
         }
-        return $this->redirect(['index']);
+        return $this->actionIndex();
     }
 }

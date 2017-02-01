@@ -71,17 +71,17 @@ final class NotifyBehavior extends Behavior
      */
     public function afterValidate()
     {
-//        $this->mailer = \Yii::$app->getMailer();
-//        $this->identity = \Yii::$app->getUser()->getIdentity();
-//        if (null == $this->identity) {
-//            throw new ErrorException('Current user (identity) NULL');
-//        }
-//
-//        if (!isset($this->createTemplate, $this->updateTemplate, $this->deleteTemplate)) {
-//            throw new ErrorException('Need set createTemplate, updateTemplate, deleteTemplate for mails');
-//        }
-//
-//        $this->sendFrom = isset($this->sendFrom) ? $this->sendFrom : 'noreply@example.com';
+        $this->mailer = \Yii::$app->getMailer();
+        $this->identity = \Yii::$app->getUser()->getIdentity();
+        if (null == $this->identity) {
+            throw new ErrorException('Current user (identity) NULL');
+        }
+
+        if (!isset($this->createTemplate, $this->updateTemplate, $this->deleteTemplate)) {
+            throw new ErrorException('Need set createTemplate, updateTemplate, deleteTemplate for mails');
+        }
+
+        $this->sendFrom = isset($this->sendFrom) ? $this->sendFrom : 'noreply@example.com';
     }
 
 

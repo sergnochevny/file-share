@@ -66,6 +66,7 @@ class Investigation extends \common\models\Investigation
             'parent' => function(Investigation $model){
                 return $model->id;
             },
+            'attribute' => 'name',
             'type' => 'investigation',
         ];
         $behaviors['notify'] = [

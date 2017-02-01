@@ -93,7 +93,7 @@ class InvestigationController extends Controller
         ){
             $model->archive();
         }
-        return $this->redirect(['index']);
+        return $this->actionIndex();
     }
 
 }

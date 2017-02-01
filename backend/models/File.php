@@ -78,6 +78,7 @@ class File extends \common\models\File
             'parent' => function(File $model){
                 return $model->id;
             },
+            'attribute' => 'name',
             'type' => 'file',
 
         ];
