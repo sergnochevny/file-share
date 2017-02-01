@@ -1,16 +1,16 @@
 <?php
 
+use backend\models\search\FileSearch;
 use backend\widgets\ActiveForm;
 use yii\bootstrap\Alert;
 use yii\helpers\Html;
 use common\helpers\Url;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
-use yii\widgets\ListView;
 use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\FileSearch */
+/* @var $searchModel backend\models\search\FileSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 if (!empty($investigation)) {
@@ -149,6 +149,7 @@ if (!empty($investigation)) {
                             [
                                 'attribute' => 'created_at',
                                 'contentOptions' => [
+                                    'class' => 'hidden-sm hidden-xs',
                                     'width' => 80
                                 ],
                                 'format' => 'html',
@@ -157,9 +158,6 @@ if (!empty($investigation)) {
                                     return $value;
                                 },
                                 'headerOptions' => [
-                                    'class' => 'hidden-sm hidden-xs',
-                                ],
-                                'contentOptions' => [
                                     'class' => 'hidden-sm hidden-xs',
                                 ],
                             ],
