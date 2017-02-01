@@ -93,8 +93,8 @@ class FileController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'uploadModel' => $uploadModel,
+            'investigation' => $investigation,
         ];
-        if (!empty($investigation)) $renderParams['investigation'] = $investigation;
         return $this->render('index', $renderParams);
     }
 
