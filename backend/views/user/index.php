@@ -76,6 +76,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute' => 'role',
                             'label' => 'Position Status',
                             'format' => 'html',
+                            'headerOptions' => [
+                                'width' => 120,
+                                'class' => 'hidden-sm hidden-xs',
+                            ],
                             'contentOptions' => [
                                 'width' => 120,
                                 'class' => 'hidden-sm hidden-xs',
