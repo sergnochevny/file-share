@@ -4,7 +4,6 @@ namespace backend\models;
 
 use backend\behaviors\HistoryBehavior;
 use backend\behaviors\UploadBehavior;
-use common\models\Investigation;
 use common\models\UserCompany;
 
 class File extends \common\models\File
