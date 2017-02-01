@@ -4,6 +4,7 @@
 namespace backend\models;
 
 
+use backend\behaviors\NotifyBehavior;
 use common\models\query\UndeletableActiveQuery;
 
 class User extends \common\models\User
