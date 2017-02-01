@@ -137,7 +137,7 @@ class WizardController extends Controller
 
         if (!Yii::$app->user->can('admin')) $investigation->company_id = Yii::$app->user->identity->company->id;
         if ($request->isPost && $investigation->load($request->post()) && $investigation->save()) {
-            return $this->redirect(['file', 'id' => $investigation->id]);
+            return $this->redirect(['/file', 'id' => $investigation->id]);
         }
 
         return $this->smartRender('index', [
