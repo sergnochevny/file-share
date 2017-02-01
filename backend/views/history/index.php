@@ -36,9 +36,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     'columns' => [
                         [
                             'attribute' => 'name',
-                            'value' => function ($model, $key, $index, $column) {
-                                $model->{$column->attribute};
-                            }
+//                            'value' => function ($model, $key, $index, $column) {
+//                                $model->{$column->attribute};
+//                            }
                         ],
                         [
                             'attribute' => 'created_at',
@@ -47,7 +47,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             'value' => function ($model, $key, $index, $column) {
                                 $value = '<span class="label label-warning" >' .  Yii::$app->formatter->asDate($model->{$column->attribute}) . '</span >';
                                 return $value;
-                            }
+                            },
+                            'contentOptions' => [
+                                'width' => 80
+                            ]
                         ],
                         ['class' => 'yii\grid\ActionColumn'],
                     ],
