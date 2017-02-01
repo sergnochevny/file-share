@@ -19,9 +19,9 @@ use common\helpers\Url;
                 $items[] = ['label' => 'Applicants', 'url' => ['/investigation'], 'options' => ['icon' => 'icon-folder-open-o']];
                 $items[] = ['label' => 'History', 'url' => ['/history'], 'options' => ['icon' => 'icon-history']];
                 $items[] = ['label' => 'Files', 'url' => ['/file'], 'options' => ['icon' => 'icon-save']];
-                if (Yii::$app->user->can('admin')) {
+//                if (Yii::$app->user->can('admin')) {
                     $items[] = ['label' => 'Users', 'url' => ['/user'], 'options' => ['icon' => 'icon-users']];
-                }
+//                }
 
                 ?>
                 <?= Menu::widget([

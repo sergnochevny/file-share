@@ -3,17 +3,13 @@
 namespace backend\controllers;
 
 
+use backend\models\Company;
 use backend\models\search\CompanySearch;
-use backend\models\services\CompanyService;
-use backend\models\forms\CompanyForm;
-use Yii;
-use common\models\Company;
-use yii\filters\AccessControl;
 use common\helpers\Url;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\web\Response;
 
 /**
  * CompanyController implements the CRUD actions for Company model.
@@ -72,7 +68,14 @@ class CompanyController extends Controller
      */
     public function actionArchive($id)
     {
-        $this->findModel($id)->archive();
+        $model = $this->findModel($id);
+        $model->detachBehavior('citrixFolderBehavior');
+        if(Yii::$app->user->can('admin') ||
+            (!Yii::$app->user->can('admin') &&
+                Yii::$app->user->can('employee', ['company'=> $model]))
+        ){
+            $model->archive();
+        }
         return $this->redirect(['index']);
     }
 

@@ -36,6 +36,7 @@ use yii\db\ActiveRecord;
  */
 class UndeletableActiveQuery extends ActiveQuery
 {
+
     protected $hiddenStatuses = [];
 
     protected $excludedHiddenStatuses = [];
@@ -51,7 +52,7 @@ class UndeletableActiveQuery extends ActiveQuery
 
         //find out value of STATUS DELETED const for called class
         $modelClass = $this->modelClass;
-        $this->hiddenStatuses = [$modelClass::STATUS_DELETED];
+        $this->hiddenStatuses = [$modelClass::STATUS_DELETED, $modelClass::STATUS_IN_HISTORY];
     }
 
     /**
@@ -72,7 +73,6 @@ class UndeletableActiveQuery extends ActiveQuery
     public function andArchived()
     {
         $modelClass = $this->modelClass;
-        $this->excludedHiddenStatuses[] = $modelClass::STATUS_DELETED;
         $this->excludedHiddenStatuses[] = $modelClass::STATUS_IN_HISTORY;
         return $this;
     }

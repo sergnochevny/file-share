@@ -5,7 +5,6 @@
 -- HeidiSQL Версия:              9.4.0.5125
 -- --------------------------------------------------------
 
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET NAMES utf8 */;
 /*!50503 SET NAMES utf8mb4 */;
@@ -126,16 +125,17 @@ CREATE TABLE IF NOT EXISTS `file` (
   PRIMARY KEY (`id`),
   KEY `type` (`type`),
   KEY `parent` (`parent`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы protus.file: ~5 rows (приблизительно)
+-- Дамп данных таблицы protus.file: ~6 rows (приблизительно)
 /*!40000 ALTER TABLE `file` DISABLE KEYS */;
 INSERT INTO `file` (`id`, `name`, `description`, `size`, `parent`, `type`, `citrix_id`, `created_at`, `updated_at`, `status`) VALUES
 	(7, 'AllFiles', 'Shared files root directory', 0, 'root', 'folder', 'fob4f466-3fd1-4d95-b567-8ac02bdd1eef', 1485600094, 1485600094, 100),
 	(8, 'drag_img1.jpg', '', 7178, 'fob4f466-3fd1-4d95-b567-8ac02bdd1eef', 'jpg', 'fif44d98-d427-f689-0d3c-2ba2245767a1', 1485609057, 1485613263, 100),
 	(9, 'drag_img2.jpg', '', 13681, 'fob4f466-3fd1-4d95-b567-8ac02bdd1eef', 'jpg', 'fi47e9a7-a84a-a3ed-75d8-200d41353e84', 1485613024, 1485613118, 100),
 	(10, '126_1455808234.jpg', '', 16107, 'fob4f466-3fd1-4d95-b567-8ac02bdd1eef', 'jpg', 'fi99851b-71db-49d6-6922-73e0379bed75', 1485693241, 1485693241, 100),
-	(11, 'drag_img1.jpg', '', 7178, 'fo1ec085-e06f-4680-90ed-ca4da2f41fa7', 'jpg', 'fid8fe30-1ce7-478f-e058-248802b662ff', 1485800345, 1485800388, 100);
+	(11, 'drag_img1.jpg', '', 7178, 'fo1ec085-e06f-4680-90ed-ca4da2f41fa7', 'jpg', 'fi99851b-71db-49d6-6922-73e0379bed75', 1485800345, 1485962115, 200),
+	(12, 'drag_img4.jpg', '', 12488, 'fob4f466-3fd1-4d95-b567-8ac02bdd1eef', 'jpg', 'fi054e77-180b-3734-560f-813097f3d51e', 1485950740, 1485950740, 100);
 /*!40000 ALTER TABLE `file` ENABLE KEYS */;
 
 -- Дамп структуры для таблица protus.history
@@ -149,10 +149,24 @@ CREATE TABLE IF NOT EXISTS `history` (
   PRIMARY KEY (`id`),
   KEY `parent` (`parent`),
   KEY `type` (`type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы protus.history: ~0 rows (приблизительно)
+-- Дамп данных таблицы protus.history: ~9 rows (приблизительно)
 /*!40000 ALTER TABLE `history` DISABLE KEYS */;
+INSERT INTO `history` (`id`, `name`, `parent`, `type`, `created_at`) VALUES
+	(3, 'drag_img1.jpg', 11, 'file', 1485958426),
+	(4, 'drag_img1.jpg', 11, 'file', 1485958911),
+	(5, 'drag_img1.jpg', 11, 'file', 1485959756),
+	(6, 'drag_img1.jpg', 11, 'file', 1485960223),
+	(7, 'drag_img1.jpg', 11, 'file', 1485960412),
+	(8, 'drag_img1.jpg', 11, 'file', 1485960597),
+	(9, 'drag_img1.jpg', 11, 'file', 1485960718),
+	(10, 'drag_img1.jpg', 11, 'file', 1485960845),
+	(11, 'drag_img1.jpg', 11, 'file', 1485960941),
+	(12, 'drag_img1.jpg', 11, 'file', 1485961054),
+	(13, 'drag_img1.jpg', 11, 'file', 1485961209),
+	(14, 'drag_img1.jpg', 11, 'file', 1485961956),
+	(15, 'drag_img1.jpg', 11, 'file', 1485962115);
 /*!40000 ALTER TABLE `history` ENABLE KEYS */;
 
 -- Дамп структуры для таблица protus.investigation

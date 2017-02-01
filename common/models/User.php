@@ -34,10 +34,6 @@ use yii\web\IdentityInterface;
  */
 class User extends UndeletableActiveRecord implements IdentityInterface
 {
-    const STATUS_DELETED = 0;
-    const STATUS_IN_HISTORY = 200;
-    const STATUS_ACTIVE = 100;
-
     /**
      * @inheritdoc
      */
@@ -233,12 +229,6 @@ class User extends UndeletableActiveRecord implements IdentityInterface
         $this->password_reset_token = null;
     }
 
-    final public static function getStatusesList(){
-        return [
-            self::STATUS_DELETED => 'Deleted',
-            self::STATUS_ACTIVE => 'Active'
-        ];
-    }
 
     /**
      * @return \yii\db\ActiveQuery

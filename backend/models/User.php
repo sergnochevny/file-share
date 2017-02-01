@@ -4,11 +4,29 @@
 namespace backend\models;
 
 
+use backend\behaviors\HistoryBehavior;
 use common\models\query\UndeletableActiveQuery;
 
 class User extends \common\models\User
 {
     use FactoryTrait;
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors['historyBehavior'] = [
+            'class' => HistoryBehavior::class,
+            'parent' => function(User $model){
+                return $model->id;
+            },
+            'type' => 'user',
+        ];
+
+        return $behaviors;
+    }
 
 
     /**

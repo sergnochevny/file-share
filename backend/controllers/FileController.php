@@ -3,16 +3,15 @@
 namespace backend\controllers;
 
 use backend\actions\DownloadAction;
+use backend\models\File;
 use backend\models\FileUpload;
-use common\models\Investigation;
-use Yii;
-use common\models\File;
+use backend\models\Investigation;
 use backend\models\search\FileSearch;
-use yii\base\InvalidParamException;
 use common\helpers\Url;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * FileController implements the CRUD actions for File model.
@@ -117,24 +116,6 @@ class FileController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
-        $model = new File();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Creates a new File model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
     public function actionUpload($parent = null)
     {
         if (Yii::$app->user->can('admin') || (!Yii::$app->user->can('admin') &&
@@ -144,27 +125,8 @@ class FileController extends Controller
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
             }
         }
-        if(!empty($parent)) return $this->actionIndex(Investigation::findOne(['citrix_id' => $parent]));
+        if (!empty($parent)) return $this->actionIndex(Investigation::findOne(['citrix_id' => $parent]));
         return $this->actionIndex();
-    }
-
-    /**
-     * Updates an existing File model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
     }
 
     /**
@@ -175,9 +137,17 @@ class FileController extends Controller
      */
     public function actionArchive($id)
     {
-        if(!Yii::$app->user->can('admin'))
-        $this->findModel($id)->archive();
-        return $this->redirect(['index']);
+        $model = $this->findModel($id);
+        $model->detachBehavior('uploadBehavior');
+        $investigation = $model->investigations;
+        if (Yii::$app->user->can('admin') ||
+            (!Yii::$app->user->can('admin') &&
+                Yii::$app->user->can('employee', ['investigation' => $investigation]))
+        ) {
+            $model->archive();
+        }
+        if (!empty($investigation)) return $this->actionIndex($investigation->id);
+        return $this->actionIndex();
     }
 
 }

@@ -45,7 +45,7 @@ class Investigation extends \common\models\Investigation
     public function behaviors()
     {
         $behaviors = parent::behaviors();
-        $behaviors[] = [
+        $behaviors['citrixFolderBehavior'] = [
             'class' => CitrixFolderBehavior::className(),
             'attribute' => 'citrix_id',
             'folder' => 'name',
@@ -61,11 +61,10 @@ class Investigation extends \common\models\Investigation
                 return $model->company->citrix_id;
             }
         ];
-        $behaviors[] = [
-            'class' => HistoryBehavior::className(),
+        $behaviors['historyBehavior'] = [
+            'class' => HistoryBehavior::class,
             'parent' => function(Investigation $model){
-                $parent = $model->company_id;
-                return $parent;
+                return $model->id;
             },
             'type' => 'investigation',
         ];

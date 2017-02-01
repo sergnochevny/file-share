@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use backend\behaviors\HistoryBehavior;
 use backend\behaviors\UploadBehavior;
 use common\models\Investigation;
 use common\models\UserCompany;
@@ -73,6 +74,14 @@ class File extends \common\models\File
                 ],
             ],
         ];
+        $behaviors['historyBehavior'] = [
+            'class' => HistoryBehavior::class,
+            'parent' => function(File $model){
+                return $model->id;
+            },
+            'type' => 'file',
+
+        ];
         return $behaviors;
     }
 
@@ -81,7 +90,7 @@ class File extends \common\models\File
      */
     public function getUsers()
     {
-        return $this->hasMany(User::className(), ['id' => 'user_id'])
+        return $this->hasOne(User::className(), ['id' => 'user_id'])
             ->via('userCompanies');
     }
 
@@ -90,7 +99,7 @@ class File extends \common\models\File
      */
     public function getUserCompanies()
     {
-        return $this->hasMany(UserCompany::className(), ['company_id' => 'company_id'])
+        return $this->hasOne(UserCompany::className(), ['company_id' => 'company_id'])
             ->via('investigations');
     }
 
@@ -100,6 +109,15 @@ class File extends \common\models\File
      */
     public function getInvestigations()
     {
-        return $this->hasMany(Investigation::className(), ['citrix_id' => 'parent']);
+        return $this->hasOne(Investigation::className(), ['citrix_id' => 'parent']);
     }
+
+    /**
+     * @return UndeletableActiveQuery
+     */
+    public function getParents()
+    {
+        return $this->hasOne(File::className(), ['citrix_id' => 'parent']);
+    }
+
 }

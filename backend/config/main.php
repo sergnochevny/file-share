@@ -68,7 +68,7 @@ return [
         'class' => 'common\behaviors\GlobalAccessBehavior',
         'rules' => [
             [
-                'controllers' => ['file', 'history', 'investigation', 'wizard'],
+                'controllers' => ['file', 'history', 'investigation', 'wizard', 'user'],
                 'allow' => true,
                 'roles' => ['@'],
             ],

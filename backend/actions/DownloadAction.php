@@ -2,6 +2,8 @@
 
 namespace backend\actions;
 
+use Yii;
+use backend\models\File;
 use Citrix\CitrixApi;
 use yii\base\Action;
 use yii\base\InvalidParamException;
@@ -54,21 +56,35 @@ class DownloadAction extends Action
      */
     public function run($id = null)
     {
-        $Citrix = CitrixApi::getInstance();
-        $Citrix->setSubdomain($this->subdomain)
-            ->setUsername($this->user)
-            ->setPassword($this->pass)
-            ->setClientId($this->clientid)
-            ->setClientSecret($this->secret)
-            ->Initialize();
+        $response = '';
 
-        $items = $Citrix->Items;
-        $item_content = $items
-            ->setId($id)
-            ->setRedirect(CitrixApi::FALSE)
-            ->setIncludeAllVersions(CitrixApi::FALSE)
-            ->ItemContent;
-        return $this->controller->redirect($item_content->DownloadUrl);
+        $model = File::findOne(['citrix_id' => $id]);
+        $investigation = $model->investigations;
+        if (Yii::$app->user->can('admin') ||
+            (
+                !Yii::$app->user->can('admin') &&
+                ((!empty($investigation) && Yii::$app->user->can('employee', ['investigation' => $investigation])) ||
+                    (Yii::$app->user->can('employee', ['allfiles' => $model->parents->parent])))
+            )
+        ) {
+            $Citrix = CitrixApi::getInstance();
+            $Citrix->setSubdomain($this->subdomain)
+                ->setUsername($this->user)
+                ->setPassword($this->pass)
+                ->setClientId($this->clientid)
+                ->setClientSecret($this->secret)
+                ->Initialize();
+
+            $items = $Citrix->Items;
+            $item_content = $items
+                ->setId($id)
+                ->setRedirect(CitrixApi::FALSE)
+                ->setIncludeAllVersions(CitrixApi::FALSE)
+                ->ItemContent;
+            $response = $this->controller->redirect($item_content->DownloadUrl);
+        }
+
+        return $response;
     }
 
 }
