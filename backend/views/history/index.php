@@ -31,11 +31,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'dataProvider' => $dataProvider,
                     'tableOptions' => ['class' => 'table table-hover table-striped  dataTable no-footer dtr-inline'],
                     'summaryOptions' => ['class' => 'col-sm-6'],
-                    'pager' => [
-                        'options' => [
-                            'class' => 'col-sm-6',
-                        ]
-                    ],
                     'options' => ['class' => 'row'],
                     'layout'=>"<div class='col-sm-12'>{items}</div>\n{summary}{pager}",
                     'columns' => [
@@ -47,6 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         [
                             'attribute' => 'created_at',
+                            'format' => 'html',
                             'label' => 'Archived at',
                             'value' => function ($model, $key, $index, $column) {
                                 $value = '<span class="label label-warning" >' .  Yii::$app->formatter->asDate($model->{$column->attribute}) . '</span >';
