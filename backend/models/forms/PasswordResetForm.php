@@ -12,10 +12,12 @@ use common\models\User;
 class PasswordResetForm extends Model
 {
     public $password;
+
     /**
      * @var \common\models\User
      */
     private $_user;
+
     /**
      * Creates a form model given a token.
      *
@@ -34,6 +36,7 @@ class PasswordResetForm extends Model
         }
         parent::__construct($config);
     }
+
     /**
      * @inheritdoc
      */
@@ -44,6 +47,7 @@ class PasswordResetForm extends Model
             ['password', 'string', 'min' => 6],
         ];
     }
+
     /**
      * Resets password.
      *

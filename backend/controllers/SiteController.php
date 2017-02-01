@@ -54,9 +54,9 @@ class SiteController extends Controller
     public function actionIndex()
     {
         Url::remember(Yii::$app->request->url);
-        if(Yii::$app->user->can('admin')){
+        if (Yii::$app->user->can('admin')) {
             return $this->render('index');
-        }else{
+        } else {
             $renderParams = InvestigationController::prepareRenderInvestigations();
             return $this->render('client', $renderParams);
         }
@@ -99,7 +99,7 @@ class SiteController extends Controller
         $this->layout = 'main-login';
         $model = new RestorePasswordRequestForm;
 
-        if($model->load(Yii::$app->request->post()) && $model->validate()){
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $token = $model->generateRecoveryToken();
             echo Url::to(['/site/password-reset', 'token' => $token], true);
         }
@@ -113,25 +113,35 @@ class SiteController extends Controller
      * @param $token
      * @return string
      */
-    public function actionPasswordReset($token)
+    public function actionPasswordReset($token = null)
     {
         $this->layout = 'main-login';
+        $model = null;
+        if (!empty($token)) {
+            try{
+                $model = new PasswordResetForm($token);
 
-        // @TODO validate
-        $model = new PasswordResetForm($token);
+                if ($model->load(Yii::$app->request->post()) && $model->validate()) {
 
-        if($model->load(Yii::$app->request->post()) && $model->validate()){
+                    $model->resetPassword();
+                    $notification = 'You password has been updated!';
 
-            $model->resetPassword();
-            $notification = 'You password has been updated!';
+                    Yii::$app->session->setFlash('alert', [
+                        'body' => $notification,
+                        'options' => ['class' => 'success'],
+                    ]);
 
-            Yii::$app->session->setFlash('alert', [
-                'body' => $notification,
-                'options' => ['class' => 'success'],
-            ]);
+                    return $this->redirect(['login']);
 
-            return $this->redirect(['login']);
-
+                }
+            } catch (\Exception $e){
+                Yii::$app->session->setFlash('alert', [
+                    'body' => $e->getMessage(),
+                    'options' => ['class' => 'error'],
+                ]);
+            }
+        } else {
+            return $this->redirect(['/']);
         }
 
         return $this->render('password-reset', ['model' => $model]);
