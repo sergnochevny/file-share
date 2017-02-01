@@ -44,9 +44,33 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                     'layout' => "<div>{items}</div>\n{summary}{pager}",
                     'columns' => [
-                        'first_name',
-                        'last_name',
-                        'phone_number',
+                        [
+                            'attribute' => 'first_name',
+                            'headerOptions' => [
+                                'class' => 'hidden-sm hidden-xs',
+                            ],
+                            'contentOptions' => [
+                                'class' => 'hidden-sm hidden-xs',
+                            ],
+                        ],
+                        [
+                            'attribute' => 'last_name',
+                            'headerOptions' => [
+                                'class' => 'hidden-sm hidden-xs',
+                            ],
+                            'contentOptions' => [
+                                'class' => 'hidden-sm hidden-xs',
+                            ],
+                        ],
+                        [
+                            'attribute' => 'phone_number',
+                            'headerOptions' => [
+                                'class' => 'hidden-sm hidden-xs',
+                            ],
+                            'contentOptions' => [
+                                'class' => 'hidden-sm hidden-xs',
+                            ],
+                        ],
                         'email:email',
                         [
                             'attribute' => 'role',
@@ -54,6 +78,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'format' => 'html',
                             'contentOptions' => [
                                 'width' => 120,
+                                'class' => 'hidden-sm hidden-xs',
                             ],
                             'value' => function ($model, $key, $index, $column) {
                                 $suff = [

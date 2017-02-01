@@ -139,7 +139,7 @@ if (!empty($investigation)) {
                                     );
                                 },
                                 'headerOptions' => [
-                                    'class' => "sorting",
+                                    'class' => 'hidden-sm hidden-xs sorting',
                                     'tabindex' => "0",
                                     'rowspan' => "1",
                                     'colspan' => "1",
@@ -151,7 +151,11 @@ if (!empty($investigation)) {
                                     'tabindex' => "0",
                                     'rowspan' => "1",
                                     'colspan' => "1",
-                                ]
+                                    'class' => 'hidden-sm hidden-xs',
+                                ],
+                                'contentOptions' => [
+                                    'class' => 'hidden-sm hidden-xs',
+                                ],
                             ],
                             [
                                 'attribute' => 'created_at',
@@ -159,13 +163,25 @@ if (!empty($investigation)) {
                                 'value' => function ($model, $key, $index, $column) {
                                     $value = '<span class="label label-warning" >' .  Yii::$app->formatter->asDate($model->{$column->attribute}) . '</span >';
                                     return $value;
-                                }
+                                },
+                                'headerOptions' => [
+                                    'class' => 'hidden-sm hidden-xs',
+                                ],
+                                'contentOptions' => [
+                                    'class' => 'hidden-sm hidden-xs',
+                                ],
                             ],
                             [
                                 'attribute' => 'size',
                                 'value' => function ($model, $key, $index, $column) {
                                     return Yii::$app->formatter->asSize($model->{$column->attribute}, 0, [], []);
-                                }
+                                },
+                                'headerOptions' => [
+                                    'class' => 'hidden-sm hidden-xs',
+                                ],
+                                'contentOptions' => [
+                                    'class' => 'hidden-sm hidden-xs',
+                                ],
                             ],
                             [
                                 'class' => 'yii\grid\ActionColumn',

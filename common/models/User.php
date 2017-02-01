@@ -30,6 +30,7 @@ use yii\web\IdentityInterface;
  * @property integer $updated_at
  *
  * @property Company $company
+ * @property UserProfile $profile
  */
 class User extends UndeletableActiveRecord implements IdentityInterface
 {
@@ -242,7 +243,7 @@ class User extends UndeletableActiveRecord implements IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
+    public function getProfile()
     {
         return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
     }

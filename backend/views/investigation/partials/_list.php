@@ -26,11 +26,24 @@ Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout
             'value' => 'company.name',
             'label' => 'Company'
         ],
-        'name',
+        [
+            'attribute' => 'name',
+            'headerOptions' => [
+                'class' => 'hidden-sm hidden-xs',
+            ],
+            'contentOptions' => [
+                'class' => 'hidden-sm hidden-xs',
+            ],
+        ],
+
         [
             'attribute' => 'start_date',
             'label' => 'Start date',
+            'headerOptions' => [
+                'class' => 'hidden-sm hidden-xs',
+            ],
             'contentOptions' => [
+                'class' => 'hidden-sm hidden-xs',
                 'width' => 80,
             ],
             'format' => 'html',
@@ -43,7 +56,11 @@ Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout
             'attribute' => 'end_date',
             'label' => 'End date',
             'format' => 'html',
+            'headerOptions' => [
+                'class' => 'hidden-sm hidden-xs',
+            ],
             'contentOptions' => [
+                'class' => 'hidden-sm hidden-xs',
                 'width' => 80,
             ],
             'value' => function ($model, $key, $index, $column) {

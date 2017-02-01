@@ -27,7 +27,7 @@ class ProfileController extends Controller
      */
     public function actionIndex($username)
     {
-        $model = $this->findModel($username);
+        $model = $this->findModel($username)->profile;
         return $this->render('index', ['model' => $model]);
     }
 

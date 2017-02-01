@@ -38,10 +38,42 @@ $this->params['breadcrumbs'][] = $this->title;
                     'layout'=>"<div class='col-sm-12'>{items}</div>\n{summary}{pager}",
                     'columns' => [
                         'name',
-                        'address',
-                        'city',
-                        'state',
-                         'zip',
+                        [
+                            'attribute' => 'address',
+                            'headerOptions' => [
+                                'class' => 'hidden-sm hidden-xs',
+                            ],
+                            'contentOptions' => [
+                                'class' => 'hidden-sm hidden-xs',
+                            ],
+                        ],
+                        [
+                            'attribute' => 'city',
+                            'headerOptions' => [
+                                'class' => 'hidden-sm hidden-xs',
+                            ],
+                            'contentOptions' => [
+                                'class' => 'hidden-sm hidden-xs',
+                            ],
+                        ],
+                        [
+                            'attribute' => 'state',
+                            'headerOptions' => [
+                                'class' => 'hidden-sm hidden-xs',
+                            ],
+                            'contentOptions' => [
+                                'class' => 'hidden-sm hidden-xs',
+                            ],
+                        ],
+                        [
+                            'attribute' => 'zip',
+                            'headerOptions' => [
+                                'class' => 'hidden-sm hidden-xs',
+                            ],
+                            'contentOptions' => [
+                                'class' => 'hidden-sm hidden-xs',
+                            ],
+                        ],
                         [
                             'class' => 'yii\grid\ActionColumn',
                             'template' => '{edit}{delete}',
