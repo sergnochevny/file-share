@@ -94,6 +94,7 @@ class UploadBehavior extends Behavior
                     if (!empty($parent) && ($parent !== 'root')) $items->setId($parent);
                     $upload_file = $items->UploadFile($file);
                     if ($upload_file == 'OK') {
+                        sleep(3);
                         $query = new SimpleSearchQuery();
                         $query->Query
                             ->setParentID($parent)
