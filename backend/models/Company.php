@@ -5,6 +5,7 @@ namespace backend\models;
 
 
 use backend\behaviors\CitrixFolderBehavior;
+use backend\behaviors\HistoryBehavior;
 use backend\behaviors\NotifyBehavior;
 
 final class Company extends \common\models\Company
@@ -42,7 +43,7 @@ final class Company extends \common\models\Company
     public function behaviors()
     {
         $behaviors = parent::behaviors();
-        $behaviors[] = [
+        $behaviors['citrixFolderBehavior'] = [
             'class' => CitrixFolderBehavior::className(),
             'attribute' => 'citrix_id',
             'folder' => 'name',
@@ -60,6 +61,13 @@ final class Company extends \common\models\Company
             'createTemplate' => 'companyCreate',
             'updateTemplate' => 'companyUpdate',
             'deleteTemplate' => 'companyDelete',
+        ];
+        $behaviors['historyBehavior'] = [
+            'class' => HistoryBehavior::class,
+            'parent' => function(Company $model){
+                return $model->id;
+            },
+            'type' => 'user',
         ];
 
         return $behaviors;

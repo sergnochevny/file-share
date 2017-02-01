@@ -2,6 +2,7 @@
 
 namespace backend\behaviors;
 
+use backend\models\Investigation;
 use Citrix\CitrixApi;
 use Citrix\ShareFile\Api\Models\File;
 use Citrix\ShareFile\Api\Models\Folder;

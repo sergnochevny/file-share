@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\query\UndeletableActiveQuery;
+use yii\base\ModelEvent;
 use yii\db\ActiveRecord;
 use Yii;
 
@@ -15,12 +16,12 @@ use Yii;
 class UndeletableActiveRecord extends ActiveRecord
 {
 
-    const EVENT_AFTER_ARCHIVE = 'afterArchive';
-    const EVENT_BEFORE_ARCHIVE = 'beforeArchive';
-
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 100;
     const STATUS_IN_HISTORY = 200;
+
+    const EVENT_AFTER_ARCHIVE = 'afterArchive';
+    const EVENT_BEFORE_ARCHIVE = 'beforeArchive';
 
     /**
      * If you are want override this method
@@ -35,6 +36,14 @@ class UndeletableActiveRecord extends ActiveRecord
         return Yii::createObject(UndeletableActiveQuery::className(), [get_called_class()]);
     }
 
+    public static function getStatusesList(){
+        return [
+            static::STATUS_ACTIVE => 'Active',
+            static::STATUS_IN_HISTORY => 'Archived',
+            static::STATUS_DELETED => 'Deleted',
+        ];
+    }
+
     /**
      * Changes status of record to STATUS_IN_HISTORY
      *
@@ -43,7 +52,7 @@ class UndeletableActiveRecord extends ActiveRecord
     public function archive()
     {
         $this->status = static::STATUS_IN_HISTORY;
-        if ($this->beforeArhive() && $this->save(false)) $this->afterArhive();
+        if ($this->beforeArhive() && $this->save()) $this->afterArhive();
     }
 
     /**
@@ -57,13 +66,29 @@ class UndeletableActiveRecord extends ActiveRecord
         if ($this->beforeDelete() && $this->save(false)) $this->afterDelete();
     }
 
+    /**
+     * Changes status of records to STATUS_DELETED
+     *
+     * @param string $condition
+     * @param array $params
+     * @return int
+     */
+    public static function deleteAll($condition = '', $params = [])
+    {
+        return parent::updateAll(['status' => static::STATUS_DELETED], $condition, $params);
+    }
+
     public function afterArhive()
     {
-        $this->trigger(self::EVENT_AFTER_ARCHIVE);
+        $event = new ModelEvent;
+        $this->trigger(self::EVENT_AFTER_ARCHIVE, $event);
+        return $event->isValid;
     }
 
     public function beforeArhive()
     {
-        $this->trigger(self::EVENT_BEFORE_ARCHIVE);
+        $event = new ModelEvent;
+        $this->trigger(self::EVENT_BEFORE_ARCHIVE, $event);
+        return $event->isValid;
     }
 }

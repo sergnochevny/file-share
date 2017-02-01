@@ -122,19 +122,8 @@ if (!empty($investigation)) {
                                             Html::tag('span', $model->{$column->attribute}, ['class' => 'file-name']),
                                             ['class' => 'file-info']
                                         );
-
-                                    $button = Html::button(
-                                        Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-remove']), [
-                                            'class' => 'file-delete-btn delete',
-                                            'title' => 'Delete',
-                                        ])
-                                    );
                                     return Html::tag('div',
-                                        Html::a($image, Url::to(['/file/download', 'id' => $model->citrix_id], true), [
-                                            'class' => 'file-link',
-                                            'title' => $model->{$column->attribute},
-                                            'file-link' => '#'
-                                        ]) . $button,
+                                        $image,
                                         ['class' => 'file']
                                     );
                                 },
@@ -155,9 +144,12 @@ if (!empty($investigation)) {
                             ],
                             [
                                 'attribute' => 'created_at',
+                                'contentOptions' => [
+                                    'width' => 80
+                                ],
                                 'format' => 'html',
                                 'value' => function ($model, $key, $index, $column) {
-                                    $value = '<span class="label label-warning" >' .  Yii::$app->formatter->asDate($model->{$column->attribute}) . '</span >';
+                                    $value = '<span class="label label-warning" >' . Yii::$app->formatter->asDate($model->{$column->attribute}) . '</span >';
                                     return $value;
                                 }
                             ],
@@ -169,19 +161,47 @@ if (!empty($investigation)) {
                             ],
                             [
                                 'class' => 'yii\grid\ActionColumn',
-                                'template' => '{delete}',
+                                'template' => '{delete}{download}',
                                 'buttons' => [
-                                    'delete' => function ($url, $model) {
-                                        return Html::a('To archive', Url::to(['/file/archive', 'id' => $model->id], true),
-                                            [
-                                                'class' => "btn btn-danger btn-xs",
-                                                'title' => 'To archive',
-                                                'aria-label' => "To archive",
-                                                'data-confirm' => "Confirm removal",
-                                                'data-method' => "post",
-                                                'data-pjax' => "0",
-                                            ]
-                                        );
+                                    'delete' => function ($url, $model) use ($investigation) {
+                                        $content = '';
+                                        if (Yii::$app->user->can('admin') ||
+                                            (
+                                                !Yii::$app->user->can('admin') &&
+                                                !empty($investigation) &&
+                                                Yii::$app->user->can('employee', ['investigation' => $investigation])
+                                            )
+                                        )
+                                            $content = Html::a('To archive', Url::to(['/file/archive', 'id' => $model->id], true),
+                                                [
+                                                    'class' => "btn btn-danger btn-xs",
+                                                    'title' => 'To archive',
+                                                    'aria-label' => "To archive",
+                                                    'data-confirm' => "Confirm removal",
+                                                    'data-method' => "post",
+                                                    'data-pjax' => "0",
+                                                ]
+                                            );
+                                        return $content;
+                                    },
+                                    'download' => function ($url, $model) use ($investigation) {
+                                        $content = '';
+                                        if (Yii::$app->user->can('admin') ||
+                                            (
+                                                !Yii::$app->user->can('admin') &&
+                                                ((!empty($investigation) && Yii::$app->user->can('employee', ['investigation' => $investigation])) ||
+                                                    (Yii::$app->user->can('employee', ['allfiles' => $model->parents->parent])))
+                                            )
+                                        )
+                                            $content = Html::a('Download', Url::to(['/file/download', 'id' => $model->citrix_id], true),
+                                                [
+                                                    'class' => "btn btn-warning btn-xs",
+                                                    'title' => 'Download',
+                                                    'aria-label' => "Download",
+                                                    'data-pjax' => "0",
+                                                ]
+                                            );
+                                        return $content;
                                     },
                                 ],
                             ],

@@ -22,6 +22,18 @@ class WizardController extends Controller
     public $defaultAction = 'company';
 
     /**
+     * @param $view
+     * @param array $viewData
+     * @return string
+     */
+    private function smartRender($view, array $viewData)
+    {
+        return Yii::$app->getRequest()->isPjax
+            ? $this->renderAjax($view, $viewData)
+            : $this->render($view, $viewData);
+    }
+
+    /**
      * Shows Company tab
      *
      * @param string $id
@@ -125,7 +137,7 @@ class WizardController extends Controller
 
         if (!Yii::$app->user->can('admin')) $investigation->company_id = Yii::$app->user->identity->company->id;
         if ($request->isPost && $investigation->load($request->post()) && $investigation->save()) {
-            return $this->redirect(['file','id'=>$investigation->id]);
+            return $this->redirect(['file', 'id' => $investigation->id]);
         }
 
         return $this->smartRender('index', [
@@ -160,17 +172,5 @@ class WizardController extends Controller
         }
 
         return ['output' => $userList, 'selected' => ''];
-    }
-
-    /**
-     * @param $view
-     * @param array $viewData
-     * @return string
-     */
-    private function smartRender($view, array $viewData)
-    {
-        return Yii::$app->getRequest()->isPjax
-            ? $this->renderAjax($view, $viewData)
-            : $this->render($view, $viewData);
     }
 }

@@ -56,7 +56,6 @@ class HistoryBehavior extends Behavior
     public function events()
     {
         return [
-            UndeletableActiveRecord::EVENT_AFTER_VALIDATE => 'afterValidate',
             UndeletableActiveRecord::EVENT_BEFORE_ARCHIVE => 'afterArchive',
         ];
     }
@@ -69,9 +68,8 @@ class HistoryBehavior extends Behavior
         if (empty($this->parent)) throw new InvalidParamException("Identity parent parameter");
     }
 
-    public function afterValidate($event)
+    public function afterArchive($event)
     {
-
         if ($this->type instanceof \Closure) {
             $this->type = call_user_func($this->type, $this->owner);
         }
@@ -79,19 +77,16 @@ class HistoryBehavior extends Behavior
         if ($this->parent instanceof \Closure) {
             $this->parent = call_user_func($this->parent, $this->owner);
         }
-    }
 
-    public function afterArchive($event)
-    {
         $model = $this->owner;
         $history = new History();
-        if(!$history->load(
+        if(!($history->load(
             [
                 'name' => $model->name,
                 'type' => $this->type,
                 'parent' => $this->parent
             ]
-        ) && $history->save()){
+        ) && $history->save())){
             if ($history->hasErrors()){
                 $error = implode('|',$history->errors);
             } else {

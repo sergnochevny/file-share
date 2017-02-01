@@ -74,26 +74,32 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             'buttons' => [
                                 'edit' => function ($url, $model) {
-                                    return Html::a('Edit', Url::to(['/wizard/user', 'id' => $model->id], true),
-                                        [
-                                            'class' => "btn btn-primary btn-xs",
-                                            'title' => 'Edit',
-                                            'aria-label' => "Edit",
-                                            'data-pjax' => "0",
-                                        ]
-                                    );
+                                    $content = '';
+                                    if (Yii::$app->user->can('admin') || (Yii::$app->user->identity->id == $model->id))
+                                        $content = Html::a('Edit', Url::to(['/wizard/user', 'id' => $model->id], true),
+                                            [
+                                                'class' => "btn btn-primary btn-xs",
+                                                'title' => 'Edit',
+                                                'aria-label' => "Edit",
+                                                'data-pjax' => "0",
+                                            ]
+                                        );
+                                    return $content;
                                 },
                                 'delete' => function ($url, $model) {
-                                    return Html::a('To archive', Url::to(['/user/archive', 'id' => $model->id], true),
-                                        [
-                                            'class' => "btn btn-danger btn-xs",
-                                            'title' => 'To archive',
-                                            'aria-label' => "To archive",
-                                            'data-confirm' => "Confirm removal",
-                                            'data-method' => "post",
-                                            'data-pjax' => "0",
-                                        ]
-                                    );
+                                    $content = '';
+                                    if (Yii::$app->user->can('admin') || (Yii::$app->user->identity->id == $model->id))
+                                        $content = Html::a('To archive', Url::to(['/user/archive', 'id' => $model->id], true),
+                                            [
+                                                'class' => "btn btn-danger btn-xs",
+                                                'title' => 'To archive',
+                                                'aria-label' => "To archive",
+                                                'data-confirm' => "Confirm removal",
+                                                'data-method' => "post",
+                                                'data-pjax' => "0",
+                                            ]
+                                        );
+                                    return $content;
                                 },
                             ],
                         ],

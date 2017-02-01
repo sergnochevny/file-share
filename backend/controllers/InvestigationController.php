@@ -2,15 +2,14 @@
 
 namespace backend\controllers;
 
-use common\models\Company;
-use common\models\User;
-use Yii;
+use backend\models\Company;
 use backend\models\Investigation;
 use backend\models\search\InvestigationSearch;
 use common\helpers\Url;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * InvestigationController implements the CRUD actions for Investigation model.
@@ -86,7 +85,14 @@ class InvestigationController extends Controller
      */
     public function actionArchive($id)
     {
-        $this->findModel($id)->archive();
+        $model = $this->findModel($id);
+        $model->detachBehavior('citrixFolderBehavior');
+        if(Yii::$app->user->can('admin') ||
+            (!Yii::$app->user->can('admin') &&
+                Yii::$app->user->can('employee', ['investigation'=> $model]))
+        ){
+            $model->archive();
+        }
         return $this->redirect(['index']);
     }
 

@@ -29,7 +29,7 @@ class FileUpload extends Model
     {
 
         if (empty($this->parent)) {
-            $this->parent = File::findOne(['parent' => 'root']);
+            $parent = File::findOne(['parent' => 'root']);
             if (!empty($parent)) {
                 $this->parent = $parent->citrix_id;
             } else return false;
