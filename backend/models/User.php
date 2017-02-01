@@ -39,8 +39,9 @@ class User extends \common\models\User
     public static function findByRole($role)
     {
         $ids = \Yii::$app->getAuthManager()->getUserIdsByRole($role);
+        $userTbl = static::tableName();
 
-        return static::find()->andWhere(['id' => $ids]);
+        return static::find()->andWhere(["$userTbl.id" => $ids]);
     }
 
     /**
