@@ -86,7 +86,7 @@ class Investigation extends \common\models\Investigation
      */
     public static function getStatusesList()
     {
-        return array_slice(parent::getStatusLabels(), 1, null, true);
+        return array_slice(parent::getStatusesList(), -6, 5, true); //remove 'deleted' status
     }
 
     /**

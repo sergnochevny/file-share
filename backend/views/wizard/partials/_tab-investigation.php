@@ -40,6 +40,8 @@ use yii\jui\DatePicker;
             <?= $form->field($investigationForm, 'phone')->textInput() ?>
 
             <?= $form->field($investigationForm, 'email')->textInput() ?>
+
+            <?= $form->field($investigationForm, 'status')->dropDownList(\backend\models\Investigation::getStatusesList()) ?>
         </div>
 
         <div class="clearfix"></div>
