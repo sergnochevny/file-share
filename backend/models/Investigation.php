@@ -5,6 +5,7 @@ namespace backend\models;
 
 use backend\behaviors\CitrixFolderBehavior;
 use backend\behaviors\HistoryBehavior;
+use backend\behaviors\NotifyBehavior;
 use common\models\Company;
 use yii\db\Query;
 
@@ -68,6 +69,15 @@ class Investigation extends \common\models\Investigation
                 return $parent;
             },
             'type' => 'investigation',
+        ];
+        $behaviors['notify'] = [
+            'class' => NotifyBehavior::class,
+            'companyId' => function(Investigation $model) {
+                return $model->company_id;
+            },
+            'createTemplate' => 'create',
+            'updateTemplate' => 'update',
+            'deleteTemplate' => 'delete',
         ];
 
         return $behaviors;

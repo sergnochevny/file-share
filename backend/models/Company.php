@@ -57,9 +57,9 @@ final class Company extends \common\models\Company
             'companyId' => function(Company $model) {
                 return $model->id;
             },
-            'createTemplate' => 'company/create',
-            'updateTemplate' => 'company/update',
-            'deleteTemplate' => 'company/delete',
+            'createTemplate' => 'create',
+            'updateTemplate' => 'update',
+            'deleteTemplate' => 'delete',
         ];
 
         return $behaviors;

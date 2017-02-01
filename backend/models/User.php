@@ -22,9 +22,9 @@ class User extends \common\models\User
             'companyId' => function(User $model) {
                 return $model->company->id;
             },
-            'createTemplate' => 'user/create',
-            'updateTemplate' => 'user/update',
-            'deleteTemplate' => 'user/delete',
+            'createTemplate' => 'create',
+            'updateTemplate' => 'update',
+            'deleteTemplate' => 'delete',
         ];
 
         return $behaviors;
