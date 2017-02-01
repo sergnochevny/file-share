@@ -53,7 +53,7 @@ class Company extends UndeletableActiveRecord
             [['name', 'address', 'city', 'state'], 'string', 'max' => 255],
             [['zip'], 'string', 'max' => 10],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_IN_HISTORY, self::STATUS_DELETED]],
         ];
     }
 

@@ -34,7 +34,7 @@ class History extends \yii\db\ActiveRecord
             [['parent', 'created_at'], 'integer'],
             [['type'], 'required'],
             [['name'], 'string', 'max' => 255],
-            [['type'], 'string', 'max' => 10],
+            [['type'], 'string', 'max' => 50],
         ];
     }
 

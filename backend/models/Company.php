@@ -8,7 +8,7 @@ use backend\behaviors\CitrixFolderBehavior;
 use backend\behaviors\HistoryBehavior;
 use backend\behaviors\NotifyBehavior;
 
-final class Company extends \common\models\Company
+class Company extends \common\models\Company
 {
     use FactoryTrait;
 

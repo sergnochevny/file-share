@@ -42,12 +42,14 @@ class File extends UndeletableActiveRecord
     public function rules()
     {
         return [
-            [['name', 'description', 'size', 'parent', 'type', 'citrix_id', 'created_at', 'updated_at'], 'required'],
+            [['name', 'description', 'size', 'parent', 'type', 'citrix_id'], 'required'],
             [['description'], 'string'],
-            [['size', 'created_at', 'updated_at', 'status'], 'integer'],
+            [['size', 'status'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['parent', 'citrix_id'], 'string', 'max' => 50],
             [['type'], 'string', 'max' => 10],
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
+            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_IN_HISTORY, self::STATUS_DELETED]],
         ];
     }
 
