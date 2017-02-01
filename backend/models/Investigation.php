@@ -6,7 +6,6 @@ namespace backend\models;
 use backend\behaviors\CitrixFolderBehavior;
 use backend\behaviors\HistoryBehavior;
 use backend\behaviors\NotifyBehavior;
-use common\models\Company;
 use yii\db\Query;
 
 /**
