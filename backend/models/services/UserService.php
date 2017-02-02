@@ -56,7 +56,7 @@ final class UserService extends Component
             [
                 'class' => NotifyBehavior::class,
                 'companyId' => function(UserService $model) {
-                    return $model->getUser()->company->id;
+                    return $model->user->company ? $model->user->company->id : null;
                 },
                 'createTemplate' => 'create',
                 'updateTemplate' => 'update',
