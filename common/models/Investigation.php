@@ -88,9 +88,10 @@ class Investigation extends UndeletableActiveRecord
     {
         if (!$this->hasErrors() && !empty($this->$attribute)) {
             try {
-                $this->$attribute = (new \DateTime($this->$attribute))->format('Y-m-d');
+                $date = \DateTime::createFromFormat('m.d.Y', $this->$attribute);
+                $this->$attribute = $date->format('Y-m-d');
             } catch (\Exception $e) {
-                $this->addError($attribute, $e->getMessage());
+                $this->addError($attribute, "Date not valid");
             }
         }
     }
