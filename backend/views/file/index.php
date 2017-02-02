@@ -121,13 +121,13 @@ if (!empty($investigation)) {
                                     );
                                 },
                                 'headerOptions' => [
-                                    'class' => 'hidden-sm hidden-xs sorting',
+                                    'class' => 'sorting',
                                     'tabindex' => "0",
                                     'rowspan' => "1",
                                     'colspan' => "1",
                                 ],
                                 'contentOptions' => [
-                                    'class' => 'hidden-sm hidden-xs sorting',
+                                    'class' => 'sorting',
                                 ]
                             ],
                             [

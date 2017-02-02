@@ -2,14 +2,11 @@
 namespace backend\controllers;
 
 
+use backend\behaviors\RememberUrlBehavior;
 use backend\models\forms\PasswordResetRequestForm;
 use backend\models\User;
-use Yii;
-use yii\helpers\Url;
-use yii\web\Controller;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use backend\models\forms\LoginForm;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -18,6 +15,24 @@ use yii\web\NotFoundHttpException;
 class ProfileController extends Controller
 {
 
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
+                ],
+            ],
+            'remember' => [
+                'class' => RememberUrlBehavior::className(),
+                'actions' => ['index'],
+            ],
+        ];
+    }
 
     /**
      * Displays profile index.

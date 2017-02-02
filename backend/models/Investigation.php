@@ -66,6 +66,9 @@ class Investigation extends \common\models\Investigation
             'parent' => function(Investigation $model){
                 return $model->id;
             },
+            'company' => function(Investigation $model){
+                return $model->company_id;
+            },
             'attribute' => 'name',
             'type' => 'investigation',
         ];

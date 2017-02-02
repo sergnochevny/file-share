@@ -67,8 +67,11 @@ class Company extends \common\models\Company
             'parent' => function(Company $model){
                 return $model->id;
             },
+            'company' => function(Company $model){
+                return $model->id;
+            },
             'attribute' => 'name',
-            'type' => 'user',
+            'type' => 'company',
         ];
 
         return $behaviors;
