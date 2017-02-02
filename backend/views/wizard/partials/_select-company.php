@@ -25,7 +25,7 @@ $dropDown = function ($model = null, $name, $list, array $options) use ($form) {
         'id' => 'company-list',
         'data-info-url' => \yii\helpers\Url::to(['company-info'], true),
         'class' => 'form-control',
-        'prompt' => ' - - -',
+        'prompt' => $model ? ' - - -' : 'Create a new company',
     ];
     if (!empty($selected)){
       $options['options'] = [$selected => ['selected'=>'selected']];

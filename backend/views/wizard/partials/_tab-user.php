@@ -24,10 +24,10 @@ use yii\helpers\Url;
             <span class="d-ib">Select Role</span>
         </h2>
 
-        <div class="form-group">                            <?php /*todo get this list from db */ ?>
+        <div class="form-group<?= $userForm->hasErrors('role') ? ' has-error' : '' ?>">                            <?php /*todo get this list from db */ ?>
             <?= Html::activeDropDownList($userForm, 'role', ['admin' => 'admin', 'client' => 'client'],
                 ['id' => 'user-role', 'class' => 'form-control', 'prompt' => ' - - -']); ?>
-            <!--<span class="help-block">There is a choice of two or more people.</span>-->
+            <?= Html::error($userForm, 'role', ['class' => 'help-block']) ?>
         </div>
     </div>
 

@@ -44,6 +44,10 @@
             $('#company-list-container').show();
             $('#user-list-container').show();
 
+        } else if ($(this).val() == 'admin') {
+            $('#company-list-container').hide();
+            $('#user-list-container').show();
+
         } else {
             $('#company-list-container').hide();
             $('#user-list-container').hide();
