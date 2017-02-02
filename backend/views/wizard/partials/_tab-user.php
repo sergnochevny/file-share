@@ -31,7 +31,7 @@ use yii\helpers\Url;
         </div>
     </div>
 
-    <div class="col-lg-6 col-lg-offset-3" id="company-list-container">
+    <div class="col-lg-6 col-lg-offset-3" id="company-list-container" style="display: none">
         <h2 align="center">
             <span class="d-ib">Select Company</span>
         </h2>
@@ -42,7 +42,7 @@ use yii\helpers\Url;
     </div>
 
 
-    <div class="col-lg-6 col-lg-offset-3" id="user-list-container">
+    <div class="col-lg-6 col-lg-offset-3" id="user-list-container" style="display: none">
         <h2 align="center">
             <span class="d-ib">Select Users</span>
         </h2>
