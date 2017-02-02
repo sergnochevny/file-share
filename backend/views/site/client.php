@@ -1,5 +1,9 @@
 <?php
 use common\helpers\Url;
+
+/** @var \backend\models\User $user */
+$user = Yii::$app->getUser()->getIdentity();
+$company = $user->company;
 ?>
 <div class="panel">
     <div class="panel-body p-a-lg">
@@ -14,12 +18,11 @@ use common\helpers\Url;
                 </div>
             </div>
             <div class="col-sm-6">
-                <img class="profile-avetar-img" src="<?= Url::to('@web/images/user-foto.jpg'); ?>"
-                     alt="Teddy Wilson" height="87">
+                <i class="icon icon-user icon-6x"></i>
                 <div class="p-a">
-                    <strong>Teddy Wilson</strong>
-                    <br> 726 XXXX New York, NY 10007 United States of America
-                    <br> <a href="tel:+1 234-56789-0123">+1 234-56789-0123</a>
+                    <strong><?= $user->first_name ?> <?= $user->last_name ?></strong>
+                    <br> <?= $company->address ?> <?= $company->city?>, <?= $company->state ?> <?= $user->company->zip ?>
+                    <br> <a href="tel:<?= $user->phone_number ?>"><?= $user->phone_number ?></a>
                 </div>
             </div>
         </div>
