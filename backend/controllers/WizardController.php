@@ -108,9 +108,10 @@ class WizardController extends Controller
                 $userForm->password = $userForm->password_repeat = null;
                 $options['isUpdate'] = true;
                 $options['selectedUser'] = $user->id;
+                $this->setFlashMessage('success', 'user');
 
             } else {
-                Yii::$app->getSession()->setFlash('error', 'The user was not created');
+                $this->setFlashMessage('error', 'user');
             }
         }
 
@@ -133,9 +134,18 @@ class WizardController extends Controller
             throw new UserException('The investigation does not exits');
         }
 
-        if (!Yii::$app->user->can('admin')) $investigation->company_id = Yii::$app->user->identity->company->id;
-        if ($request->isPost && $investigation->load($request->post()) && $investigation->save()) {
-            return $this->redirect(['/file', 'id' => $investigation->id]);
+        if (!Yii::$app->user->can('admin')) {
+            $investigation->company_id = Yii::$app->user->identity->company->id;
+        }
+
+        if ($request->isPost && $investigation->load($request->post())) {
+            if ($investigation->save()) {
+                $this->setFlashMessage('success', 'applicant');
+                return $this->redirect(['/file', 'id' => $investigation->id]);
+
+            } else {
+                $this->setFlashMessage('error', 'applicant');
+            }
         }
 
         return $this->smartRender('index', [
