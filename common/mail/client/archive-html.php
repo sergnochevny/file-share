@@ -7,10 +7,17 @@ use yii\helpers\Html;
 ?>
 
 
-<?php if ($model instanceof \backend\models\services\UserService): ?>
+<?php if ($model instanceof \backend\models\Company): ?>
+    <p>The <b><?= Html::encode($model->name) ?></b> company was
+        archived at <b><?= Yii::$app->formatter->asDatetime($model->updated_at) ?></b>
+        by <b><?= Html::encode($identity->username) ?></b>
+    </p>
+
+
+<?php elseif ($model instanceof \backend\models\services\UserService): ?>
     <p>
         The user <b><?= Html::encode($model->getUser()->username) ?></b> was
-        created at <b><?= Yii::$app->formatter->asDatetime($model->getUser()->created_at) ?></b>
+        archived at <b><?= Yii::$app->formatter->asDatetime($model->getUser()->updated_at) ?></b>
         by <b><?= Html::encode($identity->username) ?></b>
     </p>
 
@@ -18,7 +25,7 @@ use yii\helpers\Html;
     <p>
         The applicant <b><?= Html::encode($model->name) ?></b>
         for <b><?= Html::encode($model->company->name) ?></b> company was
-        created at <b><?= Yii::$app->formatter->asDatetime($model->created_at) ?></b>
+        archived at <b><?= Yii::$app->formatter->asDatetime($model->updated_at) ?></b>
         by <b><?= Html::encode($identity->username) ?></b>
     </p>
 

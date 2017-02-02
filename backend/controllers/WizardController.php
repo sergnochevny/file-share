@@ -99,7 +99,10 @@ class WizardController extends Controller
             }
 
             if ($userForm->validate() && $userService->save($userForm)) {
+                //reset password fields
+                $userForm->password = $userForm->password_repeat = null;
                 $options['isUpdate'] = true;
+                $options['selectedUser'] = $user->id;
 
             } else {
                 Yii::$app->getSession()->setFlash('error', 'The user was not created');
