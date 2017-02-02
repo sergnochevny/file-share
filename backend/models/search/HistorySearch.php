@@ -42,13 +42,9 @@ class HistorySearch extends History
 
         // add conditions that should always apply here
         if (!Yii::$app->user->can('admin')) {
-            $query->andWhere(
-                [
-                    'or' => [
-                        'company_id' => Yii::$app->user->identity->company->id,
-                        'company_id' => null,
-                    ]
-                ]
+            $query->where(
+                ['or', ['company_id' => Yii::$app->user->identity->company->id], ['company_id' => null]]
+
             );
         }
 
