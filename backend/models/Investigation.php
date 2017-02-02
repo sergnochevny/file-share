@@ -25,7 +25,7 @@ class Investigation extends \common\models\Investigation
     public function rules()
     {
         $rules = parent::rules();
-        $rules[] = ['name', 'match', 'pattern' => '/^\w*$/'];
+        $rules[] = ['name', 'match', 'pattern' => '/^[\w\s]*$/'];
         $rules[] = [['name'], 'unique', 'when' => function ($model, $attribute) {
             /** @var $model Investigation */
             return $model->isAttributeChanged($attribute, false);
