@@ -46,6 +46,9 @@ final class UserForm extends Model
     public function rules()
     {
         return [
+            ['role', 'required', 'message' => 'Please choose the role of user'],
+            ['role', 'in', 'range' => ['admin', 'client']],
+
             [['company_id'], 'required', 'when' => function($form) {
                 //only client role require company
                 return $form->role == 'client';

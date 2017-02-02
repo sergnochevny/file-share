@@ -24,14 +24,16 @@ use yii\helpers\Url;
             <span class="d-ib">Select Role</span>
         </h2>
 
-        <div class="form-group">                            <?php /*todo get this list from db */ ?>
+        <div class="form-group<?= $userForm->hasErrors('role') ? ' has-error' : '' ?>">                            <?php /*todo get this list from db */ ?>
             <?= Html::activeDropDownList($userForm, 'role', ['admin' => 'admin', 'client' => 'client'],
                 ['id' => 'user-role', 'class' => 'form-control', 'prompt' => ' - - -']); ?>
-            <!--<span class="help-block">There is a choice of two or more people.</span>-->
+            <?= Html::error($userForm, 'role', ['class' => 'help-block']) ?>
         </div>
     </div>
 
-    <div class="col-lg-6 col-lg-offset-3" id="company-list-container" style="display: none">
+    <div class="col-lg-6 col-lg-offset-3" id="company-list-container" <?=
+    $userForm->company_id ? '' : 'style="display: none"'
+    ?>>
         <h2 align="center">
             <span class="d-ib">Select Company</span>
         </h2>
@@ -42,7 +44,9 @@ use yii\helpers\Url;
     </div>
 
 
-    <div class="col-lg-6 col-lg-offset-3" id="user-list-container" style="display: none">
+    <div class="col-lg-6 col-lg-offset-3" id="user-list-container" <?=
+    $isUpdate ? '' : 'style="display: none"'
+    ?>>
         <h2 align="center">
             <span class="d-ib">Select Users</span>
         </h2>
