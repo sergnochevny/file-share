@@ -60,6 +60,7 @@ final class UserService extends Component
                 },
                 'createTemplate' => 'create',
                 'updateTemplate' => 'update',
+                'archiveTemplate' => 'archive',
                 'deleteTemplate' => 'delete',
             ],
         ];
@@ -138,7 +139,7 @@ final class UserService extends Component
     public function afterValidate()
     {
         $event = new ModelEvent;
-        $this->trigger(UndeletableActiveRecord::EVENT_BEFORE_VALIDATE, $event);
+        $this->trigger(UndeletableActiveRecord::EVENT_AFTER_VALIDATE, $event);
 
         return $event->isValid;
     }

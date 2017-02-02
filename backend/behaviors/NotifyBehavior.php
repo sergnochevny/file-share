@@ -22,16 +22,16 @@ final class NotifyBehavior extends Behavior
     private $companyId;
 
     /** @var string */
-    public $createTemplate;
+    public $createTemplate = 'create';
 
     /** @var string */
-    public $updateTemplate;
+    public $updateTemplate = 'update';
 
     /** @var string */
-    public $archiveTemplate;
+    public $archiveTemplate = 'archive';
 
     /** @var string */
-    public $deleteTemplate;
+    public $deleteTemplate = 'delete';
 
     /** @var string */
     public $sendFrom;
