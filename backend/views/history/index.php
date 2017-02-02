@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         return '<span class="label label-warning">' . ucfirst($model->{$column->attribute}) .'</span>';
                                         break;
                                     case 'investigation';
-                                        return '<span class="label label-error">' . ucfirst($model->{$column->attribute}) .'</span>';
+                                        return '<span class="label label-danger">' . ucfirst($model->{$column->attribute}) .'</span>';
                                         break;
                                 }
                             },
