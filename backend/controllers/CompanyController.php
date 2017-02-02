@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 
+use backend\behaviors\RememberUrlBehavior;
 use backend\models\Company;
 use backend\models\search\CompanySearch;
 use common\helpers\Url;
