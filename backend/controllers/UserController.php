@@ -86,6 +86,9 @@ class UserController extends Controller
         $model = $this->findModel($id);
         if (Yii::$app->user->can('admin')) {
             $model->archive();
+            Yii::$app->session->setFlash('success', 'Archived successfully');
+        }else{
+            Yii::$app->session->setFlash('error', 'Permission denied');
         }
         return $this->actionIndex();
     }

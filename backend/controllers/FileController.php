@@ -114,6 +114,7 @@ class FileController extends Controller
     /**
      * Creates a new File model.
      * If creation is successful, the browser will be redirected to the 'view' page.
+     * @param null $parent
      * @return mixed
      */
     public function actionUpload($parent = null)
@@ -123,6 +124,7 @@ class FileController extends Controller
         ) {
             $model = new FileUpload(['parent' => $parent]);
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->session->setFlash('success', 'File added successfully');
             }
         }
         if (!empty($parent)) return $this->actionIndex(Investigation::findOne(['citrix_id' => $parent]));
@@ -140,11 +142,11 @@ class FileController extends Controller
         $model = $this->findModel($id);
         $model->detachBehavior('uploadBehavior');
         $investigation = $model->investigations;
-        if (Yii::$app->user->can('admin') ||
-            (!Yii::$app->user->can('admin') &&
-                Yii::$app->user->can('employee', ['investigation' => $investigation]))
-        ) {
+        if (Yii::$app->user->can('admin') || (!Yii::$app->user->can('admin') && Yii::$app->user->can('employee', ['investigation' => $investigation]))){
             $model->archive();
+            Yii::$app->session->setFlash('success', 'Archived successfully');
+        }else{
+            Yii::$app->session->setFlash('error', 'Permission denied');
         }
         if (!empty($investigation)) return $this->actionIndex($investigation->id);
         return $this->actionIndex();

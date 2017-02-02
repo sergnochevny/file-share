@@ -1,13 +1,11 @@
 <?php
 
-use backend\models\search\FileSearch;
 use backend\widgets\ActiveForm;
 use common\widgets\Alert;
 use yii\helpers\Html;
 use common\helpers\Url;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
-use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\search\FileSearch */

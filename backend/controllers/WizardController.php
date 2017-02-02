@@ -16,22 +16,12 @@ use yii\web\Response;
 
 class WizardController extends Controller
 {
+
     /**
      * @inheritdoc
      */
     public $defaultAction = 'company';
 
-    /**
-     * @param $view
-     * @param array $viewData
-     * @return string
-     */
-    private function smartRender($view, array $viewData)
-    {
-        return Yii::$app->getRequest()->isPjax
-            ? $this->renderAjax($view, $viewData)
-            : $this->render($view, $viewData);
-    }
 
     /**
      * Shows Company tab
@@ -163,14 +153,23 @@ class WizardController extends Controller
 
         if ('admin' == $userRole) {
             $userList = User::findByRole($userRole)->select(['id', 'username as name'])->asArray()->all();
-
         } else if ($companyId) {
             $company = Company::findOne($companyId);
             /** @var array $userList */
             $userList = $company->getUsers()->select(['id', 'username as name'])->asArray()->all();
-
         }
 
         return ['output' => $userList, 'selected' => ''];
     }
+
+    /**
+     * @param $view
+     * @param array $viewData
+     * @return string
+     */
+    private function smartRender($view, array $viewData)
+    {
+        return Yii::$app->getRequest()->isPjax ? $this->renderAjax($view, $viewData) : $this->render($view, $viewData);
+    }
+
 }

@@ -70,11 +70,11 @@ class CompanyController extends Controller
     {
         $model = $this->findModel($id);
         $model->detachBehavior('citrixFolderBehavior');
-        if(Yii::$app->user->can('admin') ||
-            (!Yii::$app->user->can('admin') &&
-                Yii::$app->user->can('employee', ['company'=> $model]))
-        ){
+        if(Yii::$app->user->can('admin') || (!Yii::$app->user->can('admin') && Yii::$app->user->can('employee', ['company'=> $model]))){
             $model->archive();
+            Yii::$app->session->setFlash('success', 'Archived successfully');
+        }else{
+            Yii::$app->session->setFlash('error', 'Permission denied');
         }
         return $this->actionIndex();
     }

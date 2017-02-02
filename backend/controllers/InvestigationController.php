@@ -17,6 +17,21 @@ use yii\web\NotFoundHttpException;
 class InvestigationController extends Controller
 {
 
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }
+
     public static function prepareRenderInvestigations($parent = null)
     {
         $company = null;
@@ -34,37 +49,6 @@ class InvestigationController extends Controller
         ];
         if (!empty($company)) $renderParams['company'] = $company;
         return $renderParams;
-    }
-
-    /**
-     * Finds the Investigation model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Investigation the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Investigation::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
     }
 
     /**
@@ -92,8 +76,27 @@ class InvestigationController extends Controller
                 Yii::$app->user->can('employee', ['investigation'=> $model]))
         ){
             $model->archive();
+            Yii::$app->session->setFlash('success', 'Archived successfully');
+        }else{
+            Yii::$app->session->setFlash('error', 'Permission denied');
         }
         return $this->actionIndex();
+    }
+
+    /**
+     * Finds the Investigation model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Investigation the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Investigation::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 
 }
