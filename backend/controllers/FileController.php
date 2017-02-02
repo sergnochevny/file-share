@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\actions\DownloadAction;
+use backend\behaviors\RememberUrlBehavior;
 use backend\models\File;
 use backend\models\FileUpload;
 use backend\models\Investigation;
