@@ -1967,6 +1967,17 @@ input[type=search] {
     margin-bottom: 15px
 }
 
+.form-group.has-error label {
+    color: #dd4b39;
+}
+.form-group.has-error .form-control {
+    border-color: #dd4b39;
+    box-shadow: none;
+}
+.form-group.has-error .help-block {
+    color: #dd4b39;
+}
+
 .checkbox, .radio {
     position: relative;
     display: block;
