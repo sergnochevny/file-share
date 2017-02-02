@@ -40,7 +40,7 @@ class UserController extends Controller
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
-        Url::remember(Yii::$app->request->url);
+        Url::remember();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -54,7 +54,6 @@ class UserController extends Controller
      */
     public function actionView($id)
     {
-        Url::remember(Yii::$app->request->url);
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -85,7 +84,7 @@ class UserController extends Controller
      * @return User the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    private function findModel($id)
     {
         if (($model = User::findOne($id)) !== null) {
             return $model;

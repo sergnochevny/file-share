@@ -30,7 +30,7 @@ class HistoryController extends Controller
         }
 
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
-        Url::remember(Yii::$app->request->url);
+        Url::remember();
 
         return $this->render('index', [
             'searchModel' => $searchModel,

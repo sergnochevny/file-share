@@ -42,7 +42,6 @@ class InvestigationController extends Controller
         }
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
-        Url::remember(Yii::$app->request->url);
         $renderParams = [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -53,11 +52,13 @@ class InvestigationController extends Controller
 
     /**
      * Lists all Investigation models.
+     * @param null $parent
      * @return mixed
      */
     public function actionIndex($parent = null)
     {
         $renderParams = static::prepareRenderInvestigations($parent);
+        Url::remember();
         return $this->render('index', $renderParams);
     }
 

@@ -60,6 +60,8 @@ class FileController extends Controller
 
     /**
      * Lists all File models.
+     * @param null $id
+     * @param null $parent
      * @return mixed
      */
     public function actionIndex($id = null, $parent = null)
@@ -88,7 +90,7 @@ class FileController extends Controller
         }
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
-        Url::remember(Yii::$app->request->url);
+        Url::remember();
         $renderParams = [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -105,7 +107,6 @@ class FileController extends Controller
      */
     public function actionView($id)
     {
-        Url::remember(Yii::$app->request->url);
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);

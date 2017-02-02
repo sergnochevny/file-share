@@ -127,7 +127,7 @@ if (!empty($investigation)) {
                                     'colspan' => "1",
                                 ],
                                 'contentOptions' => [
-                                    'class' => 'hidden-sm hidden-xs sorting',
+                                    'class' => 'sorting',
                                 ]
                             ],
                             [
