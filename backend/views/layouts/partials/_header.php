@@ -42,7 +42,8 @@ use common\helpers\Url;
         </div>
         <div class="navbar-toggleable">
             <nav id="navbar" class="navbar-collapse collapse">
-                <button class="sidenav-toggler hidden-xs" title="Collapse sidenav ( [ )" aria-expanded="true" type="button">
+                <button class="sidenav-toggler hidden-xs" title="Collapse sidenav ( [ )" aria-expanded="true"
+                        type="button">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="bars">
                         <span class="bar-line bar-line-1 out"></span>
@@ -60,18 +61,19 @@ use common\helpers\Url;
                     <!--li class="hidden-xs hidden-sm">
                         <?= Html::beginForm('', 'post', ['class' => 'navbar-search navbar-search-collapsed']); ?>
                             <?= Html::input('string', 'global-search', null, [
-                                'class' => 'navbar-search-input',
-                                'placeholder' => 'Search for people, companies'
-                            ]); ?>
+                        'class' => 'navbar-search-input',
+                        'placeholder' => 'Search for people, companies'
+                    ]); ?>
                             <?= Html::button(
-                                Html::tag('span', '', ['class' => 'icon icon-search icon-lg']), [
-                                    'class' => 'navbar-search-toggler', 'title' => 'Expand search form ( S )', 'aria-expanded' => 'false'
-                                ]
-                            ); ?>
+                        Html::tag('span', '', ['class' => 'icon icon-search icon-lg']), [
+                            'class' => 'navbar-search-toggler', 'title' => 'Expand search form ( S )', 'aria-expanded' => 'false'
+                        ]
+                    ); ?>
                         <?= Html::endForm(); ?>
                     </li-->
                     <li class="dropdown hidden">
-                        <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" style="height: 45px">
+                        <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                           style="height: 45px">
                           <span class="icon-with-child hidden-xs">
                             <span class="icon icon-bell-o icon-lg"></span>
                             <span class="badge badge-danger badge-above right">3</span>
@@ -154,13 +156,17 @@ use common\helpers\Url;
                                 <a href="#">
                                     <h5 class="navbar-upgrade-heading">
                                         <?= !is_null(Yii::$app->user->identity->username) ? ucfirst(Yii::$app->user->identity->username) : null; ?>
-                                        <small class="navbar-upgrade-notification">Last Active 12.24.2016</small>
+                                        <small class="navbar-upgrade-notification">
+                                            Last Active
+                                            <?= !empty(Yii::$app->user->identity) ? Yii::$app->formatter->asDatetime(Yii::$app->user->identity->action_at) : '' ?>
+                                        </small>
                                     </h5>
                                 </a>
                             </li>
                             <li class="divider"></li>
-<!--                            <li><a href="#">Contacts</a></li>-->
-<!--                            <li><a href="--><?= ''//Url::to(['/profile', 'username' => isset(Yii::$app->user->identity->id) ? Yii::$app->user->identity->username : null], true) ?><!--">Profile</a></li>-->
+                            <!--                            <li><a href="#">Contacts</a></li>-->
+                            <!--                            <li><a href="-->
+                            <?= ''//Url::to(['/profile', 'username' => isset(Yii::$app->user->identity->id) ? Yii::$app->user->identity->username : null], true)    ?><!--">Profile</a></li>-->
                             <li><a href="<?= Url::to(['/site/logout'], true) ?>" data-method="POST">Sign out</a></li>
                         </ul>
                     </li>

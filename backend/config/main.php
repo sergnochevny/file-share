@@ -116,5 +116,8 @@ return [
             ],
         ],
     ],
+    'as beforeAction' => [
+        'class' => 'common\behaviors\LastActionBehavior',
+    ],
     'params' => $params,
 ];

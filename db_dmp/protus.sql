@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `company` (
 -- Дамп данных таблицы protus.company: ~1 rows (приблизительно)
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
 INSERT INTO `company` (`id`, `name`, `description`, `address`, `city`, `state`, `zip`, `status`, `created_at`, `updated_at`, `citrix_id`) VALUES
-	(19, 'Test_Upd', '', '', '', '', '', 100, 1485609638, 1486047806, 'fo2da890-e919-4f98-94dd-b1d2e65defe3');
+	(19, 'Test_Upd', '', '', '', '', '', 200, 1485609638, 1486054598, 'fo2da890-e919-4f98-94dd-b1d2e65defe3');
 /*!40000 ALTER TABLE `company` ENABLE KEYS */;
 
 -- Дамп структуры для таблица protus.file
@@ -131,14 +131,14 @@ CREATE TABLE IF NOT EXISTS `file` (
 /*!40000 ALTER TABLE `file` DISABLE KEYS */;
 INSERT INTO `file` (`id`, `name`, `description`, `size`, `parent`, `type`, `citrix_id`, `created_at`, `updated_at`, `status`) VALUES
 	(7, 'AllFiles', 'Shared files root directory', 0, 'root', 'folder', 'fob4f466-3fd1-4d95-b567-8ac02bdd1eef', 1485600094, 1485600094, 100),
-	(8, 'drag_img1.jpg', '', 7178, 'fob4f466-3fd1-4d95-b567-8ac02bdd1eef', 'jpg', 'fif44d98-d427-f689-0d3c-2ba2245767a1', 1485609057, 1485613263, 100),
+	(8, 'drag_img1.jpg', '', 7178, 'fob4f466-3fd1-4d95-b567-8ac02bdd1eef', 'jpg', 'fif44d98-d427-f689-0d3c-2ba2245767a1', 1485609057, 1486054648, 200),
 	(9, 'drag_img2.jpg', '', 13681, 'fob4f466-3fd1-4d95-b567-8ac02bdd1eef', 'jpg', 'fi47e9a7-a84a-a3ed-75d8-200d41353e84', 1485613024, 1485613118, 100),
 	(10, '126_1455808234.jpg', '', 16107, 'fob4f466-3fd1-4d95-b567-8ac02bdd1eef', 'jpg', 'fi99851b-71db-49d6-6922-73e0379bed75', 1485693241, 1485693241, 100),
-	(11, 'drag_img1.jpg', '', 7178, 'fo1ec085-e06f-4680-90ed-ca4da2f41fa7', 'jpg', 'fi99851b-71db-49d6-6922-73e0379bed75', 1485800345, 1486048422, 200),
+	(11, 'drag_img1.jpg', '', 7178, 'fo1ec085-e06f-4680-90ed-ca4da2f41fa7', 'jpg', 'fi99851b-71db-49d6-6922-73e0379bed75', 1485800345, 1486051980, 200),
 	(12, 'drag_img4.jpg', '', 12488, 'fob4f466-3fd1-4d95-b567-8ac02bdd1eef', 'jpg', 'fi054e77-180b-3734-560f-813097f3d51e', 1485950740, 1485950740, 100),
-	(13, 'drag_img7.jpg', '', 13791, 'fo1ec085-e06f-4680-90ed-ca4da2f41fa7', 'jpg', 'fi8269b1-a8ff-328e-ade9-dc8abfb24bc2', 1485965309, 1486048843, 200),
-	(14, 'drag_img3.jpg', '', 10906, 'fo1ec085-e06f-4680-90ed-ca4da2f41fa7', 'jpg', 'fi2fa773-d695-2970-df69-da0db6a742d1', 1485965364, 1486048972, 200),
-	(15, '126_1455808234.jpg', '', 16107, 'fo1ec085-e06f-4680-90ed-ca4da2f41fa7', 'jpg', 'fi68ffeb-c9e5-fd74-dd1e-e5e25b6e4ced', 1485965377, 1486048029, 200);
+	(13, 'drag_img7.jpg', '', 13791, 'fo1ec085-e06f-4680-90ed-ca4da2f41fa7', 'jpg', 'fi8269b1-a8ff-328e-ade9-dc8abfb24bc2', 1485965309, 1486052099, 200),
+	(14, 'drag_img3.jpg', '', 10906, 'fo1ec085-e06f-4680-90ed-ca4da2f41fa7', 'jpg', 'fi2fa773-d695-2970-df69-da0db6a742d1', 1485965364, 1486048972, 100),
+	(15, '126_1455808234.jpg', '', 16107, 'fo1ec085-e06f-4680-90ed-ca4da2f41fa7', 'jpg', 'fi68ffeb-c9e5-fd74-dd1e-e5e25b6e4ced', 1485965377, 1486048029, 100);
 /*!40000 ALTER TABLE `file` ENABLE KEYS */;
 
 -- Дамп структуры для таблица protus.history
@@ -154,22 +154,27 @@ CREATE TABLE IF NOT EXISTS `history` (
   KEY `parent` (`parent`),
   KEY `type` (`type`),
   KEY `company_id` (`company_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы protus.history: ~24 rows (приблизительно)
+-- Дамп данных таблицы protus.history: ~16 rows (приблизительно)
 /*!40000 ALTER TABLE `history` DISABLE KEYS */;
 INSERT INTO `history` (`id`, `name`, `parent`, `type`, `created_at`, `company_id`) VALUES
-	(27, 'drag_img1.jpg', 11, 'file', 1486047633, NULL),
-	(28, 'drag_img7.jpg', 13, 'file', 1486047753, NULL),
-	(29, 'Test_App', 2, 'investigation', 1486047789, NULL),
-	(30, 'Test_Upd', 19, 'company', 1486047805, NULL),
-	(31, '126_1455808234.jpg', 15, 'file', 1486048029, NULL),
-	(32, 'drag_img1.jpg', 11, 'file', 1486048102, NULL),
-	(33, 'drag_img7.jpg', 13, 'file', 1486048319, NULL),
-	(34, 'drag_img3.jpg', 14, 'file', 1486048364, NULL),
-	(35, 'drag_img1.jpg', 11, 'file', 1486048422, NULL),
-	(36, 'drag_img7.jpg', 13, 'file', 1486048843, NULL),
-	(37, 'drag_img3.jpg', 14, 'file', 1486048972, NULL);
+	(27, 'drag_img1.jpg', 11, 'file', 1486047633, 1),
+	(28, 'drag_img13.jpg', 13, 'file', 1486047753, NULL),
+	(29, 'Test_App', 2, 'investigation', 1486047789, 1),
+	(30, 'Test_Upd', 19, 'company', 1486047805, 1),
+	(31, '126_1455808234.jpg', 15, 'file', 1486048029, 1),
+	(32, 'drag_img1.jpg', 11, 'file', 1486048102, 1),
+	(33, 'drag_img7.jpg', 13, 'file', 1486048319, 1),
+	(34, 'drag_img3.jpg', 14, 'file', 1486048364, 1),
+	(35, 'drag_img1.jpg', 11, 'file', 1486048422, 1),
+	(36, 'drag_img7.jpg', 13, 'file', 1486048843, 1),
+	(37, 'drag_img3.jpg', 14, 'file', 1486048972, 1),
+	(38, 'drag_img1.jpg', 11, 'file', 1486051980, 1),
+	(39, 'drag_img7.jpg', 13, 'file', 1486052099, 19),
+	(40, 'Test_App', 2, 'investigation', 1486054588, 19),
+	(41, 'Test_Upd', 19, 'company', 1486054598, 19),
+	(42, 'drag_img1.jpg', 8, 'file', 1486054648, NULL);
 /*!40000 ALTER TABLE `history` ENABLE KEYS */;
 
 -- Дамп структуры для таблица protus.investigation
@@ -196,7 +201,7 @@ CREATE TABLE IF NOT EXISTS `investigation` (
 -- Дамп данных таблицы protus.investigation: ~1 rows (приблизительно)
 /*!40000 ALTER TABLE `investigation` DISABLE KEYS */;
 INSERT INTO `investigation` (`id`, `company_id`, `start_date`, `end_date`, `name`, `description`, `contact_person`, `phone`, `email`, `status`, `created_at`, `updated_at`, `citrix_id`) VALUES
-	(2, 19, '0000-00-00', '0000-00-00', 'Test_App', 'Test Applicant', 'rdskflgh sdl;gfk', '4657687', 'kdsjfh@dfjdhf.hj', 100, 1485796515, 1486047792, 'fo1ec085-e06f-4680-90ed-ca4da2f41fa7');
+	(2, 19, '0000-00-00', '0000-00-00', 'Test_App', 'Test Applicant', 'rdskflgh sdl;gfk', '4657687', 'kdsjfh@dfjdhf.hj', 200, 1485796515, 1486054590, 'fo1ec085-e06f-4680-90ed-ca4da2f41fa7');
 /*!40000 ALTER TABLE `investigation` ENABLE KEYS */;
 
 -- Дамп структуры для таблица protus.key_storage
@@ -274,6 +279,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `status` smallint(6) unsigned NOT NULL DEFAULT '100',
   `created_at` int(11) unsigned NOT NULL,
   `updated_at` int(11) unsigned NOT NULL,
+  `action_at` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `username` (`username`),
@@ -282,9 +288,9 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 -- Дамп данных таблицы protus.user: ~2 rows (приблизительно)
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `phone_number`, `email`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `status`, `created_at`, `updated_at`) VALUES
-	(2, NULL, NULL, NULL, 'email@email.com', 'admin', 's8fG050TnphotWkYFWB5VA_vr-6DJDEg', '$2y$13$9WhOdxpxqma7h/j1G/ZxJuS4mDe/OiFcokSaK8wx7kRCGDTI61wr.', NULL, 100, 1485692238, 1485692238),
-	(4, 'User', 'Test', '34543545', 'user@usr.us', 'user', 'AfUiJsf4AfsUHXMNSYfMpD2ddB-CGlZu', '$2y$13$jg9vW509INme6S60DbuUIOOTcX5weJneEJJbAAbz4DcIbElJrAxAy', NULL, 100, 1485784036, 1485973113);
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `phone_number`, `email`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `status`, `created_at`, `updated_at`, `action_at`) VALUES
+	(2, NULL, NULL, NULL, 'email@email.com', 'admin', 's8fG050TnphotWkYFWB5VA_vr-6DJDEg', '$2y$13$9WhOdxpxqma7h/j1G/ZxJuS4mDe/OiFcokSaK8wx7kRCGDTI61wr.', NULL, 100, 1485692238, 1485692238, 1486056071),
+	(4, 'User', 'Test', '34543545', 'user@usr.us', 'user', 'AfUiJsf4AfsUHXMNSYfMpD2ddB-CGlZu', '$2y$13$jg9vW509INme6S60DbuUIOOTcX5weJneEJJbAAbz4DcIbElJrAxAy', NULL, 100, 1485784036, 1485973113, 0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 -- Дамп структуры для таблица protus.user_company
