@@ -98,6 +98,9 @@ final class UserService extends Component
             $isInsert = true;
             $user->generateAuthKey();
             $user->setPassword($form->password);
+
+        } elseif (!empty($form->password{0})) {
+            $user->setPassword($form->password);
         }
 
         $user->setAttributes($form->getAttributes([
