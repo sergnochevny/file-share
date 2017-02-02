@@ -87,11 +87,9 @@ class Investigation extends UndeletableActiveRecord
     public function parseDates($attribute, $params)
     {
         if (!$this->hasErrors() && !empty($this->$attribute)) {
-            try {
-                $date = \DateTime::createFromFormat('m.d.Y', $this->$attribute);
+            $date = \DateTime::createFromFormat('m.d.Y', $this->$attribute);
+            if ($date) {
                 $this->$attribute = $date->format('Y-m-d');
-            } catch (\Exception $e) {
-                $this->addError($attribute, "Date not valid");
             }
         }
     }
