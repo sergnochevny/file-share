@@ -95,7 +95,6 @@ class FileController extends Controller
         }
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
-        Url::remember();
         $renderParams = [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
