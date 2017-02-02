@@ -6,10 +6,9 @@ namespace backend\behaviors;
 
 use backend\models\Company;
 use backend\models\User;
+use common\models\UndeletableActiveRecord;
 use yii\base\Behavior;
 use yii\base\ErrorException;
-use yii\base\Model;
-use yii\db\BaseActiveRecord;
 
 final class NotifyBehavior extends Behavior
 {
@@ -27,6 +26,9 @@ final class NotifyBehavior extends Behavior
 
     /** @var string */
     public $updateTemplate;
+
+    /** @var string */
+    public $archiveTemplate;
 
     /** @var string */
     public $deleteTemplate;
@@ -59,10 +61,11 @@ final class NotifyBehavior extends Behavior
     public function events()
     {
         return [
-            BaseActiveRecord::EVENT_AFTER_INSERT => 'afterInsert',
-            BaseActiveRecord::EVENT_AFTER_UPDATE => 'afterUpdate',
-            BaseActiveRecord::EVENT_AFTER_DELETE => 'afterDelete',
-            Model::EVENT_AFTER_VALIDATE => 'afterValidate',
+            UndeletableActiveRecord::EVENT_AFTER_INSERT => 'afterInsert',
+            UndeletableActiveRecord::EVENT_AFTER_UPDATE => 'afterUpdate',
+            UndeletableActiveRecord::EVENT_AFTER_ARCHIVE => 'afterArchive',
+            UndeletableActiveRecord::EVENT_AFTER_DELETE => 'afterDelete',
+            UndeletableActiveRecord::EVENT_AFTER_VALIDATE => 'afterValidate',
         ];
     }
 
@@ -77,8 +80,8 @@ final class NotifyBehavior extends Behavior
             throw new ErrorException('Current user (identity) NULL');
         }
 
-        if (!isset($this->createTemplate, $this->updateTemplate, $this->deleteTemplate)) {
-            throw new ErrorException('Need set createTemplate, updateTemplate, deleteTemplate for mails');
+        if (!isset($this->createTemplate, $this->updateTemplate, $this->archiveTemplate, $this->deleteTemplate)) {
+            throw new ErrorException('Need set createTemplate, updateTemplate, archiveTemplate, deleteTemplate for mails');
         }
 
         $this->sendFrom = isset($this->sendFrom) ? $this->sendFrom : 'noreply@example.com';
@@ -102,7 +105,15 @@ final class NotifyBehavior extends Behavior
     }
 
     /**
-     * @hint delete aka "move to history"
+     *
+     */
+    public function afterArchive()
+    {
+        $this->sendMessagesWithTemplate($this->archiveTemplate);
+    }
+
+    /**
+     *
      */
     public function afterDelete()
     {

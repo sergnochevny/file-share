@@ -5,7 +5,6 @@ namespace backend\models;
 
 
 use backend\behaviors\HistoryBehavior;
-use backend\behaviors\NotifyBehavior;
 use common\models\query\UndeletableActiveQuery;
 
 class User extends \common\models\User
@@ -25,15 +24,6 @@ class User extends \common\models\User
             },
             'attribute' => 'username',
             'type' => 'user',
-        ];
-        $behaviors['notify'] = [
-            'class' => NotifyBehavior::class,
-            'companyId' => function(User $model) {
-                return $model->company->id;
-            },
-            'createTemplate' => 'create',
-            'updateTemplate' => 'update',
-            'deleteTemplate' => 'delete',
         ];
 
         return $behaviors;

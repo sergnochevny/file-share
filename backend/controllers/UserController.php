@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\search\UserSearch;
+use backend\models\services\UserService;
 use backend\models\User;
 use common\helpers\Url;
 use Yii;
@@ -84,8 +85,10 @@ class UserController extends Controller
     public function actionArchive($id)
     {
         $model = $this->findModel($id);
+        /** @var UserService $service */
+        $service = Yii::createObject(UserService::class, [$model]);
         if (Yii::$app->user->can('admin')) {
-            $model->archive();
+            $service->archive();
         }
         return $this->actionIndex();
     }
