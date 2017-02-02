@@ -36,13 +36,14 @@ class WizardController extends Controller
         if (null === $company) {
             throw new UserException('The company does not exists');
         }
+        $isUpdate = $company->id > 0 ? true : false;
 
         if ($request->isPost && $company->load($request->post())) {
             if ($company->save()) {
-                $this->setFlashMessage('success', 'company');
+                $this->setFlashMessage('success', 'company', $isUpdate);
 
             } else {
-                $this->setFlashMessage('error', 'company');
+                $this->setFlashMessage('error', 'company', $isUpdate);
             }
         }
 
@@ -50,7 +51,7 @@ class WizardController extends Controller
             'isCompany' => true,
             'companyForm' => $company,
             'selected' => $company->id,
-            'isUpdate' => $company->id > 0 ? true : false,
+            'isUpdate' => $isUpdate,
         ]);
     }
 
@@ -106,10 +107,10 @@ class WizardController extends Controller
                 $userForm->password = $userForm->password_repeat = null;
                 $options['isUpdate'] = true;
                 $options['selectedUser'] = $user->id;
-                $this->setFlashMessage('success', 'user');
+                $this->setFlashMessage('success', 'user', $options['isUpdate']);
 
             } else {
-                $this->setFlashMessage('error', 'user');
+                $this->setFlashMessage('error', 'user', $options['isUpdate']);
             }
         }
 
@@ -131,6 +132,7 @@ class WizardController extends Controller
         if (null === $investigation) {
             throw new UserException('The investigation does not exits');
         }
+        $isUpdate = $investigation->id > 0 ? true : false;
 
         if (!Yii::$app->user->can('admin')) {
             $investigation->company_id = Yii::$app->user->identity->company->id;
@@ -138,11 +140,11 @@ class WizardController extends Controller
 
         if ($request->isPost && $investigation->load($request->post())) {
             if ($investigation->save()) {
-                $this->setFlashMessage('success', 'applicant');
+                $this->setFlashMessage('success', 'applicant', $isUpdate);
                 return $this->redirect(['/file', 'id' => $investigation->id]);
 
             } else {
-                $this->setFlashMessage('error', 'applicant');
+                $this->setFlashMessage('error', 'applicant', $isUpdate);
             }
         }
 
@@ -191,14 +193,16 @@ class WizardController extends Controller
     /**
      * @param $type
      * @param $entity
+     * @param $isUpdate
      * @param string|null $message
      */
-    private function setFlashMessage($type, $entity, $message = null)
+    private function setFlashMessage($type, $entity, $isUpdate = false, $message = null)
     {
+        $action = $isUpdate ? 'updated' : 'created';
         if (null === $message) {
             $message = ($type == 'success')
-                ? "The $entity was created successfully"
-                : "The $entity was not created";
+                ? "The $entity was $action successfully"
+                : "The $entity was not $action";
         }
 
         Yii::$app->getSession()->setFlash($type, $message);
