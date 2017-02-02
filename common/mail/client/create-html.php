@@ -1,5 +1,5 @@
 <?php
-/** @var $model \backend\models\Company|\backend\models\User|\backend\models\Investigation */
+/** @var $model \backend\models\Company|\backend\models\services\UserService|\backend\models\Investigation */
 /** @var $identity \backend\models\User */
 
 use yii\helpers\Html;
@@ -7,10 +7,10 @@ use yii\helpers\Html;
 ?>
 
 
-<?php if ($model instanceof \backend\models\User): ?>
+<?php if ($model instanceof \backend\models\services\UserService): ?>
     <p>
-        The user <b><?= Html::encode($model->username) ?></b> was
-        created at <b><?= Yii::$app->formatter->asDatetime($model->created_at) ?></b>
+        The user <b><?= Html::encode($model->getUser()->username) ?></b> was
+        created at <b><?= Yii::$app->formatter->asDatetime($model->getUser()->created_at) ?></b>
         by <b><?= Html::encode($identity->username) ?></b>
     </p>
 

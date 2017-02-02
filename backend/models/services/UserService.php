@@ -55,8 +55,8 @@ final class UserService extends Component
         return [
             [
                 'class' => NotifyBehavior::class,
-                'companyId' => function(User $model) {
-                    return $model->company->id;
+                'companyId' => function(UserService $model) {
+                    return $model->getUser()->company->id;
                 },
                 'createTemplate' => 'create',
                 'updateTemplate' => 'update',
@@ -92,6 +92,7 @@ final class UserService extends Component
         }
 
         $user = $this->user;
+        $form->setUser($user);
         $isInsert = false;
         if ($user->isNewRecord) {
             $isInsert = true;
