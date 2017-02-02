@@ -126,7 +126,7 @@ class HistoryBehavior extends Behavior
                 'name' => $model->{$this->attribute},
                 'type' => $this->type,
                 'parent' => $this->parent,
-                'company' => $this->company
+                'company_id' => $this->company
             ]
         ) && $history->save())){
             if ($history->hasErrors()){
