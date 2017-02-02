@@ -2,12 +2,11 @@
 namespace backend\controllers;
 
 
-use backend\behaviors\RememberUrlBehavior;
-use backend\models\forms\PasswordResetRequestForm;
-use backend\models\User;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use backend\behaviors\RememberUrlBehavior;
+use backend\models\User;
 
 /**
  * Profile controller

@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'format' => 'html',
                             'label' => '',
                             'value' => function ($model, $key, $index, $column) {
-                                return '<span class="label label-success" >' . ucfirst($model->{$column->attribute}) .'</span>';
+                                return '<span class="label label-success">' . ucfirst($model->{$column->attribute}) .'</span>';
                             },
                             'contentOptions' => [
                                 'width' => 80

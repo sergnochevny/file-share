@@ -2,12 +2,13 @@
 
 namespace backend\controllers;
 
-use backend\models\search\HistorySearch;
-use common\models\History;
 use Yii;
-use common\helpers\Url;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use common\models\History;
+use backend\behaviors\RememberUrlBehavior;
+use backend\models\search\HistorySearch;
 
 /**
  * HistoryController implements the CRUD actions for File model.

@@ -2,15 +2,14 @@
 
 namespace backend\controllers;
 
-use backend\behaviors\RememberUrlBehavior;
-use backend\models\Company;
-use backend\models\Investigation;
-use backend\models\search\InvestigationSearch;
-use common\helpers\Url;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use backend\behaviors\RememberUrlBehavior;
+use backend\models\Company;
+use backend\models\Investigation;
+use backend\models\search\InvestigationSearch;
 
 /**
  * InvestigationController implements the CRUD actions for Investigation model.
@@ -63,7 +62,6 @@ class InvestigationController extends Controller
     public function actionIndex($parent = null)
     {
         $renderParams = static::prepareRenderInvestigations($parent);
-        Url::remember();
         return $this->render('index', $renderParams);
     }
 

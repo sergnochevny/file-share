@@ -1,8 +1,6 @@
 <?php
 
-
 namespace backend\controllers;
-
 
 use backend\models\Company;
 use backend\models\forms\UserForm;
