@@ -40,7 +40,12 @@ class WizardController extends Controller
         }
 
         if ($request->isPost && $company->load($request->post())) {
-            $company->save();
+            if ($company->save()) {
+                $this->setFlashMessage('success', 'company');
+
+            } else {
+                $this->setFlashMessage('error', 'company');
+            }
         }
 
         return $this->smartRender('index', [
@@ -173,6 +178,22 @@ class WizardController extends Controller
     private function smartRender($view, array $viewData)
     {
         return Yii::$app->getRequest()->isPjax ? $this->renderAjax($view, $viewData) : $this->render($view, $viewData);
+    }
+
+    /**
+     * @param $type
+     * @param $entity
+     * @param string|null $message
+     */
+    private function setFlashMessage($type, $entity, $message = null)
+    {
+        if (null === $message) {
+            $message = ($type == 'success')
+                ? "The $entity was created successfully"
+                : "The $entity was not created";
+        }
+
+        Yii::$app->getSession()->setFlash($type, $message);
     }
 
 }
