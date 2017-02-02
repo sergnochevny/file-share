@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\behaviors\RememberUrlBehavior;
 use backend\models\Company;
 use backend\models\Investigation;
 use backend\models\search\InvestigationSearch;
@@ -29,6 +30,10 @@ class InvestigationController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'remember' => [
+                'class' => RememberUrlBehavior::className(),
+                'actions' => ['index'],
+            ],
         ];
     }
 
@@ -42,7 +47,6 @@ class InvestigationController extends Controller
         }
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
-        Url::remember(Yii::$app->request->url);
         $renderParams = [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

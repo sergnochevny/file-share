@@ -2,10 +2,12 @@
 
 namespace backend\controllers;
 
+use backend\behaviors\RememberUrlBehavior;
 use backend\models\search\HistorySearch;
 use common\models\History;
 use Yii;
 use common\helpers\Url;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -16,6 +18,41 @@ class HistoryController extends Controller
 {
 
     /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+            'remember' => [
+                'class' => RememberUrlBehavior::className(),
+                'actions' => ['index'],
+            ],
+        ];
+    }
+
+    /**
+     * Finds the User model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return History the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = History::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    /**
      * Lists all File models.
      * @return mixed
      */
@@ -23,14 +60,9 @@ class HistoryController extends Controller
     {
         $searchModel = new HistorySearch();
 
-        if (Yii::$app->user->can('admin')) {
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        } else {
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams, null, []);
-        }
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
-        Url::remember(Yii::$app->request->url);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -61,22 +93,6 @@ class HistoryController extends Controller
     {
         $this->findModel($id)->delete();
         return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the User model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return History the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = History::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
 
 }

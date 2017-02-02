@@ -12,25 +12,6 @@ class User extends \common\models\User
     use FactoryTrait;
 
     /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        $behaviors = parent::behaviors();
-        $behaviors['historyBehavior'] = [
-            'class' => HistoryBehavior::class,
-            'parent' => function(User $model){
-                return $model->id;
-            },
-            'attribute' => 'username',
-            'type' => 'user',
-        ];
-
-        return $behaviors;
-    }
-
-
-    /**
      * Finds by role and returns ActiveQuery
      *
      * @param $role
@@ -42,6 +23,27 @@ class User extends \common\models\User
         $userTbl = static::tableName();
 
         return static::find()->andWhere(["$userTbl.id" => $ids]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors['historyBehavior'] = [
+            'class' => HistoryBehavior::class,
+            'parent' => function (User $model) {
+                return $model->id;
+            },
+            'company' => function (User $model) {
+                return $model->company->id;
+            },
+            'attribute' => 'username',
+            'type' => 'user',
+        ];
+
+        return $behaviors;
     }
 
     /**
