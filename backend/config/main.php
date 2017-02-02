@@ -61,6 +61,8 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '@<username:[\w-]+>/' => '/profile/index',
+                'wizard/applicant' => '/wizard/investigation',
+                'applicant' => '/investigation'
             ]
         ],
         'formatter' => [

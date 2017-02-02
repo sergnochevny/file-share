@@ -31,7 +31,7 @@ use yii\helpers\Url;
         </div>
     </div>
 
-    <div class="col-lg-6 col-lg-offset-3">
+    <div class="col-lg-6 col-lg-offset-3" id="company-list-container">
         <h2 align="center">
             <span class="d-ib">Select Company</span>
         </h2>
@@ -42,7 +42,7 @@ use yii\helpers\Url;
     </div>
 
 
-    <div class="col-lg-6 col-lg-offset-3">
+    <div class="col-lg-6 col-lg-offset-3" id="user-list-container">
         <h2 align="center">
             <span class="d-ib">Select Users</span>
         </h2>
@@ -53,7 +53,7 @@ use yii\helpers\Url;
                 'data' => $isUpdate ? $userForm->getUser()->getColleaguesList() : [],
                 'pluginOptions'=>[
                     'depends'=>['company-list', 'user-role'],
-                    'placeholder' => 'Select...',
+                    'placeholder' => ' - - -',
                     'url' => Url::to(['company-users'])
                 ],
                 'options' => [

@@ -38,7 +38,12 @@ class WizardController extends Controller
         }
 
         if ($request->isPost && $company->load($request->post())) {
-            $company->save();
+            if ($company->save()) {
+                $this->setFlashMessage('success', 'company');
+
+            } else {
+                $this->setFlashMessage('error', 'company');
+            }
         }
 
         return $this->smartRender('index', [
@@ -101,9 +106,10 @@ class WizardController extends Controller
                 $userForm->password = $userForm->password_repeat = null;
                 $options['isUpdate'] = true;
                 $options['selectedUser'] = $user->id;
+                $this->setFlashMessage('success', 'user');
 
             } else {
-                Yii::$app->getSession()->setFlash('error', 'The user was not created');
+                $this->setFlashMessage('error', 'user');
             }
         }
 
@@ -126,9 +132,18 @@ class WizardController extends Controller
             throw new UserException('The investigation does not exits');
         }
 
-        if (!Yii::$app->user->can('admin')) $investigation->company_id = Yii::$app->user->identity->company->id;
-        if ($request->isPost && $investigation->load($request->post()) && $investigation->save()) {
-            return $this->redirect(['/file', 'id' => $investigation->id]);
+        if (!Yii::$app->user->can('admin')) {
+            $investigation->company_id = Yii::$app->user->identity->company->id;
+        }
+
+        if ($request->isPost && $investigation->load($request->post())) {
+            if ($investigation->save()) {
+                $this->setFlashMessage('success', 'applicant');
+                return $this->redirect(['/file', 'id' => $investigation->id]);
+
+            } else {
+                $this->setFlashMessage('error', 'applicant');
+            }
         }
 
         return $this->smartRender('index', [
@@ -171,6 +186,22 @@ class WizardController extends Controller
     private function smartRender($view, array $viewData)
     {
         return Yii::$app->getRequest()->isPjax ? $this->renderAjax($view, $viewData) : $this->render($view, $viewData);
+    }
+
+    /**
+     * @param $type
+     * @param $entity
+     * @param string|null $message
+     */
+    private function setFlashMessage($type, $entity, $message = null)
+    {
+        if (null === $message) {
+            $message = ($type == 'success')
+                ? "The $entity was created successfully"
+                : "The $entity was not created";
+        }
+
+        Yii::$app->getSession()->setFlash($type, $message);
     }
 
 }

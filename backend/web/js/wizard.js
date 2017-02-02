@@ -36,5 +36,19 @@
     //update user
     updateFormOnListChange(userList, userForm);
 
+    //hide some selects when chosen role is not client
+    $(document).on('change', '#user-role', function (ev) {
+        ev.preventDefault();
+
+        if ($(this).val() == 'client') {
+            $('#company-list-container').show();
+            $('#user-list-container').show();
+
+        } else {
+            $('#company-list-container').hide();
+            $('#user-list-container').hide();
+        }
+    })
+
 
 })(jQuery);
