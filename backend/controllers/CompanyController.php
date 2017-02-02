@@ -28,6 +28,10 @@ class CompanyController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'remember' => [
+                'class' => RememberUrlBehavior::className(),
+                'actions' => ['index'],
+            ],
         ];
     }
 

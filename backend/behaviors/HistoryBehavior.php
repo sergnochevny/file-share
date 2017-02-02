@@ -23,6 +23,24 @@ class HistoryBehavior extends Behavior
 
     private $parent = null;
 
+    private $company = null;
+
+    /**
+     * @return null
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     * @param null $company
+     */
+    public function setCompany($company)
+    {
+        $this->company = $company;
+    }
+
     /**
      * @return mixed
      */
@@ -97,13 +115,18 @@ class HistoryBehavior extends Behavior
             $this->parent = call_user_func($this->parent, $this->owner);
         }
 
+        if ($this->company instanceof \Closure) {
+            $this->company = call_user_func($this->company, $this->owner);
+        }
+
         $model = $this->owner;
         $history = new History();
         if(!($history->load(
             [
                 'name' => $model->{$this->attribute},
                 'type' => $this->type,
-                'parent' => $this->parent
+                'parent' => $this->parent,
+                'company' => $this->company
             ]
         ) && $history->save())){
             if ($history->hasErrors()){

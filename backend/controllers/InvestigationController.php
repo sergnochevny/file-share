@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\behaviors\RememberUrlBehavior;
 use backend\models\Company;
 use backend\models\Investigation;
 use backend\models\search\InvestigationSearch;
@@ -28,6 +29,10 @@ class InvestigationController extends Controller
                 'actions' => [
                     'delete' => ['POST'],
                 ],
+            ],
+            'remember' => [
+                'class' => RememberUrlBehavior::className(),
+                'actions' => ['index'],
             ],
         ];
     }

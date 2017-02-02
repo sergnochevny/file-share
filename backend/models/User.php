@@ -5,40 +5,11 @@ namespace backend\models;
 
 
 use backend\behaviors\HistoryBehavior;
-use backend\behaviors\NotifyBehavior;
 use common\models\query\UndeletableActiveQuery;
 
 class User extends \common\models\User
 {
     use FactoryTrait;
-
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        $behaviors = parent::behaviors();
-        $behaviors['historyBehavior'] = [
-            'class' => HistoryBehavior::class,
-            'parent' => function(User $model){
-                return $model->id;
-            },
-            'attribute' => 'username',
-            'type' => 'user',
-        ];
-        $behaviors['notify'] = [
-            'class' => NotifyBehavior::class,
-            'companyId' => function(User $model) {
-                return $model->company->id;
-            },
-            'createTemplate' => 'create',
-            'updateTemplate' => 'update',
-            'deleteTemplate' => 'delete',
-        ];
-
-        return $behaviors;
-    }
-
 
     /**
      * Finds by role and returns ActiveQuery
@@ -52,6 +23,27 @@ class User extends \common\models\User
         $userTbl = static::tableName();
 
         return static::find()->andWhere(["$userTbl.id" => $ids]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors['historyBehavior'] = [
+            'class' => HistoryBehavior::class,
+            'parent' => function (User $model) {
+                return $model->id;
+            },
+            'company' => function (User $model) {
+                return $model->company->id;
+            },
+            'attribute' => 'username',
+            'type' => 'user',
+        ];
+
+        return $behaviors;
     }
 
     /**

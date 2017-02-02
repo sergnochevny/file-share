@@ -36,15 +36,21 @@ class HistorySearch extends History
      * @param array $order
      * @return ActiveDataProvider
      */
-    public function search(array $params, array $relations = null, array $where = null, array $order = null)
+    public function search(array $params)
     {
         $query = History::find();
-        $relations = [
-            'rel' => $relations,
-            'cond'
-        ];
-        $this->assignOptions($query, $relations, $where, $order);
+
         // add conditions that should always apply here
+        if (!Yii::$app->user->can('admin')) {
+            $query->andWhere(
+                [
+                    'or' => [
+                        'company_id' => Yii::$app->user->identity->company->id,
+                        'company_id' => null,
+                    ]
+                ]
+            );
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

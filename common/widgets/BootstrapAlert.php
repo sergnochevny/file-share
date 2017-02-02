@@ -2,10 +2,9 @@
 
 namespace common\widgets;
 
-use yii\bootstrap\Alert;
 use yii\helpers\Html;
 
-class BootstrapAlert extends Alert
+class BootstrapAlert extends \yii\bootstrap\Alert
 {
 
     /**

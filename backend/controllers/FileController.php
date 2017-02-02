@@ -48,6 +48,10 @@ class FileController extends Controller
                     'upload' => ['POST'],
                 ],
             ],
+            'remember' => [
+                'class' => RememberUrlBehavior::className(),
+                'actions' => ['index'],
+            ],
         ];
     }
 
@@ -101,18 +105,6 @@ class FileController extends Controller
     }
 
     /**
-     * Displays a single File model.
-     * @param string $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
      * Creates a new File model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @param null $parent
@@ -123,9 +115,13 @@ class FileController extends Controller
         if (Yii::$app->user->can('admin') || (!Yii::$app->user->can('admin') &&
                 Yii::$app->user->can('employee', ['investigation' => Investigation::findOne(['citrix_id' => $parent])]))
         ) {
-            $model = new FileUpload(['parent' => $parent]);
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                Yii::$app->session->setFlash('success', 'File added successfully');
+            try {
+                $model = new FileUpload(['parent' => $parent]);
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                    Yii::$app->session->setFlash('success', 'File added successfully');
+                }
+            } catch (\Exception $e) {
+                Yii::$app->session->setFlash('error', $e->getMessage());
             }
         }
         if (!empty($parent)) return $this->actionIndex(Investigation::findOne(['citrix_id' => $parent]));
@@ -143,11 +139,15 @@ class FileController extends Controller
         $model = $this->findModel($id);
         $model->detachBehavior('uploadBehavior');
         $investigation = $model->investigations;
-        if (Yii::$app->user->can('admin') || (!Yii::$app->user->can('admin') && Yii::$app->user->can('employee', ['investigation' => $investigation]))){
-            $model->archive();
-            Yii::$app->session->setFlash('success', 'Archived successfully');
-        }else{
-            Yii::$app->session->setFlash('error', 'Permission denied');
+        try {
+            if (Yii::$app->user->can('admin') || (!Yii::$app->user->can('admin') && Yii::$app->user->can('employee', ['investigation' => $investigation]))) {
+                $model->archive();
+                Yii::$app->session->setFlash('success', 'Archived successfully');
+            } else {
+                Yii::$app->session->setFlash('error', 'Permission denied');
+            }
+        } catch (\Exception $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
         }
         if (!empty($investigation)) return $this->actionIndex($investigation->id);
         return $this->actionIndex();

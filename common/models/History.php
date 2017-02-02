@@ -12,6 +12,7 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $id
  * @property string $name
  * @property integer $parent
+ * @property integer $company_id
  * @property string $type
  * @property integer $created_at
  */
@@ -31,7 +32,7 @@ class History extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['parent', 'created_at'], 'integer'],
+            [['parent', 'created_at', 'company_id'], 'integer'],
             [['type'], 'required'],
             [['name'], 'string', 'max' => 255],
             [['type'], 'string', 'max' => 50],

@@ -6,6 +6,11 @@ use backend\behaviors\HistoryBehavior;
 use backend\behaviors\UploadBehavior;
 use common\models\UserCompany;
 
+/**
+ * @property Investigation $investigations
+ * @property User[] $users
+ */
+
 class File extends \common\models\File
 {
 
@@ -78,6 +83,12 @@ class File extends \common\models\File
             'parent' => function(File $model){
                 return $model->id;
             },
+            'company' => function(File $model){
+                $company_id = null;
+                $investigation = $model->investigations;
+                if(!empty($investigation)) $company_id = $investigation->company_id;
+                return $company_id;
+            },
             'attribute' => 'name',
             'type' => 'file',
 
@@ -86,7 +97,7 @@ class File extends \common\models\File
     }
 
     /**
-     * @return UndeletableActiveQuery
+     * @return User
      */
     public function getUsers()
     {
@@ -95,7 +106,7 @@ class File extends \common\models\File
     }
 
     /**
-     * @return UndeletableActiveQuery
+     * @return UserCompany
      */
     public function getUserCompanies()
     {
@@ -105,7 +116,7 @@ class File extends \common\models\File
 
 
     /**
-     * @return UndeletableActiveQuery
+     * @return Investigation
      */
     public function getInvestigations()
     {
@@ -113,7 +124,7 @@ class File extends \common\models\File
     }
 
     /**
-     * @return UndeletableActiveQuery
+     * @return File
      */
     public function getParents()
     {

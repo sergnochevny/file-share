@@ -46,18 +46,31 @@ final class UserForm extends Model
     public function rules()
     {
         return [
-            [['email', 'username'], 'required'],
             [['company_id'], 'required', 'when' => function($form) {
                 //only client role require company
                 return $form->role == 'client';
             }],
+
+            [['email', 'username'], 'required'],
+
             [['password', 'password_repeat'], 'required', 'on' => self::SCENARIO_CREATE],
+
+            [
+                'password_repeat', 'required', 'enableClientValidation' => false,
+                'when' => function(UserForm $model, $attribute) {
+                    return ($model->scenario === UserForm::SCENARIO_DEFAULT)
+                        ? !empty($model->password{0})
+                        : false;
+                },
+            ],
+
+            [['password', 'password_repeat'], 'string', 'min' => 8],
+            ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match"],
+
+
             [['company_id'], 'integer'],
             [['role', 'first_name', 'last_name', 'phone_number'], 'string'],
             [['email'], 'email'],
-
-            [['password', 'password_repeat'], 'string', 'min' => 8, 'on' => self::SCENARIO_CREATE],
-            ['password_repeat', 'compare', 'compareAttribute'=>'password', 'message' => "Passwords don't match", 'on' => self::SCENARIO_CREATE],
 
             [
                 ['username'],
