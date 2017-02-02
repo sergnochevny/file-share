@@ -1,6 +1,7 @@
 <?php
 
 use backend\models\Investigation;
+use common\widgets\Alert;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use common\helpers\Url;
@@ -8,6 +9,9 @@ use yii\widgets\Pjax;
 
 Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout' => 0, 'options' => ['class' => 'panel-body panel-collapse']]);
 ?>
+<div class="alert-container">
+    <?= Alert::widget() ?>
+</div>
 <?= $this->render('/search/_search', ['model' => $searchModel]); ?>
 <?= GridView::widget([
     'dataProvider' => $dataProvider,

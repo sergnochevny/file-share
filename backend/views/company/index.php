@@ -1,5 +1,6 @@
 <?php
 
+use common\widgets\Alert;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use common\helpers\Url;
@@ -29,6 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= Html::a(Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-plus icon-lg icon-fw']), ['class' => 'btn-label']) . ' Create a new company', Url::to(['/wizard/company']), ['class' => 'btn btn-sm btn-labeled arrow-success']) ?>
             </div>
             <?php Pjax::begin(['id' => 'company_index', 'enablePushState' => false, 'timeout' => 0, 'options' => ['class' => 'panel-body panel-collapse']]); ?>
+                <div class="alert-container">
+                    <?= Alert::widget() ?>
+                </div>
                 <?= $this->render('/search/_search', ['model' => $searchModel]); ?>
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,

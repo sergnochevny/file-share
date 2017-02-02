@@ -42,14 +42,9 @@ if (!empty($investigation)) {
 <?= !empty($investigation) ? $this->render('partials/_investigation', ['model' => $investigation]) : '' ?>
 
 <?php Pjax::begin(['id' => 'file_index', 'enablePushState' => false, 'timeout' => 0]); ?>
-
-<?php if (Yii::$app->request->isAjax && Yii::$app->session->hasFlash('alert')): ?>
-    <?= Alert::widget([
-        'body' => ArrayHelper::getValue(Yii::$app->session->getFlash('alert'), 'body'),
-        'options' => ArrayHelper::getValue(Yii::$app->session->getFlash('alert'), 'options'),
-    ]) ?>
-<?php endif ?>
-
+<div class="alert-container">
+    <?= Alert::widget() ?>
+</div>
 <div class="row gutter-xs">
     <div class="col-xs-12">
         <div class="panel">

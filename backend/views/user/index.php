@@ -1,5 +1,6 @@
 <?php
 
+use common\widgets\Alert;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use common\helpers\Url;
@@ -33,7 +34,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="form-inline no-footer">
 
                 <?php Pjax::begin(['id' => 'user_index', 'enablePushState' => false, 'timeout' => 0, 'options' => ['class' => 'panel-body panel-collapse']]); ?>
-
+                <div class="alert-container">
+                    <?= Alert::widget() ?>
+                </div>
                 <?= $this->render('/search/_search', ['model' => $searchModel]); ?>
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,

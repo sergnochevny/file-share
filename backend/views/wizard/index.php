@@ -3,6 +3,7 @@
 /* @var $this \yii\web\View */
 
 use common\helpers\Url;
+use common\widgets\Alert;
 use yii\widgets\Pjax;
 use yii\web\JqueryAsset;
 
@@ -20,6 +21,9 @@ $this->title = 'Wizard';
 ?>
 <div class="row">
     <?php Pjax::begin(['id' => 'wizard-container', 'options' => ['class' => 'col-sm-12'], 'enablePushState' => false, 'timeout' => 0]); ?>
+        <div class="alert-container">
+            <?= Alert::widget() ?>
+        </div>
         <div class="row gutter-xs">
             <div class="col-xs-12">
                 <div class="panel">

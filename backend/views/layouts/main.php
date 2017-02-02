@@ -1,6 +1,7 @@
 <?php
 
 use backend\assets\AppAsset;
+use common\widgets\Alert;
 use yii\helpers\Html;
 
 /* @var $this \yii\web\View */
@@ -25,6 +26,9 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed201
             <?= $this->render('partials/_header.php') ?>
             <div class="layout-main">
                 <?= $this->render('partials/_left.php') ?>
+                <div class="alert-container">
+                    <?= Alert::widget() ?>
+                </div>
                 <div class="layout-content">
                     <div class="layout-content-body">
                         <?= $content ?>

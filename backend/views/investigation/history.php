@@ -4,6 +4,7 @@
 /* @var $searchModel backend\models\InvestigationSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+use common\widgets\Alert;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use common\helpers\Url;
@@ -28,6 +29,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-xs-12">
         <div class="panel">
             <?php Pjax::begin(['options' => ['class' => 'panel-body panel-collapse']]); ?>
+                <div class="alert-container">
+                    <?= Alert::widget() ?>
+                </div>
                 <?= $this->render('partials/_search', ['model' => $searchModel]); ?>
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,

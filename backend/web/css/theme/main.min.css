@@ -402,18 +402,18 @@ pre {
     color: #40a070
 }
 
-.field-file #file{
+.field-file #file {
     width: 90px;
     height: 30px;
     margin-left: -15px;
     cursor: pointer;
 }
 
-.has-success.field-file{
+.has-success.field-file {
     z-index: 97;
 }
 
-.field-file{
+.field-file {
     width: 90px;
     height: 30px;
     position: absolute;
@@ -423,7 +423,25 @@ pre {
     z-index: 999;
 }
 
-.send-file-button{
+.send-file-button {
     z-index: 98;
     position: relative;
+}
+
+.alert-container{
+    position: fixed;
+    right: 15px;
+    top: 66px;
+    z-index: 999;
+}
+.alert {
+    padding: 10px 20px;
+    max-width: 340px;
+}
+.alert .close{
+    color: #FFF;
+    margin-left: 15px;
+    opacity: .85;
+    margin-top: 1px;
+    font-size: 1.4em;
 }
