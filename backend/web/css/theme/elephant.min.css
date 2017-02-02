@@ -302,12 +302,15 @@ a:focus, a:hover {
     text-decoration: underline
 }
 
-th a, .sorting a {
+th a,
+.p-a a,
+.sorting a {
     color: #a8976f;
     text-decoration: none
 }
 
 th a:focus, th a:hover,
+.p-a a:focus, .p-a a:hover,
 .sorting a:focus, .sorting a:hover {
     color: #87764E;
     text-decoration: underline
