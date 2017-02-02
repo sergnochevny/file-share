@@ -44,8 +44,19 @@ $this->params['breadcrumbs'][] = $this->title;
                             'format' => 'html',
                             'label' => 'Archived at',
                             'value' => function ($model, $key, $index, $column) {
-                                $value = '<span class="label label-warning" >' .  Yii::$app->formatter->asDate($model->{$column->attribute}) . '</span >';
+                                $value = '<span class="label label-warning" >' .  Yii::$app->formatter->asDate($model->{$column->attribute}) . '</span>';
                                 return $value;
+                            },
+                            'contentOptions' => [
+                                'width' => 80
+                            ]
+                        ],
+                        [
+                            'attribute' => 'type',
+                            'format' => 'html',
+                            'label' => 'Type',
+                            'value' => function ($model, $key, $index, $column) {
+                                return '<span class="label label-success" >' . ucfirst($model->{$column->attribute}) .'</span>';
                             },
                             'contentOptions' => [
                                 'width' => 80
