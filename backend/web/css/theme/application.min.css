@@ -796,7 +796,11 @@ html {
 
     .layout-sidebar-body {
         padding-bottom: 5px;
-        padding-top: 5px
+        padding-top: 5px;
+    }
+
+    .layout-sidebar-collapsed .layout-sidebar-body {
+        margin-top: -25px;
     }
 
     .layout-sidebar-fixed .layout-sidebar-body {
