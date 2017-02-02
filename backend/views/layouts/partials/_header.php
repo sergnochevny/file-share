@@ -57,7 +57,7 @@ use common\helpers\Url;
                     <li class="visible-xs-block">
                         <h4 class="navbar-text text-center">Hi, Admin</h4>
                     </li>
-                    <li class="hidden-xs hidden-sm">
+                    <!--li class="hidden-xs hidden-sm">
                         <?= Html::beginForm('', 'post', ['class' => 'navbar-search navbar-search-collapsed']); ?>
                             <?= Html::input('string', 'global-search', null, [
                                 'class' => 'navbar-search-input',
@@ -69,7 +69,7 @@ use common\helpers\Url;
                                 ]
                             ); ?>
                         <?= Html::endForm(); ?>
-                    </li>
+                    </li-->
                     <li class="dropdown hidden">
                         <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" style="height: 45px">
                           <span class="icon-with-child hidden-xs">

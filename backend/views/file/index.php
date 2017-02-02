@@ -136,10 +136,10 @@ if (!empty($investigation)) {
                                     'tabindex' => "0",
                                     'rowspan' => "1",
                                     'colspan' => "1",
-                                    'class' => 'hidden-sm hidden-xs',
+                                    'class' => 'hidden',
                                 ],
                                 'contentOptions' => [
-                                    'class' => 'hidden-sm hidden-xs',
+                                    'class' => 'hidden',
                                 ],
                             ],
                             [

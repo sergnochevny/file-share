@@ -3,7 +3,6 @@
 namespace backend\controllers;
 
 use backend\actions\DownloadAction;
-use backend\behaviors\RememberUrlBehavior;
 use backend\models\File;
 use backend\models\FileUpload;
 use backend\models\Investigation;
@@ -65,6 +64,8 @@ class FileController extends Controller
 
     /**
      * Lists all File models.
+     * @param null $id
+     * @param null $parent
      * @return mixed
      */
     public function actionIndex($id = null, $parent = null)
@@ -93,6 +94,7 @@ class FileController extends Controller
         }
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
+        Url::remember();
         $renderParams = [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

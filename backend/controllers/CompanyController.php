@@ -3,7 +3,6 @@
 namespace backend\controllers;
 
 
-use backend\behaviors\RememberUrlBehavior;
 use backend\models\Company;
 use backend\models\search\CompanySearch;
 use common\helpers\Url;
@@ -45,6 +44,7 @@ class CompanyController extends Controller
         $searchModel = new CompanySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
+        Url::remember();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

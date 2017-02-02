@@ -2,14 +2,13 @@
 
 namespace backend\controllers;
 
-use backend\behaviors\RememberUrlBehavior;
-use backend\models\search\UserSearch;
-use backend\models\services\UserService;
-use backend\models\User;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use backend\behaviors\RememberUrlBehavior;
+use backend\models\search\UserSearch;
+use backend\models\User;
 
 /**
  * UserController implements the CRUD actions for User model.
