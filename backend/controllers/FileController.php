@@ -73,15 +73,15 @@ class FileController extends Controller
     {
         $investigation = null;
         if (!empty($id) && empty($parent)) {
-            $investigation = Investigation::findOne($id);
+            $investigation = Investigation::findOne(['id'=>$id]);
             if (!empty($investigation)) {
                 $parent = $investigation->citrix_id;
-            }
+            } else $parent = 'no investigation';
         } else {
             $parent = File::findOne(['parent' => 'root']);
             if (!empty($parent)) {
                 $parent = $parent->citrix_id;
-            }
+            } else $parent = 'no parent';
         }
         $uploadModel = new FileUpload;
         if (!empty($id) && !empty($parent)) {

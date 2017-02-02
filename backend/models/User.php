@@ -64,4 +64,13 @@ class User extends \common\models\User
 
         return array_column($users, 'username', 'id');
     }
+
+    /**
+     * @return array
+     */
+    public function getFullName()
+    {
+
+        return $this->first_name . ' ' .$this->last_name;
+    }
 }

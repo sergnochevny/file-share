@@ -37,7 +37,7 @@ use yii\jui\DatePicker;
         <div class="col-sm-6">
             <?= $form->field($investigationForm, 'contact_person')->textInput() ?>
 
-            <?= $form->field($investigationForm, 'phone')->textInput() ?>
+            <?= $form->field($investigationForm, 'phone')->input('tel') ?>
 
             <?= $form->field($investigationForm, 'email')->textInput() ?>
 

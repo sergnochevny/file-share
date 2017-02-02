@@ -19,22 +19,28 @@ use yii\helpers\Html;
                     <div class="col-sm-6">
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <span class="pull-right"><span class="label label-success"><?= Investigation::getStatusByCode($model->status) ?></span></span>
+                                <span class="pull-right">
+                                    <span class="label label-<?= Investigation::getStatusCSSClass($model->status) ?>">
+                                        <?= Investigation::getStatusByCode($model->status)?>
+                                    </span>
+                                </span>
                                 <span class="icon icon-tag icon-lg icon-fw"></span>
                                 Status
                             </li>
                             <li class="list-group-item">
-                                <span class="pull-right"><span class="label label-success">Hercule Puaro</span></span>
+                                <span class="pull-right"><span
+                                            class="label label-success"><?= $model->contact_person; ?></span></span>
                                 <span class="icon icon-user icon-lg icon-fw"></span>
                                 Contact person
                             </li>
                             <li class="list-group-item">
-                                <span class="pull-right"><span class="label label-success">8-800-555-22-55</span></span>
+                                <span class="pull-right"><span class="label label-success"><?= $model->phone; ?></span></span>
                                 <span class="icon icon-phone icon-lg icon-fw"></span>
                                 Phone number
                             </li>
                             <li class="list-group-item">
-                                <span class="pull-right"><span class="label label-success">Puaro@detective.net</span></span>
+                                <span class="pull-right"><span
+                                            class="label label-success"><?= Yii::$app->formatter->asEmail($model->email); ?></span></span>
                                 <span class="icon icon-envelope-o icon-lg icon-fw"></span>
                                 Email
                             </li>
@@ -43,17 +49,20 @@ use yii\helpers\Html;
                     <div class="col-sm-6">
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <span class="pull-right"><span class="label label-success"><?= Yii::$app->formatter->asDate($model->start_date) ?></span></span>
+                                <span class="pull-right"><span
+                                            class="label label-success"><?= Yii::$app->formatter->asDate($model->start_date) ?></span></span>
                                 <span class="icon icon-calendar  icon-lg icon-fw"></span>
                                 Start date
                             </li>
                             <li class="list-group-item">
-                                <span class="pull-right"><span class="label label-success"><?= Yii::$app->formatter->asDate($model->end_date) ?></span></span>
+                                <span class="pull-right"><span
+                                            class="label label-success"><?= Yii::$app->formatter->asDate($model->end_date) ?></span></span>
                                 <span class="icon icon-calendar  icon-lg icon-fw"></span>
                                 End date
                             </li>
                             <li class="list-group-item">
-                                <span class="pull-right"><span class="label label-success">Thomas Mor</span></span>
+                                <span class="pull-right"><span
+                                            class="label label-success"><?= Html::encode(Yii::$app->user->identity->fullName) ?></span></span>
                                 <span class="icon icon-user-plus  icon-lg icon-fw"></span>
                                 Applicant
                             </li>

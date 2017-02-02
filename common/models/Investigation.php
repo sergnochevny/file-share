@@ -110,6 +110,20 @@ class Investigation extends UndeletableActiveRecord
     }
 
     /**
+     * @return array
+     */
+    public static function getStatusesCSSList()
+    {
+        return [
+            self::STATUS_PENDING => 'info',
+            self::STATUS_IN_PROGRESS => 'warning',
+            self::STATUS_COMPLETED => 'success',
+            self::STATUS_IN_HISTORY => 'default',
+            self::STATUS_CANCELLED => 'danger',
+            self::STATUS_DELETED => 'danger',
+        ];
+    }
+    /**
      * @param $code
      * @return string|null
      */
@@ -119,6 +133,11 @@ class Investigation extends UndeletableActiveRecord
         return isset($statuses[$code]) ? $statuses[$code] : null;
     }
 
+    public static function getStatusCSSClass($code)
+    {
+        $statuses = static::getStatusesCSSList();
+        return isset($statuses[$code]) ? $statuses[$code] : null;
+    }
     /**
      * @inheritdoc
      */
