@@ -2,7 +2,7 @@
 
 use backend\models\search\FileSearch;
 use backend\widgets\ActiveForm;
-use yii\bootstrap\Alert;
+use common\widgets\Alert;
 use yii\helpers\Html;
 use common\helpers\Url;
 use yii\grid\GridView;
