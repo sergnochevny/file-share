@@ -52,7 +52,7 @@ class UndeletableActiveRecord extends ActiveRecord
     public function archive()
     {
         $this->status = static::STATUS_IN_HISTORY;
-        if ($this->beforeArhive() && $this->save()) $this->afterArhive();
+        if ($this->beforeArchive() && $this->save()) $this->afterArchive();
     }
 
     /**
@@ -78,14 +78,14 @@ class UndeletableActiveRecord extends ActiveRecord
         return parent::updateAll(['status' => static::STATUS_DELETED], $condition, $params);
     }
 
-    public function afterArhive()
+    public function afterArchive()
     {
         $event = new ModelEvent;
         $this->trigger(self::EVENT_AFTER_ARCHIVE, $event);
         return $event->isValid;
     }
 
-    public function beforeArhive()
+    public function beforeArchive()
     {
         $event = new ModelEvent;
         $this->trigger(self::EVENT_BEFORE_ARCHIVE, $event);
