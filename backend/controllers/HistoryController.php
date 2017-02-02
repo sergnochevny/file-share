@@ -3,9 +3,11 @@
 namespace backend\controllers;
 
 use backend\models\search\HistorySearch;
+use common\models\History;
 use Yii;
 use common\helpers\Url;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 /**
  * HistoryController implements the CRUD actions for File model.
@@ -20,7 +22,13 @@ class HistoryController extends Controller
     public function actionIndex()
     {
         $searchModel = new HistorySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        if (Yii::$app->user->can('admin')) {
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        } else {
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams, null, []);
+        }
+
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
         Url::remember(Yii::$app->request->url);
 
@@ -37,9 +45,9 @@ class HistoryController extends Controller
      */
     public function actionView($id)
     {
-        Url::remember(Yii::$app->request->url);
+        $model = $this->findModel($id);
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -53,6 +61,22 @@ class HistoryController extends Controller
     {
         $this->findModel($id)->delete();
         return $this->redirect(['index']);
+    }
+
+    /**
+     * Finds the User model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return History the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = History::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 
 }

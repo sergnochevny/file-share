@@ -40,6 +40,17 @@ $this->params['breadcrumbs'][] = $this->title;
                     'columns' => [
                         'name',
                         [
+                            'attribute' => 'type',
+                            'format' => 'html',
+                            'label' => '',
+                            'value' => function ($model, $key, $index, $column) {
+                                return '<span class="label label-success" >' . ucfirst($model->{$column->attribute}) .'</span>';
+                            },
+                            'contentOptions' => [
+                                'width' => 80
+                            ]
+                        ],
+                        [
                             'attribute' => 'created_at',
                             'format' => 'html',
                             'label' => 'Archived at',
@@ -52,22 +63,11 @@ $this->params['breadcrumbs'][] = $this->title;
                             ]
                         ],
                         [
-                            'attribute' => 'type',
-                            'format' => 'html',
-                            'label' => 'Type',
-                            'value' => function ($model, $key, $index, $column) {
-                                return '<span class="label label-success" >' . ucfirst($model->{$column->attribute}) .'</span>';
-                            },
-                            'contentOptions' => [
-                                'width' => 80
-                            ]
-                        ],
-                        [
                             'class' => 'yii\grid\ActionColumn',
                             'template' => '{details}',
                             'buttons' => [
                                 'details' => function ($url, $model) {
-                                    $content = Html::a('Details', Url::to(['/hi/archive', 'id' => $model->id], true),
+                                    $content = Html::a('Details', Url::to(['/history/view', 'id' => $model->id], true),
                                         [
                                             'class' => "btn btn-success btn-xs",
                                             'title' => 'Details',
