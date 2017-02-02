@@ -44,7 +44,17 @@ $this->params['breadcrumbs'][] = $this->title;
                             'format' => 'html',
                             'label' => '',
                             'value' => function ($model, $key, $index, $column) {
-                                return '<span class="label label-success">' . ucfirst($model->{$column->attribute}) .'</span>';
+                                switch ($model->{$column->attribute}){
+                                    case 'file';
+                                        return '<span class="label label-success">' . ucfirst($model->{$column->attribute}) .'</span>';
+                                        break;
+                                    case 'company';
+                                        return '<span class="label label-warning">' . ucfirst($model->{$column->attribute}) .'</span>';
+                                        break;
+                                    case 'investigation';
+                                        return '<span class="label label-error">' . ucfirst($model->{$column->attribute}) .'</span>';
+                                        break;
+                                }
                             },
                             'contentOptions' => [
                                 'width' => 80
