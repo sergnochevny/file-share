@@ -2,17 +2,15 @@
 namespace backend\controllers;
 
 
+use backend\behaviors\RememberUrlBehavior;
+use backend\models\forms\LoginForm;
 use backend\models\forms\PasswordResetForm;
 use backend\models\forms\PasswordResetRequestForm;
 use backend\models\forms\RestorePasswordRequestForm;
-use Yii;
 use common\helpers\Url;
-use yii\base\Model;
-use yii\bootstrap\Html;
-use yii\web\Controller;
+use Yii;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use backend\models\forms\LoginForm;
+use yii\web\Controller;
 
 /**
  * Site controller
@@ -34,6 +32,10 @@ class SiteController extends Controller
                 'actions' => [
                     'logout' => ['post'],
                 ],
+            ],
+            'remember' => [
+                'class' => RememberUrlBehavior::className(),
+                'actions' => ['index'],
             ],
         ];
     }
@@ -57,19 +59,12 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        Url::remember(Yii::$app->request->url);
         if (Yii::$app->user->can('admin')) {
             return $this->render('index');
         } else {
             $renderParams = InvestigationController::prepareRenderInvestigations();
             return $this->render('client', $renderParams);
         }
-    }
-
-    public function actionWizard()
-    {
-        Url::remember(Yii::$app->request->url);
-        return $this->render('wizard');
     }
 
     /**
@@ -81,7 +76,6 @@ class SiteController extends Controller
     {
         $this->layout = 'main-login';
 
-        Url::remember(Yii::$app->request->url);
         $model = new LoginForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {

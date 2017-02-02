@@ -2,6 +2,7 @@
 
 namespace backend\models\search;
 
+use common\traits\activeQuery\ActiveDataProviderAdditionalDataTrait;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -12,7 +13,7 @@ use common\models\History;
  */
 class HistorySearch extends History
 {
-
+    use ActiveDataProviderAdditionalDataTrait;
     public $pagesize = 10;
 
     /**
@@ -30,13 +31,26 @@ class HistorySearch extends History
      *
      * @param array $params
      *
+     * @param array $relations
+     * @param array $where
+     * @param array $order
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search(array $params)
     {
         $query = History::find();
 
         // add conditions that should always apply here
+        if (!Yii::$app->user->can('admin')) {
+            $query->andWhere(
+                [
+                    'or' => [
+                        'company_id' => Yii::$app->user->identity->company->id,
+                        'company_id' => null,
+                    ]
+                ]
+            );
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

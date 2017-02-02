@@ -2,10 +2,10 @@
 
 namespace backend\controllers;
 
+use backend\behaviors\RememberUrlBehavior;
 use backend\models\search\UserSearch;
 use backend\models\services\UserService;
 use backend\models\User;
-use common\helpers\Url;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -16,6 +16,7 @@ use yii\web\NotFoundHttpException;
  */
 class UserController extends Controller
 {
+
     /**
      * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -44,6 +45,10 @@ class UserController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'remember' => [
+                'class' => RememberUrlBehavior::className(),
+                'actions' => ['index', 'wizard'],
+            ],
         ];
     }
 
@@ -56,7 +61,6 @@ class UserController extends Controller
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
-        Url::remember(Yii::$app->request->url);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -70,7 +74,6 @@ class UserController extends Controller
      */
     public function actionView($id)
     {
-        Url::remember(Yii::$app->request->url);
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -90,9 +93,10 @@ class UserController extends Controller
         if (Yii::$app->user->can('admin')) {
             $service->archive();
             Yii::$app->session->setFlash('success', 'Archived successfully');
-        }else{
+        } else {
             Yii::$app->session->setFlash('error', 'Permission denied');
         }
         return $this->actionIndex();
     }
+
 }
