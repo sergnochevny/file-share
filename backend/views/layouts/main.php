@@ -26,9 +26,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed201
             <?= $this->render('partials/_header.php') ?>
             <div class="layout-main">
                 <?= $this->render('partials/_left.php') ?>
-                <div class="alert-container">
-                    <?= Alert::widget() ?>
-                </div>
+                <?= Alert::widget() ?>
                 <div class="layout-content">
                     <div class="layout-content-body">
                         <?= $content ?>

@@ -11,6 +11,7 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $id
  * @property string $name
  * @property string $address
+ * @property string $description
  * @property string $city
  * @property string $state
  * @property string $zip
@@ -52,6 +53,7 @@ class Company extends UndeletableActiveRecord
             [['name'], 'required'],
             [['name', 'address', 'city', 'state'], 'string', 'max' => 255],
             [['zip'], 'string', 'max' => 10],
+            ['description', 'default', 'value' => ''],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_IN_HISTORY, self::STATUS_DELETED]],
         ];

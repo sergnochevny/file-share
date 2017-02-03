@@ -3,6 +3,7 @@
 /** @var $investigationForm \backend\models\Investigation*/
 /** @var bool $isUpdate */
 
+use backend\models\Company;
 use yii\jui\DatePicker;
 
 ?>
@@ -13,15 +14,16 @@ use yii\jui\DatePicker;
         'action' => ['investigation', 'id' => $investigationForm->id],
     ]) ?>
     <div class="col-lg-6 col-lg-offset-3">
-        <h2 align="center">
-            <span class="d-ib">Select Company</span>
-        </h2>
-
+        <?php if(Company::find()->count() > 0): ?>
+            <h2 align="center">
+                <span class="d-ib">Select Company</span>
+            </h2>
+        <?php endif; ?>
         <?= $this->render('_select-company', ['form' => $form, 'model' => $investigationForm])  ?>
 
     </div>
     <div class="clearfix"></div>
-    <hr/>
+    <?php if(Company::find()->count() > 0): ?><hr/><?php endif; ?>
     <div class="row">
         <div class="col-sm-6">
 

@@ -1,0 +1,1 @@
+(function ($) { $('.alert-container').insertAfter('.layout-sidebar'); })(jQuery);

@@ -20,19 +20,21 @@ $dropDown = function ($model = null, $name, $list, array $options) use ($form) {
 }
 ?>
 <?php if (Yii::$app->getUser()->can('admin')): ?>
-    <?php
-    $options = [
-        'id' => 'company-list',
-        'data-info-url' => \yii\helpers\Url::to(['company-info'], true),
-        'class' => 'form-control',
-        'prompt' => $model ? ' - - -' : 'Create a new company',
-    ];
-    if (!empty($selected)){
-      $options['options'] = [$selected => ['selected'=>'selected']];
-    }
-    ?>
-    <?= $dropDown($model, 'company_id', Company::getList(), $options ) ?>
+    <?php if(Company::find()->count() > 0): ?>
+        <?php
+        $options = [
+            'id' => 'company-list',
+            'data-info-url' => \yii\helpers\Url::to(['company-info'], true),
+            'class' => 'form-control',
+            'prompt' => $model ? ' - - -' : 'Create a new company',
+        ];
+        if (!empty($selected)){
+          $options['options'] = [$selected => ['selected'=>'selected']];
+        }
+        ?>
+        <?= $dropDown($model, 'company_id', Company::getList(), $options ) ?>
+    <?php endif ?>
 <!--<span class="help-block">For convenience, use the quick search</span>-->
 <?php elseif (Yii::$app->getUser()->can('client')): ?>
-    <?= Yii::$app->user->identity->company->name?>
+        <?= Yii::$app->user->identity->company->name?>
 <?php endif ?>
