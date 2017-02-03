@@ -74,7 +74,8 @@ Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout
             ],
             'format' => 'html',
             'value' => function ($model, $key, $index, $column) {
-                $value = '<span class="label label-success" >' . Investigation::getStatusByCode($model->{$column->attribute}) . '</span >';
+                $code = $model->{$column->attribute};
+                $value = '<span class="label label-'. Investigation::getStatusCSSClass($code) .'" >' . Investigation::getStatusByCode($code) . '</span >';
                 return $value;
             }
         ],

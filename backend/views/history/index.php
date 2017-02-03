@@ -69,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return $value;
                             },
                             'contentOptions' => [
-                                'width' => 80
+                                'width' => 100
                             ]
                         ],
 //                        [
