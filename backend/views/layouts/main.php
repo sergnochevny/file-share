@@ -8,7 +8,6 @@ use yii\helpers\Html;
 /* @var $content string */
 
 AppAsset::register($this);
-$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/dist');
 
 ?>
 <?php $this->beginPage() ?>
