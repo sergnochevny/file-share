@@ -29,9 +29,21 @@ use yii\jui\DatePicker;
 
             <?= $form->field($investigationForm, 'description')->textarea(['placeholder' => 'Provide description']) ?>
 
-            <?= $form->field($investigationForm, 'start_date')->widget(DatePicker::class) ?>
+            <?= $form->field($investigationForm, 'start_date')->widget(DatePicker::class, [
+                'clientOptions' => [
+                    'onSelect' => new \yii\web\JsExpression('function (dateText, inst) {
+                        $("#'.\yii\helpers\Html::getInputId($investigationForm, 'end_date').'").datepicker("option", "minDate", new Date(inst.selectedYear, inst.selectedMonth, inst.selectedDay));
+                    }'),
+                ],
+            ]) ?>
 
-            <?= $form->field($investigationForm, 'end_date')->widget(DatePicker::class) ?>
+            <?= $form->field($investigationForm, 'end_date')->widget(DatePicker::class, [
+                'clientOptions' => [
+                    'onSelect' => new \yii\web\JsExpression('function (dateText, inst) {
+                        $("#'.\yii\helpers\Html::getInputId($investigationForm, 'start_date').'").datepicker("option", "maxDate", new Date(inst.selectedYear, inst.selectedMonth, inst.selectedDay));
+                    }'),
+                ],
+            ]) ?>
 
         </div>
         <div class="col-sm-6">
