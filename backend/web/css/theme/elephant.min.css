@@ -1901,7 +1901,7 @@ output {
     color: #ccc
 }
 
-.form-control {
+.form-control, .hasDatepicker {
     display: block;
     width: 100%;
     height: 34px;
@@ -1923,7 +1923,7 @@ output {
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s, -webkit-box-shadow ease-in-out .15s
 }
 
-.form-control:focus {
+.form-control:focus, .hasDatepicker:focus {
     border-color: #87764E;
     outline: 0
 }

@@ -31,16 +31,16 @@ use yii\helpers\Url;
     <div class="row">
         <div class="col-sm-6">
 
-            <?= $form->field($companyForm, 'name')->textInput() ?>
+            <?= $form->field($companyForm, 'name')->textInput(['placeholder' => 'Company name']) ?>
 
-            <?= $form->field($companyForm, 'city')->textInput() ?>
+            <?= $form->field($companyForm, 'city')->textInput(['placeholder' => 'Location city']) ?>
 
-            <?= $form->field($companyForm, 'zip')->textInput() ?>
+            <?= $form->field($companyForm, 'zip')->textInput(['placeholder' => 'Zip code']) ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($companyForm, 'address')->textInput() ?>
+            <?= $form->field($companyForm, 'address')->textInput(['placeholder' => 'Location address']) ?>
 
-            <?= $form->field($companyForm, 'state')->textInput() ?>
+            <?= $form->field($companyForm, 'state')->textInput(['placeholder' => 'Location state']) ?>
         </div>
 
 

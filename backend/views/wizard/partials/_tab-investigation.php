@@ -25,9 +25,9 @@ use yii\jui\DatePicker;
     <div class="row">
         <div class="col-sm-6">
 
-            <?= $form->field($investigationForm, 'name')->textInput() ?>
+            <?= $form->field($investigationForm, 'name')->textInput(['placeholder' => 'Name']) ?>
 
-            <?= $form->field($investigationForm, 'description')->textarea() ?>
+            <?= $form->field($investigationForm, 'description')->textarea(['placeholder' => 'Provide description']) ?>
 
             <?= $form->field($investigationForm, 'start_date')->widget(DatePicker::class) ?>
 
@@ -35,13 +35,13 @@ use yii\jui\DatePicker;
 
         </div>
         <div class="col-sm-6">
-            <?= $form->field($investigationForm, 'contact_person')->textInput() ?>
+            <?= $form->field($investigationForm, 'contact_person')->textInput(['placeholder' => 'Contact person']) ?>
 
-            <?= $form->field($investigationForm, 'phone')->input('tel') ?>
+            <?= $form->field($investigationForm, 'phone')->input('tel', ['placeholder' => 'Phone number']) ?>
 
-            <?= $form->field($investigationForm, 'email')->textInput() ?>
+            <?= $form->field($investigationForm, 'email')->textInput(['placeholder' => 'Contact email address']) ?>
 
-            <?= $form->field($investigationForm, 'status')->dropDownList(\backend\models\Investigation::getStatusesList()) ?>
+            <?= $form->field($investigationForm, 'status')->dropDownList(\backend\models\Investigation::getStatusesList(),['prompt' => 'Select status']) ?>
         </div>
 
         <div class="clearfix"></div>
