@@ -106,7 +106,9 @@ CREATE TABLE IF NOT EXISTS `company` (
 -- Дамп данных таблицы protus.company: ~1 rows (приблизительно)
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
 INSERT INTO `company` (`id`, `name`, `description`, `address`, `city`, `state`, `zip`, `status`, `created_at`, `updated_at`, `citrix_id`) VALUES
-	(19, 'Test_Upd', '', '', '', '', '', 200, 1485609638, 1486054598, 'fo2da890-e919-4f98-94dd-b1d2e65defe3');
+	(19, 'Test_Upd', '', '', '', '', '', 100, 1485609638, 1486054598, 'fo2da890-e919-4f98-94dd-b1d2e65defe3'),
+	(20, 'asdfsakj', '', 'sadfggasdf', 'dsafkjh', 'asdfads', '656454615', 100, 1486059372, 1486059372, 'foc136db-1bcd-4a62-8cd4-86dcf58d2dd1'),
+	(21, 'jhgfyhf', '', '', 'gyfytf', '', '', 100, 1486060327, 1486060327, 'fo53f8ed-ba4e-4ad0-9e2d-3cb09575aa3c');
 /*!40000 ALTER TABLE `company` ENABLE KEYS */;
 
 -- Дамп структуры для таблица protus.file
@@ -134,9 +136,9 @@ INSERT INTO `file` (`id`, `name`, `description`, `size`, `parent`, `type`, `citr
 	(8, 'drag_img1.jpg', '', 7178, 'fob4f466-3fd1-4d95-b567-8ac02bdd1eef', 'jpg', 'fif44d98-d427-f689-0d3c-2ba2245767a1', 1485609057, 1486054648, 200),
 	(9, 'drag_img2.jpg', '', 13681, 'fob4f466-3fd1-4d95-b567-8ac02bdd1eef', 'jpg', 'fi47e9a7-a84a-a3ed-75d8-200d41353e84', 1485613024, 1485613118, 100),
 	(10, '126_1455808234.jpg', '', 16107, 'fob4f466-3fd1-4d95-b567-8ac02bdd1eef', 'jpg', 'fi99851b-71db-49d6-6922-73e0379bed75', 1485693241, 1485693241, 100),
-	(11, 'drag_img1.jpg', '', 7178, 'fo1ec085-e06f-4680-90ed-ca4da2f41fa7', 'jpg', 'fi99851b-71db-49d6-6922-73e0379bed75', 1485800345, 1486051980, 200),
+	(11, 'drag_img1.jpg', '', 7178, 'fo1ec085-e06f-4680-90ed-ca4da2f41fa7', 'jpg', 'fi99851b-71db-49d6-6922-73e0379bed75', 1485800345, 1486051980, 100),
 	(12, 'drag_img4.jpg', '', 12488, 'fob4f466-3fd1-4d95-b567-8ac02bdd1eef', 'jpg', 'fi054e77-180b-3734-560f-813097f3d51e', 1485950740, 1485950740, 100),
-	(13, 'drag_img7.jpg', '', 13791, 'fo1ec085-e06f-4680-90ed-ca4da2f41fa7', 'jpg', 'fi8269b1-a8ff-328e-ade9-dc8abfb24bc2', 1485965309, 1486052099, 200),
+	(13, 'drag_img7.jpg', '', 13791, 'fo1ec085-e06f-4680-90ed-ca4da2f41fa7', 'jpg', 'fi8269b1-a8ff-328e-ade9-dc8abfb24bc2', 1485965309, 1486052099, 100),
 	(14, 'drag_img3.jpg', '', 10906, 'fo1ec085-e06f-4680-90ed-ca4da2f41fa7', 'jpg', 'fi2fa773-d695-2970-df69-da0db6a742d1', 1485965364, 1486048972, 100),
 	(15, '126_1455808234.jpg', '', 16107, 'fo1ec085-e06f-4680-90ed-ca4da2f41fa7', 'jpg', 'fi68ffeb-c9e5-fd74-dd1e-e5e25b6e4ced', 1485965377, 1486048029, 100);
 /*!40000 ALTER TABLE `file` ENABLE KEYS */;
@@ -201,7 +203,8 @@ CREATE TABLE IF NOT EXISTS `investigation` (
 -- Дамп данных таблицы protus.investigation: ~1 rows (приблизительно)
 /*!40000 ALTER TABLE `investigation` DISABLE KEYS */;
 INSERT INTO `investigation` (`id`, `company_id`, `start_date`, `end_date`, `name`, `description`, `contact_person`, `phone`, `email`, `status`, `created_at`, `updated_at`, `citrix_id`) VALUES
-	(2, 19, '0000-00-00', '0000-00-00', 'Test_App', 'Test Applicant', 'rdskflgh sdl;gfk', '4657687', 'kdsjfh@dfjdhf.hj', 200, 1485796515, 1486054590, 'fo1ec085-e06f-4680-90ed-ca4da2f41fa7');
+	(2, 19, '0000-00-00', '0000-00-00', 'Test_App', 'Test Applicant', 'rdskflgh sdl;gfk', '4657687', 'kdsjfh@dfjdhf.hj', 200, 1485796515, 1486054590, 'fo1ec085-e06f-4680-90ed-ca4da2f41fa7'),
+	(3, 19, '2017-02-01', '2017-02-21', 'sdrtgsdfg', 'cxfgdcgydxfg', '', '', '', 250, 1486111821, 1486111821, 'fof47f51-4c38-4ef2-aae4-22dab4cd1372');
 /*!40000 ALTER TABLE `investigation` ENABLE KEYS */;
 
 -- Дамп структуры для таблица protus.key_storage
@@ -289,8 +292,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Дамп данных таблицы protus.user: ~2 rows (приблизительно)
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `first_name`, `last_name`, `phone_number`, `email`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `status`, `created_at`, `updated_at`, `action_at`) VALUES
-	(2, NULL, NULL, NULL, 'email@email.com', 'admin', 's8fG050TnphotWkYFWB5VA_vr-6DJDEg', '$2y$13$9WhOdxpxqma7h/j1G/ZxJuS4mDe/OiFcokSaK8wx7kRCGDTI61wr.', NULL, 100, 1485692238, 1485692238, 1486056071),
-	(4, 'User', 'Test', '34543545', 'user@usr.us', 'user', 'AfUiJsf4AfsUHXMNSYfMpD2ddB-CGlZu', '$2y$13$jg9vW509INme6S60DbuUIOOTcX5weJneEJJbAAbz4DcIbElJrAxAy', NULL, 100, 1485784036, 1485973113, 0);
+	(2, NULL, NULL, NULL, 'email@email.com', 'admin', 's8fG050TnphotWkYFWB5VA_vr-6DJDEg', '$2y$13$9WhOdxpxqma7h/j1G/ZxJuS4mDe/OiFcokSaK8wx7kRCGDTI61wr.', NULL, 100, 1485692238, 1485692238, 1486140828),
+	(4, 'User', 'Test', '34543545', 'user@usr.us', 'user', 'AfUiJsf4AfsUHXMNSYfMpD2ddB-CGlZu', '$2y$13$jg9vW509INme6S60DbuUIOOTcX5weJneEJJbAAbz4DcIbElJrAxAy', NULL, 100, 1485784036, 1485973113, 1486134922);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 -- Дамп структуры для таблица protus.user_company
