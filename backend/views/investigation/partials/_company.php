@@ -16,13 +16,13 @@ use common\helpers\Url;
                         'options' => ['class' => 'profile-nav'],
                         'items' => [[
                             'label' => 'Applicants',
-                            'url' => Url::to(['applicant'],true)
+                            'url' => Url::to(['/investigation'],true)
                         ],[
                             'label' => 'History',
-                            'url' => Url::to(['history'],true)
+                            'url' => Url::to(['/history'],true)
                         ],[
                             'label' => 'Files',
-                            'url' => Url::to(['file'],true)
+                            'url' => Url::to(['/file'],true)
                         ]]
                     ]) ?>
                 </div>
