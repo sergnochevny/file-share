@@ -10,9 +10,27 @@ use yii\web\UploadedFile;
 
 class FileUpload extends Model
 {
+    static private $fileThumbnailMap = [
+        'doc' => 'doc',
+        'docx' => 'doc',
+        'xls' => 'xls',
+        'pdf' => 'pdf',
+        'zip' => 'zip',
+        'rar' => 'zip',
+        'att' => 'att',
+        'png' => 'pic',
+        'jpg' => 'pic',
+        'jpeg' => 'pic',
+    ];
+
     public $file;
     public $description;
     public $parent;
+
+    public static function fileExt($ext)
+    {
+        return isset(self::$fileThumbnailMap[$ext]) ? self::$fileThumbnailMap[$ext] : 'att';
+    }
 
     /**
      * @inheritdoc

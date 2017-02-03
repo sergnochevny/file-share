@@ -109,7 +109,7 @@ if (!empty($investigation)) {
                                 'format' => 'html',
                                 'value' => function ($model, $key, $index, $column) {
                                     $image = Html::tag('div', '', [
-                                            'class' => 'file-thumbnail file-thumbnail-' . $model->type
+                                            'class' => 'file-thumbnail file-thumbnail-' . \backend\models\FileUpload::fileExt($model->type)
                                         ]) . Html::tag('div',
                                             Html::tag('span', $model->type, ['class' => 'file-ext']) .
                                             Html::tag('span', $model->{$column->attribute}, ['class' => 'file-name']),
