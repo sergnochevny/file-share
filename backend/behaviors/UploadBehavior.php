@@ -106,7 +106,7 @@ class UploadBehavior extends Behavior
                                 $id = $res->ItemID;
                                 if(!empty($id)) break;
                             }
-                            sleep(3);
+                            sleep(5);
                         }
                     }
                     /**
