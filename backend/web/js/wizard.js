@@ -52,7 +52,6 @@
             $('#company-list-container').hide();
             $('#user-list-container').hide();
         }
-    })
-
+    });
 
 })(jQuery);

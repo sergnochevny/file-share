@@ -2,6 +2,7 @@
 namespace common\widgets;
 
 use Yii;
+use yii\bootstrap\Html;
 
 /**
  * Alert widget renders a message from session flash. All flash messages are displayed
@@ -51,25 +52,30 @@ class Alert extends \yii\bootstrap\Widget
         $flashes = $session->getAllFlashes();
         $appendCss = isset($this->options['class']) ? ' ' . $this->options['class'] : '';
 
-        foreach ($flashes as $type => $data) {
-            if (isset($this->alertTypes[$type])) {
-                $data = (array) $data;
-                foreach ($data as $i => $message) {
-                    /* initialize css class for each alert box */
-                    $this->options['class'] = $this->alertTypes[$type] . $appendCss;
+        if(sizeof($flashes) > 0){
+            echo Html::beginTag('div', ['class' => 'alert-container']);
+            foreach ($flashes as $type => $data) {
+                if (isset($this->alertTypes[$type])) {
+                    $data = (array) $data;
+                    foreach ($data as $i => $message) {
+                        /* initialize css class for each alert box */
+                        $this->options['class'] = $this->alertTypes[$type] . $appendCss;
 
-                    /* assign unique id to each alert box */
-                    $this->options['id'] = $this->getId() . '-' . $type . '-' . $i;
+                        /* assign unique id to each alert box */
+                        $this->options['id'] = $this->getId() . '-' . $type . '-' . $i;
 
-                    echo BootstrapAlert::widget([
-                        'body' => $message,
-                        'closeButton' => $this->closeButton,
-                        'options' => $this->options,
-                    ]);
+                        echo BootstrapAlert::widget([
+                            'body' => $message,
+                            'closeButton' => $this->closeButton,
+                            'options' => $this->options,
+                        ]);
+                    }
+
+                    $session->removeFlash($type);
                 }
-
-                $session->removeFlash($type);
             }
+            echo Html::endTag('div');
+            $this->getView()->registerJsFile('@web/js/alert.helper.js');
         }
     }
 }

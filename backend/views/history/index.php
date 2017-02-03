@@ -46,13 +46,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             'value' => function ($model, $key, $index, $column) {
                                 switch ($model->{$column->attribute}){
                                     case 'file';
-                                        return '<span class="label label-success">' . ucfirst($model->{$column->attribute}) .'</span>';
+                                        return '<span class="label label-success"><span class="icon icon-file"></span> ' . ucfirst($model->{$column->attribute}) .'</span>';
                                         break;
                                     case 'company';
-                                        return '<span class="label label-warning">' . ucfirst($model->{$column->attribute}) .'</span>';
+                                        return '<span class="label label-warning"><span class="icon icon-building"></span> ' . ucfirst($model->{$column->attribute}) .'</span>';
                                         break;
                                     case 'investigation';
-                                        return '<span class="label label-danger">' . ucfirst($model->{$column->attribute}) .'</span>';
+                                        return '<span class="label label-danger"><span class="icon icon-user-secret"></span> ' . ucfirst($model->{$column->attribute}) .'</span>';
                                         break;
                                 }
                             },

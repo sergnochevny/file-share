@@ -76,20 +76,20 @@ use yii\helpers\Url;
         <div class="col-sm-6">
 
 
-            <?= $form->field($userForm, 'username')->textInput() ?>
+            <?= $form->field($userForm, 'username')->textInput(['placeholder' => 'Create username']) ?>
 
-            <?= $form->field($userForm, 'email')->textInput() ?>
+            <?= $form->field($userForm, 'email')->textInput(['placeholder' => 'Active email address']) ?>
 
-            <?= $form->field($userForm, 'password')->passwordInput() ?>
+            <?= $form->field($userForm, 'password')->passwordInput(['placeholder' => 'Create password']) ?>
 
-            <?= $form->field($userForm, 'password_repeat')->passwordInput() ?>
+            <?= $form->field($userForm, 'password_repeat')->passwordInput(['placeholder' => 'Confirm your password']) ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($userForm, 'first_name')->textInput() ?>
+            <?= $form->field($userForm, 'first_name')->textInput(['placeholder' => 'First name']) ?>
 
-            <?= $form->field($userForm, 'last_name')->textInput() ?>
+            <?= $form->field($userForm, 'last_name')->textInput(['placeholder' => 'Last name']) ?>
 
-            <?= $form->field($userForm, 'phone_number')->textInput() ?>
+            <?= $form->field($userForm, 'phone_number')->textInput(['placeholder' => 'Phone number']) ?>
 
 
 

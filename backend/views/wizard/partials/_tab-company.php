@@ -4,6 +4,7 @@
 /** @var $isUpdate bool */
 ///** @var $companyId int|bool If user is not client then false */
 
+use backend\models\Company;
 use yii\helpers\Url;
 
 ?>
@@ -18,29 +19,32 @@ use yii\helpers\Url;
         ],
     ]) ?>
     <div class="col-lg-6 col-lg-offset-3">
-        <h2 align="center">
-            <span class="d-ib">Select Company</span>
-        </h2>
-
+        <?php if(Company::find()->count() > 0): ?>
+            <h2 align="center">
+                <span class="d-ib">Select Company</span>
+            </h2>
+        <?php endif; ?>
         <div class="form-group">
             <?= $this->render('_select-company', ['selected' => $selected]) ?>
         </div>
     </div>
     <div class="clearfix"></div>
-    <hr/>
+    <?php if(Company::find()->count() > 0): ?><hr/><?php endif; ?>
     <div class="row">
         <div class="col-sm-6">
 
-            <?= $form->field($companyForm, 'name')->textInput() ?>
+            <?= $form->field($companyForm, 'name')->textInput(['placeholder' => 'Company name']) ?>
 
-            <?= $form->field($companyForm, 'city')->textInput() ?>
+            <?= $form->field($companyForm, 'city')->textInput(['placeholder' => 'Location city']) ?>
 
-            <?= $form->field($companyForm, 'zip')->textInput() ?>
+            <?= $form->field($companyForm, 'zip')->textInput(['placeholder' => 'Zip code', 'maxlength' => '10']) ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($companyForm, 'address')->textInput() ?>
+            <?= $form->field($companyForm, 'address')->textInput(['placeholder' => 'Location address']) ?>
 
-            <?= $form->field($companyForm, 'state')->textInput() ?>
+            <?= $form->field($companyForm, 'state')->textInput(['placeholder' => 'Location state']) ?>
+
+            <?= $form->field($companyForm, 'description')->textarea(['placeholder' => 'Describe your company', 'rows' => 4]) ?>
         </div>
 
 
