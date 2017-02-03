@@ -170,7 +170,7 @@ use common\helpers\Url;
                             <li><a href="<?= Url::to(['/site/logout'], true) ?>" data-method="POST">Sign out</a></li>
                         </ul>
                     </li>
-                    <li class="visible-xs-block">
+                    <!--li class="visible-xs-block">
                         <a href="#">
                             <span class="icon icon-users icon-lg icon-fw"></span>
                             Contacts
@@ -181,7 +181,7 @@ use common\helpers\Url;
                             <span class="icon icon-user icon-lg icon-fw"></span>
                             Profile
                         </a>
-                    </li>
+                    </li-->
                     <li class="visible-xs-block">
                         <a href="<?= Url::to(['/site/logout'], true) ?>" data-method="POST">
                             <span class="icon icon-power-off icon-lg icon-fw"></span>
