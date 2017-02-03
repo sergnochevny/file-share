@@ -16,6 +16,19 @@ class Menu extends \yii\widgets\Menu
             $template = strtr($template, [
                 '{icon}' => Html::encode(Url::to($item['options']['icon'])),
             ]);
+        } else {
+            $template = strtr($template, ['{icon}' => null,]);
+        }
+        if (isset($item['badges'])) {
+            $badges = $item['badges'];
+            if ($badges instanceof \Closure) {
+                $badges = call_user_func($badges);
+            }
+            $template = strtr($template, ['{badges}' => $badges,]);
+        } else {
+            $template = strtr($template, [
+                '{badges}' => null,
+            ]);
         }
         if (isset($item['url'])) {
             $template = strtr($template, [
@@ -41,7 +54,7 @@ class Menu extends \yii\widgets\Menu
             if (ltrim($route, '/') !== str_replace('/index', '', $this->route)) {
                 return false;
             }
-            if(is_array($item['url'])){
+            if (is_array($item['url'])) {
                 unset($item['url']['#']);
                 if (count($item['url']) > 1) {
                     $params = $item['url'];
