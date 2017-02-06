@@ -65,32 +65,39 @@ $this->params['breadcrumbs'][] = $this->title;
                             'format' => 'html',
                             'label' => 'Archived at',
                             'value' => function ($model, $key, $index, $column) {
-                                $value = '<span class="label label-warning" >' .  Yii::$app->formatter->asDate($model->{$column->attribute}) . '</span>';
-                                return $value;
+                                $formatter = Yii::$app->getFormatter();
+                                $value = $model->{$column->attribute};
+                                $dateTime = $formatter->asDatetime($value);
+                                $date = $formatter->asDate($value);
+
+                                return Html::tag('span', $date, [
+                                    'class' => 'label label-warning',
+                                    'title' => $dateTime,
+                                ]);
                             },
                             'contentOptions' => [
                                 'width' => 100
                             ]
                         ],
-//                        [
-//                            'class' => 'yii\grid\ActionColumn',
-//                            'template' => '{details}',
-//                            'buttons' => [
-//                                'details' => function ($url, $model) {
-//                                    $content = Html::a('Details', Url::to(['/history/view', 'id' => $model->id], true),
-//                                        [
-//                                            'class' => "btn btn-success btn-xs",
-//                                            'title' => 'Details',
-//                                            'aria-label' => "Details",
-//                                        ]
-//                                    );
-//                                    return $content;
-//                                },
-//                            ],
-//                            'contentOptions' => [
-//                                'width' => 80
-//                            ]
-//                        ],
+                        [
+                            'class' => 'yii\grid\ActionColumn',
+                            'template' => '{details}',
+                            'buttons' => [
+                                'details' => function ($url, $model) {
+                                    $content = Html::a('Details', Url::to(['/history/view', 'id' => $model->id], true),
+                                        [
+                                            'class' => "btn btn-primary btn-xs",
+                                            'title' => 'Details',
+                                            'aria-label' => "Details",
+                                        ]
+                                    );
+                                    return $content;
+                                },
+                            ],
+                            'contentOptions' => [
+                                'width' => 80
+                            ]
+                        ],
                     ],
                     'pager' => [
                         'options' => [
