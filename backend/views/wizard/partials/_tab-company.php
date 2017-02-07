@@ -8,6 +8,7 @@ use backend\models\Company;
 use backend\models\User;
 use yii\helpers\Url;
 
+$isShowCompany = User::isAdmin() && (Company::find()->count() > 0);
 ?>
 
 <div id="tab-1" class="tab-pane active">
@@ -20,13 +21,11 @@ use yii\helpers\Url;
         ],
     ]) ?>
 
-    <?php if (User::isAdmin()): ?>
+    <?php if ($isShowCompany): ?>
     <div class="col-lg-6 col-lg-offset-3">
-        <?php if(Company::find()->count() > 0): ?>
             <h2 align="center">
                 <span class="d-ib">Select Company</span>
             </h2>
-        <?php endif; ?>
         <div class="form-group">
             <?= $this->render('_select-company', ['selected' => $selected]) ?>
         </div>
@@ -34,7 +33,7 @@ use yii\helpers\Url;
     <?php endif ?>
 
     <div class="clearfix"></div>
-    <?php if(Company::find()->count() > 0): ?><hr/><?php endif; ?>
+    <?php if($isShowCompany): ?><hr/><?php endif; ?>
     <div class="row">
         <div class="col-sm-6">
 

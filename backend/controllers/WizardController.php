@@ -30,6 +30,11 @@ class WizardController extends Controller
      */
     public function actionCompany($id = null)
     {
+        if (User::isClient()) {
+            $user = User::getIdentity();
+            $id = $user->company->id;
+        }
+
         $request = Yii::$app->getRequest();
         /** @var Company $company */
         $company = Company::create($id);

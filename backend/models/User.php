@@ -26,6 +26,30 @@ class User extends \common\models\User
     }
 
     /**
+     * @return null|User
+     */
+    public static function getIdentity()
+    {
+        return \Yii::$app->getUser()->identity;
+    }
+
+    /**
+     * @return bool
+     */
+    public static function isClient()
+    {
+        return !self::isAdmin();
+    }
+
+    /**
+     * @return bool
+     */
+    public static function isAdmin()
+    {
+        return \Yii::$app->user->can('admin');
+    }
+
+    /**
      * @inheritdoc
      */
     public function behaviors()
@@ -46,21 +70,6 @@ class User extends \common\models\User
         return $behaviors;
     }
 
-    /**
-     * @return bool
-     */
-    public static function isClient()
-    {
-        return !self::isAdmin();
-    }
-
-    /**
-     * @return bool
-     */
-    public static function isAdmin()
-    {
-        return \Yii::$app->user->can('admin');
-    }
 
     /**
      * @return array
