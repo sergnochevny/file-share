@@ -49,9 +49,17 @@ class User extends \common\models\User
     /**
      * @return bool
      */
-    public function isClient()
+    public static function isClient()
     {
-        return !\Yii::$app->user->can('admin');
+        return !self::isAdmin();
+    }
+
+    /**
+     * @return bool
+     */
+    public static function isAdmin()
+    {
+        return \Yii::$app->user->can('admin');
     }
 
     /**

@@ -5,6 +5,7 @@
 ///** @var $companyId int|bool If user is not client then false */
 
 use backend\models\Company;
+use backend\models\User;
 use yii\helpers\Url;
 
 ?>
@@ -18,6 +19,8 @@ use yii\helpers\Url;
             'data-create-url' => Url::to(['company'], true), //when select prompt send request to create url
         ],
     ]) ?>
+
+    <?php if (User::isAdmin()): ?>
     <div class="col-lg-6 col-lg-offset-3">
         <?php if(Company::find()->count() > 0): ?>
             <h2 align="center">
@@ -28,6 +31,8 @@ use yii\helpers\Url;
             <?= $this->render('_select-company', ['selected' => $selected]) ?>
         </div>
     </div>
+    <?php endif ?>
+
     <div class="clearfix"></div>
     <?php if(Company::find()->count() > 0): ?><hr/><?php endif; ?>
     <div class="row">
