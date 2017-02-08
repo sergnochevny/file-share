@@ -100,7 +100,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         [
                             'class' => 'yii\grid\ActionColumn',
-                            'template' => '{edit}{delete}',
+                            'template' => '{edit}',
                             'contentOptions' => [
                                 'width' => 120,
                             ],
@@ -113,21 +113,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'class' => "btn btn-primary btn-xs",
                                                 'title' => 'Edit',
                                                 'aria-label' => "Edit",
-                                                'data-pjax' => "0",
-                                            ]
-                                        );
-                                    return $content;
-                                },
-                                'delete' => function ($url, $model) {
-                                    $content = '';
-                                    if (Yii::$app->user->can('admin') || (Yii::$app->user->identity->id == $model->id))
-                                        $content = Html::a('To archive', Url::to(['/user/archive', 'id' => $model->id], true),
-                                            [
-                                                'class' => "btn btn-danger btn-xs",
-                                                'title' => 'To archive',
-                                                'aria-label' => "To archive",
-                                                'data-confirm' => "Confirm removal",
-                                                'data-method' => "post",
                                                 'data-pjax' => "0",
                                             ]
                                         );

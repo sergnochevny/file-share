@@ -39,6 +39,8 @@ class HistorySearch extends History
     public function search(array $params)
     {
         $query = History::find();
+        //exclude users
+        $query->andWhere(['<>', 'type', 'user']);
 
         // add conditions that should always apply here
         if (!Yii::$app->user->can('admin')) {
