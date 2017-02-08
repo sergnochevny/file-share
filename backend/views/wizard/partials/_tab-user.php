@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
+use backend\models\User;
 
 /** @var $this \yii\web\View */
 /** @var $userForm \backend\models\forms\UserForm */
@@ -19,6 +20,7 @@ use yii\helpers\Url;
             'data-create-url' => Url::to(['user'], true), //when select prompt in user send request to create url
         ],
     ]) ?>
+    <?php if (User::isAdmin()): ?>
     <div class="col-lg-6 col-lg-offset-3">
         <h2 align="center">
             <span class="d-ib">Select Role</span>
@@ -26,7 +28,7 @@ use yii\helpers\Url;
 
         <div class="form-group<?= $userForm->hasErrors('role') ? ' has-error' : '' ?>">                            <?php /*todo get this list from db */ ?>
             <?= Html::activeDropDownList($userForm, 'role', ['admin' => 'admin', 'client' => 'client'],
-                ['id' => 'user-role', 'class' => 'form-control', 'prompt' => ' - - -']); ?>
+                ['id' => 'user-role', 'class' => 'form-control', 'prompt' => 'Select a Role']); ?>
             <?= Html::error($userForm, 'role', ['class' => 'help-block']) ?>
         </div>
     </div>
@@ -42,10 +44,10 @@ use yii\helpers\Url;
             <?= $this->render('_select-company', ['model' => $userForm]) ?>
         </div>
     </div>
-
+    <?php endif ?>
 
     <div class="col-lg-6 col-lg-offset-3" id="user-list-container" <?=
-    $isUpdate ? '' : 'style="display: none"'
+    $isUpdate || User::isClient() ? '' : 'style="display: none"'
     ?>>
         <h2 align="center">
             <span class="d-ib">Select Users</span>
@@ -54,15 +56,17 @@ use yii\helpers\Url;
         <div class="form-group">
             <?= \kartik\depdrop\DepDrop::widget([
                 'name' => 'user',
-                'data' => $isUpdate ? $userForm->getUser()->getColleaguesList() : [],
+                'data' => $isUpdate
+                    ? $userForm->getUser()->getColleaguesList()
+                    : (User::isClient() ? Yii::$app->user->identity->getColleaguesList() : []),
                 'pluginOptions'=>[
                     'depends'=>['company-list', 'user-role'],
-                    'placeholder' => ' - - -',
+                    'placeholder' => 'Create a New User',
                     'url' => Url::to(['company-users'])
                 ],
                 'options' => [
                     'id'=>'user-list',
-                    'prompt' => ' - - -',
+                    'prompt' => 'Create a New User',
                     'options' => [$selectedUser => ['selected'=>'selected']]
                 ],
             ]) ?>

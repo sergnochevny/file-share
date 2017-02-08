@@ -101,6 +101,7 @@ class WizardController extends Controller
             if ($identity->isClient()) {
                 //explicitly set role if client creates another user
                 $userForm->role = 'client';
+                $userForm->company_id = Yii::$app->user->identity->company->id;
             }
             //new user with admin role can't have company
             if ($userForm->role == 'admin') {
@@ -108,11 +109,14 @@ class WizardController extends Controller
             }
 
             if ($userForm->validate() && $userService->save($userForm)) {
+                $this->setFlashMessage('success', 'user', $options['isUpdate']);
+
                 //reset password fields
                 $userForm->password = $userForm->password_repeat = null;
+
                 $options['isUpdate'] = true;
                 $options['selectedUser'] = $user->id;
-                $this->setFlashMessage('success', 'user', $options['isUpdate']);
+                $userForm->scenario = UserForm::SCENARIO_DEFAULT;
 
             } else {
                 $this->setFlashMessage('error', 'user', $options['isUpdate']);

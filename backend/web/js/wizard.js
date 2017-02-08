@@ -24,9 +24,14 @@
         $(document).on('change', list, function (e) {
             e.preventDefault();
             var id = $(this).val(),
-                createUrl = $(form).data('createUrl');
+                createUrl = $(form).data('createUrl'),
+                data = {};
 
-            pjaxSendRequest(createUrl, 'get', {'id': id});
+            if (id) {
+                data.id = id;
+            }
+
+            pjaxSendRequest(createUrl, 'get', data);
         });
     }
 
