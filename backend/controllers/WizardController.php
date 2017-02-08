@@ -143,11 +143,11 @@ class WizardController extends Controller
         }
         $isUpdate = $investigation->id > 0 ? true : false;
 
-        if (!Yii::$app->user->can('admin')) {
-            $investigation->company_id = Yii::$app->user->identity->company->id;
-        }
-
         if ($request->isPost && $investigation->load($request->post())) {
+            if (User::isClient()) {
+                $investigation->company_id = Yii::$app->user->identity->company->id;
+            }
+
             if ($investigation->save()) {
                 $this->setFlashMessage('success', 'applicant', $isUpdate);
                 return $this->redirect(['/file', 'id' => $investigation->id]);

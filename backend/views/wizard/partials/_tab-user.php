@@ -27,7 +27,7 @@ use backend\models\User;
         </h2>
 
         <div class="form-group<?= $userForm->hasErrors('role') ? ' has-error' : '' ?>">                            <?php /*todo get this list from db */ ?>
-            <?= Html::activeDropDownList($userForm, 'role', ['admin' => 'admin', 'client' => 'client'],
+            <?= Html::activeDropDownList($userForm, 'role', ['admin' => 'Admin', 'client' => 'Client'],
                 ['id' => 'user-role', 'class' => 'form-control', 'prompt' => 'Select a Role']); ?>
             <?= Html::error($userForm, 'role', ['class' => 'help-block']) ?>
         </div>
@@ -80,20 +80,20 @@ use backend\models\User;
         <div class="col-sm-6">
 
 
-            <?= $form->field($userForm, 'username')->textInput(['placeholder' => 'Create username']) ?>
+            <?= $form->field($userForm, 'username')->textInput(['placeholder' => 'User Name']) ?>
 
             <?= $form->field($userForm, 'email')->textInput(['placeholder' => 'Active email address']) ?>
 
-            <?= $form->field($userForm, 'password')->passwordInput(['placeholder' => 'Create password']) ?>
+            <?= $form->field($userForm, 'password')->passwordInput(['placeholder' => 'Your password']) ?>
 
-            <?= $form->field($userForm, 'password_repeat')->passwordInput(['placeholder' => 'Confirm your password']) ?>
+            <?= $form->field($userForm, 'password_repeat')->passwordInput(['placeholder' => 'Confirm Your password']) ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($userForm, 'first_name')->textInput(['placeholder' => 'First name']) ?>
+            <?= $form->field($userForm, 'first_name')->textInput(['placeholder' => 'First Name']) ?>
 
-            <?= $form->field($userForm, 'last_name')->textInput(['placeholder' => 'Last name']) ?>
+            <?= $form->field($userForm, 'last_name')->textInput(['placeholder' => 'Last Name']) ?>
 
-            <?= $form->field($userForm, 'phone_number')->textInput(['placeholder' => 'Phone number']) ?>
+            <?= $form->field($userForm, 'phone_number')->textInput(['placeholder' => 'Phone Number']) ?>
 
 
 
@@ -108,7 +108,7 @@ use backend\models\User;
                                                         </span>
                 <?= $isUpdate ? 'Update' : 'Create' ?>
             </button>
-            <a href="<?= \yii\helpers\Url::to(['investigation'], true) ?>" class="hidden btn btn-sm btn-labeled  arrow-success">
+            <a href="<?= \yii\helpers\Url::to(['investigation'], true) ?>" class="<?= $isUpdate ? '' : 'hidden ' ?>btn btn-sm btn-labeled  arrow-success">
                                                         <span class="btn-label">
                                                             <span
                                                                 class="icon icon-chevron-circle-right  icon-lg icon-fw"></span>

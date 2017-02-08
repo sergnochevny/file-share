@@ -39,16 +39,16 @@ $isShowCompany = User::isAdmin() && (Company::find()->count() > 0);
 
             <?= $form->field($companyForm, 'name')->textInput(['placeholder' => 'Company name']) ?>
 
-            <?= $form->field($companyForm, 'city')->textInput(['placeholder' => 'Location city']) ?>
+            <?= $form->field($companyForm, 'city')->textInput(['placeholder' => 'Location City']) ?>
 
-            <?= $form->field($companyForm, 'zip')->textInput(['placeholder' => 'Zip code', 'maxlength' => '10']) ?>
+            <?= $form->field($companyForm, 'zip')->textInput(['placeholder' => 'Zip Code', 'maxlength' => '10']) ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($companyForm, 'address')->textInput(['placeholder' => 'Location address']) ?>
+            <?= $form->field($companyForm, 'address')->textInput(['placeholder' => 'Location Address']) ?>
 
-            <?= $form->field($companyForm, 'state')->textInput(['placeholder' => 'Location state']) ?>
+            <?= $form->field($companyForm, 'state')->textInput(['placeholder' => 'Location State']) ?>
 
-            <?= $form->field($companyForm, 'description')->textarea(['placeholder' => 'Describe your company', 'rows' => 4]) ?>
+            <?= $form->field($companyForm, 'description')->textarea(['placeholder' => 'Describe Your Company', 'rows' => 4]) ?>
         </div>
 
 
@@ -61,7 +61,7 @@ $isShowCompany = User::isAdmin() && (Company::find()->count() > 0);
                 </span>
                 <?= $isUpdate ? 'Update' : 'Create' ?>
             </button>
-            <a href="<?= \yii\helpers\Url::to(['user'], true) ?>" class="hidden btn btn-sm btn-labeled  arrow-success" type="button">
+            <a href="<?= \yii\helpers\Url::to(['user'], true) ?>" class="<?= $isUpdate ? '' : 'hidden ' ?>btn btn-sm btn-labeled  arrow-success" type="button">
                 <span class="btn-label">
                     <span class="icon icon-chevron-circle-right  icon-lg icon-fw"></span>
                 </span>

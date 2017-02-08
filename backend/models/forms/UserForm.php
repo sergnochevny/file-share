@@ -114,4 +114,14 @@ final class UserForm extends Model
     {
         $this->user = $user;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'User Name'
+        ];
+    }
 }

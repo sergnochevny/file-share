@@ -28,11 +28,11 @@ $this->title = 'Wizard';
                     <div class="panel-body panel-collapse">
                         <div align="center">
                             <h1>
-                                <span class="d-ib"><i class="fa fa-magic" aria-hidden="true"></i> Wizard form</span>
+                                <span class="d-ib"><i class="fa fa-magic" aria-hidden="true"></i>Protus3 Wizard Form</span>
                             </h1>
 
                             <p>
-                                <small>Add and edit Company, Agents and Applicants</small>
+                                <small>Add and edit Company, Users and Applicants</small>
                             </p>
                         </div>
 

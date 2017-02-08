@@ -4,7 +4,10 @@
 /** @var bool $isUpdate */
 
 use backend\models\Company;
+use backend\models\User;
 use yii\jui\DatePicker;
+
+$isShowCompany = User::isAdmin() && (Company::find()->count() > 0);
 
 ?>
 <div id="tab-3" class="tab-pane active">
@@ -13,23 +16,22 @@ use yii\jui\DatePicker;
         'options' => ['data-pjax' => 'wizard-container'],
         'action' => ['investigation', 'id' => $investigationForm->id],
     ]) ?>
+    <?php if ($isShowCompany): ?>
     <div class="col-lg-6 col-lg-offset-3">
-        <?php if(Company::find()->count() > 0): ?>
             <h2 align="center">
                 <span class="d-ib">Select Company</span>
             </h2>
-        <?php endif; ?>
         <?= $this->render('_select-company', ['form' => $form, 'model' => $investigationForm])  ?>
-
     </div>
+    <?php endif ?>
     <div class="clearfix"></div>
-    <?php if(Company::find()->count() > 0): ?><hr/><?php endif; ?>
+    <?php if($isShowCompany): ?><hr/><?php endif; ?>
     <div class="row">
         <div class="col-sm-6">
 
             <?= $form->field($investigationForm, 'name')->textInput(['placeholder' => 'Name']) ?>
 
-            <?= $form->field($investigationForm, 'description')->textarea(['placeholder' => 'Provide description']) ?>
+            <?= $form->field($investigationForm, 'description')->textarea(['placeholder' => 'Provide Description']) ?>
 
             <?= $form->field($investigationForm, 'start_date')->widget(DatePicker::class, [
                 'clientOptions' => [
@@ -49,13 +51,13 @@ use yii\jui\DatePicker;
 
         </div>
         <div class="col-sm-6">
-            <?= $form->field($investigationForm, 'contact_person')->textInput(['placeholder' => 'Contact person']) ?>
+            <?= $form->field($investigationForm, 'contact_person')->textInput(['placeholder' => 'Contact Person']) ?>
 
-            <?= $form->field($investigationForm, 'phone')->input('tel', ['placeholder' => 'Phone number']) ?>
+            <?= $form->field($investigationForm, 'phone')->input('tel', ['placeholder' => 'Phone Number']) ?>
 
-            <?= $form->field($investigationForm, 'email')->textInput(['placeholder' => 'Contact email address']) ?>
+            <?= $form->field($investigationForm, 'email')->textInput(['placeholder' => 'Contact Email Address']) ?>
 
-            <?= $form->field($investigationForm, 'status')->dropDownList(\backend\models\Investigation::getStatusesList(),['prompt' => 'Select status']) ?>
+            <?= $form->field($investigationForm, 'status')->dropDownList(\backend\models\Investigation::getStatusesList(),['prompt' => 'Select Status']) ?>
         </div>
 
         <div class="clearfix"></div>
