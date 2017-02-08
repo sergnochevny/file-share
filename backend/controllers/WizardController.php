@@ -46,6 +46,7 @@ class WizardController extends Controller
         if ($request->isPost && $company->load($request->post())) {
             if ($company->save()) {
                 $this->setFlashMessage('success', 'company', $isUpdate);
+                $isUpdate = true;
 
             } else {
                 $this->setFlashMessage('error', 'company', $isUpdate);
