@@ -82,11 +82,11 @@ use backend\models\User;
 
             <?= $form->field($userForm, 'username')->textInput(['placeholder' => 'User Name']) ?>
 
-            <?= $form->field($userForm, 'email')->textInput(['placeholder' => 'Active email address']) ?>
+            <?= $form->field($userForm, 'email')->textInput(['placeholder' => 'Actual Email Address']) ?>
 
-            <?= $form->field($userForm, 'password')->passwordInput(['placeholder' => 'Your password']) ?>
+            <?= $form->field($userForm, 'password')->passwordInput(['placeholder' => 'Your Password']) ?>
 
-            <?= $form->field($userForm, 'password_repeat')->passwordInput(['placeholder' => 'Confirm Your password']) ?>
+            <?= $form->field($userForm, 'password_repeat')->passwordInput(['placeholder' => 'Confirm Your Password']) ?>
         </div>
         <div class="col-sm-6">
             <?= $form->field($userForm, 'first_name')->textInput(['placeholder' => 'First Name']) ?>
