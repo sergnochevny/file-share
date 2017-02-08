@@ -99,7 +99,7 @@ class WizardController extends Controller
 
         if ($request->isPost && $userForm->load($request->post())) {
             if ($identity->isClient()) {
-                //explicitly set role if client creates another user
+                //explicitly set role and company if client creates another user
                 $userForm->role = 'client';
                 $userForm->company_id = Yii::$app->user->identity->company->id;
             }
