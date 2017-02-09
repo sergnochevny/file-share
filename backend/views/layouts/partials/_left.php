@@ -25,7 +25,7 @@ $userCompany = Yii::$app->user->identity->company;
                         'label' => 'Companies',
                         'url' => ['/company'],
                         'options' => ['icon' => 'icon-contao'],
-                        'badges' => function(){
+                        'badges' => function () {
                             $count = Company::find()->count();
                             return $count ? Html::tag('span', $count, ['class' => 'badge badge-success', 'title' => 'Active']) : '';
                         }
@@ -35,7 +35,7 @@ $userCompany = Yii::$app->user->identity->company;
                     'label' => 'Applicants',
                     'url' => ['/investigation'],
                     'options' => ['icon' => 'icon-folder-open-o'],
-                    'badges' => function() use ($userCompany) {
+                    'badges' => function () use ($userCompany) {
                         $stPending = Investigation::STATUS_PENDING;
                         $stInProgress = Investigation::STATUS_IN_PROGRESS;
 
@@ -62,7 +62,7 @@ $userCompany = Yii::$app->user->identity->company;
                     'label' => 'Users',
                     'url' => ['/user'],
                     'options' => ['icon' => 'icon-users'],
-                    'badges' => function() use ($userCompany) {
+                    'badges' => function () use ($userCompany) {
                         $q = User::find()->joinWith('company');
                         if (isset($userCompany)) {
                             $q->andWhere(['company.id' => $userCompany->id]);
@@ -79,8 +79,23 @@ $userCompany = Yii::$app->user->identity->company;
                     'options' => ['class' => 'sidenav'],
                     'itemOptions' => ['class' => 'sidenav-item'],
                     'linkTemplate' => '<a href="{url}">{badges}<span class="sidenav-icon icon {icon}"></span><span class="sidenav-label">{label}</span></a>',
+                    'activeItem' => function ($widget, $item) {
+                        $res = null;
+                        if (isset($item['url']) && isset($item['url'][0])) {
+                            $route = is_array($item['url']) ? $item['url'][0] : $item['url'];
+                            if ((ltrim($route, '/') == 'investigation') &&
+                                (Yii::$app->controller->id == 'file') &&
+                                (Yii::$app->controller->action->id == 'index') &&
+                                (!empty(Yii::$app->controller->actionParams['id']))) $res = true;
+                            if ((ltrim($route, '/') == 'file') &&
+                                (Yii::$app->controller->id == 'file') &&
+                                (Yii::$app->controller->action->id == 'index') &&
+                                (!empty(Yii::$app->controller->actionParams['id']))) $res = false;
+                        }
+                        return $res;
+                    },
                     'items' => $items
-                ]) ?>
+                ]); ?>
             </nav>
         </div>
     </div>
