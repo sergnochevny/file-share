@@ -58,7 +58,7 @@ class Menu extends \yii\widgets\Menu
     protected function isItemActive($item)
     {
         if (isset($this->activeItem) && ($this->activeItem instanceof \Closure)) {
-            $res = call_user_func($this->activeItem, [$this, $item]);
+            $res = call_user_func($this->activeItem, $this, $item);
             if (isset($res)) return $res;
         }
         if (isset($item['url']) && isset($item['url'][0])) {
