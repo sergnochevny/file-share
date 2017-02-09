@@ -37,7 +37,7 @@ $isShowCompany = User::isAdmin() && (Company::find()->count() > 0);
     <div class="row">
         <div class="col-sm-6">
 
-            <?= $form->field($companyForm, 'name')->textInput(['placeholder' => 'Company name']) ?>
+            <?= $form->field($companyForm, 'name')->textInput(['placeholder' => 'Company Name']) ?>
 
             <?= $form->field($companyForm, 'city')->textInput(['placeholder' => 'Location City']) ?>
 
