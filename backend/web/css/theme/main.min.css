@@ -430,8 +430,8 @@ pre {
 
 .alert-container{
     position: fixed;
-    right: 15px;
-    top: 66px;
+    right: 0;
+    bottom: 0;
     z-index: 999;
 }
 .alert {
