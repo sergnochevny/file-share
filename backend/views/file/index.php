@@ -73,10 +73,34 @@ if (!empty($investigation)) {
                     ); ?>
                     <?php if (!empty($investigation) || Yii::$app->user->can('admin')): ?>
                         <?= $uploadForm->field($uploadModel, 'file')->fileInput(['id' => "file"])->label(false); ?>
-                        <?= Html::submitButton('<span class="btn-label"><span class="icon icon-upload  icon-lg icon-fw"></span></span>Upload', [
+                        <?= Html::button('<span class="btn-label"><span class="icon icon-upload  icon-lg icon-fw"></span></span>Upload', [
                             'id' => "send",
                             'class' => 'btn btn-sm btn-labeled arrow-warning send-file-button'
                         ]); ?>
+                        <?php $this->beginBlock('fileDescription') ?>
+                        <div id="file-description" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">File Description (optional)</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <?= Html::activeTextarea($uploadModel, 'description', [
+                                                'class' => 'form-control',
+                                                'style' => 'width: 100%; height: 100px; color: #000;',
+                                        ]) ?>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default upload" data-dismiss="modal">Upload</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <?php $this->endBlock() ?>
                     <?php endif; ?>
 
                     <?php

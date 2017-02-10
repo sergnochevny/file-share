@@ -39,7 +39,7 @@ class FileUpload extends Model
     {
         return [
             [['file'], 'file', 'skipOnEmpty' => false],
-            [['description'], 'safe']
+            [['description'], 'string']
         ];
     }
 
@@ -61,6 +61,7 @@ class FileUpload extends Model
         $model->tmp = $this->file->tempName;
         $model->type = $this->file->extension;
         $model->parent = $this->parent;
+        $model->description = $this->description;
 
         return $model->save();
     }

@@ -32,6 +32,7 @@ AppAsset::register($this);
                     </div>
                 </div>
             </div>
+            <?= isset($this->blocks['fileDescription']) ? $this->blocks['fileDescription'] : '' ?>
             <?php $this->endBody() ?>
         </body>
     </html>
