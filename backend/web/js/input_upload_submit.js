@@ -4,8 +4,9 @@
         $('#file-description').modal('show');
     });
 
-    $(document).on('click', '#file-description .upload', function (event) {
+    $(document).on('click', '#photo-upload', function (event) {
         event.preventDefault();
+        event.stopPropagation();
         var form = $('#upload-file'),
             textArea = $('#file-description textarea'),
             inpDescr = document.createElement('input');
@@ -16,7 +17,12 @@
 
         form.prepend(inpDescr);
         form.submit();
+    });
 
+    //fix - when clicked on textarea, clearForm called,
+    // because of event propagation to click on div#file-description
+    $(document).on('click', '#modal-file-description', function () {
+        return false;
     });
 
     var clearForm = function (event) {

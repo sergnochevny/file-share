@@ -82,7 +82,7 @@ if (!empty($investigation)) {
                             <div class="modal-dialog">
 
                                 <!-- Modal content-->
-                                <div class="modal-content">
+                                <div id="modal-file-description" class="modal-content">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         <h4 class="modal-title">File Description (optional)</h4>
@@ -94,7 +94,7 @@ if (!empty($investigation)) {
                                         ]) ?>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default upload" data-dismiss="modal">Upload</button>
+                                        <button id="photo-upload" type="button" class="btn btn-default" data-dismiss="modal">Upload</button>
                                     </div>
                                 </div>
 
@@ -154,18 +154,7 @@ if (!empty($investigation)) {
                                     'class' => 'sorting',
                                 ]
                             ],
-                            [
-                                'attribute' => 'description',
-                                'headerOptions' => [
-                                    'tabindex' => "0",
-                                    'rowspan' => "1",
-                                    'colspan' => "1",
-                                    'class' => 'hidden',
-                                ],
-                                'contentOptions' => [
-                                    'class' => 'hidden',
-                                ],
-                            ],
+                            'description:ntext:Description',
                             [
                                 'attribute' => 'created_at',
                                 'contentOptions' => [
