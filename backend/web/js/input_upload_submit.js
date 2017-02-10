@@ -19,9 +19,13 @@
 
     });
 
-    $(document).on('click', '#file-description .close', function (event) {
+    var clearForm = function (event) {
         event.preventDefault();
         $('#upload-file')[0].reset();
-    });
+    };
+
+    $(document).on('click', '#file-description .close', clearForm);
+
+    $(document).on('click', 'div#file-description', clearForm);
 })(jQuery);
 
