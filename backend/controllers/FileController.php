@@ -8,11 +8,11 @@ use backend\models\File;
 use backend\models\FileUpload;
 use backend\models\Investigation;
 use backend\models\search\FileSearch;
-use common\helpers\Url;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Request;
 
 /**
  * FileController implements the CRUD actions for File model.
@@ -124,7 +124,19 @@ class FileController extends Controller
                 Yii::$app->session->setFlash('error', $e->getMessage());
             }
         }
-        if (!empty($parent)) return $this->actionIndex(Investigation::findOne(['citrix_id' => $parent]));
+
+        $inv = Investigation::findOne(['citrix_id' => $parent]);
+
+        //Save request params, except parent
+        // if parent set then loads all files instead of investigation's files
+        /** @var Request $rq */
+        $rq = Yii::$app->getRequest();
+        $params = $rq->getQueryParams();
+        $params['parent'] = null;
+        $params['id'] = $inv->id;
+        $rq->setQueryParams($params);
+
+        if (!empty($parent)) return $this->actionIndex($inv->id);
         return $this->actionIndex();
     }
 
