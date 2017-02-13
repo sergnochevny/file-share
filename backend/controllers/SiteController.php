@@ -5,8 +5,8 @@ namespace backend\controllers;
 use backend\behaviors\RememberUrlBehavior;
 use backend\models\forms\LoginForm;
 use backend\models\forms\PasswordResetForm;
-use backend\models\forms\PasswordResetRequestForm;
 use backend\models\forms\RestorePasswordRequestForm;
+use backend\models\Statistics;
 use common\helpers\Url;
 use Yii;
 use yii\filters\VerbFilter;
@@ -60,11 +60,23 @@ class SiteController extends Controller
     public function actionIndex()
     {
         if (Yii::$app->user->can('admin')) {
-            return $this->render('index');
+            return $this->renderIndex();
         } else {
             $renderParams = InvestigationController::prepareRenderInvestigations();
             return $this->render('client', $renderParams);
         }
+    }
+
+    /**
+     * Shows index page for admins
+     * @return string
+     */
+    public function renderIndex()
+    {
+        $statistics = new Statistics();
+        $statistics->load(Yii::$app->request->post());
+
+        return $this->render('index', ['stat' => $statistics]);
     }
 
     /**
