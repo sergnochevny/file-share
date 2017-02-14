@@ -60,7 +60,7 @@ $this->registerJs("$(document).on('change', '#date-range-selector', function () 
                         <div class="media-chart">
                             <canvas data-chart="doughnut" data-animation="false"
                                     data-labels='["Completed", "In Progress"]'
-                                    data-values='[{"backgroundColor": ["#431f4d", "#ffffff"], "borderColor": ["#292929", "#292929"], "data": [<?= $stat->completedApplicants ?>, <?= $stat->allApplicants ?>]}]'
+                                    data-values='[{"backgroundColor": ["#431f4d", "#ffffff"], "borderColor": ["#292929", "#292929"], "data": [<?= $stat->completedApplicants ?>, <?= $stat->allApplicants ?: 1 ?>]}]'
                                     data-hide='["legend", "scalesX", "scalesY", "tooltips"]' height="64"
                                     width="64"></canvas>
                         </div>
@@ -70,7 +70,9 @@ $this->registerJs("$(document).on('change', '#date-range-selector', function () 
                             <span class="fw-l"><?= $stat->completedApplicants ?></span>
                             <small>Completed</small>
                         </h2>
-                        <small>More than <?= $stat->getInPercentageRoundedDown($stat->completedApplicants) ?>% completed applicants</small>
+                        <small>
+                            <?= $stat->countPercentage($stat->completedApplicants) ?>% completed applicants
+                        </small>
                     </div>
                 </div>
             </div>
@@ -84,7 +86,7 @@ $this->registerJs("$(document).on('change', '#date-range-selector', function () 
                         <div class="media-chart">
                             <canvas data-chart="doughnut" data-animation="false"
                                     data-labels='["Completed", "In Progress"]'
-                                    data-values='[{"backgroundColor": ["#431f4d", "#ffffff"], "borderColor": ["#292929", "#292929"], "data": [<?= $stat->activeApplicants ?>, <?= $stat->allApplicants ?>]}]'
+                                    data-values='[{"backgroundColor": ["#431f4d", "#ffffff"], "borderColor": ["#292929", "#292929"], "data": [<?= $stat->activeApplicants ?>, <?= $stat->allApplicants ?: 1 ?>]}]'
                                     data-hide='["legend", "scalesX", "scalesY", "tooltips"]' height="64"
                                     width="64"></canvas>
                         </div>
@@ -94,7 +96,9 @@ $this->registerJs("$(document).on('change', '#date-range-selector', function () 
                             <span class="fw-l"><?= $stat->activeApplicants ?></span>
                             <small>In Progress</small>
                         </h2>
-                        <small>Less than <?= $stat->getInPercentageRoundedUp($stat->activeApplicants) ?>% in progress applicants</small>
+                        <small>
+                            <?= $stat->countPercentage($stat->activeApplicants) ?>% applicants in progress
+                        </small>
                     </div>
                 </div>
             </div>

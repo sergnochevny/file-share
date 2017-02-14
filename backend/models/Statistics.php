@@ -4,6 +4,8 @@
 namespace backend\models;
 
 
+use common\models\query\UndeletableActiveQuery;
+use yii\base\ErrorException;
 use yii\base\Model;
 
 /**
@@ -15,14 +17,24 @@ use yii\base\Model;
  * @property integer $completedApplicants
  * @property integer $activeApplicants
  * @property integer $pendingApplicants
+ *
+ *
+ * @property DateTime $startDateTime
+ * @property DateTime $dndDateTime
+ * @property \DateInterval $dateInterval
+ * @property UndeletableActiveQuery $investigationQuery
  */
 class Statistics extends Model
 {
+    /** @var string */
     public $dateRange;
 
+    /**
+     * @inheritdoc
+     */
     public function init()
     {
-        $this->dateRange = 'last_7d';
+        $this->dateRange = 'P7D';
     }
 
     /**
@@ -43,17 +55,18 @@ class Statistics extends Model
     public function getDateRangeList()
     {
         return [
-            'today' => 'Today',
-            'yesterday' => 'Yesterday',
-            'last_7d' => 'Last 7 days',
-            'last_1m' => 'Last 30 days',
-            'last_3m' => 'Last 90 days',
+            //'P0D' => 'Today',
+            //'P1D' => 'Yesterday',
+            'P1D' => 'Last 24 hours',
+            'P7D' => 'Last 7 days',
+            'P30D' => 'Last 30 days',
+            'P90D' => 'Last 90 days',
         ];
     }
 
     public function getAllApplicants()
     {
-        return Investigation::find()->count();
+        return $this->getInvestigationQuery()->count();
     }
 
     public function getCompletedApplicants()
@@ -71,10 +84,31 @@ class Statistics extends Model
         return $this->countApplicantsWithStatus(Investigation::STATUS_PENDING);
     }
 
-    public function countApplicantsWithStatus($status)
-    {
-        return Investigation::find()->where(['status' => $status])->count();
 
+
+    /**
+     * @return \DateTime
+     */
+    public function getStartDateTime()
+    {
+        return $this->getEndDateTime()->minus($this->getDateInterval());
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getEndDateTime()
+    {
+       return new DateTime();
+    }
+
+    /**
+     * @return \DateInterval
+     * @throws ErrorException
+     */
+    public function getDateInterval()
+    {
+        return new \DateInterval($this->dateRange);
     }
 
     /**
@@ -106,12 +140,43 @@ class Statistics extends Model
     }
 
     /**
-     * @param $value
+     * @param int $value
      * @return float|int
      */
-    private function countPercentage($value)
+    public function countPercentage($value)
     {
         $allApplicants = $this->getAllApplicants();
         return $allApplicants ? ($value / $allApplicants) * 100 : 0;
+    }
+
+    /**
+     * Gets main query.
+     * All queries must builds from this query if you need apply date range
+     *
+     * @return UndeletableActiveQuery
+     * @throws \ErrorException when validation failed
+     */
+    public function getInvestigationQuery()
+    {
+        if (!$this->validate()) {
+            throw new ErrorException('Validation is failed');
+        }
+
+        return Investigation::find()
+            ->andWhere([
+                'between',
+                'updated_at',
+                $this->getStartDateTime()->getTimestamp(),
+                $this->getEndDateTime()->getTimestamp()
+            ]);
+    }
+
+    /**
+     * @param int $status
+     * @return int|string
+     */
+    private function countApplicantsWithStatus($status)
+    {
+        return $this->getInvestigationQuery()->andWhere(['status' => $status])->count();
     }
 }
