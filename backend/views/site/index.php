@@ -39,14 +39,19 @@ $this->registerJs("$(document).on('change', '#date-range-selector', function () 
                         <span class="bg-gray sq-64 circle"><span class="icon icon-flag"></span></span>
                     </div>
                     <div class="media-middle media-body">
-                        <h3 class="media-heading">
+                        <h2 class="media-heading">
                             <span class="fw-l"><?= $stat->allApplicants ?></span>
+                            <small>Applicants</small>
                             <!--<span class="fw-b fz-sm text-danger">
                                 <span class="icon icon-caret-up"></span>
                                 15%
                             </span>-->
-                        </h3>
-                        <small><?= $stat->pendingApplicants ?> applicant are pending</small>
+                        </h2>
+                        <small>
+                            <?=  Yii::t('app', '{n, plural, =1{# applicant is} other{# applicants are}} pending', array(
+                                'n' => $stat->pendingApplicants,
+                            )) ?>
+                        </small>
                     </div>
                 </div>
             </div>
@@ -107,11 +112,11 @@ $this->registerJs("$(document).on('change', '#date-range-selector', function () 
 </div>
 
 
-<!--<div class="row gutter-xs">
-    <div class="col-xs-12 col-md-6">
+<div class="row gutter-xs">
+    <div class="col-xs-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Income / Expenses</h4>
+                <h4 class="card-title">New Applicants For The Last 30 Days</h4>
             </div>
             <div class="card-body">
                 <div class="card-chart">
@@ -124,20 +129,4 @@ $this->registerJs("$(document).on('change', '#date-range-selector', function () 
             </div>
         </div>
     </div>
-    <div class="col-xs-12 col-md-6">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Pass / Failed</h4>
-            </div>
-            <div class="card-body">
-                <div class="card-chart">
-                    <canvas data-chart="bar" data-animation="false"
-                            data-labels='["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]'
-                            data-values='[{"label": "Pass", "backgroundColor": "#87764e", "borderColor": "#87764e", "data": [3089, 2132, 1854, 2326, 3274, 3679, 3075]}, {"label": "Failed", "backgroundColor": "#da1021", "borderColor": "#da1021", "data": [983, 2232, 3057, 2238, 1613, 2194, 3874]}]'
-                            data-tooltips='{"mode": "label"}' data-hide='["gridLinesX", "legend"]'
-                            height="150"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>-->
+</div>
