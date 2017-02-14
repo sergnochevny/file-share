@@ -41,16 +41,17 @@ $this->registerJs("$(document).on('change', '#date-range-selector', function () 
                     <div class="media-middle media-body">
                         <h2 class="media-heading">
                             <span class="fw-l"><?= $stat->allApplicants ?></span>
-                            <small>Applicants</small>
-                            <!--<span class="fw-b fz-sm text-danger">
-                                <span class="icon icon-caret-up"></span>
-                                15%
-                            </span>-->
+                            <small>
+                                <?= Yii::t('app', '{n, plural, =1{Applicant} other{Applicants}}', [
+                                        'n' => $stat->allApplicants
+                                ]) ?>
+
+                            </small>
                         </h2>
                         <small>
-                            <?=  Yii::t('app', '{n, plural, =1{# applicant is} other{# applicants are}} pending', array(
+                            <?=  Yii::t('app', '{n, plural, =1{# applicant is} other{# applicants are}} pending', [
                                 'n' => $stat->pendingApplicants,
-                            )) ?>
+                            ]) ?>
                         </small>
                     </div>
                 </div>
