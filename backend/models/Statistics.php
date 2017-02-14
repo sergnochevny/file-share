@@ -146,7 +146,7 @@ class Statistics extends Model
     public function countPercentage($value)
     {
         $allApplicants = $this->getAllApplicants();
-        return $allApplicants ? ($value / $allApplicants) * 100 : 0;
+        return $allApplicants ? round(($value / $allApplicants) * 100) : 0;
     }
 
     /**

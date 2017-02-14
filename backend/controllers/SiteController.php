@@ -6,6 +6,7 @@ use backend\behaviors\RememberUrlBehavior;
 use backend\models\forms\LoginForm;
 use backend\models\forms\PasswordResetForm;
 use backend\models\forms\RestorePasswordRequestForm;
+use backend\models\Graph;
 use backend\models\Statistics;
 use common\helpers\Url;
 use Yii;
@@ -76,7 +77,14 @@ class SiteController extends Controller
         $statistics = new Statistics();
         $statistics->load(Yii::$app->request->post());
 
-        return $this->render('index', ['stat' => $statistics]);
+        $interval = new \DateInterval('P30D');
+        $step = new \DateInterval('P1D');
+        $graph = new Graph($interval, $step);
+
+        return $this->render('index', [
+            'stat' => $statistics,
+            'graph' => $graph,
+        ]);
     }
 
     /**

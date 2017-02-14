@@ -1,5 +1,6 @@
 <?php
 /** @var $stat \backend\models\Statistics */
+/** @var $graph \backend\models\Graph */
 /** @var $this \yii\web\View */
 
 use yii\widgets\ActiveForm;
@@ -122,10 +123,10 @@ $this->registerJs("$(document).on('change', '#date-range-selector', function () 
             <div class="card-body">
                 <div class="card-chart">
                     <canvas data-chart="line" data-animation="false"
-                            data-labels='["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]'
-                            data-values='[{"label": "Income", "backgroundColor": "transparent", "borderColor": "#87764e", "pointBackgroundColor": "#87764e", "data": [29432, 20314, 17665, 22162, 31194, 35053, 29298]}, {"label": "Expenses", "backgroundColor": "transparent", "borderColor": "#da1021", "pointBackgroundColor": "#da1021", "data": [9956, 22607, 30963, 22668, 16338, 22222, 39238]}]'
+                            data-labels='<?= json_encode(array_keys($graph->getDataForGraph())) ?>'
+                            data-values='[{"label": "New Applicants", "backgroundColor": "transparent", "borderColor": "#87764e", "pointBackgroundColor": "#87764e", "data": <?= json_encode(array_values($graph->getDataForGraph())) ?>}]'
                             data-tooltips='{"mode": "label"}' data-hide='["gridLinesX", "legend"]'
-                            height="150"></canvas>
+                            height="100px"></canvas>
                 </div>
             </div>
         </div>
