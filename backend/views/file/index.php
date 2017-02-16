@@ -89,12 +89,14 @@ if (!empty($investigation)) {
                                     </div>
                                     <div class="modal-body">
                                         <?= Html::activeTextarea($uploadModel, 'description', [
-                                                'class' => 'form-control',
-                                                'style' => 'width: 100%; height: 100px; color: #000;',
+                                            'class' => 'form-control',
+                                            'style' => 'width: 100%; height: 100px; color: #000;',
                                         ]) ?>
                                     </div>
                                     <div class="modal-footer">
-                                        <button id="photo-upload" type="button" class="btn btn-default" data-dismiss="modal">Upload</button>
+                                        <button id="photo-upload" type="button" class="btn btn-default"
+                                                data-dismiss="modal">Upload
+                                        </button>
                                     </div>
                                 </div>
 
@@ -117,9 +119,9 @@ if (!empty($investigation)) {
                 </div>
                 <div class="form-inline no-footer">
                     <?php
-                        if(!empty($investigation)) $action = Url::to([null, 'id'=>$investigation->id]);
+                    $action = empty($investigation) ?: Url::to([null, 'id' => $investigation->id]);
                     ?>
-                    <?= $this->render('/search/_search', ['model' => $searchModel, 'action'=>$action]); ?>
+                    <?= $this->render('/search/_search', ['model' => $searchModel, 'action' => $action]); ?>
 
                     <?= GridView::widget([
                         'dataProvider' => $dataProvider,
