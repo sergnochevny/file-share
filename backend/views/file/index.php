@@ -116,7 +116,10 @@ if (!empty($investigation)) {
                     </div>
                 </div>
                 <div class="form-inline no-footer">
-                    <?= $this->render('/search/_search', ['model' => $searchModel]); ?>
+                    <?php
+                        if(!empty($investigation)) $action = Url::to([null, 'id'=>$investigation->id]);
+                    ?>
+                    <?= $this->render('/search/_search', ['model' => $searchModel, 'action'=>$action]); ?>
 
                     <?= GridView::widget([
                         'dataProvider' => $dataProvider,

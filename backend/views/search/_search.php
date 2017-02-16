@@ -9,11 +9,11 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 
 $this->registerJsFile(YII_ENV_DEV ? '@web/js/form_search.js' : '@web/js/form_search.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
-
+$action = !empty($action)?$action:null;
 ?>
 <?php $form = ActiveForm::begin([
     'id' => 'form_search',
-    'action' => Url::to(['index'], true),
+    'action' => $action,
     'method' => 'get',
     'fieldConfig' => [
         'template' => '<label>{input}</label>',

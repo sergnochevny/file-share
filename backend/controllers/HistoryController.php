@@ -58,9 +58,7 @@ class HistoryController extends Controller
     public function actionIndex()
     {
         $searchModel = new HistorySearch();
-
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
 
         return $this->render('index', [

@@ -22,7 +22,8 @@ class HistorySearch extends History
     public function rules()
     {
         return [
-            [['parent', 'created_at', 'type', 'created_at'], 'safe']
+            [['parent', 'created_at', 'type', 'created_at'], 'safe'],
+            [['pagesize'], 'integer']
         ];
     }
 

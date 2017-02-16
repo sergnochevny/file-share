@@ -93,7 +93,14 @@ class FileController extends Controller
             $uploadModel->parent = $parent;
             $searchModel->parent = $parent;
         }
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        //Save request params, except parent
+        // if parent set then loads all files instead of investigation's files
+        /** @var Request $rq */
+        $params = Yii::$app->request->queryParams;
+        $params['parent'] = $parent;
+        $params['id'] = $id;
+
+        $dataProvider = $searchModel->search($params);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
         $renderParams = [
             'searchModel' => $searchModel,
@@ -126,15 +133,6 @@ class FileController extends Controller
         }
 
         $inv = Investigation::findOne(['citrix_id' => $parent]);
-
-        //Save request params, except parent
-        // if parent set then loads all files instead of investigation's files
-        /** @var Request $rq */
-        $rq = Yii::$app->getRequest();
-        $params = $rq->getQueryParams();
-        $params['parent'] = null;
-        $params['id'] = $inv->id;
-        $rq->setQueryParams($params);
 
         if (!empty($parent)) return $this->actionIndex($inv->id);
         return $this->actionIndex();
