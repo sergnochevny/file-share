@@ -13,21 +13,13 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
-
     <?= $form->field($model, 'size')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'parent')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'type')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'citrix_id')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'created_at')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'updated_at')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'status')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">

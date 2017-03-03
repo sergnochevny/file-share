@@ -89,13 +89,14 @@ if (!empty($investigation)) {
                                     </div>
                                     <div class="modal-body">
                                         <?= Html::activeTextarea($uploadModel, 'description', [
+                                            'form' => $uploadForm->id,
                                             'class' => 'form-control',
                                             'style' => 'width: 100%; height: 100px; color: #000;',
                                         ]) ?>
                                     </div>
                                     <div class="modal-footer">
-                                        <button id="photo-upload" type="button" class="btn btn-default"
-                                                data-dismiss="modal">Upload
+                                        <button id="photo-upload" type="button" class="btn btn-default">
+                                            Upload
                                         </button>
                                     </div>
                                 </div>

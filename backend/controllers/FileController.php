@@ -108,6 +108,7 @@ class FileController extends Controller
             'uploadModel' => $uploadModel,
             'investigation' => $investigation,
         ];
+        if(Yii::$app->request->isAjax) return $this->renderAjax('index', $renderParams);
         return $this->render('index', $renderParams);
     }
 
