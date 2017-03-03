@@ -16,7 +16,7 @@
         $('#upload-file')[0].reset();
     };
 
-    $('#file-description').on('hide.bs.modal', clearForm);
+    $(document).on('hide.bs.modal', '#file-description', clearForm);
 
 })(jQuery);
 

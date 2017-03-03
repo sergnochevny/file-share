@@ -107,7 +107,6 @@ if (!empty($investigation)) {
                     <?php endif; ?>
 
                     <?php
-                    $this->registerJsFile(YII_ENV_DEV ? '@web/js/input_upload_submit.js' : '@web/js/input_upload_submit.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
                     \backend\widgets\ActiveForm::end();
                     ?>
                     <div class="panel panel-body" data-toggle="match-height">
@@ -254,3 +253,6 @@ if (!empty($investigation)) {
 </div>
 
 <?php Pjax::end(); ?>
+<?php
+$this->registerJsFile(YII_ENV_DEV ? '@web/js/input_upload_submit.js' : '@web/js/input_upload_submit.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+?>
