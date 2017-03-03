@@ -4,6 +4,7 @@ namespace common\models;
 
 
 use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "{{%investigation}}".
@@ -62,10 +63,13 @@ class Investigation extends UndeletableActiveRecord
         return [
             [['company_id'], 'required', 'message' => 'Please select company'],
             [['company_id'], 'integer'],
-            [['start_date', 'end_date'], 'parseDates'],
-            [['name', 'contact_person', 'phone', 'email'], 'string'],
+            ['start_date', 'default', 'value' => new Expression('NOW()')],
+            ['name', 'required'],
+            [['name', 'contact_person'], 'string'],
+            ['phone', 'number'],
+            ['email', 'email'],
             [['description'], 'string', 'max' => 2000],
-            ['status', 'default', 'value' => self::STATUS_PENDING],
+            ['status', 'default', 'value' => self::STATUS_IN_PROGRESS],
             ['status', 'in', 'range' => [
                 self::STATUS_COMPLETED, self::STATUS_IN_PROGRESS, self::STATUS_PENDING,
                 self::STATUS_IN_HISTORY, self::STATUS_CANCELLED, self::STATUS_DELETED
@@ -80,7 +84,7 @@ class Investigation extends UndeletableActiveRecord
 
     /**
      * Validates and converts date from jUI to Y-m-d mysql date
-     *
+     * @todo remove. Not needed any more
      * @param $attribute
      * @param $params
      */
@@ -148,7 +152,7 @@ class Investigation extends UndeletableActiveRecord
             'company_id' => 'Company ID',
             'start_date' => 'Start Date',
             'end_date' => 'End Date',
-            'name' => 'Name',
+            'name' => 'Applicant Name',
             'description' => 'Description',
             'contact_person' => 'Contact Person',
             'phone' => 'Phone',

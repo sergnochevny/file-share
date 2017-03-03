@@ -31,22 +31,9 @@ $isShowCompany = User::isAdmin() && (Company::find()->count() > 0);
 
             <?= $form->field($investigationForm, 'name')->textInput(['placeholder' => 'Name']) ?>
 
-            <?= $form->field($investigationForm, 'description')->textarea(['placeholder' => 'Provide Description']) ?>
-
-            <?= $form->field($investigationForm, 'start_date')->widget(DatePicker::class, [
-                'clientOptions' => [
-                    'onSelect' => new \yii\web\JsExpression('function (dateText, inst) {
-                        $("#'.\yii\helpers\Html::getInputId($investigationForm, 'end_date').'").datepicker("option", "minDate", new Date(inst.selectedYear, inst.selectedMonth, inst.selectedDay));
-                    }'),
-                ],
-            ]) ?>
-
-            <?= $form->field($investigationForm, 'end_date')->widget(DatePicker::class, [
-                'clientOptions' => [
-                    'onSelect' => new \yii\web\JsExpression('function (dateText, inst) {
-                        $("#'.\yii\helpers\Html::getInputId($investigationForm, 'start_date').'").datepicker("option", "maxDate", new Date(inst.selectedYear, inst.selectedMonth, inst.selectedDay));
-                    }'),
-                ],
+            <?= $form->field($investigationForm, 'description')->textarea([
+                'placeholder' => 'Provide Description',
+                'style' => 'height: 99px;'
             ]) ?>
 
         </div>
@@ -56,8 +43,6 @@ $isShowCompany = User::isAdmin() && (Company::find()->count() > 0);
             <?= $form->field($investigationForm, 'phone')->input('tel', ['placeholder' => 'Phone Number']) ?>
 
             <?= $form->field($investigationForm, 'email')->textInput(['placeholder' => 'Contact Email Address']) ?>
-
-            <?= $form->field($investigationForm, 'status')->dropDownList(\backend\models\Investigation::getStatusesList(),['prompt' => 'Select Status']) ?>
         </div>
 
         <div class="clearfix"></div>
