@@ -148,7 +148,7 @@ class Investigation extends UndeletableActiveRecord
             'company_id' => 'Company ID',
             'start_date' => 'Start Date',
             'end_date' => 'End Date',
-            'name' => 'Name',
+            'name' => 'Applicant',
             'description' => 'Description',
             'contact_person' => 'Contact Person',
             'phone' => 'Phone',
