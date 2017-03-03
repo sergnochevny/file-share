@@ -60,7 +60,7 @@ class Investigation extends UndeletableActiveRecord
     public function rules()
     {
         return [
-            [['company_id'], 'required'],
+            [['company_id'], 'required', 'message' => 'Please select company'],
             [['company_id'], 'integer'],
             [['start_date', 'end_date'], 'parseDates'],
             [['name', 'contact_person', 'phone', 'email'], 'string'],
