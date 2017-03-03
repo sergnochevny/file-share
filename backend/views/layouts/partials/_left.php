@@ -25,35 +25,12 @@ $userCompany = Yii::$app->user->identity->company;
                         'label' => 'Companies',
                         'url' => ['/company'],
                         'options' => ['icon' => 'icon-contao'],
-                        'badges' => function () {
-                            $count = Company::find()->count();
-                            return $count ? Html::tag('span', $count, ['class' => 'badge badge-success', 'title' => 'Active']) : '';
-                        }
                     ];
                 }
                 $items[] = [
                     'label' => 'Applicants',
                     'url' => ['/investigation'],
                     'options' => ['icon' => 'icon-folder-open-o'],
-                    'badges' => function () use ($userCompany) {
-                        $stPending = Investigation::STATUS_PENDING;
-                        $stInProgress = Investigation::STATUS_IN_PROGRESS;
-
-                        $q = Investigation::find()
-                            ->select(['COUNT(*) as cnt', 'status', 'company_id'])
-                            ->asArray()
-                            ->where(['status' => [$stPending, $stInProgress]]);
-                        if (isset($userCompany)) {
-                            $q->andWhere(['company_id' => $userCompany->id]);
-                        }
-                        $counts = $q->groupBy(['status'])->all();
-                        $counts = array_column($counts, 'cnt', 'status');
-
-                        $pending = isset($counts[$stPending]) ? Html::tag('span', $counts[$stPending], ['class' => 'badge badge-info', 'title' => 'Pending']) : '';
-                        $inProgress = isset($counts[$stInProgress]) ? Html::tag('span', $counts[$stInProgress], ['class' => 'badge badge-warning', 'title' => 'In progress']) : '';
-
-                        return $pending . $inProgress;
-                    },
                 ];
                 $items[] = ['label' => 'History', 'url' => ['/history'], 'options' => ['icon' => 'icon-history']];
                 $items[] = ['label' => 'Files', 'url' => ['/file'], 'options' => ['icon' => 'icon-save']];
@@ -62,15 +39,6 @@ $userCompany = Yii::$app->user->identity->company;
                     'label' => 'Users',
                     'url' => ['/user'],
                     'options' => ['icon' => 'icon-users'],
-                    'badges' => function () use ($userCompany) {
-                        $q = User::find()->joinWith('company');
-                        if (isset($userCompany)) {
-                            $q->andWhere(['company.id' => $userCompany->id]);
-                        }
-                        $count = $q->count();
-
-                        return $count ? Html::tag('span', $count, ['class' => 'badge badge-success', 'title' => 'Active']) : '';
-                    },
                 ];
                 //                }
 
@@ -78,7 +46,7 @@ $userCompany = Yii::$app->user->identity->company;
                 <?= Menu::widget([
                     'options' => ['class' => 'sidenav'],
                     'itemOptions' => ['class' => 'sidenav-item'],
-                    'linkTemplate' => '<a href="{url}">{badges}<span class="sidenav-icon icon {icon}"></span><span class="sidenav-label">{label}</span></a>',
+                    'linkTemplate' => '<a href="{url}"><span class="sidenav-icon icon {icon}"></span><span class="sidenav-label">{label}</span></a>',
                     'activeItem' => function ($widget, $item) {
                         $res = null;
                         if (isset($item['url']) && isset($item['url'][0])) {

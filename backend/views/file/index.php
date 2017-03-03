@@ -89,13 +89,14 @@ if (!empty($investigation)) {
                                     </div>
                                     <div class="modal-body">
                                         <?= Html::activeTextarea($uploadModel, 'description', [
+                                            'form' => $uploadForm->id,
                                             'class' => 'form-control',
                                             'style' => 'width: 100%; height: 100px; color: #000;',
                                         ]) ?>
                                     </div>
                                     <div class="modal-footer">
-                                        <button id="photo-upload" type="button" class="btn btn-default"
-                                                data-dismiss="modal">Upload
+                                        <button id="photo-upload" type="button" class="btn btn-default">
+                                            Upload
                                         </button>
                                     </div>
                                 </div>
@@ -106,7 +107,6 @@ if (!empty($investigation)) {
                     <?php endif; ?>
 
                     <?php
-                    $this->registerJsFile(YII_ENV_DEV ? '@web/js/input_upload_submit.js' : '@web/js/input_upload_submit.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
                     \backend\widgets\ActiveForm::end();
                     ?>
                     <div class="panel panel-body" data-toggle="match-height">
@@ -253,3 +253,6 @@ if (!empty($investigation)) {
 </div>
 
 <?php Pjax::end(); ?>
+<?php
+$this->registerJsFile(YII_ENV_DEV ? '@web/js/input_upload_submit.js' : '@web/js/input_upload_submit.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+?>
