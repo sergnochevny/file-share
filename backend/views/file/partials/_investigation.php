@@ -49,16 +49,10 @@ use yii\helpers\Html;
                     <div class="col-sm-6">
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <span class="pull-right"><span
+                                <span class="pull-right"><span title="<?= Yii::$app->formatter->asDate($model->start_date, 'full') ?>"
                                             class="label label-success"><?= Yii::$app->formatter->asDate($model->start_date) ?></span></span>
                                 <span class="icon icon-calendar  icon-lg icon-fw"></span>
                                 Start date
-                            </li>
-                            <li class="list-group-item">
-                                <span class="pull-right"><span
-                                            class="label label-success"><?= Yii::$app->formatter->asDate($model->end_date) ?></span></span>
-                                <span class="icon icon-calendar  icon-lg icon-fw"></span>
-                                End date
                             </li>
                             <li class="list-group-item">
                                 <span class="pull-right"><span

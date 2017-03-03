@@ -52,22 +52,6 @@ Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout
             }
         ],
         [
-            'attribute' => 'end_date',
-            'label' => 'End date',
-            'format' => 'html',
-            'headerOptions' => [
-                'class' => 'hidden-sm hidden-xs',
-            ],
-            'contentOptions' => [
-                'class' => 'hidden-sm hidden-xs',
-                'width' => 80,
-            ],
-            'value' => function ($model, $key, $index, $column) {
-                $value = '<span class="label label-warning" >' . Yii::$app->formatter->asDate($model->{$column->attribute}) . '</span >';
-                return $value;
-            }
-        ],
-        [
             'attribute' => 'status',
             'contentOptions' => [
                 'width' => 80,
