@@ -34,6 +34,18 @@ class ProtusController extends Controller
         $this->createAdminAccount($username, $email, $password);
     }
 
+    public function actionInitSuperAdmin($adminData)
+    {
+        list($username, $email, $password) = explode(":", $adminData);
+
+        if ($this->hasErrors($username, $password)) {
+            return;
+        }
+
+        $this->initRoleSuperAdmin();
+        $this->createSuperAdminAccount($username, $email, $password);
+    }
+
     /**
      * @return bool|int
      */
@@ -61,8 +73,24 @@ class ProtusController extends Controller
         $this->stdout('OK' . "\n");
     }
 
+    /**
+     * @return bool|int
+     */
+    private function initRoleSuperAdmin()
+    {
+        $manager = \Yii::$app->getAuthManager();
+        $manager->removeAll();
 
-    private function createAdminAccount($username, $email, $password)
+        $admin = $manager->getRole('admin');
+        $sadmin = $manager->createRole('superadmin');
+        $manager->add($sadmin);
+        //add all client permissions to admin
+        $manager->addChild($sadmin, $admin);
+
+        $this->stdout('OK' . "\n");
+    }
+
+    private function createSuperAdminAccount($username, $email, $password)
     {
         $user = new User();
         $user->username = $username;
@@ -70,14 +98,14 @@ class ProtusController extends Controller
         $user->setPassword($password);
         $user->generateAuthKey();
         if (!$user->save()) {
-            return $this->stdout("Admin user was not created" . PHP_EOL, Console::FG_RED);
+            return $this->stdout("Super Admin user was not created" . PHP_EOL, Console::FG_RED);
         }
 
         $manager = \Yii::$app->getAuthManager();
-        $admin = $manager->getRole('admin');
-        $manager->assign($admin, $user->id);
+        $sadmin = $manager->getRole('superadmin');
+        $manager->assign($sadmin, $user->id);
 
-        return $this->stdout('Admin user was successfully created' . PHP_EOL, Console::FG_GREEN);
+        return $this->stdout('Super Admin user was successfully created' . PHP_EOL, Console::FG_GREEN);
     }
 
     /**
