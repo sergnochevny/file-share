@@ -90,6 +90,24 @@ class ProtusController extends Controller
         $this->stdout('OK' . "\n");
     }
 
+    private function createAdminAccount($username, $email, $password)
+    {
+        $user = new User();
+        $user->username = $username;
+        $user->email = $email;
+        $user->setPassword($password);
+        $user->generateAuthKey();
+        if (!$user->save()) {
+            return $this->stdout("Admin user was not created" . PHP_EOL, Console::FG_RED);
+        }
+
+        $manager = \Yii::$app->getAuthManager();
+        $admin = $manager->getRole('admin');
+        $manager->assign($admin, $user->id);
+
+        return $this->stdout('Admin user was successfully created' . PHP_EOL, Console::FG_GREEN);
+    }
+
     private function createSuperAdminAccount($username, $email, $password)
     {
         $user = new User();
