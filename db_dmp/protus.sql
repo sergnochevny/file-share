@@ -89,7 +89,7 @@ INSERT INTO `auth_rule` (`name`, `data`, `created_at`, `updated_at`) VALUES
 -- Дамп структуры для таблица protus.company
 DROP TABLE IF EXISTS `company`;
 CREATE TABLE IF NOT EXISTS `company` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
   `address` varchar(255) DEFAULT NULL,
@@ -182,7 +182,7 @@ INSERT INTO `history` (`id`, `name`, `parent`, `type`, `created_at`, `company_id
 -- Дамп структуры для таблица protus.investigation
 DROP TABLE IF EXISTS `investigation`;
 CREATE TABLE IF NOT EXISTS `investigation` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `company_id` int(11) unsigned NOT NULL,
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
@@ -232,7 +232,7 @@ INSERT INTO `key_storage` (`name`, `value`, `comment`, `updated_at`, `created_at
 -- Дамп структуры для таблица protus.logs
 DROP TABLE IF EXISTS `logs`;
 CREATE TABLE IF NOT EXISTS `logs` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `action` varchar(255) NOT NULL,
   `created_at` int(11) unsigned NOT NULL,
   `updated_at` int(11) unsigned NOT NULL,
@@ -270,7 +270,7 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 -- Дамп структуры для таблица protus.user
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `first_name` varchar(255) DEFAULT NULL,
   `last_name` varchar(255) DEFAULT NULL,
   `phone_number` varchar(255) DEFAULT NULL,
@@ -327,11 +327,53 @@ CREATE TABLE IF NOT EXISTS `user_profile` (
   KEY `idx-last_name` (`last_name`),
   KEY `idx-full_name` (`first_name`,`last_name`),
   CONSTRAINT `fk-user_profile-user_id-user-id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Дамп данных таблицы protus.user_profile: ~0 rows (приблизительно)
 /*!40000 ALTER TABLE `user_profile` DISABLE KEYS */;
 /*!40000 ALTER TABLE `user_profile` ENABLE KEYS */;
+
+
+--
+-- Структура таблицы `investigation_type`
+--
+
+DROP TABLE IF EXISTS `investigation_type`;
+CREATE TABLE IF NOT EXISTS `investigation_type` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `created_at` int(11) unsigned NOT NULL,
+  `updated_at` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+--
+-- Структура таблицы `company_investigation_type`
+--
+
+DROP TABLE IF EXISTS `company_investigation_type`;
+CREATE TABLE IF NOT EXISTS `company_investigation_type` (
+  `company_id` int(11) unsigned NOT NULL,
+  `investigation_type_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`company_id`, `investigation_type_id`),
+  CONSTRAINT `fk-company_investigation_type-company_id` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk-company_investigation_type-investigation_type_id` FOREIGN KEY (`investigation_type_id`) REFERENCES `investigation_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+--
+-- Структура таблицы `investigation_investigation_type`
+--
+
+DROP TABLE IF EXISTS `investigation_investigation_type`;
+CREATE TABLE IF NOT EXISTS `investigation_investigation_type` (
+  `investigation_id` int(11) unsigned NOT NULL,
+  `investigation_type_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`investigation_id`, `investigation_type_id`),
+  CONSTRAINT `fk-investigation_investigation_type-investigation_id` FOREIGN KEY (`investigation_id`) REFERENCES `investigation` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk-investigation_investigation_type-investigation_type_id` FOREIGN KEY (`investigation_type_id`) REFERENCES `investigation_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
