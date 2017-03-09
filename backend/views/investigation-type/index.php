@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <a class="btn btn-labeled arrow-default" href="<?= Url::previous() ?>"><span class="btn-label"><span class="icon icon-chevron-circle-left icon-lg icon-fw"></span></span> Back</a>
     </div>
     <h1 class="title-bar-title">
-        <span class="d-ib"><span class="icon icon-info-circle"></span> <b><?= Html::encode($this->title) ?></b></span>
+        <span class="d-ib"><span class="icon icon-c"></span> <b><?= Html::encode($this->title) ?></b></span>
     </h1>
     <p class="title-bar-description">
         <small>List of all applicant types</small>
