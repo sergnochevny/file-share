@@ -5,6 +5,7 @@ namespace console\controllers;
 
 
 use backend\components\rbac\rules\EmployeeRule;
+use Citrix\ShareFile\Api\Models\Query;
 use common\models\User;
 use yii\console\Controller;
 use yii\helpers\Console;
@@ -17,7 +18,7 @@ class ProtusController extends Controller
 {
 
     /**
-     * Initiate site. Creates roles client and admin. Creates admin account
+     * Initiate site. Creates roles client, admin and super admin. Creates super admin account. WARNING! If you already have db with roles, this will overwrite it. To add role or user see add-role, create-user respectively
      *
      * @param string $adminData username:email:password[Minimum 8 digits]
      * @return string
@@ -31,19 +32,82 @@ class ProtusController extends Controller
         }
 
         $this->initRoles();
-        $this->createAdminAccount($username, $email, $password);
+        return $this->createSuperAdminAccount($username, $email, $password);
     }
 
-    public function actionInitSuperAdmin($adminData)
+    /**
+     * Adds role to DB. If set child new role will get this child
+     *
+     * @param string $name Name of new role
+     * @param bool|string $child Name of child (optional)
+     * @return bool|int
+     */
+    public function actionAddRole($name, $child = false)
     {
-        list($username, $email, $password) = explode(":", $adminData);
-
-        if ($this->hasErrors($username, $password)) {
-            return;
+        $manager = \Yii::$app->getAuthManager();
+        //ensure that user want overwrite roles
+        if ($manager->getRole($name)) {
+            return $this->stderr('Role already exists' . PHP_EOL, Console::FG_RED);
         }
 
-        $this->initRoleSuperAdmin();
-        $this->createSuperAdminAccount($username, $email, $password);
+        $newRole = $manager->createRole($name);
+        $manager->add($newRole);
+        if ($child) {
+            $child = $manager->getRole($child);
+            $manager->addChild($newRole, $child);
+        }
+
+        return $this->stdout('Role added' . PHP_EOL, Console::FG_GREEN);
+    }
+
+    /**
+     * Creates user and assigns a role. Usage: protus/create-user username:email:password:role
+     *
+     * @param $userData
+     * @return bool|int
+     */
+    public function actionCreateUser($userData)
+    {
+        list($username, $email, $password, $role) = explode(":", $userData);
+        $manager = \Yii::$app->getAuthManager();
+        $role = $manager->getRole($role);
+        if ($role === null) {
+            return $this->stderr('This role does not exists' . PHP_EOL, Console::FG_RED);
+        }
+
+        $user = new User();
+        $user->username = $username;
+        $user->email = $email;
+        $user->setPassword($password);
+        $user->generateAuthKey();
+        if (!$user->save()) {
+            return $this->stdout('User ' . $user->username . ' was not created' . PHP_EOL, Console::FG_RED);
+        }
+        $manager->assign($role, $user->id);
+
+        return $this->stdout('User ' . $user->username . ' was successfully created with role ' . $role->name . PHP_EOL, Console::FG_GREEN);
+    }
+
+    /**
+     * Remove user from db. Warning! This is DELETE FROM query and not just change status to DELETE
+     * @param string $username
+     * @return string
+     */
+    public function actionRemoveUser($username)
+    {
+        $user = User::findOne(['username' => $username]);
+        if ($user) {
+            $manager = \Yii::$app->getAuthManager();
+            $manager->revokeAll($user->id);
+            $rows = \Yii::$app->getDb()->createCommand("DELETE FROM `user` WHERE `id` = {$user->id}")->execute();
+            if ($rows > 0) {
+                return $this->stdout('User was removed' . PHP_EOL, Console::FG_GREEN);
+            } else {
+                return $this->stdout('Nothing to remove' . PHP_EOL, Console::FG_GREEN);
+            }
+        }
+
+        return $this->stdout('User not found' . PHP_EOL, Console::FG_RED);
     }
 
     /**
@@ -52,14 +116,28 @@ class ProtusController extends Controller
     private function initRoles()
     {
         $manager = \Yii::$app->getAuthManager();
-        $manager->removeAll();
+        //ensure that user want overwrite roles
+        if ($manager->getRole('client')) {
+            $answer = $this->prompt('You already have some roles. Do you want overwrite it? y/yes:', ['required' => true]);
+            if (in_array(strtolower($answer), ['y', 'yes'])) {
+                $this->stdout('OK. Now will be overwrite all' . PHP_EOL, Console::FG_GREEN);
+                $manager->removeAll();
+            } else {
+                $this->stdout('OK. Nothing was touched' . PHP_EOL, Console::FG_GREEN);
+                \Yii::$app->end();
+            }
+        }
 
         $client = $manager->createRole('client');
         $admin = $manager->createRole('admin');
+        $superAdmin = $manager->createRole('superAdmin');
         $manager->add($client);
         $manager->add($admin);
+        $manager->add($superAdmin);
         //add all client permissions to admin
         $manager->addChild($admin, $client);
+        //add all admin permissions to superadmin
+        $manager->addChild($superAdmin, $admin);
 
         $rule = new EmployeeRule();
         $manager->add($rule);
@@ -70,60 +148,12 @@ class ProtusController extends Controller
         $manager->add($employee);
 
         $manager->addChild($client, $employee);
-        $this->stdout('OK' . "\n");
-    }
-
-    /**
-     * @return bool|int
-     */
-    private function initRoleSuperAdmin()
-    {
-        $manager = \Yii::$app->getAuthManager();
-        $manager->removeAll();
-
-        $admin = $manager->getRole('admin');
-        $sadmin = $manager->createRole('superadmin');
-        $manager->add($sadmin);
-        //add all client permissions to admin
-        $manager->addChild($sadmin, $admin);
-
-        $this->stdout('OK' . "\n");
-    }
-
-    private function createAdminAccount($username, $email, $password)
-    {
-        $user = new User();
-        $user->username = $username;
-        $user->email = $email;
-        $user->setPassword($password);
-        $user->generateAuthKey();
-        if (!$user->save()) {
-            return $this->stdout("Admin user was not created" . PHP_EOL, Console::FG_RED);
-        }
-
-        $manager = \Yii::$app->getAuthManager();
-        $admin = $manager->getRole('admin');
-        $manager->assign($admin, $user->id);
-
-        return $this->stdout('Admin user was successfully created' . PHP_EOL, Console::FG_GREEN);
+        return $this->stdout('OK' . "\n");
     }
 
     private function createSuperAdminAccount($username, $email, $password)
     {
-        $user = new User();
-        $user->username = $username;
-        $user->email = $email;
-        $user->setPassword($password);
-        $user->generateAuthKey();
-        if (!$user->save()) {
-            return $this->stdout("Super Admin user was not created" . PHP_EOL, Console::FG_RED);
-        }
-
-        $manager = \Yii::$app->getAuthManager();
-        $sadmin = $manager->getRole('superadmin');
-        $manager->assign($sadmin, $user->id);
-
-        return $this->stdout('Super Admin user was successfully created' . PHP_EOL, Console::FG_GREEN);
+        return $this->actionCreateUser("$username:$email:$password:superAdmin");
     }
 
     /**
