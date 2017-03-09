@@ -32,6 +32,12 @@ $userCompany = Yii::$app->user->identity->company;
                     'url' => ['/investigation'],
                     'options' => ['icon' => 'icon-folder-open-o'],
                 ];
+                $items[] = [
+                    'label' => 'Applicant Types',
+                    'url' => ['/investigation-type'],
+                    'options' => ['icon' => 'icon-folder-info-circle'],
+                    'visible' => Yii::$app->user->can('admin'),
+                ];
                 $items[] = ['label' => 'History', 'url' => ['/history'], 'options' => ['icon' => 'icon-history']];
                 $items[] = ['label' => 'Files', 'url' => ['/file'], 'options' => ['icon' => 'icon-save']];
                 //                if (Yii::$app->user->can('admin')) {
