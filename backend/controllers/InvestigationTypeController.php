@@ -8,18 +8,42 @@ use common\models\InvestigationType;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use Yii;
 
 class InvestigationTypeController extends Controller
 {
+    /**
+     * Shows list of types
+     *
+     * @return string
+     */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider(['query' => InvestigationType::find()]);
         return $this->render('index', ['dataProvider' => $dataProvider]);
     }
 
+    /**
+     * Creates new type
+     *
+     * @return string|\yii\web\Response
+     */
     public function actionAddType()
     {
+        $request = Yii::$app->getRequest();
+        $session = Yii::$app->getSession();
+        $model = new InvestigationType();
+        if ($request->isPost) {
+            if ($model->load($request->post()) && $model->save()) {
+                $session->setFlash('success', 'Type was successfully added');
+                return $this->redirect(['index']);
 
+            } else {
+                $session->setFlash('danger', 'Type was not added');
+            }
+        }
+
+        return $this->render('create', ['model' => $model]);
     }
 
     public function actionViewType()
