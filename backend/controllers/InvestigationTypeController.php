@@ -28,7 +28,7 @@ class InvestigationTypeController extends Controller
      *
      * @return string|\yii\web\Response
      */
-    public function actionAddType()
+    public function actionCreate()
     {
         $request = Yii::$app->getRequest();
         $session = Yii::$app->getSession();
@@ -44,6 +44,30 @@ class InvestigationTypeController extends Controller
         }
 
         return $this->render('create', ['model' => $model]);
+    }
+
+    /**
+     * Updates type
+     *
+     * @param $id
+     * @return string|\yii\web\Response
+     */
+    public function actionUpdate($id)
+    {
+        $request = Yii::$app->getRequest();
+        $session = Yii::$app->getSession();
+        $model = $this->findModel($id);
+        if ($request->isPost) {
+            if ($model->load($request->post()) && $model->save()) {
+                $session->setFlash('success', 'Type was successfully updated');
+                return $this->redirect(['index']);
+
+            } else {
+                $session->setFlash('danger', 'Type was not updated');
+            }
+        }
+
+        return $this->render('update', ['model' => $model]);
     }
 
     public function actionViewType()

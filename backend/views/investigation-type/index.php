@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <a class="btn btn-labeled arrow-default" href="<?= Url::previous() ?>"><span class="btn-label"><span class="icon icon-chevron-circle-left icon-lg icon-fw"></span></span> Back</a>
     </div>
     <h1 class="title-bar-title">
-        <span class="d-ib"><span class="icon icon-c"></span> <b><?= Html::encode($this->title) ?></b></span>
+        <span class="d-ib"><span class="icon icon-info-circle"></span> <b><?= Html::encode($this->title) ?></b></span>
     </h1>
     <p class="title-bar-description">
         <small>List of all applicant types</small>
@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="panel-heading">
 
 
-                <a class="btn btn-sm btn-labeled arrow-success" href="<?= Url::to(['add-type']) ?>">
+                <a class="btn btn-sm btn-labeled arrow-success" href="<?= Url::to(['create']) ?>">
                     <span class="btn-label">
                         <span class="icon icon-plus icon-lg icon-fw"></span>
                     </span>
@@ -58,13 +58,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     [
                         'class' => 'yii\grid\ActionColumn',
-                        'template' => '{edit}{delete}',
+                        'template' => '{edit}{remove}',
                         'contentOptions' => [
                             'width' => 100,
                         ],
                         'buttons' => [
                             'edit' => function ($url, $model) {
-                                return Html::a('Edit', Url::to(['/wizard/company', 'id' => $model->id], true),
+                                return Html::a('Edit', Url::to(['update', 'id' => $model->id], true),
                                     [
                                         'class' => "btn btn-primary btn-xs",
                                         'title' => 'Edit',
@@ -73,12 +73,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ]
                                 );
                             },
-                            'delete' => function ($url, $model) {
-                                return Html::a('To archive', Url::to(['/company/archive', 'id' => $model->id], true),
+                            'remove' => function ($url, $model) {
+                                return Html::a('Remove', Url::to(['remove', 'id' => $model->id], true),
                                     [
                                         'class' => "btn btn-danger btn-xs",
-                                        'title' => 'To archive',
-                                        'aria-label' => "To archive",
+                                        'title' => 'Remove',
+                                        'aria-label' => "Remove",
                                         'data-confirm' => "Confirm removal",
                                         'data-method' => "post",
                                         'data-pjax' => "0",
