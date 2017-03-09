@@ -81,7 +81,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'aria-label' => "Remove",
                                         'data-confirm' => "Confirm removal",
                                         'data-method' => "post",
-                                        'data-pjax' => "0",
                                     ]
                                 );
                             },
