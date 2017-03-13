@@ -36,7 +36,6 @@ class Company extends \common\models\Company
             /** @var $model Company */
             return $model->isAttributeChanged($attribute, false);
         }];
-        $rules[] = ['investigationTypeIds', 'safe'];
         return $rules;
     }
 

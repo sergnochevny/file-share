@@ -17,6 +17,8 @@ use yii2tech\ar\linkmany\LinkManyBehavior;
  * @property string $state
  * @property string $zip
  *
+ * @property array $investigationTypeIds
+ *
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
@@ -63,6 +65,7 @@ class Company extends UndeletableActiveRecord
             ['description', 'default', 'value' => ''],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_IN_HISTORY, self::STATUS_DELETED]],
+            ['investigationTypeIds', 'safe'],
         ];
     }
 
@@ -81,6 +84,8 @@ class Company extends UndeletableActiveRecord
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+
+            'investigationTypeIds' => 'Investigation Types'
         ];
     }
 
