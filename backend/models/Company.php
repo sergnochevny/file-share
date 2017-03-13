@@ -12,8 +12,6 @@ class Company extends \common\models\Company
 {
     use FactoryTrait;
 
-   // public $investigationTypes;
-
     /**
      * Gets list [id => name] of companies
      *

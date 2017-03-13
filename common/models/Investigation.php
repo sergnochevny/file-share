@@ -25,6 +25,8 @@ use yii2tech\ar\linkmany\LinkManyBehavior;
  * @property integer $updated_at
  * @property string $citrix_id
  *
+ * @property array $investigationTypeIds
+ *
  * @property array $statusLabels
  *
  * @property Company $company

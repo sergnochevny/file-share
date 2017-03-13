@@ -136,7 +136,7 @@ class WizardController extends Controller
      * @return string
      * @throws UserException
      */
-    public function actionInvestigation($id = null)
+    public function actionInvestigation($id = null, $companyId = null)
     {
         $request = Yii::$app->getRequest();
         /** @var Investigation $investigation */
@@ -145,6 +145,14 @@ class WizardController extends Controller
             throw new UserException('The investigation does not exits');
         }
         $isUpdate = $investigation->id > 0 ? true : false;
+        if (!$isUpdate && $companyId !== null) {
+            //fills defaults investigation types for selected company
+            $investigation->investigationTypeIds = InvestigationType::find()
+                ->joinWith('companies')
+                ->andWhere(['company_id' => $companyId])
+                ->select(InvestigationType::tableName() . '.id')
+                ->column();
+        }
 
         if ($request->isPost && $investigation->load($request->post())) {
             if (User::isClient()) {
