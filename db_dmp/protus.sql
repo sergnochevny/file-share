@@ -342,6 +342,7 @@ DROP TABLE IF EXISTS `investigation_type`;
 CREATE TABLE IF NOT EXISTS `investigation_type` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
+  `status` smallint(6) unsigned NOT NULL,
   `created_at` int(11) unsigned NOT NULL,
   `updated_at` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`)

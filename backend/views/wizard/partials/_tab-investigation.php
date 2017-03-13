@@ -47,10 +47,11 @@ $isShowCompany = User::isAdmin() && (Company::find()->count() > 0);
     </div>
 
     <div class="row">
+        <?php if (!empty($investigationTypes)): ?>
         <div class="col-sm-6 investigation-types">
             <?= $form->field($investigationForm, 'investigationTypeIds')-> checkboxList($investigationTypes) ?>
         </div>
-
+        <?php endif ?>
         <div class="clearfix"></div>
         <hr/>
         <div align="center">

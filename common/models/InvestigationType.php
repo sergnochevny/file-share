@@ -17,7 +17,7 @@ use yii\behaviors\TimestampBehavior;
  * @property InvestigationInvestigationType[] $investigationInvestigationTypes
  * @property Investigation[] $investigations
  */
-class InvestigationType extends \yii\db\ActiveRecord
+class InvestigationType extends UndeletableActiveRecord
 {
     /**
      * @inheritdoc
@@ -42,6 +42,7 @@ class InvestigationType extends \yii\db\ActiveRecord
         return [
             [['name'], 'required'],
             [['name'], 'string', 'max' => 255],
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
         ];
     }
 
