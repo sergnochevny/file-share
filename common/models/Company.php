@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\models\query\UndeletableActiveQuery;
 use yii\behaviors\TimestampBehavior;
+use yii2tech\ar\linkmany\LinkManyBehavior;
 
 /**
  * This is the model class for table "{{%company}}".
@@ -22,6 +23,7 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property Investigation[] $investigations
  * @property User[] $users
+ * @property InvestigationType[] $investigationTypes
  */
 class Company extends UndeletableActiveRecord
 {
@@ -41,6 +43,11 @@ class Company extends UndeletableActiveRecord
     {
         return [
             TimestampBehavior::class,
+            'linkGroupBehavior' => [
+                'class' => LinkManyBehavior::class,
+                'relation' => 'investigationTypes',
+                'relationReferenceAttribute' => 'investigationTypeIds',
+            ],
         ];
     }
 
@@ -99,5 +106,11 @@ class Company extends UndeletableActiveRecord
     {
         return $this->hasMany(User::class, ['id' => 'user_id'])
             ->viaTable('user_company', ['company_id' => 'id']);
+    }
+
+    public function getInvestigationTypes()
+    {
+        return $this->hasMany(InvestigationType::class, ['id' => 'investigation_type_id'])
+            ->viaTable('company_investigation_type', ['company_id' => 'id']);
     }
 }

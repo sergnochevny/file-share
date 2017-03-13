@@ -73,7 +73,7 @@ $this->title = 'Wizard';
 
                                     <?php
                                     if ($companyActive) {
-                                        echo $this->render('partials/_tab-company', compact('companyForm', 'selected', 'isUpdate'));
+                                        echo $this->render('partials/_tab-company', compact('companyForm', 'selected', 'isUpdate', 'investigationTypes'));
                                     } else if ($userActive) {
                                         echo $this->render('partials/_tab-user', compact('userForm', 'selectedUser', 'isUpdate'));
                                     } else if ($investigationActive) {

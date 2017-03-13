@@ -7,6 +7,7 @@ use backend\models\forms\UserForm;
 use backend\models\Investigation;
 use backend\models\services\UserService;
 use backend\models\User;
+use common\models\InvestigationType;
 use Yii;
 use yii\base\UserException;
 use yii\web\Controller;
@@ -58,6 +59,7 @@ class WizardController extends Controller
             'companyForm' => $company,
             'selected' => $company->id,
             'isUpdate' => $isUpdate,
+            'investigationTypes' => InvestigationType::find()->select('name')->indexBy('id')->column()
         ]);
     }
 

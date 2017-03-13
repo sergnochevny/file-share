@@ -8,6 +8,9 @@ use backend\models\Company;
 use backend\models\User;
 use yii\helpers\Url;
 
+//@todo consider to move in css file
+$this->registerCss('.investigation-types label {display: block;}');
+
 $isShowCompany = User::isAdmin() && (Company::find()->count() > 0);
 ?>
 
@@ -50,8 +53,12 @@ $isShowCompany = User::isAdmin() && (Company::find()->count() > 0);
 
             <?= $form->field($companyForm, 'description')->textarea(['placeholder' => 'Describe Your Company', 'rows' => 4]) ?>
         </div>
+    </div>
 
-
+    <div class="row">
+        <div class="col-sm-6 investigation-types">
+            <?= $form->field($companyForm, 'investigationTypeIds')-> checkboxList($investigationTypes) ?>
+        </div>
         <div class="clearfix"></div>
         <hr/>
         <div align="center">
