@@ -59,7 +59,7 @@ class WizardController extends Controller
             'companyForm' => $company,
             'selected' => $company->id,
             'isUpdate' => $isUpdate,
-            'investigationTypes' => InvestigationType::find()->select('name')->indexBy('id')->column()
+            'investigationTypes' => InvestigationType::find()->select('name')->indexBy('id')->column(),
         ]);
     }
 
@@ -165,6 +165,7 @@ class WizardController extends Controller
             'investigationForm' => $investigation,
             'selected' => $investigation->company_id,
             'isUpdate' => $investigation->id > 0 ? true : false,
+            'investigationTypes' => InvestigationType::find()->select('name')->indexBy('id')->column(),
         ]);
     }
 

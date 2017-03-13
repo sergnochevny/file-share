@@ -44,6 +44,12 @@ $isShowCompany = User::isAdmin() && (Company::find()->count() > 0);
 
             <?= $form->field($investigationForm, 'email')->textInput(['placeholder' => 'Contact Email Address']) ?>
         </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 investigation-types">
+            <?= $form->field($investigationForm, 'investigationTypeIds')-> checkboxList($investigationTypes) ?>
+        </div>
 
         <div class="clearfix"></div>
         <hr/>

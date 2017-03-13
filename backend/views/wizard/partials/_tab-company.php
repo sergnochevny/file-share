@@ -8,8 +8,6 @@ use backend\models\Company;
 use backend\models\User;
 use yii\helpers\Url;
 
-//@todo consider to move in css file
-$this->registerCss('.investigation-types label {display: block;}');
 
 $isShowCompany = User::isAdmin() && (Company::find()->count() > 0);
 ?>

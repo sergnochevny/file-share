@@ -14,6 +14,8 @@ $userActive = isset($isUser) ? $activeClass : '';
 $investigationActive = isset($isInvestigation) ? $activeClass : '';
 $isUpdate = isset($isUpdate) ? $isUpdate : false;
 
+//@todo consider to move in css file
+$this->registerCss('.investigation-types label {display: block;}');
 $this->registerJsFile('@web/js/wizard.js', ['depends' => JqueryAsset::class]);
 \yii\jui\JuiAsset::register($this);
 $this->title = 'Wizard';
@@ -77,7 +79,7 @@ $this->title = 'Wizard';
                                     } else if ($userActive) {
                                         echo $this->render('partials/_tab-user', compact('userForm', 'selectedUser', 'isUpdate'));
                                     } else if ($investigationActive) {
-                                        echo $this->render('partials/_tab-investigation', compact('investigationForm', 'isUpdate'));
+                                        echo $this->render('partials/_tab-investigation', compact('investigationForm', 'isUpdate', 'investigationTypes'));
                                     }
                                     ?>
 

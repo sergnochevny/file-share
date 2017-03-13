@@ -45,7 +45,7 @@ class Company extends UndeletableActiveRecord
     {
         return [
             TimestampBehavior::class,
-            'linkGroupBehavior' => [
+            [
                 'class' => LinkManyBehavior::class,
                 'relation' => 'investigationTypes',
                 'relationReferenceAttribute' => 'investigationTypeIds',

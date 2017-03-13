@@ -5,6 +5,7 @@ namespace common\models;
 
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
+use yii2tech\ar\linkmany\LinkManyBehavior;
 
 /**
  * This is the model class for table "{{%investigation}}".
@@ -27,6 +28,7 @@ use yii\db\Expression;
  * @property array $statusLabels
  *
  * @property Company $company
+ * @property InvestigationType[] $investigationTypes
  */
 class Investigation extends UndeletableActiveRecord
 {
@@ -52,6 +54,11 @@ class Investigation extends UndeletableActiveRecord
     {
         return [
             TimestampBehavior::class,
+            [
+                'class' => LinkManyBehavior::class,
+                'relation' => 'investigationTypes',
+                'relationReferenceAttribute' => 'investigationTypeIds',
+            ],
         ];
     }
 
@@ -79,6 +86,8 @@ class Investigation extends UndeletableActiveRecord
                 'targetClass' => Company::className(),
                 'targetAttribute' => ['company_id' => 'id']
             ],
+
+            ['investigationTypeIds', 'safe'],
         ];
     }
 
@@ -160,6 +169,8 @@ class Investigation extends UndeletableActiveRecord
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+
+            'investigationTypeIds' => 'Type'
         ];
     }
 
@@ -169,5 +180,11 @@ class Investigation extends UndeletableActiveRecord
     public function getCompany()
     {
         return $this->hasOne(Company::className(), ['id' => 'company_id'])->inverseOf('investigations');
+    }
+
+    public function getInvestigationTypes()
+    {
+        return $this->hasMany(InvestigationType::class, ['id' => 'investigation_type_id'])
+            ->viaTable('investigation_investigation_type', ['investigation_id' => 'id']);
     }
 }
