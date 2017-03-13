@@ -4,8 +4,9 @@
         companyForm = '#company-form',
         userList = '#user-list',
         userForm = '#user-form',
+        investigationCompanyList = '#investigation-form select',
+        investigationForm = '#investigation-form',
         pjaxContainer = '#wizard-container';
-
 
     function pjaxSendRequest(url, type, data) {
         $.pjax({
@@ -57,6 +58,14 @@
             $('#company-list-container').hide();
             $('#user-list-container').hide();
         }
+    });
+
+    //changes default investigation types when changing company
+    $(document).on('change', investigationCompanyList, function (event) {
+        var companyId = $(this).val(),
+            url = $(investigationForm).attr('action');
+
+        pjaxSendRequest(url, 'get', {companyId: companyId});
     });
 
 })(jQuery);

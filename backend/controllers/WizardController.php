@@ -145,13 +145,14 @@ class WizardController extends Controller
             throw new UserException('The investigation does not exits');
         }
         $isUpdate = $investigation->id > 0 ? true : false;
-        if (!$isUpdate && $companyId !== null) {
+        if ($companyId !== null && User::isAdmin()) {
             //fills defaults investigation types for selected company
             $investigation->investigationTypeIds = InvestigationType::find()
                 ->joinWith('companies')
                 ->andWhere(['company_id' => $companyId])
                 ->select(InvestigationType::tableName() . '.id')
                 ->column();
+            $investigation->company_id = $companyId;
         }
 
         if ($request->isPost && $investigation->load($request->post())) {
