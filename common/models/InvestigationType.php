@@ -59,6 +59,19 @@ class InvestigationType extends UndeletableActiveRecord
         ];
     }
 
+    /**
+     * @param int $companyId
+     * @return array
+     */
+    public static function getDefaultIdsForCompanyId($companyId)
+    {
+        return InvestigationType::find()
+            ->joinWith('companies')
+            ->andWhere(['company_id' => $companyId])
+            ->select(self::tableName() . '.id')
+            ->column();
+    }
+
 //    /**
 //     * @return \yii\db\ActiveQuery
 //     */

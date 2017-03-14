@@ -8,6 +8,7 @@ use backend\models\Company;
 use backend\models\search\CompanySearch;
 use common\helpers\Url;
 use Yii;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -33,6 +34,21 @@ class CompanyController extends Controller
                 'class' => RememberUrlBehavior::className(),
                 'actions' => ['index'],
             ],
+            [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index'],
+                        'roles' => ['admin'],
+                    ],
+                    [
+                        //all actions
+                        'allow' => true,
+                        'roles' => ['superAdmin']
+                    ],
+                ]
+            ]
         ];
     }
 
@@ -53,18 +69,6 @@ class CompanyController extends Controller
     }
 
     /**
-     * Displays a single Company model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
      * Archive an existing Company model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -74,12 +78,9 @@ class CompanyController extends Controller
     {
         $model = $this->findModel($id);
         $model->detachBehavior('citrixFolderBehavior');
-        if(Yii::$app->user->can('admin') || (!Yii::$app->user->can('admin') && Yii::$app->user->can('employee', ['company'=> $model]))){
-            $model->archive();
-            Yii::$app->session->setFlash('success', 'Archived successfully');
-        }else{
-            Yii::$app->session->setFlash('error', 'Permission denied');
-        }
+        $model->archive();
+        Yii::$app->session->setFlash('success', 'Archived successfully');
+
         return $this->actionIndex();
     }
 

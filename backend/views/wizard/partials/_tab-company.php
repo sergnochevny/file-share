@@ -39,18 +39,38 @@ $isReadOnly = User::isClient();
     <div class="row">
         <div class="col-sm-6">
 
-            <?= $form->field($companyForm, 'name')->textInput(['placeholder' => 'Company Name', 'readonly' => $isReadOnly]) ?>
+            <?= $form->field($companyForm, 'name')->textInput([
+                'placeholder' => $isReadOnly ? '' : 'Company Name',
+                'readonly' => $isReadOnly
+            ]) ?>
 
-            <?= $form->field($companyForm, 'city')->textInput(['placeholder' => 'Location City', 'readonly' => $isReadOnly]) ?>
+            <?= $form->field($companyForm, 'city')->textInput([
+                'placeholder' => $isReadOnly ? '' : 'Location City',
+                'readonly' => $isReadOnly
+            ]) ?>
 
-            <?= $form->field($companyForm, 'zip')->textInput(['placeholder' => 'Zip Code', 'maxlength' => '10', 'readonly' => $isReadOnly]) ?>
+            <?= $form->field($companyForm, 'zip')->textInput([
+                'placeholder' => $isReadOnly ? '' : 'Zip Code',
+                'maxlength' => '10',
+                'readonly' => $isReadOnly
+            ]) ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($companyForm, 'address')->textInput(['placeholder' => 'Location Address', 'readonly' => $isReadOnly]) ?>
+            <?= $form->field($companyForm, 'address')->textInput([
+                'placeholder' => $isReadOnly ? '' : 'Location Address',
+                'readonly' => $isReadOnly
+            ]) ?>
 
-            <?= $form->field($companyForm, 'state')->textInput(['placeholder' => 'Location State', 'readonly' => $isReadOnly]) ?>
+            <?= $form->field($companyForm, 'state')->textInput([
+                'placeholder' => $isReadOnly ? '' : 'Location State',
+                'readonly' => $isReadOnly
+            ]) ?>
 
-            <?= $form->field($companyForm, 'description')->textarea(['placeholder' => 'Describe Your Company', 'rows' => 4, 'readonly' => $isReadOnly]) ?>
+            <?= $form->field($companyForm, 'description')->textarea([
+                'placeholder' => $isReadOnly ? '' : 'Describe Your Company',
+                'rows' => 4,
+                'readonly' => $isReadOnly
+            ]) ?>
         </div>
     </div>
 
