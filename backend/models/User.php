@@ -6,10 +6,18 @@ namespace backend\models;
 
 use backend\behaviors\HistoryBehavior;
 use common\models\query\UndeletableActiveQuery;
+use Yii;
 
+/**
+ * Class User
+ * @package backend\models
+ *
+ * @mixin WhoIsUserTrait
+ */
 class User extends \common\models\User
 {
     use FactoryTrait;
+    use WhoIsUserTrait;
 
     /**
      * Finds by role and returns ActiveQuery
@@ -31,22 +39,6 @@ class User extends \common\models\User
     public static function getIdentity()
     {
         return \Yii::$app->getUser()->identity;
-    }
-
-    /**
-     * @return bool
-     */
-    public static function isClient()
-    {
-        return !self::isAdmin();
-    }
-
-    /**
-     * @return bool
-     */
-    public static function isAdmin()
-    {
-        return \Yii::$app->user->can('admin');
     }
 
     /**
