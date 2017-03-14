@@ -10,11 +10,40 @@ use backend\models\User;
 use common\models\InvestigationType;
 use Yii;
 use yii\base\UserException;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 
 class WizardController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['company', 'investigation'],
+                        'roles' => ['client']
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['company', 'user'],
+                        'roles' => ['admin'],
+                    ],
+                    [
+                        //all actions
+                        'allow' => true,
+                        'roles' => ['superAdmin']
+                    ],
+                ]
+            ]
+        ];
+    }
 
     /**
      * @inheritdoc
@@ -73,8 +102,6 @@ class WizardController extends Controller
     public function actionUser($id = null)
     {
         $request = Yii::$app->getRequest();
-        /** @var User $identity current user */
-        $identity = Yii::$app->getUser()->getIdentity();
         /** @var User $user */
         $user = User::create($id);
         if (null === $user) {
@@ -101,7 +128,7 @@ class WizardController extends Controller
         }
 
         if ($request->isPost && $userForm->load($request->post())) {
-            if ($identity->isClient()) {
+            if (User::isClient()) {
                 //explicitly set role and company if client creates another user
                 $userForm->role = 'client';
                 $userForm->company_id = Yii::$app->user->identity->company->id;
@@ -142,17 +169,22 @@ class WizardController extends Controller
         /** @var Investigation $investigation */
         $investigation = Investigation::create($id);
         if (null === $investigation) {
-            throw new UserException('The investigation does not exits');
+            throw new UserException('The applicant does not exits');
         }
         $isUpdate = $investigation->id > 0 ? true : false;
-        if ($companyId !== null && User::isAdmin()) {
-            //fills defaults investigation types for selected company
-            $investigation->investigationTypeIds = InvestigationType::find()
-                ->joinWith('companies')
-                ->andWhere(['company_id' => $companyId])
-                ->select(InvestigationType::tableName() . '.id')
-                ->column();
+
+        // fills defaults investigation types
+        // for selected company when selecting in dropdown
+        if ($companyId !== null && User::isSuperAdmin()) {
+            $investigation->investigationTypeIds = InvestigationType::getDefaultIdsForCompanyId($companyId);
             $investigation->company_id = $companyId;
+        }
+
+        // fills defaults investigation types
+        // when client creates a new investigation
+        if (User::isClient() && $investigation->isNewRecord) {
+            $companyId = User::getIdentity()->company->id;
+            $investigation->investigationTypeIds = InvestigationType::getDefaultIdsForCompanyId($companyId);
         }
 
         if ($request->isPost && $investigation->load($request->post())) {
