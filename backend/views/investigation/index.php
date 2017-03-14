@@ -6,6 +6,7 @@
 
 use yii\helpers\Html;
 use common\helpers\Url;
+use backend\models\User;
 
 $this->title = 'Applicants';
 $this->params['breadcrumbs'][] = $this->title;
@@ -25,9 +26,15 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="row gutter-xs">
     <div class="col-xs-12">
         <div class="panel panel-default">
+            <?php if (!User::isAdmin()): ?>
             <div class="panel-heading">
-                <?= Html::a(Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-plus icon-lg icon-fw']), ['class' => 'btn-label']) . ' Create a New Applicant', Url::to(['/wizard/investigation']), ['class' => 'btn btn-sm btn-labeled arrow-success']) ?>
+                <a class="btn btn-sm btn-labeled arrow-success" href="<?= Url::to(['/wizard/investigation']) ?>">
+                    <span class="btn-label">
+                        <span class="icon icon-plus icon-lg icon-fw"></span>
+                    </span> Create a New Applicant
+                </a>
             </div>
+            <?php endif ?>
             <?= $this->render('partials/_list',
                 [
                     'searchModel' => $searchModel,
