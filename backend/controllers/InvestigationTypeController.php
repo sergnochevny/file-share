@@ -6,12 +6,37 @@ namespace backend\controllers;
 
 use common\models\InvestigationType;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use Yii;
 
 class InvestigationTypeController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index'],
+                        'roles' => ['admin'],
+                    ],
+                    [
+                        //all actions
+                        'allow' => true,
+                        'roles' => ['superAdmin']
+                    ],
+                ]
+            ]
+        ];
+    }
+
     /**
      * Shows list of types
      *

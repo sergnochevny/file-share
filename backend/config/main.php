@@ -62,7 +62,9 @@ return [
             'rules' => [
                 '@<username:[\w-]+>/' => '/profile/index',
                 'wizard/applicant' => '/wizard/investigation',
-                'applicant' => '/investigation'
+                'applicant' => '/investigation',
+                'applicant-types' => '/investigation-type',
+                'applicant-types/<action>' => '/investigation-type/<action>',
             ]
         ],
         'formatter' => [

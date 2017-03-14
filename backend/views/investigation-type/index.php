@@ -1,5 +1,6 @@
 <?php
 
+use backend\models\User;
 use common\widgets\Alert;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -30,13 +31,14 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel panel-default">
             <div class="panel-heading">
 
-
+                <?php if (User::isSuperAdmin()): ?>
                 <a class="btn btn-sm btn-labeled arrow-success" href="<?= Url::to(['create']) ?>">
                     <span class="btn-label">
                         <span class="icon icon-plus icon-lg icon-fw"></span>
                     </span>
-                    Create a new investigation type
+                    Create a new applicant type
                 </a>
+                <?php endif ?>
 
             </div>
             <?php Pjax::begin(['id' => 'company_index', 'enablePushState' => false, 'timeout' => 0, 'options' => ['class' => 'panel-body panel-collapse']]); ?>
@@ -64,6 +66,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         'buttons' => [
                             'edit' => function ($url, $model) {
+                                if (!User::isSuperAdmin()) {
+                                    return '';
+                                }
+
                                 return Html::a('Edit', Url::to(['update', 'id' => $model->id], true),
                                     [
                                         'class' => "btn btn-primary btn-xs",
@@ -74,6 +80,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                 );
                             },
                             'remove' => function ($url, $model) {
+                                if (!User::isSuperAdmin()) {
+                                    return '';
+                                }
+
                                 return Html::a('Remove', Url::to(['remove', 'id' => $model->id], true),
                                     [
                                         'class' => "btn btn-danger btn-xs",
