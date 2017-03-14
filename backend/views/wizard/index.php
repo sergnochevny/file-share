@@ -6,6 +6,7 @@ use common\helpers\Url;
 use common\widgets\Alert;
 use yii\widgets\Pjax;
 use yii\web\JqueryAsset;
+use backend\models\User;
 
 
 $activeClass = ' active';
@@ -13,6 +14,8 @@ $companyActive = isset($isCompany) ? $activeClass : '';
 $userActive = isset($isUser) ? $activeClass : '';
 $investigationActive = isset($isInvestigation) ? $activeClass : '';
 $isUpdate = isset($isUpdate) ? $isUpdate : false;
+
+$col_xs_x = User::isSuperAdmin() ? 'col-xs-4' : 'col-xs-6';
 
 //@todo consider to move in css file
 $this->registerCss('.investigation-types label {display: block;}');
@@ -34,7 +37,16 @@ $this->title = 'Wizard';
                             </h1>
 
                             <p>
+                                <?php if (User::isSuperAdmin()): ?>
                                 <small>Add and edit Company, Users and Applicants</small>
+
+                                <?php elseif (User::isAdmin()): ?>
+                                <small>Add and edit Company and Users</small>
+
+                                <?php elseif (User::isClient()): ?>
+                                <small>Add and edit Applicants, see about your Company</small>
+
+                                <?php endif ?>
                             </p>
                         </div>
 
@@ -42,7 +54,7 @@ $this->title = 'Wizard';
                             <div id="demo-form-wizard-1" class="form form-horizontal">
                                 <hr/>
                                 <ul class="steps">
-                                    <li class="step col-xs-4<?= $companyActive ?>">
+                                    <li class="step <?= $col_xs_x ?><?= $companyActive ?>">
                                         <a class="step-segment" href="<?= Url::to(['company'], true) ?>">
                                             <span class="step-icon icon icon-contao"></span>
                                         </a>
@@ -51,7 +63,9 @@ $this->title = 'Wizard';
                                             <strong class="hidden-xs">Company</strong>
                                         </div>
                                     </li>
-                                    <li class="step col-xs-4<?= $userActive ?>">
+
+                                    <?php if (!User::isClient()): ?>
+                                    <li class="step <?= $col_xs_x ?><?= $userActive ?>">
                                         <a class="step-segment" href="<?= Url::to(['user'], true) ?>">
                                             <span class="step-icon icon icon-users"></span>
                                         </a>
@@ -60,7 +74,10 @@ $this->title = 'Wizard';
                                             <strong class="hidden-xs">Users</strong>
                                         </div>
                                     </li>
-                                    <li class="step col-xs-4<?= $investigationActive ?>">
+                                    <?php endif ?>
+
+                                    <?php if (!User::isAdmin()): ?>
+                                    <li class="step <?= $col_xs_x ?><?= $investigationActive ?>">
                                         <a class="step-segment" href="<?= Url::to(['investigation'], true) ?>">
                                             <span class="step-icon icon icon-folder-open-o"></span>
                                         </a>
@@ -69,6 +86,7 @@ $this->title = 'Wizard';
                                             <strong class="hidden-xs">Applicants</strong>
                                         </div>
                                     </li>
+                                    <?php endif ?>
                                 </ul>
                                 <hr/>
                                 <div class="tab-content">
@@ -76,9 +94,9 @@ $this->title = 'Wizard';
                                     <?php
                                     if ($companyActive) {
                                         echo $this->render('partials/_tab-company', compact('companyForm', 'selected', 'isUpdate', 'investigationTypes'));
-                                    } else if ($userActive) {
+                                    } else if ($userActive && !User::isClient()) {
                                         echo $this->render('partials/_tab-user', compact('userForm', 'selectedUser', 'isUpdate'));
-                                    } else if ($investigationActive) {
+                                    } else if ($investigationActive && !User::isAdmin()) {
                                         echo $this->render('partials/_tab-investigation', compact('investigationForm', 'isUpdate', 'investigationTypes'));
                                     }
                                     ?>

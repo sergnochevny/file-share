@@ -9,7 +9,8 @@ use backend\models\User;
 use yii\helpers\Url;
 
 
-$isShowCompany = User::isAdmin() && (Company::find()->count() > 0);
+$isShowSelectCompany = !User::isClient() && (Company::find()->count() > 0);
+$isReadOnly = User::isClient();
 ?>
 
 <div id="tab-1" class="tab-pane active">
@@ -22,7 +23,7 @@ $isShowCompany = User::isAdmin() && (Company::find()->count() > 0);
         ],
     ]) ?>
 
-    <?php if ($isShowCompany): ?>
+    <?php if ($isShowSelectCompany): ?>
     <div class="col-lg-6 col-lg-offset-3">
             <h2 align="center">
                 <span class="d-ib">Select Company</span>
@@ -34,27 +35,27 @@ $isShowCompany = User::isAdmin() && (Company::find()->count() > 0);
     <?php endif ?>
 
     <div class="clearfix"></div>
-    <?php if($isShowCompany): ?><hr/><?php endif; ?>
+    <?php if($isShowSelectCompany): ?><hr/><?php endif; ?>
     <div class="row">
         <div class="col-sm-6">
 
-            <?= $form->field($companyForm, 'name')->textInput(['placeholder' => 'Company Name']) ?>
+            <?= $form->field($companyForm, 'name')->textInput(['placeholder' => 'Company Name', 'readonly' => $isReadOnly]) ?>
 
-            <?= $form->field($companyForm, 'city')->textInput(['placeholder' => 'Location City']) ?>
+            <?= $form->field($companyForm, 'city')->textInput(['placeholder' => 'Location City', 'readonly' => $isReadOnly]) ?>
 
-            <?= $form->field($companyForm, 'zip')->textInput(['placeholder' => 'Zip Code', 'maxlength' => '10']) ?>
+            <?= $form->field($companyForm, 'zip')->textInput(['placeholder' => 'Zip Code', 'maxlength' => '10', 'readonly' => $isReadOnly]) ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($companyForm, 'address')->textInput(['placeholder' => 'Location Address']) ?>
+            <?= $form->field($companyForm, 'address')->textInput(['placeholder' => 'Location Address', 'readonly' => $isReadOnly]) ?>
 
-            <?= $form->field($companyForm, 'state')->textInput(['placeholder' => 'Location State']) ?>
+            <?= $form->field($companyForm, 'state')->textInput(['placeholder' => 'Location State', 'readonly' => $isReadOnly]) ?>
 
-            <?= $form->field($companyForm, 'description')->textarea(['placeholder' => 'Describe Your Company', 'rows' => 4]) ?>
+            <?= $form->field($companyForm, 'description')->textarea(['placeholder' => 'Describe Your Company', 'rows' => 4, 'readonly' => $isReadOnly]) ?>
         </div>
     </div>
 
     <div class="row">
-        <?php if (!empty($investigationTypes)): ?>
+        <?php if (!empty($investigationTypes) && !User::isClient()): ?>
         <div class="col-sm-6 investigation-types">
             <?= $form->field($companyForm, 'investigationTypeIds')-> checkboxList($investigationTypes) ?>
         </div>
@@ -62,13 +63,15 @@ $isShowCompany = User::isAdmin() && (Company::find()->count() > 0);
         <div class="clearfix"></div>
         <hr/>
         <div align="center">
+            <?php if (!User::isClient()): ?>
             <button class="btn btn-sm btn-labeled arrow-warning" type="submit">
                 <span class="btn-label">
                     <span class="icon icon-check-square icon-lg icon-fw"></span>
                 </span>
                 <?= $isUpdate ? 'Update' : 'Create' ?>
             </button>
-            <a href="<?= \yii\helpers\Url::to(['user'], true) ?>" class="<?= $isUpdate ? '' : 'hidden ' ?>btn btn-sm btn-labeled  arrow-success" type="button">
+            <?php endif ?>
+            <a href="<?= \yii\helpers\Url::to([User::isClient() ? 'investigation' : 'user'], true) ?>" class="<?= $isUpdate ? '' : 'hidden ' ?>btn btn-sm btn-labeled  arrow-success" type="button">
                 <span class="btn-label">
                     <span class="icon icon-chevron-circle-right  icon-lg icon-fw"></span>
                 </span>
