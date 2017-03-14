@@ -12,7 +12,7 @@ use yii\grid\SerialColumn;
 /* @var $searchModel backend\models\CompanySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Applicants types';
+$this->title = 'Applicant types';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="title-bar">
@@ -29,18 +29,16 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="row gutter-xs">
     <div class="col-xs-12">
         <div class="panel panel-default">
+            <?php if (!User::isAdmin()): ?>
             <div class="panel-heading">
-
-                <?php if (User::isSuperAdmin()): ?>
                 <a class="btn btn-sm btn-labeled arrow-success" href="<?= Url::to(['create']) ?>">
                     <span class="btn-label">
                         <span class="icon icon-plus icon-lg icon-fw"></span>
                     </span>
                     Create a new applicant type
                 </a>
-                <?php endif ?>
-
             </div>
+            <?php endif ?>
             <?php Pjax::begin(['id' => 'company_index', 'enablePushState' => false, 'timeout' => 0, 'options' => ['class' => 'panel-body panel-collapse']]); ?>
             <div class="alert-container">
                 <?= Alert::widget() ?>
