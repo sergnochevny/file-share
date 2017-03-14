@@ -73,7 +73,8 @@ class WizardController extends Controller
         }
         $isUpdate = $company->id > 0 ? true : false;
 
-        if ($request->isPost && $company->load($request->post())) {
+        //User cannot edit company, just only browse
+        if ($request->isPost && !User::isClient() && $company->load($request->post())) {
             if ($company->save()) {
                 $this->setFlashMessage('success', 'company', $isUpdate);
                 $isUpdate = true;
