@@ -1,7 +1,9 @@
 <?php
 
 use backend\models\Investigation;
+use backend\models\User;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Investigation */
@@ -23,6 +25,9 @@ use yii\helpers\Html;
                                     <span class="label label-<?= Investigation::getStatusCSSClass($model->status) ?>">
                                         <?= Investigation::getStatusByCode($model->status)?>
                                     </span>
+                                    <?php if (Investigation::STATUS_COMPLETED !== $model->status && !User::isClient()): ?>
+                                        <a class="btn btn-success btn-xs" href="<?= Url::to(['/investigation/complete', 'id' => $model->id]) ?>" title="Change status to complete" aria-label="Change status to complete">Complete</a>
+                                    <?php endif ?>
                                 </span>
                                 <span class="icon icon-tag icon-lg icon-fw"></span>
                                 Status
