@@ -131,23 +131,26 @@ class ProtusController extends Controller
         $client = $manager->createRole('client');
         $admin = $manager->createRole('admin');
         $superAdmin = $manager->createRole('superAdmin');
+
         $manager->add($client);
         $manager->add($admin);
         $manager->add($superAdmin);
-        //add all client permissions to admin
-        $manager->addChild($admin, $client);
-        //add all admin permissions to superadmin
+
+        //add all client permissions to superAdmin
+        $manager->addChild($superAdmin, $client);
+        //add all admin permissions to superAdmin
         $manager->addChild($superAdmin, $admin);
 
-        $rule = new EmployeeRule();
-        $manager->add($rule);
+//        $rule = new EmployeeRule();
+//        $manager->add($rule);
+//
+//        $employee = $manager->createPermission('employee');
+//        $employee->description = 'Employee';
+//        $employee->ruleName = $rule->name;
+//        $manager->add($employee);
+//
+//        $manager->addChild($client, $employee);
 
-        $employee = $manager->createPermission('employee');
-        $employee->description = 'Employee';
-        $employee->ruleName = $rule->name;
-        $manager->add($employee);
-
-        $manager->addChild($client, $employee);
         return $this->stdout('OK' . "\n");
     }
 
