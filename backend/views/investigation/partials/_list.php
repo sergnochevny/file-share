@@ -6,6 +6,7 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use common\helpers\Url;
 use yii\widgets\Pjax;
+use backend\models\User;
 
 Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout' => 0, 'options' => ['class' => 'panel-body panel-collapse']]);
 ?>
@@ -72,6 +73,11 @@ Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout
             ],
             'buttons' => [
                 'edit' => function ($url, $model) {
+//@todo:TEST
+//                    if (User::isAdmin()) {
+//                        return '';
+//                    }
+
                     return Html::a('Edit', Url::to(['/wizard/investigation', 'id' => $model->id], true),
                         [
                             'class' => "btn btn-primary btn-xs",
@@ -82,6 +88,11 @@ Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout
                     );
                 },
                 'delete' => function ($url, $model) {
+//@todo:TEST
+//                    if (User::isAdmin()) {
+//                        return '';
+//                    }
+
                     return Html::a('To archive', Url::to(['/investigation/archive', 'id' => $model->id], true),
                         [
                             'class' => "btn btn-danger btn-xs",
