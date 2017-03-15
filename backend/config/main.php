@@ -63,6 +63,7 @@ return [
                 '@<username:[\w-]+>/' => '/profile/index',
                 'wizard/applicant' => '/wizard/investigation',
                 'applicant' => '/investigation',
+                'applicant/<action>' => '/investigation/<action>',
                 'applicant-types' => '/investigation-type',
                 'applicant-types/<action>' => '/investigation-type/<action>',
             ]
@@ -70,52 +71,6 @@ return [
         'formatter' => [
             'dateFormat' => 'MM.dd.yyyy',
             'sizeFormatBase' => 1000
-        ],
-    ],
-    'as globalAccess' => [
-        'class' => 'common\behaviors\GlobalAccessBehavior',
-        'rules' => [
-            [
-                'controllers' => ['file', 'history', 'investigation', 'wizard', 'user'],
-                'allow' => true,
-                'roles' => ['@'],
-            ],
-            [
-                'controllers' => ['company', 'user'],
-                'allow' => true,
-                'roles' => ['admin'],
-            ],
-            [
-                'controllers' => ['company'],
-                'actions' => ['view'],
-                'allow' => true,
-                'roles' => ['client'],
-            ],
-            [
-                'controllers' => ['site'],
-                'allow' => true,
-                'actions' => ['login', 'restore-password-request', 'password-reset'],
-                'roles' => ['?'],
-            ],
-            [
-                'controllers' => ['site'],
-                'allow' => true,
-                'actions' => ['logout','index'],
-                'roles' => ['@'],
-            ],
-            [
-                'controllers' => ['site'],
-                'allow' => true,
-                'actions' => ['error'],
-                'roles' => ['?', '@'],
-            ],
-            [
-                'allow' => true,
-                'roles' => ['admin'],
-            ],
-            [
-                'allow' => false,
-            ],
         ],
     ],
     'as beforeAction' => [
