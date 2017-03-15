@@ -10,6 +10,7 @@ use backend\models\Graph;
 use backend\models\Statistics;
 use common\helpers\Url;
 use Yii;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 
@@ -38,6 +39,21 @@ class SiteController extends Controller
                 'class' => RememberUrlBehavior::className(),
                 'actions' => ['index'],
             ],
+            [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'logout', 'error'],
+                        'roles' => ['@']
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['login', 'restore-password-request', 'password-reset', 'error'],
+                        'roles' => ['?']
+                    ]
+                ]
+            ]
         ];
     }
 
@@ -66,25 +82,6 @@ class SiteController extends Controller
             $renderParams = InvestigationController::prepareRenderInvestigations();
             return $this->render('client', $renderParams);
         }
-    }
-
-    /**
-     * Shows index page for admins
-     * @return string
-     */
-    public function renderIndex()
-    {
-        $statistics = new Statistics();
-        $statistics->load(Yii::$app->request->post());
-
-        $interval = new \DateInterval('P30D');
-        $step = new \DateInterval('P1D');
-        $graph = new Graph($interval, $step);
-
-        return $this->render('index', [
-            'stat' => $statistics,
-            'graph' => $graph,
-        ]);
     }
 
     /**
@@ -177,11 +174,29 @@ class SiteController extends Controller
     }
 
     /**
+     * Shows index page for admins
+     * @return string
+     */
+    protected function renderIndex()
+    {
+        $statistics = new Statistics();
+        $statistics->load(Yii::$app->request->post());
+
+        $interval = new \DateInterval('P30D');
+        $step = new \DateInterval('P1D');
+        $graph = new Graph($interval, $step);
+
+        return $this->render('index', [
+            'stat' => $statistics,
+            'graph' => $graph,
+        ]);
+    }
+
+    /**
      * @return mixed
      */
-    public function getResetUrl()
+    protected function getResetUrl()
     {
         return $this->resetUrl;
     }
-
 }
