@@ -10,17 +10,17 @@ use Yii;
  * @package backend\models
  *
  * These checks not for "can user something?", they are for check "who is user"
- * because superAdmin can "employee" but he is not employee
+ * because superAdmin can "client" but he is not client
  */
 trait WhoIsUserTrait
 {
-    /**
-     * @return bool
-     */
-    public static function isEmployee()
-    {
-        return self::isClient() && Yii::$app->user->can('employee');
-    }
+//    /**
+//     * @return bool
+//     */
+//    public static function isEmployee()
+//    {
+//        return self::isClient() && Yii::$app->user->can('employee');
+//    }
 
     /**
      * @return bool
