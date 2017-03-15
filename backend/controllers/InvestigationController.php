@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -33,26 +34,26 @@ class InvestigationController extends Controller
                 'class' => RememberUrlBehavior::className(),
                 'actions' => ['index'],
             ],
+            [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => false,
+                        'actions' => ['complete'],
+                        'roles' => ['client'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'complete'],
+                        'roles' => ['admin']
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['superAdmin', 'client']
+                    ],
+                ]
+            ]
         ];
-    }
-
-    public static function prepareRenderInvestigations($parent = null)
-    {
-        $company = null;
-        $searchModel = new InvestigationSearch();
-        if (!(Yii::$app->user->can('admin'))) {
-            $searchModel->parent = Yii::$app->user->identity->company->id;
-            $company = Company::findOne($searchModel->parent);
-            if(empty($company)) $searchModel->parent = 'no parent';
-        }
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->pagination->pageSize = $searchModel->pagesize;
-        $renderParams = [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ];
-        if (!empty($company)) $renderParams['company'] = $company;
-        return $renderParams;
     }
 
     /**
@@ -76,16 +77,44 @@ class InvestigationController extends Controller
     {
         $model = $this->findModel($id);
         $model->detachBehavior('citrixFolderBehavior');
-        if(Yii::$app->user->can('admin') ||
-            (!Yii::$app->user->can('admin') &&
-                Yii::$app->user->can('employee', ['investigation'=> $model]))
-        ){
-            $model->archive();
-            Yii::$app->session->setFlash('success', 'Archived successfully');
-        }else{
-            Yii::$app->session->setFlash('error', 'Permission denied');
-        }
+        $model->archive();
+        Yii::$app->session->setFlash('success', 'Archived successfully');
+
         return $this->actionIndex();
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function actionComplete($id)
+    {
+        $investigation = $this->findModel($id);
+        $investigation->updateAttributes(['status' => Investigation::STATUS_COMPLETED]);
+        return $this->redirect(['/file', 'id' => $id]);
+    }
+
+    /**
+     * @param mixed $parent
+     * @return array
+     */
+    public static function prepareRenderInvestigations($parent = null)
+    {
+        $company = null;
+        $searchModel = new InvestigationSearch();
+        if (!(Yii::$app->user->can('admin'))) {
+            $searchModel->parent = Yii::$app->user->identity->company->id;
+            $company = Company::findOne($searchModel->parent);
+            if(empty($company)) $searchModel->parent = 'no parent';
+        }
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination->pageSize = $searchModel->pagesize;
+        $renderParams = [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ];
+        if (!empty($company)) $renderParams['company'] = $company;
+        return $renderParams;
     }
 
     /**
