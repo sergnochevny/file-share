@@ -73,10 +73,9 @@ Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout
             ],
             'buttons' => [
                 'edit' => function ($url, $model) {
-//@todo:TEST
-//                    if (User::isAdmin()) {
-//                        return '';
-//                    }
+                    if (User::isAdmin()) {
+                        return '';
+                    }
 
                     return Html::a('Edit', Url::to(['/wizard/investigation', 'id' => $model->id], true),
                         [
@@ -88,10 +87,9 @@ Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout
                     );
                 },
                 'delete' => function ($url, $model) {
-//@todo:TEST
-//                    if (User::isAdmin()) {
-//                        return '';
-//                    }
+                    if (User::isAdmin()) {
+                        return '';
+                    }
 
                     return Html::a('To archive', Url::to(['/investigation/archive', 'id' => $model->id], true),
                         [
