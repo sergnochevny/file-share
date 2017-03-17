@@ -12,6 +12,10 @@ use Yii;
  * Class User
  * @package backend\models
  *
+ * @property string $fullName
+ * @property string|null $userRole
+ * @property array $colleaguesList
+ *
  * @mixin WhoIsUserTrait
  */
 class User extends \common\models\User
@@ -84,11 +88,10 @@ class User extends \common\models\User
     }
 
     /**
-     * @return array
+     * @return string
      */
     public function getFullName()
     {
-
         return $this->first_name . ' ' .$this->last_name;
     }
 }

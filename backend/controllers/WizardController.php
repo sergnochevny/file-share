@@ -32,7 +32,7 @@ class WizardController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['company', 'user'],
+                        'actions' => ['company', 'user', 'company-users'],
                         'roles' => ['admin'],
                     ],
                     [
@@ -129,13 +129,12 @@ class WizardController extends Controller
         }
 
         if ($request->isPost && $userForm->load($request->post())) {
-            if (User::isClient()) {
-                //explicitly set role and company if client creates another user
+            if (User::isAdmin()) {
+                //admin can create only clients
                 $userForm->role = 'client';
-                $userForm->company_id = Yii::$app->user->identity->company->id;
             }
             //new user with admin role can't have company
-            if ($userForm->role == 'admin') {
+            if ($userForm->role == 'admin' || $userForm->role == 'superAdmin') {
                 $userForm->company_id = null;
             }
 
@@ -155,6 +154,30 @@ class WizardController extends Controller
         }
 
         return $this->smartRender('index', $options);
+    }
+
+    /**
+     * list users in company || admins for dep dropdown
+     *
+     * @return string JSON output
+     */
+    public function actionCompanyUsers()
+    {
+        Yii::$app->getResponse()->format = Response::FORMAT_JSON;
+        $userList = [];
+        $depDrops = Yii::$app->getRequest()->post('depdrop_all_params');
+        $companyId = isset($depDrops['company-list']) ? (int)$depDrops['company-list'] : false;
+        $userRole = isset($depDrops['user-role']) ? $depDrops['user-role'] : false;
+
+        if ('admin' == $userRole || 'superAdmin' == $userRole) {
+            $userList = User::findByRole($userRole)->select(['id', 'username as name'])->asArray()->all();
+        } else if ($companyId) {
+            $company = Company::findOne($companyId);
+            /** @var array $userList */
+            $userList = $company->getUsers()->select(['id', 'username as name'])->asArray()->all();
+        }
+
+        return ['output' => $userList, 'selected' => ''];
     }
 
     /**
@@ -209,30 +232,6 @@ class WizardController extends Controller
             'isUpdate' => $investigation->id > 0 ? true : false,
             'investigationTypes' => InvestigationType::find()->select('name')->indexBy('id')->column(),
         ]);
-    }
-
-    /**
-     * list users in company || admins for dep dropdown
-     *
-     * @return string JSON output
-     */
-    public function actionCompanyUsers()
-    {
-        Yii::$app->getResponse()->format = Response::FORMAT_JSON;
-        $userList = [];
-        $depDrops = Yii::$app->getRequest()->post('depdrop_all_params');
-        $companyId = isset($depDrops['company-list']) ? (int)$depDrops['company-list'] : false;
-        $userRole = isset($depDrops['user-role']) ? $depDrops['user-role'] : false;
-
-        if ('admin' == $userRole) {
-            $userList = User::findByRole($userRole)->select(['id', 'username as name'])->asArray()->all();
-        } else if ($companyId) {
-            $company = Company::findOne($companyId);
-            /** @var array $userList */
-            $userList = $company->getUsers()->select(['id', 'username as name'])->asArray()->all();
-        }
-
-        return ['output' => $userList, 'selected' => ''];
     }
 
     /**

@@ -20,21 +20,27 @@ use backend\models\User;
             'data-create-url' => Url::to(['user'], true), //when select prompt in user send request to create url
         ],
     ]) ?>
-    <?php if (User::isAdmin()): ?>
-    <div class="col-lg-6 col-lg-offset-3">
-        <h2 align="center">
-            <span class="d-ib">Select Role</span>
-        </h2>
+    <?php if (Yii::$app->user->can('admin')): ?>
+        <?php if (Yii::$app->user->can('superAdmin')): ?>
+        <div class="col-lg-6 col-lg-offset-3">
+            <h2 align="center">
+                <span class="d-ib">Select Role</span>
+            </h2>
 
-        <div class="form-group<?= $userForm->hasErrors('role') ? ' has-error' : '' ?>">                            <?php /*todo get this list from db */ ?>
-            <?= Html::activeDropDownList($userForm, 'role', ['admin' => 'Admin', 'client' => 'Client'],
-                ['id' => 'user-role', 'class' => 'form-control', 'prompt' => 'Select a Role']); ?>
-            <?= Html::error($userForm, 'role', ['class' => 'help-block']) ?>
+            <div class="form-group<?= $userForm->hasErrors('role') ? ' has-error' : '' ?>">                            <?php /*todo get this list from db */ ?>
+                <?= Html::activeDropDownList($userForm, 'role', [
+                    'superAdmin' => 'Super Admin',
+                    'admin' => 'Admin',
+                    'client' => 'Company User'
+                ],
+                    ['id' => 'user-role', 'class' => 'form-control', 'prompt' => 'Select a Role']); ?>
+                <?= Html::error($userForm, 'role', ['class' => 'help-block']) ?>
+            </div>
         </div>
-    </div>
+        <?php endif ?>
 
     <div class="col-lg-6 col-lg-offset-3" id="company-list-container" <?=
-    $userForm->company_id ? '' : 'style="display: none"'
+    $userForm->company_id || User::isAdmin() ? '' : 'style="display: none"'
     ?>>
         <h2 align="center">
             <span class="d-ib">Select Company</span>
@@ -47,7 +53,7 @@ use backend\models\User;
     <?php endif ?>
 
     <div class="col-lg-6 col-lg-offset-3" id="user-list-container" <?=
-    $isUpdate || User::isClient() ? '' : 'style="display: none"'
+    $isUpdate ? '' : 'style="display: none"'
     ?>>
         <h2 align="center">
             <span class="d-ib">Select Users</span>
@@ -58,7 +64,7 @@ use backend\models\User;
                 'name' => 'user',
                 'data' => $isUpdate
                     ? $userForm->getUser()->getColleaguesList()
-                    : (User::isClient() ? Yii::$app->user->identity->getColleaguesList() : []),
+                    : [],
                 'pluginOptions'=>[
                     'depends'=>['company-list', 'user-role'],
                     'placeholder' => 'Create a New User',
