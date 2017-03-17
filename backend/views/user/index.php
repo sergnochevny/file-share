@@ -1,5 +1,6 @@
 <?php
 
+use backend\models\User;
 use common\widgets\Alert;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -89,34 +90,53 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             'value' => function ($model, $key, $index, $column) {
                                 $suff = [
-                                    'admin' => 'success',
-                                    'client' => 'warning'
+                                    'superAdmin' => 'success',
+                                    'admin' => 'warning',
+                                    'Company User' => 'danger'
                                 ];
-                                $value = '<span class="label label-' . $suff[$model->{$column->attribute}] . '" >' .
-                                    $model->{$column->attribute} .
+                                //workaround for rename client
+                                $role = $model->{$column->attribute};
+                                if ($role == 'client') {
+                                    $role = 'Company User';
+                                }
+                                $value = '<span class="label label-' . $suff[$role] . '" >' .
+                                    $role .
                                     '</span >';
                                 return $value;
                             }
                         ],
                         [
                             'class' => 'yii\grid\ActionColumn',
-                            'template' => '{edit}',
+                            'template' => '{edit}{delete}',
                             'contentOptions' => [
                                 'width' => 120,
                             ],
                             'buttons' => [
                                 'edit' => function ($url, $model) {
-                                    $content = '';
-                                    if (Yii::$app->user->can('admin') || (Yii::$app->user->identity->id == $model->id))
-                                        $content = Html::a('Edit', Url::to(['/wizard/user', 'id' => $model->id], true),
-                                            [
-                                                'class' => "btn btn-primary btn-xs",
-                                                'title' => 'Edit',
-                                                'aria-label' => "Edit",
-                                                'data-pjax' => "0",
-                                            ]
-                                        );
-                                    return $content;
+                                    return Html::a('Edit', Url::to(['/wizard/user', 'id' => $model->id], true),
+                                        [
+                                            'class' => "btn btn-primary btn-xs",
+                                            'title' => 'Edit',
+                                            'aria-label' => "Edit",
+                                            'data-pjax' => "0",
+                                        ]
+                                    );
+                                },
+                                'delete' => function ($url, $model) {
+                                    if (!User::isSuperAdmin()) {
+                                        return '';
+                                    }
+
+                                    return Html::a('To archive', Url::to(['archive', 'id' => $model->id], true),
+                                        [
+                                            'class' => "btn btn-danger btn-xs",
+                                            'title' => 'To archive',
+                                            'aria-label' => "To archive",
+                                            'data-confirm' => "Confirm removal",
+                                            'data-method' => "post",
+                                            'data-pjax' => "0",
+                                        ]
+                                    );
                                 },
                             ],
                         ],

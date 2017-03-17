@@ -47,10 +47,9 @@ class UserSearch extends User
     public function search($params)
     {
         $query = static::find();
-        if (!Yii::$app->user->can('admin')) {
-            $query
-                ->joinWith(['company'])
-                ->andWhere(['company.id' => Yii::$app->user->identity->company->id]);
+        if (!Yii::$app->user->can('superAdmin')) {
+            //admin can edit only company users
+            $query->rightJoin('user_company', User::tableName() . '.[[id]] = [[user_company]].[[user_id]]');
         }
 
         // add conditions that should always apply here
