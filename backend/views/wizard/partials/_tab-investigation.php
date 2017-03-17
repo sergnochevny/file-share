@@ -4,10 +4,8 @@
 /** @var bool $isUpdate */
 
 use backend\models\Company;
-use backend\models\User;
-use yii\jui\DatePicker;
 
-$isShowCompany = User::isAdmin() && (Company::find()->count() > 0);
+$isShowCompany = Yii::$app->user->can('admin') && (Company::find()->count() > 0);
 
 ?>
 <div id="tab-3" class="tab-pane active">
