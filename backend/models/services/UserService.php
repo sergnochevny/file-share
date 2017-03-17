@@ -77,7 +77,7 @@ final class UserService extends Component
 
                             //admin can't have company
         $form->company_id = isset($user->company->id) ? $user->company->id : null;
-        $form->role = $this->getUserRole();
+        $form->role = $user->getUserRole();
     }
 
     /**
@@ -170,14 +170,7 @@ final class UserService extends Component
     }
 
 
-    /**
-     * @return string|null
-     */
-    private function getUserRole()
-    {
-        $roles = array_keys($this->authManager->getRolesByUser($this->user->id));
-        return isset($roles[0]) ? $roles[0] : null;
-    }
+
 
     /**
      * @param $id
