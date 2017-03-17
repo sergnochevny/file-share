@@ -68,10 +68,19 @@ class User extends \common\models\User
      */
     public function getColleaguesList()
     {
-        $query = $this->company ? $this->company->getUsers() : static::findByRole('admin');
+        $query = $this->company ? $this->company->getUsers() : static::findByRole($this->getUserRole());
         $users = $query->select(['id', 'username'])->asArray()->all();
 
         return array_column($users, 'username', 'id');
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getUserRole()
+    {
+        $roles = array_keys(Yii::$app->getAuthManager()->getRolesByUser($this->id));
+        return isset($roles[0]) ? $roles[0] : null;
     }
 
     /**
