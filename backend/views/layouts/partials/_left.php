@@ -20,13 +20,13 @@ $userCompany = Yii::$app->user->identity->company;
                 $items = [];
                 $items[] = ['label' => 'Navigation', 'options' => ['class' => 'sidenav-heading']];
                 $items[] = ['label' => 'Home', 'url' => Url::to(['/site'], true), 'options' => ['icon' => 'icon-home']];
-                if (Yii::$app->user->can('admin')) {
-                    $items[] = [
-                        'label' => 'Companies',
-                        'url' => ['/company'],
-                        'options' => ['icon' => 'icon-contao'],
-                    ];
-                }
+                $items[] = [
+                    'label' => 'Companies',
+                    'url' => ['/company'],
+                    'options' => ['icon' => 'icon-contao'],
+                    'visible' => !User::isClient()
+                ];
+
                 $items[] = [
                     'label' => 'Applicants',
                     'url' => ['/investigation'],
@@ -36,17 +36,16 @@ $userCompany = Yii::$app->user->identity->company;
                     'label' => 'Applicant Types',
                     'url' => ['/investigation-type'],
                     'options' => ['icon' => 'icon-folder-info-circle'],
-                    'visible' => Yii::$app->user->can('admin'),
+                    'visible' => !User::isClient(),
                 ];
                 $items[] = ['label' => 'History', 'url' => ['/history'], 'options' => ['icon' => 'icon-history']];
                 $items[] = ['label' => 'Files', 'url' => ['/file'], 'options' => ['icon' => 'icon-save']];
-                //                if (Yii::$app->user->can('admin')) {
                 $items[] = [
                     'label' => 'Users',
                     'url' => ['/user'],
                     'options' => ['icon' => 'icon-users'],
+                    'visible' => !User::isClient(),
                 ];
-                //                }
 
                 ?>
                 <?= Menu::widget([
