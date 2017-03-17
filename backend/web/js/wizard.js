@@ -50,7 +50,9 @@
             $('#company-list-container').show();
             $('#user-list-container').show();
 
-        } else if ($(this).val() == 'admin') {
+        } else if ($(this).val() == 'admin'
+                || $(this).val() == 'superAdmin'
+        ) {
             $('#company-list-container').hide();
             $('#user-list-container').show();
 
@@ -60,7 +62,16 @@
         }
     });
 
-    //changes default investigation types when changing company
+    //when admin add new user - after company was chosen show dropdown with users
+    $(document).on('change', '#user-form #company-list', function (event) {
+        if ($(this).val() !== '') {
+            $('#user-list-container').show();
+        } else {
+            $('#user-list-container').hide();
+        }
+    });
+
+    //changes default applicants types when changing company
     $(document).on('change', investigationCompanyList, function (event) {
         var companyId = $(this).val(),
             url = $(investigationForm).attr('action');
