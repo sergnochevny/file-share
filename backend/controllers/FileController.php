@@ -4,21 +4,23 @@ namespace backend\controllers;
 
 use backend\actions\DownloadAction;
 use backend\behaviors\RememberUrlBehavior;
+use backend\behaviors\VerifyPermissionBehavior;
 use backend\models\File;
 use backend\models\FileUpload;
 use backend\models\Investigation;
 use backend\models\search\FileSearch;
+use common\components\PermissionController;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\web\Request;
 
 /**
  * FileController implements the CRUD actions for File model.
  */
-class FileController extends Controller
+class FileController extends PermissionController
 {
 
     /**
@@ -59,18 +61,23 @@ class FileController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
+                        'actions' => ['download', 'upload', 'index'],
                         'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['delete'],
+                        'roles' => ['admin', 'superAdmin'],
                     ]
                 ]
-            ]
+            ],
+            'permission' => VerifyPermissionBehavior::className()
         ];
     }
 
     public function actions()
     {
-        $actions = parent::actions();
-        $actions['download'] = DownloadAction::className();
-        return $actions;
+        return ArrayHelper::merge(parent::actions(), ['download' => DownloadAction::className()]);
     }
 
     /**
@@ -83,7 +90,7 @@ class FileController extends Controller
     {
         $investigation = null;
         if (!empty($id) && empty($parent)) {
-            $investigation = Investigation::findOne(['id'=>$id]);
+            $investigation = Investigation::findOne(['id' => $id]);
             if (!empty($investigation)) {
                 $parent = $investigation->citrix_id;
             } else $parent = 'no investigation';
@@ -118,20 +125,14 @@ class FileController extends Controller
             'uploadModel' => $uploadModel,
             'investigation' => $investigation,
         ];
-        if(Yii::$app->request->isAjax) return $this->renderAjax('index', $renderParams);
+        if (Yii::$app->request->isAjax) return $this->renderAjax('index', $renderParams);
         return $this->render('index', $renderParams);
     }
 
-    /**
-     * Creates a new File model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @param null $parent
-     * @return mixed
-     */
     public function actionUpload($parent = null)
     {
-        if (Yii::$app->user->can('superAdmin') || (!Yii::$app->user->can('superAdmin') &&
-                Yii::$app->user->can('employee', ['investigation' => Investigation::findOne(['citrix_id' => $parent])]))
+        if ($this->verifyPermission(VerifyPermissionBehavior::EVENT_VERIFY_FILE_PERMISSION,
+            ['investigation' => Investigation::findOne(['citrix_id' => $parent])])
         ) {
             try {
                 $model = new FileUpload(['parent' => $parent]);
@@ -151,7 +152,7 @@ class FileController extends Controller
 
     /**
      * Archive an existing File model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * If archiving is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
      */
@@ -161,7 +162,9 @@ class FileController extends Controller
         $model->detachBehavior('uploadBehavior');
         $investigation = $model->investigations;
         try {
-            if (Yii::$app->user->can('superAdmin') || (!Yii::$app->user->can('superAdmin') && Yii::$app->user->can('employee', ['investigation' => $investigation]))) {
+            if ($this->verifyPermission(VerifyPermissionBehavior::EVENT_VERIFY_FILE_PERMISSION,
+                ['investigation' => $investigation])
+            ) {
                 $model->archive();
                 Yii::$app->session->setFlash('success', 'Archived successfully');
             } else {
@@ -174,4 +177,24 @@ class FileController extends Controller
         return $this->actionIndex();
     }
 
+    /**
+     * Delete an existing File model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param string $id
+     * @return mixed
+     */
+    public function actionDelete($id)
+    {
+        $model = $this->findModel($id);
+        $model->detachBehavior('uploadBehavior');
+        $investigation = $model->investigations;
+        try {
+            $model->delete();
+            Yii::$app->session->setFlash('success', 'Deleted successfully');
+        } catch (\Exception $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+        if (!empty($investigation)) return $this->actionIndex($investigation->id);
+        return $this->actionIndex();
+    }
 }

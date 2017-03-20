@@ -109,7 +109,7 @@ if (!empty($investigation)) {
                     <?php
                     \backend\widgets\ActiveForm::end();
                     ?>
-                    <div class="panel panel-body" data-toggle="match-height">
+                    <div class="panel panel-body btn-" data-toggle="match-height">
                         <div class="progress progress-xs">
                             <div class="progress-bar progress-bar-indicating progress-bar-warning" role="progressbar"
                                  aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
@@ -190,25 +190,40 @@ if (!empty($investigation)) {
                             ],
                             [
                                 'class' => 'yii\grid\ActionColumn',
-                                'template' => '{delete}{download}',
+                                'template' => '{archive}{delete}{download}',
                                 'contentOptions' => [
-                                    'width' => 150
+                                    'width' => (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin')) ? 220:150
                                 ],
                                 'buttons' => [
-                                    'delete' => function ($url, $model) use ($investigation) {
+                                    'archive' => function ($url, $model) use ($investigation) {
                                         $content = '';
-                                        if (Yii::$app->user->can('admin') ||
+                                        if (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin') ||
                                             (
-                                                !Yii::$app->user->can('admin') &&
+                                                !Yii::$app->user->can('admin') && !Yii::$app->user->can('superAdmin') &&
                                                 !empty($investigation) &&
                                                 Yii::$app->user->can('employee', ['investigation' => $investigation])
                                             )
                                         )
                                             $content = Html::a('To archive', Url::to(['/file/archive', 'id' => $model->id], true),
                                                 [
-                                                    'class' => "btn btn-danger btn-xs",
+                                                    'class' => "btn btn-primary btn-xs",
                                                     'title' => 'To archive',
                                                     'aria-label' => "To archive",
+                                                    'data-confirm' => "Confirm archiving",
+                                                    'data-method' => "post",
+                                                    'data-pjax' => "0",
+                                                ]
+                                            );
+                                        return $content;
+                                    },
+                                    'delete' => function ($url, $model) use ($investigation) {
+                                        $content = '';
+                                        if (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin'))
+                                            $content = Html::a('Delete', Url::to(['/file/delete', 'id' => $model->id], true),
+                                                [
+                                                    'class' => "btn btn-danger btn-xs",
+                                                    'title' => 'Delete',
+                                                    'aria-label' => "Delete",
                                                     'data-confirm' => "Confirm removal",
                                                     'data-method' => "post",
                                                     'data-pjax' => "0",
@@ -218,9 +233,9 @@ if (!empty($investigation)) {
                                     },
                                     'download' => function ($url, $model) use ($investigation) {
                                         $content = '';
-                                        if (Yii::$app->user->can('admin') ||
+                                        if (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin') ||
                                             (
-                                                !Yii::$app->user->can('admin') &&
+                                                !Yii::$app->user->can('admin') && !Yii::$app->user->can('superAdmin') &&
                                                 ((!empty($investigation) && Yii::$app->user->can('employee', ['investigation' => $investigation])) ||
                                                     (Yii::$app->user->can('employee', ['allfiles' => $model->parents->parent])))
                                             )

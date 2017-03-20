@@ -18,6 +18,113 @@ class ProtusController extends Controller
 {
 
     /**
+     * @return bool|int
+     */
+    private function initRoles()
+    {
+        $manager = \Yii::$app->getAuthManager();
+        //ensure that user want overwrite roles
+        $rule = new EmployeeRule();
+        if (!$manager->getRule($rule->name)) {
+            $manager->add($rule);
+        }
+
+        if ($employee = $manager->getPermission('employee')) {
+            $answer = $this->prompt('You already have employee permission. Do you want overwrite it? y/yes:', ['required' => true]);
+            if (in_array(strtolower($answer), ['y', 'yes'])) {
+                $manager->remove($employee);
+                $employee = $manager->createPermission('employee');
+                $employee->description = 'Employee';
+                $employee->ruleName = $rule->name;
+                $manager->add($employee);
+                $this->stdout('OK. Now will be overwrite employee' . PHP_EOL, Console::FG_GREEN);
+            }
+        } else {
+            $employee = $manager->createPermission('employee');
+            $employee->description = 'Employee';
+            $employee->ruleName = $rule->name;
+            $manager->add($employee);
+        }
+
+        if ($client = $manager->getRole('client')) {
+            $answer = $this->prompt('You already have client role. Do you want overwrite it? y/yes:', ['required' => true]);
+            if (in_array(strtolower($answer), ['y', 'yes'])) {
+                $manager->remove($client);
+                $client = $manager->createRole('client');
+                $manager->add($client);
+                $this->stdout('OK. Now will be overwrite client' . PHP_EOL, Console::FG_GREEN);
+            }
+        } else {
+            $client = $manager->createRole('client');
+            $manager->add($client);
+        }
+
+        if ($admin = $manager->getRole('admin')) {
+            $answer = $this->prompt('You already have admin role. Do you want overwrite it? y/yes:', ['required' => true]);
+            if (in_array(strtolower($answer), ['y', 'yes'])) {
+                $this->stdout('OK. Now will be overwrite admin' . PHP_EOL, Console::FG_GREEN);
+                $manager->remove($admin);
+                $admin = $manager->createRole('admin');
+                $manager->add($admin);
+            }
+        }else {
+            $admin = $manager->createRole('admin');
+            $manager->add($admin);
+        }
+
+        if ($superAdmin = $manager->getRole('superAdmin')) {
+            $answer = $this->prompt('You already have superAdmin role. Do you want overwrite it? y/yes:', ['required' => true]);
+            if (in_array(strtolower($answer), ['y', 'yes'])) {
+                $manager->remove($superAdmin);
+                $superAdmin = $manager->createRole('superAdmin');
+                $manager->add($superAdmin);
+                $this->stdout('OK. Now will be overwrite superAdmin' . PHP_EOL, Console::FG_GREEN);
+            }
+        } else {
+            $superAdmin = $manager->createRole('superAdmin');
+            $manager->add($superAdmin);
+        }
+
+        if(!$manager->hasChild($client, $employee)) $manager->addChild($client, $employee);
+        if(!$manager->hasChild($superAdmin, $client)) $manager->addChild($superAdmin, $client);
+        if(!$manager->hasChild($superAdmin, $admin)) $manager->addChild($superAdmin, $admin);
+
+        return $this->stdout('OK' . "\n");
+    }
+
+    private function createSuperAdminAccount($username, $email, $password)
+    {
+        return $this->actionCreateUser("$username:$email:$password:superAdmin");
+    }
+
+    /**
+     * Checks for username exists and password has at least 8 digits
+     *
+     * @param $username
+     * @param $password
+     * @return bool
+     */
+    private function hasErrors($username, $password)
+    {
+        $errors = false;
+        $user = User::findOne(['username' => $username]);
+        if ($user) {
+            $errors = true;
+            $this->stderr('User already exists' . PHP_EOL, Console::FG_RED);
+        }
+
+        if (mb_strlen($password) < 8) {
+            $errors = true;
+            $this->stderr('Password must be at least 8 digits length' . PHP_EOL, Console::FG_RED);
+        }
+
+        return $errors;
+    }
+
+    public function actionInitRoles(){
+        return $this->initRoles();
+    }
+    /**
      * Initiate site. Creates roles client, admin and super admin. Creates super admin account. WARNING! If you already have db with roles, this will overwrite it. To add role or user see add-role, create-user respectively
      *
      * @param string $adminData username:email:password[Minimum 8 digits]
@@ -108,78 +215,5 @@ class ProtusController extends Controller
         }
 
         return $this->stdout('User not found' . PHP_EOL, Console::FG_RED);
-    }
-
-    /**
-     * @return bool|int
-     */
-    private function initRoles()
-    {
-        $manager = \Yii::$app->getAuthManager();
-        //ensure that user want overwrite roles
-        if ($manager->getRole('client')) {
-            $answer = $this->prompt('You already have some roles. Do you want overwrite it? y/yes:', ['required' => true]);
-            if (in_array(strtolower($answer), ['y', 'yes'])) {
-                $this->stdout('OK. Now will be overwrite all' . PHP_EOL, Console::FG_GREEN);
-                $manager->removeAll();
-            } else {
-                $this->stdout('OK. Nothing was touched' . PHP_EOL, Console::FG_GREEN);
-                \Yii::$app->end();
-            }
-        }
-
-        $client = $manager->createRole('client');
-        $admin = $manager->createRole('admin');
-        $superAdmin = $manager->createRole('superAdmin');
-
-        $manager->add($client);
-        $manager->add($admin);
-        $manager->add($superAdmin);
-
-        //add all client permissions to superAdmin
-        $manager->addChild($superAdmin, $client);
-        //add all admin permissions to superAdmin
-        $manager->addChild($superAdmin, $admin);
-
-//        $rule = new EmployeeRule();
-//        $manager->add($rule);
-//
-//        $employee = $manager->createPermission('employee');
-//        $employee->description = 'Employee';
-//        $employee->ruleName = $rule->name;
-//        $manager->add($employee);
-//
-//        $manager->addChild($client, $employee);
-
-        return $this->stdout('OK' . "\n");
-    }
-
-    private function createSuperAdminAccount($username, $email, $password)
-    {
-        return $this->actionCreateUser("$username:$email:$password:superAdmin");
-    }
-
-    /**
-     * Checks for username exists and password has at least 8 digits
-     *
-     * @param $username
-     * @param $password
-     * @return bool
-     */
-    private function hasErrors($username, $password)
-    {
-        $errors = false;
-        $user = User::findOne(['username' => $username]);
-        if ($user) {
-            $errors = true;
-            $this->stderr('User already exists' . PHP_EOL, Console::FG_RED);
-        }
-
-        if (mb_strlen($password) < 8) {
-            $errors = true;
-            $this->stderr('Password must be at least 8 digits length' . PHP_EOL, Console::FG_RED);
-        }
-
-        return $errors;
     }
 }

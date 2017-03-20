@@ -2,14 +2,15 @@
 
 namespace backend\actions;
 
-use Yii;
+use backend\behaviors\VerifyPermissionBehavior;
 use backend\models\File;
 use Citrix\CitrixApi;
-use yii\base\Action;
+use common\components\PermissionAction;
+use common\components\PermissionController;
+use Yii;
 use yii\base\InvalidParamException;
-use yii\web\Response;
 
-class DownloadAction extends Action
+class DownloadAction extends PermissionAction
 {
 
     protected $subdomain;
@@ -58,14 +59,14 @@ class DownloadAction extends Action
     {
         $response = '';
 
+        /**
+         * @var PermissionController $thi ->controller
+         */
+
         $model = File::findOne(['citrix_id' => $id]);
         $investigation = $model->investigations;
-        if (Yii::$app->user->can('admin') ||
-            (
-                !Yii::$app->user->can('admin') &&
-                ((!empty($investigation) && Yii::$app->user->can('employee', ['investigation' => $investigation])) ||
-                    (Yii::$app->user->can('employee', ['allfiles' => $model->parents->parent])))
-            )
+        if ($this->controller->verifyPermission(VerifyPermissionBehavior::EVENT_VERIFY_FILE_DOWNLOAD_PERMISSION,
+            ['model' => $model, '$investigation' => $investigation])
         ) {
             $Citrix = CitrixApi::getInstance();
             $Citrix->setSubdomain($this->subdomain)
