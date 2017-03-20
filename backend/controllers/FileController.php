@@ -130,7 +130,7 @@ class FileController extends Controller
      */
     public function actionUpload($parent = null)
     {
-        if (Yii::$app->user->can('admin') || (!Yii::$app->user->can('admin') &&
+        if (Yii::$app->user->can('superAdmin') || (!Yii::$app->user->can('superAdmin') &&
                 Yii::$app->user->can('employee', ['investigation' => Investigation::findOne(['citrix_id' => $parent])]))
         ) {
             try {
@@ -161,7 +161,7 @@ class FileController extends Controller
         $model->detachBehavior('uploadBehavior');
         $investigation = $model->investigations;
         try {
-            if (Yii::$app->user->can('admin') || (!Yii::$app->user->can('admin') && Yii::$app->user->can('employee', ['investigation' => $investigation]))) {
+            if (Yii::$app->user->can('superAdmin') || (!Yii::$app->user->can('superAdmin') && Yii::$app->user->can('employee', ['investigation' => $investigation]))) {
                 $model->archive();
                 Yii::$app->session->setFlash('success', 'Archived successfully');
             } else {
