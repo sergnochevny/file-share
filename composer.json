@@ -54,7 +54,8 @@
     "kartik-v/yii2-widget-depdrop": "^1.0.0",
     "ait/keystorage": "0.0.2",
     "bower/ext-lib": "^1.0.1",
-    "yii2tech/ar-linkmany": "^1.0"
+    "yii2tech/ar-linkmany": "^1.0",
+    "c006/yii2-migration-utility": "^1.2"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.0.0",
@@ -74,6 +75,12 @@
     }
   },
   "scripts": {
-    "post-install-cmd": "php init --env=Development --overwrite=n"
+    "post-create-cmd": "php init --env=Development --overwrite=n",
+    "post-update-cmd": [
+      "php yii migrate --interactive=0"
+    ],
+    "post-install-cmd": [
+      "php yii migrate --interactive=0"
+    ]
   }
 }

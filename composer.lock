@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "021fd04e76acb8903c37f311d1a55561",
+    "content-hash": "2bd45c364030c71d45a7152f7e5acbab",
     "packages": [
         {
             "name": "ait/keystorage",
@@ -263,6 +263,45 @@
                 "reference": "1.0.1"
             },
             "type": "library"
+        },
+        {
+            "name": "c006/yii2-migration-utility",
+            "version": "v1.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c006/yii2-migration-utility.git",
+                "reference": "a7455e7405f5914ce62f4f550718c9b61b1c5048"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c006/yii2-migration-utility/zipball/a7455e7405f5914ce62f4f550718c9b61b1c5048",
+                "reference": "a7455e7405f5914ce62f4f550718c9b61b1c5048",
+                "shasum": ""
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "c006\\utility\\migration\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jon Chambers",
+                    "email": "jchambers.dev@gmail.com"
+                }
+            ],
+            "description": "Automatically writes the create tables for migrations or create tables in general",
+            "keywords": [
+                "extension",
+                "migration",
+                "tables",
+                "yii2"
+            ],
+            "time": "2016-11-01T04:58:36+00:00"
         },
         {
             "name": "cebe/markdown",
