@@ -9,6 +9,7 @@ use backend\models\FileUpload;
 use backend\models\Investigation;
 use backend\models\search\FileSearch;
 use Yii;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -53,6 +54,15 @@ class FileController extends Controller
                 'class' => RememberUrlBehavior::className(),
                 'actions' => ['index'],
             ],
+            [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ]
+                ]
+            ]
         ];
     }
 

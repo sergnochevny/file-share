@@ -2,6 +2,7 @@
 
 namespace backend\models\search;
 
+use backend\models\User;
 use common\traits\activeQuery\ActiveDataProviderAdditionalDataTrait;
 use Yii;
 use yii\base\Model;
@@ -45,9 +46,11 @@ class HistorySearch extends History
 
         // add conditions that should always apply here
         if (!Yii::$app->user->can('admin')) {
+            /** @var User $user */
+            $user = Yii::$app->user->identity;
             $query->where(
-                ['or', ['company_id' => Yii::$app->user->identity->company->id], ['company_id' => null]]
-
+               // ['or', ['company_id' => Yii::$app->user->identity->company->id], ['company_id' => null]]
+                ['company_id' => $user->company->id]
             );
         }
 

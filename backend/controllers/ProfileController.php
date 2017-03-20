@@ -2,6 +2,7 @@
 namespace backend\controllers;
 
 
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -30,6 +31,15 @@ class ProfileController extends Controller
                 'class' => RememberUrlBehavior::className(),
                 'actions' => ['index'],
             ],
+            [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ]
+                ]
+            ]
         ];
     }
 

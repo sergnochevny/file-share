@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -32,6 +33,15 @@ class HistoryController extends Controller
                 'class' => RememberUrlBehavior::className(),
                 'actions' => ['index'],
             ],
+            [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ]
+                ]
+            ]
         ];
     }
 
@@ -67,29 +77,29 @@ class HistoryController extends Controller
         ]);
     }
 
-    /**
-     * Displays a single File model.
-     * @param string $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        $model = $this->findModel($id);
-        return $this->render('view', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Deletes an existing Company model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-        return $this->redirect(['index']);
-    }
+//    /**
+//     * Displays a single File model.
+//     * @param string $id
+//     * @return mixed
+//     */
+//    public function actionView($id)
+//    {
+//        $model = $this->findModel($id);
+//        return $this->render('view', [
+//            'model' => $model,
+//        ]);
+//    }
+//
+//    /**
+//     * Deletes an existing Company model.
+//     * If deletion is successful, the browser will be redirected to the 'index' page.
+//     * @param integer $id
+//     * @return mixed
+//     */
+//    public function actionDelete($id)
+//    {
+//        $this->findModel($id)->delete();
+//        return $this->redirect(['index']);
+//    }
 
 }
