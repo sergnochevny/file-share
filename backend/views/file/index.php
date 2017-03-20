@@ -19,6 +19,8 @@ if (!empty($investigation)) {
     $this->title = 'Files';
     $this->params['breadcrumbs'][] = $this->title;
 }
+
+$view = $this;
 ?>
 <div class="title-bar">
 
@@ -71,7 +73,7 @@ if (!empty($investigation)) {
                             ]
                         ]
                     ); ?>
-                    <?php if (!empty($investigation) || Yii::$app->user->can('admin')): ?>
+                    <?php if (!empty($investigation) || Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin')): ?>
                         <?= $uploadForm->field($uploadModel, 'file')->fileInput(['id' => "file"])->label(false); ?>
                         <?= Html::button('<span class="btn-label"><span class="icon icon-upload  icon-lg icon-fw"></span></span>Upload', [
                             'id' => "send",
@@ -195,7 +197,7 @@ if (!empty($investigation)) {
                                     'width' => (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin')) ? 220:150
                                 ],
                                 'buttons' => [
-                                    'archive' => function ($url, $model) use ($investigation) {
+                                    'archive' => function ($url, $model) use ($investigation, $view) {
                                         $content = '';
                                         if (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin') ||
                                             (
