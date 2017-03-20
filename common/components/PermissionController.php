@@ -8,7 +8,7 @@ namespace common\components;
 
 
 use backend\behaviors\PermissionEvent;
-use yii\base\Controller;
+use yii\web\Controller;
 
 class PermissionController extends Controller
 {
