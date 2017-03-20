@@ -28,6 +28,11 @@ if (!YII_ENV_TEST) {
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
     ];
+
+    $config['modules']['utility'] = [
+        'class' => 'c006\utility\migration\Module',
+    ];
+
 }
 
 return $config;
