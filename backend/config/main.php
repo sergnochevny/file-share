@@ -20,8 +20,8 @@ return [
     ],
     'components' => [
         'assetManager' => [
+            'linkAssets' => false,
             'bundles' => [
-                'linkAssets' => true,
                 'yii\web\JqueryAsset' => [
                     'sourcePath' => null,
                     'basePath' => '@webroot',
@@ -31,7 +31,7 @@ return [
                     ]
                 ],
             ],
-            'converter' =>[
+            'converter' => [
                 'class' => '\common\assets\AssetGzipConverter'
             ]
         ],

@@ -14,7 +14,7 @@ class AssetGzipConverter extends Component implements AssetConverterInterface
 {
     public function convert($asset, $basePath)
     {
-        if ((strrpos($asset, '.js') || strrpos($asset, '.css')) && (strrpos($asset, '.fz') == false)) {
+        if ((strrpos($asset, '.js') || strrpos($asset, '.css')) && (strrpos($asset, '.gz') == false)) {
 
             $target = $asset . '.gz';
             $dest = $basePath . DIRECTORY_SEPARATOR . $target;
@@ -27,13 +27,11 @@ class AssetGzipConverter extends Component implements AssetConverterInterface
                 fclose($r_source);
                 gzpassthru($r_dest);
                 gzclose($r_dest);
-
-                return $target;
             }
+
+ //           return $target;
         }
-
         return $asset;
-
     }
 
 
