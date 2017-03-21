@@ -21,6 +21,7 @@ return [
     'components' => [
         'assetManager' => [
             'bundles' => [
+                'linkAssets' => true,
                 'yii\web\JqueryAsset' => [
                     'sourcePath' => null,
                     'basePath' => '@webroot',
@@ -30,6 +31,9 @@ return [
                     ]
                 ],
             ],
+            'converter' =>[
+                'class' => '\common\assets\AssetGzipConverter'
+            ]
         ],
         'request' => [
             'csrfParam' => '_csrf-backend',

@@ -270,6 +270,4 @@ $view = $this;
 </div>
 
 <?php Pjax::end(); ?>
-<?php
-$this->registerJsFile(YII_ENV_DEV ? '@web/js/input_upload_submit.js' : '@web/js/input_upload_submit.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
-?>
+<?php \backend\assets\AlertHelperAsset::register($this);?>
