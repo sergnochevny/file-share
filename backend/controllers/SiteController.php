@@ -78,7 +78,7 @@ class SiteController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['login', 'restore-password-request', 'password-reset'],
-                        'roles' => ['?','@'],
+                        'roles' => ['?', '@'],
                     ],
                     [
                         'actions' => ['error'],
@@ -123,7 +123,7 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (Yii::$app->user->isGuest) $this->goHome();
+        if (!Yii::$app->user->isGuest) $this->goHome();
 
         $this->layout = 'main-login';
         $model = new LoginForm();
@@ -144,7 +144,7 @@ class SiteController extends Controller
      */
     public function actionRestorePasswordRequest()
     {
-        if (Yii::$app->user->isGuest) $this->goHome();
+        if (!Yii::$app->user->isGuest) $this->goHome();
 
         $this->layout = 'main-login';
         $model = new RestorePasswordRequestForm;
@@ -165,7 +165,7 @@ class SiteController extends Controller
      */
     public function actionPasswordReset($token = null)
     {
-        if (Yii::$app->user->isGuest) $this->goHome();
+        if (!Yii::$app->user->isGuest) $this->goHome();
 
         $this->layout = 'main-login';
         $model = null;
