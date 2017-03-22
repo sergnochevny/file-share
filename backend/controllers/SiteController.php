@@ -11,6 +11,7 @@ use backend\models\Statistics;
 use common\helpers\Url;
 use Yii;
 use yii\filters\AccessControl;
+use yii\filters\AccessRule;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 
@@ -22,6 +23,33 @@ class SiteController extends Controller
 
     const EMAIL_USER = 'email_user';
     private $resetUrl;
+
+    /**
+     * Shows index page for admins
+     * @return string
+     */
+    protected function renderIndex()
+    {
+        $statistics = new Statistics();
+        $statistics->load(Yii::$app->request->post());
+
+        $interval = new \DateInterval('P30D');
+        $step = new \DateInterval('P1D');
+        $graph = new Graph($interval, $step);
+
+        return $this->render('index', [
+            'stat' => $statistics,
+            'graph' => $graph,
+        ]);
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getResetUrl()
+    {
+        return $this->resetUrl;
+    }
 
     /**
      * @inheritdoc
@@ -44,14 +72,18 @@ class SiteController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'logout', 'error'],
-                        'roles' => ['@']
+                        'actions' => ['index', 'logout'],
+                        'roles' => ['@'],
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['login', 'restore-password-request', 'password-reset', 'error'],
-                        'roles' => ['?']
-                    ]
+                        'actions' => ['login', 'restore-password-request', 'password-reset'],
+                        'roles' => ['?','@'],
+                    ],
+                    [
+                        'actions' => ['error'],
+                        'allow' => true,
+                    ],
                 ]
             ]
         ];
@@ -91,8 +123,9 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        $this->layout = 'main-login';
+        if (Yii::$app->user->isGuest) $this->goHome();
 
+        $this->layout = 'main-login';
         $model = new LoginForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
@@ -111,6 +144,8 @@ class SiteController extends Controller
      */
     public function actionRestorePasswordRequest()
     {
+        if (Yii::$app->user->isGuest) $this->goHome();
+
         $this->layout = 'main-login';
         $model = new RestorePasswordRequestForm;
 
@@ -130,6 +165,8 @@ class SiteController extends Controller
      */
     public function actionPasswordReset($token = null)
     {
+        if (Yii::$app->user->isGuest) $this->goHome();
+
         $this->layout = 'main-login';
         $model = null;
         if (!empty($token)) {
@@ -171,32 +208,5 @@ class SiteController extends Controller
     {
         Yii::$app->user->logout();
         return $this->goHome();
-    }
-
-    /**
-     * Shows index page for admins
-     * @return string
-     */
-    protected function renderIndex()
-    {
-        $statistics = new Statistics();
-        $statistics->load(Yii::$app->request->post());
-
-        $interval = new \DateInterval('P30D');
-        $step = new \DateInterval('P1D');
-        $graph = new Graph($interval, $step);
-
-        return $this->render('index', [
-            'stat' => $statistics,
-            'graph' => $graph,
-        ]);
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getResetUrl()
-    {
-        return $this->resetUrl;
     }
 }
