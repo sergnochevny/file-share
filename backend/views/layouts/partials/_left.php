@@ -35,7 +35,7 @@ $userCompany = Yii::$app->user->identity->company;
                 $items[] = [
                     'label' => 'Applicant Types',
                     'url' => ['/investigation-type'],
-                    'options' => ['icon' => 'icon-folder-info-circle'],
+                    'options' => ['icon' => 'icon-info-circle'],
                     'visible' => !User::isClient(),
                 ];
                 $items[] = ['label' => 'History', 'url' => ['/history'], 'options' => ['icon' => 'icon-history']];

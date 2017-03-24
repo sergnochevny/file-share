@@ -71,7 +71,7 @@ use common\helpers\Url;
                     ); ?>
                         <?= Html::endForm(); ?>
                     </li-->
-                    <li class="dropdown hidden">
+                    <!--<li class="dropdown ">
                         <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
                            style="height: 45px">
                           <span class="icon-with-child hidden-xs">
@@ -144,7 +144,7 @@ use common\helpers\Url;
                                 <a class="dropdown-btn" href="#">See All</a>
                             </div>
                         </div>
-                    </li>
+                    </li>-->
                     <li class="dropdown hidden-xs">
                         <button class="navbar-account-btn" data-toggle="dropdown" aria-haspopup="true">
                             <i class="icon icon-user" style="margin-top: 8px; font-size: 1.5em"></i>
