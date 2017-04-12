@@ -55,7 +55,7 @@
     "ait/keystorage": "0.0.2",
     "bower/ext-lib": "^1.0.1",
     "yii2tech/ar-linkmany": "^1.0",
-    "c006/yii2-migration-utility": "^1.2"
+    "ait/citrix": "1.0.9"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.0.0",
@@ -63,7 +63,7 @@
     "yiisoft/yii2-faker": "~2.0.0",
     "codeception/base": "^2.2.3",
     "codeception/verify": "~0.3.1",
-    "ait/citrix": "1.0.9"
+    "c006/yii2-migration-utility": "^1.2"
   },
   "config": {
     "process-timeout": 1800
