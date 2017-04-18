@@ -18,12 +18,12 @@ RewriteEngine On
 # you don't bounce between http and https.
 # To redirect all users to access the site WITHOUT the 'www.' prefix,
 
-RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+#RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
 #RewriteRule ^ http%{ENV:protossl}://%1%{REQUEST_URI} [L,R=301]
 #
-#RewriteCond %{HTTPS} off
-#RewriteCond %{HTTP-Forwarded-Proto} !https
-#RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP-Forwarded-Proto} !https
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 RewriteCond %{REQUEST_URI} !\.(css|jpg|jpeg|gif|png|zip|rar|doc|xls|js|tif|tiff|docx|xlsx|ico|map|gz|svg|woff|woff2|ttf)$
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
