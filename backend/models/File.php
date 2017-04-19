@@ -10,7 +10,6 @@ use common\models\UserCompany;
  * @property Investigation $investigations
  * @property User[] $users
  */
-
 class File extends \common\models\File
 {
 
@@ -70,7 +69,7 @@ class File extends \common\models\File
                                         'parent' => 'root',
                                     ]
                                 );
-                                if ($allfiles->save()) $model->parent = $allfiles->citrix_id;
+                                if ($allfiles->save(false)) $model->parent = $allfiles->citrix_id;
                             }
                         }
                         return $model->parent;
@@ -80,13 +79,13 @@ class File extends \common\models\File
         ];
         $behaviors['historyBehavior'] = [
             'class' => HistoryBehavior::class,
-            'parent' => function(File $model){
+            'parent' => function (File $model) {
                 return $model->id;
             },
-            'company' => function(File $model){
+            'company' => function (File $model) {
                 $company_id = null;
                 $investigation = $model->investigations;
-                if(!empty($investigation)) $company_id = $investigation->company_id;
+                if (!empty($investigation)) $company_id = $investigation->company_id;
                 return $company_id;
             },
             'attribute' => 'name',

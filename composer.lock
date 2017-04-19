@@ -8,20 +8,20 @@
     "packages": [
         {
             "name": "ait/citrix",
-            "version": "1.0.11",
+            "version": "1.0.14",
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:ait/citrix.git",
-                "reference": "77e1edb245def7df08d44ae0634e7b22fff48083"
+                "reference": "a48c636af723beda1c35a1c58021cff009ef5d12"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/citrix/1.0.11.0/77e1edb245def7df08d44ae0634e7b22fff48083.zip",
-                "reference": "77e1edb245def7df08d44ae0634e7b22fff48083",
+                "url": "http://tp.ait.com:443/repo/private/dists/ait/citrix/1.0.14.0/a48c636af723beda1c35a1c58021cff009ef5d12.zip",
+                "reference": "a48c636af723beda1c35a1c58021cff009ef5d12",
                 "shasum": null,
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "http://tp.ait.com:443/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -58,7 +58,7 @@
                 }
             ],
             "description": "Citrix Share File API implementation the class wrapper",
-            "time": "2017-04-19T16:57:34+00:00"
+            "time": "2017-04-19T18:48:50+00:00"
         },
         {
             "name": "ait/guzzle",
@@ -75,7 +75,7 @@
                 "shasum": null,
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "http://tp.ait.com:443/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -395,7 +395,7 @@
                 "shasum": null,
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "http://tp.ait.com:443/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]

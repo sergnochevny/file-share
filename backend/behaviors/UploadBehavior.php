@@ -286,9 +286,7 @@ class UploadBehavior extends Behavior
         ];
     }
 
-    public function afterValidate($event)
-    {
-
+    protected function initCitrix(){
         $this->Citrix = CitrixApi::getInstance();
         $this->Citrix->setSubdomain($this->subdomain)
             ->setUsername($this->user)
@@ -296,7 +294,10 @@ class UploadBehavior extends Behavior
             ->setClientId($this->id)
             ->setClientSecret($this->secret)
             ->Initialize();
+    }
 
+    public function afterValidate($event)
+    {
         foreach ($this->attributes as $attribute => $config) {
             $this->attributes[$attribute]['tempPath'] = FileHelper::normalizePath(Yii::getAlias($this->owner->{$config['tempPath']}));
             if ($config['parent'] instanceof \Closure) {
@@ -311,6 +312,7 @@ class UploadBehavior extends Behavior
      */
     public function beforeInsert()
     {
+        $this->initCitrix();
         foreach ($this->attributes as $attribute => $config) {
             if ($this->owner->$attribute) {
                 $id = $this->saveFile($attribute);
@@ -369,6 +371,7 @@ class UploadBehavior extends Behavior
      */
     public function beforeUpdate()
     {
+        $this->initCitrix();
         foreach ($this->attributes as $attribute => $config) {
             $id = $this->saveFile($attribute, false);
             $this->owner->setAttribute($config['id'], $id);
