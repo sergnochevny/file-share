@@ -10,6 +10,7 @@ use backend\models\User;
 use common\models\InvestigationType;
 use Yii;
 use yii\base\UserException;
+use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
@@ -67,21 +68,26 @@ class WizardController extends Controller
 
         $request = Yii::$app->getRequest();
         /** @var Company $company */
-        $company = Company::create($id);
-        if (null === $company) {
-            throw new UserException('The company does not exists');
-        }
-        $isUpdate = $company->id > 0 ? true : false;
-
-        //User cannot edit company, just only browse
-        if ($request->isPost && !User::isClient() && $company->load($request->post())) {
-            if ($company->save()) {
-                $this->setFlashMessage('success', 'company', $isUpdate);
-                $isUpdate = true;
-
-            } else {
-                $this->setFlashMessage('error', 'company', $isUpdate);
+        try{
+            $company = Company::create($id);
+            if (null === $company) {
+                throw new UserException('The company does not exists');
             }
+            $isUpdate = $company->id > 0 ? true : false;
+
+            //User cannot edit company, just only browse
+            if ($request->isPost && !User::isClient() && $company->load($request->post())) {
+                if ($company->save()) {
+                    $this->setFlashMessage('success', 'company', $isUpdate);
+                    $isUpdate = true;
+
+                } else {
+                    $this->setFlashMessage('error', 'company', $isUpdate);
+                }
+            }
+
+        } catch (\Exception $e){
+            $this->setFlashMessage('error', 'company', $isUpdate, $e->getMessage());
         }
 
         return $this->smartRender('index', [
