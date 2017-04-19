@@ -66,8 +66,8 @@ class WizardController extends Controller
         }
 
         $request = Yii::$app->getRequest();
-        /** @var Company $company */
         try{
+            /** @var Company $company */
             $company = Company::create($id);
             if (null === $company) {
                 throw new UserException('The company does not exists');
