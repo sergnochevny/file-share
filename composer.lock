@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "ait/citrix",
-            "version": "1.0.14",
+            "version": "1.0.15",
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:ait/citrix.git",
-                "reference": "a48c636af723beda1c35a1c58021cff009ef5d12"
+                "reference": "7ac8e08f88453c4d6ae3ac88c711edd75568acf9"
             },
             "dist": {
                 "type": "zip",
-                "url": "http://tp.ait.com:443/repo/private/dists/ait/citrix/1.0.14.0/a48c636af723beda1c35a1c58021cff009ef5d12.zip",
-                "reference": "a48c636af723beda1c35a1c58021cff009ef5d12",
+                "url": "http://tp.ait.com:443/repo/private/dists/ait/citrix/1.0.15.0/7ac8e08f88453c4d6ae3ac88c711edd75568acf9.zip",
+                "reference": "7ac8e08f88453c4d6ae3ac88c711edd75568acf9",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -58,7 +58,7 @@
                 }
             ],
             "description": "Citrix Share File API implementation the class wrapper",
-            "time": "2017-04-19T18:48:50+00:00"
+            "time": "2017-04-19T20:06:28+00:00"
         },
         {
             "name": "ait/guzzle",
