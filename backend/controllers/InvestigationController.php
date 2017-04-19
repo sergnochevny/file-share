@@ -38,6 +38,11 @@ class InvestigationController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
+                        'allow' => true,
+                        'actions' => ['complete'],
+                        'roles' => ['superAdmin'],
+                    ],
+                    [
                         'allow' => false,
                         'actions' => ['complete'],
                         'roles' => ['client'],
