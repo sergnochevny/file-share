@@ -10,7 +10,6 @@ use backend\models\User;
 use common\models\InvestigationType;
 use Yii;
 use yii\base\UserException;
-use yii\db\Exception;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
@@ -109,54 +108,58 @@ class WizardController extends Controller
     public function actionUser($id = null)
     {
         $request = Yii::$app->getRequest();
-        /** @var User $user */
-        $user = User::create($id);
-        if (null === $user) {
-            throw new UserException('The user does not exists');
-        }
-
-        /** @var UserForm $userForm */
-        $userForm = Yii::createObject(UserForm::class);
-        /** @var UserService $userService */
-        $userService = Yii::createObject(UserService::class, [$user]);
-
-        $options = [
-            'isUser' => true,
-            'userForm' => $userForm,
-            'isUpdate' => false,
-            'selectedUser' => null,
-        ];
-        if ($user->id) {
-            $userService->populateForm($userForm);
-            $options['isUpdate'] = true;
-            $options['selectedUser'] = $user->id;
-        } else {
-            $userForm->scenario = UserForm::SCENARIO_CREATE;
-        }
-
-        if ($request->isPost && $userForm->load($request->post())) {
-            if (User::isAdmin()) {
-                //admin can create only clients
-                $userForm->role = 'client';
-            }
-            //new user with admin role can't have company
-            if ($userForm->role == 'admin' || $userForm->role == 'superAdmin') {
-                $userForm->company_id = null;
+        try {
+            /** @var User $user */
+            $user = User::create($id);
+            if (null === $user) {
+                throw new UserException('The user does not exists');
             }
 
-            if ($userForm->validate() && $userService->save($userForm)) {
-                $this->setFlashMessage('success', 'user', $options['isUpdate']);
+            /** @var UserForm $userForm */
+            $userForm = Yii::createObject(UserForm::class);
+            /** @var UserService $userService */
+            $userService = Yii::createObject(UserService::class, [$user]);
 
-                //reset password fields
-                $userForm->password = $userForm->password_repeat = null;
-
+            $options = [
+                'isUser' => true,
+                'userForm' => $userForm,
+                'isUpdate' => false,
+                'selectedUser' => null,
+            ];
+            if ($user->id) {
+                $userService->populateForm($userForm);
                 $options['isUpdate'] = true;
                 $options['selectedUser'] = $user->id;
-                $userForm->scenario = UserForm::SCENARIO_DEFAULT;
-
             } else {
-                $this->setFlashMessage('error', 'user', $options['isUpdate']);
+                $userForm->scenario = UserForm::SCENARIO_CREATE;
             }
+
+            if ($request->isPost && $userForm->load($request->post())) {
+                if (User::isAdmin()) {
+                    //admin can create only clients
+                    $userForm->role = 'client';
+                }
+                //new user with admin role can't have company
+                if ($userForm->role == 'admin' || $userForm->role == 'superAdmin') {
+                    $userForm->company_id = null;
+                }
+
+                if ($userForm->validate() && $userService->save($userForm)) {
+                    $this->setFlashMessage('success', 'user', $options['isUpdate']);
+
+                    //reset password fields
+                    $userForm->password = $userForm->password_repeat = null;
+
+                    $options['isUpdate'] = true;
+                    $options['selectedUser'] = $user->id;
+                    $userForm->scenario = UserForm::SCENARIO_DEFAULT;
+
+                } else {
+                    $this->setFlashMessage('error', 'user', $options['isUpdate']);
+                }
+            }
+        } catch (\Exception $e) {
+            $this->setFlashMessage('error', null, null, $e->getMessage());
         }
 
         return $this->smartRender('index', $options);
@@ -196,40 +199,45 @@ class WizardController extends Controller
     public function actionInvestigation($id = null, $companyId = null)
     {
         $request = Yii::$app->getRequest();
-        /** @var Investigation $investigation */
-        $investigation = Investigation::create($id);
-        if (null === $investigation) {
-            throw new UserException('The applicant does not exits');
-        }
-        $isUpdate = $investigation->id > 0 ? true : false;
+        try {
+            /** @var Investigation $investigation */
+            $investigation = Investigation::create($id);
+            if (null === $investigation) {
+                throw new UserException('The applicant does not exits');
+            }
+            $isUpdate = $investigation->id > 0 ? true : false;
 
-        // fills defaults investigation types
-        // for selected company when selecting in dropdown
-        if ($companyId !== null && User::isSuperAdmin()) {
-            $investigation->investigationTypeIds = InvestigationType::getDefaultIdsForCompanyId($companyId);
-            $investigation->company_id = $companyId;
-        }
-
-        // fills defaults investigation types
-        // when client creates a new investigation
-        if (User::isClient() && $investigation->isNewRecord) {
-            $companyId = User::getIdentity()->company->id;
-            $investigation->investigationTypeIds = InvestigationType::getDefaultIdsForCompanyId($companyId);
-        }
-
-        if ($request->isPost && $investigation->load($request->post())) {
-            if (User::isClient()) {
-                $investigation->company_id = Yii::$app->user->identity->company->id;
+            // fills defaults investigation types
+            // for selected company when selecting in dropdown
+            if ($companyId !== null && User::isSuperAdmin()) {
+                $investigation->investigationTypeIds = InvestigationType::getDefaultIdsForCompanyId($companyId);
+                $investigation->company_id = $companyId;
             }
 
-            if ($investigation->save()) {
-                $this->setFlashMessage('success', 'applicant', $isUpdate);
-                return $this->redirect(['/file', 'id' => $investigation->id]);
-
-            } else {
-                $this->setFlashMessage('error', 'applicant', $isUpdate);
+            // fills defaults investigation types
+            // when client creates a new investigation
+            if (User::isClient() && $investigation->isNewRecord) {
+                $companyId = User::getIdentity()->company->id;
+                $investigation->investigationTypeIds = InvestigationType::getDefaultIdsForCompanyId($companyId);
             }
+
+            if ($request->isPost && $investigation->load($request->post())) {
+                if (User::isClient()) {
+                    $investigation->company_id = Yii::$app->user->identity->company->id;
+                }
+
+                if ($investigation->save()) {
+                    $this->setFlashMessage('success', 'applicant', $isUpdate);
+                    return $this->redirect(['/file', 'id' => $investigation->id]);
+
+                } else {
+                    $this->setFlashMessage('error', 'applicant', $isUpdate);
+                }
+            }
+        } catch (\Exception $e) {
+            $this->setFlashMessage('error', null, null, $e->getMessage());
         }
+
 
         return $this->smartRender('index', [
             'isInvestigation' => true,
