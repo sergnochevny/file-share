@@ -29,6 +29,8 @@ $isShowCompany = Yii::$app->user->can('admin') && (Company::find()->count() > 0)
 
             <?= $form->field($investigationForm, 'name')->textInput(['placeholder' => 'Name']) ?>
 
+            <?= $form->field($investigationForm, 'name')->textInput(['placeholder' => 'Name']) ?>
+
             <?= $form->field($investigationForm, 'description')->textarea([
                 'placeholder' => 'Provide Description',
                 'style' => 'height: 99px;'

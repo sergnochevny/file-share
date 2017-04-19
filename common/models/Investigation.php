@@ -15,10 +15,13 @@ use yii2tech\ar\linkmany\LinkManyBehavior;
  * @property string $start_date
  * @property string $end_date
  * @property string $name
+ * @property string $case_number
  * @property string $description
  * @property string $contact_person
  * @property string $phone
  * @property string $email
+ *
+ * @property integer $created_by
  *
  * @property integer $status
  * @property integer $created_at
@@ -31,6 +34,7 @@ use yii2tech\ar\linkmany\LinkManyBehavior;
  *
  * @property Company $company
  * @property InvestigationType[] $investigationTypes
+ * @property User $createdBy
  */
 class Investigation extends UndeletableActiveRecord
 {
@@ -74,7 +78,7 @@ class Investigation extends UndeletableActiveRecord
             [['company_id'], 'integer'],
             ['start_date', 'default', 'value' => new Expression('NOW()')],
             ['name', 'required'],
-            [['name', 'contact_person'], 'string'],
+            [['name', 'contact_person', 'case_number'], 'string'],
             ['phone', 'number'],
             ['email', 'email'],
             [['description'], 'string', 'max' => 2000],
@@ -87,6 +91,11 @@ class Investigation extends UndeletableActiveRecord
                 ['company_id'], 'exist', 'skipOnError' => true,
                 'targetClass' => Company::className(),
                 'targetAttribute' => ['company_id' => 'id']
+            ],
+            [
+                ['created_by'], 'exist', 'skipOnError' => true,
+                'targetClass' => User::className(),
+                'targetAttribute' => ['created_by' => 'id']
             ],
 
             ['investigationTypeIds', 'safe'],
@@ -188,5 +197,13 @@ class Investigation extends UndeletableActiveRecord
     {
         return $this->hasMany(InvestigationType::class, ['id' => 'investigation_type_id'])
             ->viaTable('investigation_investigation_type', ['investigation_id' => 'id']);
+    }
+
+    /**
+     * @return UndeletableActiveQuery
+     */
+    public function getCreatedBy()
+    {
+        return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
 }
