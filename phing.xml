@@ -57,16 +57,36 @@
 
     <target name="minifyjs">
         <echo msg="Minifying JavaScript files..."/>
-        <jsmin targetDir="${JS_DIR}" suffix=".min">
+        <foreach param="filename" absparam="absfilename" target="minify_js">
             <fileset refid="tominjs"/>
-        </jsmin>
+        </foreach>
+    </target>
+
+    <target name="minify_js">
+        <basename file="${filename}" property="file" suffix=".js"/>
+        <dirname file="${absfilename}" property="dir"/>
+        <property name="from" value="${dir}\${file}.js"/>
+        <property name="to" value="${dir}\${file}.min.js"/>
+        <echo msg="minify ${from}"/>
+        <echo msg="to ${to}"/>
+        <exec command="java -jar compiler.jar --js ${from} --js_output_file ${to}"/>
     </target>
 
     <target name="minifycss">
         <echo msg="Minifying CSS files..."/>
-        <jsmin targetDir="${CSS_DIR}" suffix=".min">
+        <foreach param="filename" absparam="absfilename" target="minify_css">
             <fileset refid="tomincss"/>
-        </jsmin>
+        </foreach>
+    </target>
+
+    <target name="minify_css">
+        <basename file="${filename}" property="file" suffix=".css"/>
+        <dirname file="${absfilename}" property="dir"/>
+        <property name="from" value="${dir}\${file}.css"/>
+        <property name="to" value="${dir}\${file}.min.css"/>
+        <echo msg="minify ${from}"/>
+        <echo msg="to ${to}"/>
+        <exec command="java -jar yuicompressor.jar --type css ${from} -o ${to}"/>
     </target>
 
     <target name="build" depends="remove_old, minifyjs, minifycss">
