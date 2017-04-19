@@ -52,7 +52,7 @@ use yii\helpers\Url;
                                 <span class="pull-right"><span
                                             class="label label-success"><?= Html::encode($model->createdBy->fullName) ?></span></span>
                                 <span class="icon icon-user-plus  icon-lg icon-fw"></span>
-                                Applicant
+                                Created By
                             </li>
                             <?php endif ?>
                         </ul>
