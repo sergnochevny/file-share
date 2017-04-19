@@ -13,15 +13,15 @@ use yii\widgets\Pjax;
 <?= Alert::widget() ?>
 <?php $form = ActiveForm::begin(['options' => ['data-pjax' => true]]) ?>
 
-    <?= $form->field($model, 'citrixId')->textInput() ?>
-    <?= $form->field($model, 'citrixPass')->textInput() ?>
-    <?= $form->field($model, 'citrixSecret')->textInput() ?>
-    <?= $form->field($model, 'citrixSubdomain')->textInput() ?>
-    <?= $form->field($model, 'citrixUser')->textInput() ?>
+<?= $form->field($model, 'citrixSubdomain')->textInput() ?>
+<?= $form->field($model, 'citrixId')->textInput() ?>
+<?= $form->field($model, 'citrixSecret')->textInput() ?>
+<?= $form->field($model, 'citrixUser')->textInput() ?>
+<?= $form->field($model, 'citrixPass')->textInput() ?>
 
-    <div class="form-group text-right">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-primary']) ?>
-    </div>
+<div class="form-group text-right">
+    <?= Html::submitButton('Save', ['class' => 'btn btn-primary']) ?>
+</div>
 
 <?php ActiveForm::end() ?>
 <?php Pjax::end() ?>
