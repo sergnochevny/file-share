@@ -14,6 +14,8 @@ use yii\db\Query;
  *
  * @property array $statusesList
  * @property array $allCompaniesList
+ *
+ * @property User $createdBy
  */
 class Investigation extends \common\models\Investigation
 {
@@ -100,5 +102,13 @@ class Investigation extends \common\models\Investigation
     {
         $companies = Company::find()->select(['id', 'name'])->asArray();
         return array_column($companies->all(), 'name', 'id');
+    }
+
+    /**
+     * @return UndeletableActiveQuery
+     */
+    public function getCreatedBy()
+    {
+        return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
 }
