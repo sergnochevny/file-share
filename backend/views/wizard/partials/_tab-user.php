@@ -114,6 +114,7 @@ use backend\models\User;
                                                         </span>
                 <?= $isUpdate ? 'Update' : 'Create' ?>
             </button>
+            <?php if (!User::isAdmin()): ?>
             <a href="<?= \yii\helpers\Url::to(['investigation'], true) ?>" class="<?= $isUpdate ? '' : 'hidden ' ?>btn btn-sm btn-labeled  arrow-success">
                                                         <span class="btn-label">
                                                             <span
@@ -121,6 +122,7 @@ use backend\models\User;
                                                         </span>
                 Next
             </a>
+            <?php endif ?>
         </div>
     </div>
     <?php \backend\widgets\ActiveForm::end() ?>

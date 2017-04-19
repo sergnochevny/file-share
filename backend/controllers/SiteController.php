@@ -9,8 +9,10 @@ use backend\models\forms\RestorePasswordRequestForm;
 use backend\models\Graph;
 use backend\models\Statistics;
 use common\helpers\Url;
+use keystorage\models\KeyStroageFormModel;
 use Yii;
 use yii\filters\AccessControl;
+use yii\filters\AccessRule;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 
@@ -22,6 +24,33 @@ class SiteController extends Controller
 
     const EMAIL_USER = 'email_user';
     private $resetUrl;
+
+    /**
+     * Shows index page for admins
+     * @return string
+     */
+    protected function renderIndex()
+    {
+        $statistics = new Statistics();
+        $statistics->load(Yii::$app->request->post());
+
+        $interval = new \DateInterval('P30D');
+        $step = new \DateInterval('P1D');
+        $graph = new Graph($interval, $step);
+
+        return $this->render('index', [
+            'stat' => $statistics,
+            'graph' => $graph,
+        ]);
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getResetUrl()
+    {
+        return $this->resetUrl;
+    }
 
     /**
      * @inheritdoc
@@ -44,14 +73,23 @@ class SiteController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'logout', 'error'],
-                        'roles' => ['@']
+                        'actions' => ['index', 'logout'],
+                        'roles' => ['@'],
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['login', 'restore-password-request', 'password-reset', 'error'],
-                        'roles' => ['?']
-                    ]
+                        'actions' => ['login', 'restore-password-request', 'password-reset'],
+                        'roles' => ['?', '@'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['settings'],
+                        'roles' => ['superAdmin']
+                    ],
+                    [
+                        'actions' => ['error'],
+                        'allow' => true,
+                    ],
                 ]
             ]
         ];
@@ -91,8 +129,9 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        $this->layout = 'main-login';
+        if (!Yii::$app->user->isGuest) $this->goHome();
 
+        $this->layout = 'main-login';
         $model = new LoginForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
@@ -111,6 +150,8 @@ class SiteController extends Controller
      */
     public function actionRestorePasswordRequest()
     {
+        if (!Yii::$app->user->isGuest) $this->goHome();
+
         $this->layout = 'main-login';
         $model = new RestorePasswordRequestForm;
 
@@ -130,6 +171,8 @@ class SiteController extends Controller
      */
     public function actionPasswordReset($token = null)
     {
+        if (!Yii::$app->user->isGuest) $this->goHome();
+
         $this->layout = 'main-login';
         $model = null;
         if (!empty($token)) {
@@ -173,30 +216,65 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
-    /**
-     * Shows index page for admins
-     * @return string
-     */
-    protected function renderIndex()
+    public function actionSettings()
     {
-        $statistics = new Statistics();
-        $statistics->load(Yii::$app->request->post());
-
-        $interval = new \DateInterval('P30D');
-        $step = new \DateInterval('P1D');
-        $graph = new Graph($interval, $step);
-
-        return $this->render('index', [
-            'stat' => $statistics,
-            'graph' => $graph,
+        $rq = Yii::$app->getRequest();
+        $session = Yii::$app->getSession();
+        $commonRules = [
+            ['trim'],
+            ['required'],
+            ['string', 'max' => 100]
+        ];
+        $model = new KeyStroageFormModel([
+            'keys' => [
+                'citrix.id' =>
+                    [
+                        'label' => 'Citrix ID',
+                        'type' => KeyStroageFormModel::TYPE_TEXTINPUT,
+                        'rules' => $commonRules,
+                    ],
+                'citrix.pass' =>
+                    [
+                        'label' => 'Citrix Password',
+                        'type' => KeyStroageFormModel::TYPE_TEXTINPUT,
+                        'rules' => $commonRules,
+                    ],
+                'citrix.secret' => [
+                    'label' => 'Citrix Secret',
+                    'type' => KeyStroageFormModel::TYPE_TEXTINPUT,
+                    'rules' => $commonRules,
+                ],
+                'citrix.subdomain' => [
+                    'label' => 'Citrix Subdomain',
+                    'type' => KeyStroageFormModel::TYPE_TEXTINPUT,
+                    'rules' => $commonRules,
+                ],
+                'citrix.user' => [
+                    'label' => 'Citrix User',
+                    'type' => KeyStroageFormModel::TYPE_TEXTINPUT,
+                    'rules' => [
+                        ['trim'],
+                        ['required'],
+                        ['string', 'max' => 100],
+                        ['email']
+                    ],
+                ]
+            ]
         ]);
-    }
 
-    /**
-     * @return mixed
-     */
-    protected function getResetUrl()
-    {
-        return $this->resetUrl;
+        if ($rq->isPost && $model->load($rq->post())) {
+            if ($model->save()) {
+                $flashBody = 'All settings were saved';
+                $flashType = 'success';
+
+            } else {
+                $flashBody = 'Settings were not saved';
+                $flashType = 'danger';
+            }
+
+            $session->setFlash($flashType, $flashBody);
+        }
+
+        return $this->render('settings', ['model' => $model]);
     }
 }

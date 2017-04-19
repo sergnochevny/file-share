@@ -33,10 +33,10 @@ class Alert extends \yii\bootstrap\Widget
      * - $value is the bootstrap alert type (i.e. danger, success, info, warning)
      */
     public $alertTypes = [
-        'error'   => 'alert-danger',
-        'danger'  => 'alert-danger',
+        'error' => 'alert-danger',
+        'danger' => 'alert-danger',
         'success' => 'alert-success',
-        'info'    => 'alert-info',
+        'info' => 'alert-info',
         'warning' => 'alert-warning'
     ];
     /**
@@ -53,11 +53,11 @@ class Alert extends \yii\bootstrap\Widget
         $flashes = $session->getAllFlashes();
         $appendCss = isset($this->options['class']) ? ' ' . $this->options['class'] : '';
 
-        if(sizeof($flashes) > 0){
+        if (sizeof($flashes) > 0) {
             echo Html::beginTag('div', ['class' => 'alert-container']);
             foreach ($flashes as $type => $data) {
                 if (isset($this->alertTypes[$type])) {
-                    $data = (array) $data;
+                    $data = (array)$data;
                     foreach ($data as $i => $message) {
                         /* initialize css class for each alert box */
                         $this->options['class'] = $this->alertTypes[$type] . $appendCss;
@@ -76,7 +76,9 @@ class Alert extends \yii\bootstrap\Widget
                 }
             }
             echo Html::endTag('div');
-            $this->getView()->registerJsFile('@web/js/alert.helper.js', ['depends' => JqueryAsset::class]);
+
+            \backend\assets\AlertHelperAsset::register($this->getView());
+
         }
     }
 }

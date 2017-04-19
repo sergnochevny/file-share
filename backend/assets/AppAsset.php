@@ -12,7 +12,14 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
 
-    public $css = [
+    public $css = YII_ENV_DEV?[
+        'css/theme/application.css',
+        'css/theme/elephant.css',
+        'css/theme/login.css',
+        'css/theme/main.css',
+        'css/theme/profile.css',
+        'css/theme/vendor.css',
+    ]:[
         'css/theme/application.min.css',
         'css/theme/elephant.min.css',
         'css/theme/login.min.css',
@@ -21,7 +28,11 @@ class AppAsset extends AssetBundle
         'css/theme/vendor.min.css',
     ];
 
-    public $js = [
+    public $js = YII_ENV_DEV?[
+        'js/theme/elephant.min.js',
+        'js/theme/application.js',
+        'js/theme/main.js',
+    ]:[
         'js/theme/elephant.min.js',
         'js/theme/application.min.js',
         'js/theme/main.min.js',

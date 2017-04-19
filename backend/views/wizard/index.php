@@ -19,7 +19,7 @@ $col_xs_x = User::isSuperAdmin() ? 'col-xs-4' : 'col-xs-6';
 
 //@todo consider to move in css file
 $this->registerCss('.investigation-types label {display: block;}');
-$this->registerJsFile('@web/js/wizard.js', ['depends' => JqueryAsset::class]);
+\backend\assets\WizardAsset::register($this);
 \yii\jui\JuiAsset::register($this);
 $this->title = 'Wizard';
 

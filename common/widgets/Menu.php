@@ -23,7 +23,7 @@ class Menu extends \yii\widgets\Menu
         $template = ArrayHelper::getValue($item, 'template', $this->linkTemplate);
         if (isset($item['options']['icon'])) {
             $template = strtr($template, [
-                '{icon}' => Html::encode(Url::to($item['options']['icon'])),
+                '{icon}' => Html::encode($item['options']['icon']),
             ]);
         } else {
             $template = strtr($template, ['{icon}' => null,]);

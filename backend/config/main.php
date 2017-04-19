@@ -19,7 +19,11 @@ return [
         ],
     ],
     'components' => [
+        'keyStorage' => [
+            'class' => 'keystorage\components\KeyStorage',
+        ],
         'assetManager' => [
+            'linkAssets' => false,
             'bundles' => [
                 'yii\web\JqueryAsset' => [
                     'sourcePath' => null,
@@ -30,6 +34,9 @@ return [
                     ]
                 ],
             ],
+            'converter' => [
+                'class' => '\common\assets\AssetGzipConverter'
+            ]
         ],
         'request' => [
             'csrfParam' => '_csrf-backend',

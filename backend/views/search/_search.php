@@ -8,7 +8,9 @@ use yii\widgets\ActiveForm;
 /* @var $model backend\models\FileSearch */
 /* @var $form yii\widgets\ActiveForm */
 
-$this->registerJsFile(YII_ENV_DEV ? '@web/js/form_search.js' : '@web/js/form_search.min.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+
+\backend\assets\FormSearchAsset::register($this);
+
 $action = !empty($action) ? $action : Url::to([null], true);
 ?>
 <?php $form = ActiveForm::begin([

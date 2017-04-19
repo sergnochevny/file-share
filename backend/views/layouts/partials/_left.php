@@ -17,7 +17,6 @@ $userCompany = Yii::$app->user->identity->company;
         <div class="custom-scrollbar">
             <nav id="sidenav" class="sidenav-collapse collapse">
                 <?php
-                $items = [];
                 $items[] = ['label' => 'Navigation', 'options' => ['class' => 'sidenav-heading']];
                 $items[] = ['label' => 'Home', 'url' => Url::to(['/site'], true), 'options' => ['icon' => 'icon-home']];
                 $items[] = [
@@ -35,7 +34,7 @@ $userCompany = Yii::$app->user->identity->company;
                 $items[] = [
                     'label' => 'Applicant Types',
                     'url' => ['/investigation-type'],
-                    'options' => ['icon' => 'icon-folder-info-circle'],
+                    'options' => ['icon' => 'icon-info-circle'],
                     'visible' => !User::isClient(),
                 ];
                 $items[] = ['label' => 'History', 'url' => ['/history'], 'options' => ['icon' => 'icon-history']];
@@ -46,7 +45,12 @@ $userCompany = Yii::$app->user->identity->company;
                     'options' => ['icon' => 'icon-users'],
                     'visible' => !User::isClient(),
                 ];
-
+                $items[] = [
+                    'label' => 'Settings',
+                    'url' => ['/site/settings'],
+                    'options' => ['icon' => 'icon-cogs'],
+                    'visible' => User::isSuperAdmin()
+                ];
                 ?>
                 <?= Menu::widget([
                     'options' => ['class' => 'sidenav'],
