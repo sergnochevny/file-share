@@ -98,7 +98,7 @@ class FileController extends PermissionController
             $parent = File::findOne(['parent' => 'root']);
             if (!empty($parent)) {
                 $parent = $parent->citrix_id;
-            } else $parent = 'no parent';
+            }
         }
         $uploadModel = new FileUpload;
         if (!empty($id) && !empty($parent)) {
