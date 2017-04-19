@@ -27,31 +27,24 @@ $isShowCompany = Yii::$app->user->can('admin') && (Company::find()->count() > 0)
     <div class="row">
         <div class="col-sm-6">
 
-            <?= $form->field($investigationForm, 'name')->textInput(['placeholder' => 'Name']) ?>
+            <?= $form->field($investigationForm, 'name')->textInput(['placeholder' => 'Name', 'maxlength' => true]) ?>
 
-            <?= $form->field($investigationForm, 'name')->textInput(['placeholder' => 'Name']) ?>
+            <?= $form->field($investigationForm, 'case_number')->textInput(['placeholder' => 'Case Number', 'maxlength' => true]) ?>
 
-            <?= $form->field($investigationForm, 'description')->textarea([
-                'placeholder' => 'Provide Description',
-                'style' => 'height: 99px;'
-            ]) ?>
-
+            <?php if (!empty($investigationTypes)): ?>
+            <?= $form->field($investigationForm, 'investigationTypeIds')-> checkboxList($investigationTypes, ['class' => 'investigation-types']) ?>
+            <?php endif ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($investigationForm, 'contact_person')->textInput(['placeholder' => 'Contact Person']) ?>
+            <?= $form->field($investigationForm, 'contact_person')->textInput(['placeholder' => 'Contact Person', 'maxlength' => true]) ?>
 
-            <?= $form->field($investigationForm, 'phone')->input('tel', ['placeholder' => 'Phone Number']) ?>
+            <?= $form->field($investigationForm, 'phone')->textInput(['placeholder' => 'Phone Number', 'maxlength' => true]) ?>
 
-            <?= $form->field($investigationForm, 'email')->textInput(['placeholder' => 'Contact Email Address']) ?>
+            <?= $form->field($investigationForm, 'email')->textInput(['placeholder' => 'Contact Email Address', 'maxlength' => true]) ?>
         </div>
     </div>
 
     <div class="row">
-        <?php if (!empty($investigationTypes)): ?>
-        <div class="col-sm-6 investigation-types">
-            <?= $form->field($investigationForm, 'investigationTypeIds')-> checkboxList($investigationTypes) ?>
-        </div>
-        <?php endif ?>
         <div class="clearfix"></div>
         <hr/>
         <div align="center">
