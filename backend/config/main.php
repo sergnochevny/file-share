@@ -19,6 +19,9 @@ return [
         ],
     ],
     'components' => [
+        'keyStorage' => [
+            'class' => 'keystorage\components\KeyStorage',
+        ],
         'assetManager' => [
             'linkAssets' => false,
             'bundles' => [

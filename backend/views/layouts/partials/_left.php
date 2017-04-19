@@ -47,7 +47,7 @@ $userCompany = Yii::$app->user->identity->company;
                 ];
                 $items[] = [
                     'label' => 'Settings',
-                    'url' => ['/'],
+                    'url' => ['/site/settings'],
                     'options' => ['icon' => 'icon-cogs'],
                     'visible' => User::isSuperAdmin()
                 ];

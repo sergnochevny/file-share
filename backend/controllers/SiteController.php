@@ -9,6 +9,7 @@ use backend\models\forms\RestorePasswordRequestForm;
 use backend\models\Graph;
 use backend\models\Statistics;
 use common\helpers\Url;
+use keystorage\models\KeyStroageFormModel;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\AccessRule;
@@ -79,6 +80,11 @@ class SiteController extends Controller
                         'allow' => true,
                         'actions' => ['login', 'restore-password-request', 'password-reset'],
                         'roles' => ['?', '@'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['settings'],
+                        'roles' => ['superAdmin']
                     ],
                     [
                         'actions' => ['error'],
@@ -208,5 +214,67 @@ class SiteController extends Controller
     {
         Yii::$app->user->logout();
         return $this->goHome();
+    }
+
+    public function actionSettings()
+    {
+        $rq = Yii::$app->getRequest();
+        $session = Yii::$app->getSession();
+        $commonRules = [
+            ['trim'],
+            ['required'],
+            ['string', 'max' => 100]
+        ];
+        $model = new KeyStroageFormModel([
+            'keys' => [
+                'citrix.id' =>
+                    [
+                        'label' => 'Citrix ID',
+                        'type' => KeyStroageFormModel::TYPE_TEXTINPUT,
+                        'rules' => $commonRules,
+                    ],
+                'citrix.pass' =>
+                    [
+                        'label' => 'Citrix Password',
+                        'type' => KeyStroageFormModel::TYPE_TEXTINPUT,
+                        'rules' => $commonRules,
+                    ],
+                'citrix.secret' => [
+                    'label' => 'Citrix Secret',
+                    'type' => KeyStroageFormModel::TYPE_TEXTINPUT,
+                    'rules' => $commonRules,
+                ],
+                'citrix.subdomain' => [
+                    'label' => 'Citrix Subdomain',
+                    'type' => KeyStroageFormModel::TYPE_TEXTINPUT,
+                    'rules' => $commonRules,
+                ],
+                'citrix.user' => [
+                    'label' => 'Citrix User',
+                    'type' => KeyStroageFormModel::TYPE_TEXTINPUT,
+                    'rules' => [
+                        ['trim'],
+                        ['required'],
+                        ['string', 'max' => 100],
+                        ['email']
+                    ],
+                ]
+            ]
+        ]);
+
+        if ($rq->isPost && $model->load($rq->post())) {
+            if ($model->save()) {
+                $flashBody = 'All settings were saved';
+                $flashType = 'success';
+
+            } else {
+                $flashBody = 'Settings were not saved';
+                $flashType = 'danger';
+            }
+
+            $session->setFlash($flashType, $flashBody);
+        }
+
+        return $this->render('settings', ['model' => $model]);
     }
 }
