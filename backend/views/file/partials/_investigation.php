@@ -13,7 +13,19 @@ use yii\helpers\Url;
     <div class="col-xs-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <?= strtoupper($model->name) ?>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <?= strtoupper($model->name) ?>
+                        <?php if (Investigation::STATUS_COMPLETED !== $model->status && !User::isClient()): ?>
+                            <a class="pull-right btn btn-xs btn-labeled arrow-success" href="<?= Url::to(['/investigation/complete', 'id' => $model->id]) ?>">
+                    <span class="btn-label">
+                        <span class="icon icon-check icon-lg icon-fw"></span>
+                    </span> Complete
+                            </a>
+                        <?php endif ?>
+                    </div>
+                </div>
+
             </div>
             <div class="panel-body panel-collapse">
                 <div class="row">
@@ -25,9 +37,7 @@ use yii\helpers\Url;
                                     <span class="label label-<?= Investigation::getStatusCSSClass($model->status) ?>">
                                         <?= Investigation::getStatusByCode($model->status)?>
                                     </span>
-                                    <?php if (Investigation::STATUS_COMPLETED !== $model->status && !User::isClient()): ?>
-                                        <a class="btn btn-success btn-xs" href="<?= Url::to(['/investigation/complete', 'id' => $model->id]) ?>" title="Change status to complete" aria-label="Change status to complete">Complete</a>
-                                    <?php endif ?>
+
                                 </span>
                                 <span class="icon icon-tag icon-lg icon-fw"></span>
                                 Status
