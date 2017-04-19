@@ -1,10 +1,18 @@
 <?php
+use backend\models\User;
 use yii\helpers\Html;
 use common\helpers\Url;
 
 /** @var \common\models\User $user */
 $user = Yii::$app->user->identity;
 
+$icon = 'c.png';
+if (User::isSuperAdmin()) {
+    $icon = 's.png';
+} elseif (User::isAdmin()) {
+    $icon = 'a.png';
+}
+$userIconSrc = Url::to(['/images/users/photo/' . $icon], true);
 ?>
 <div class="layout-header">
     <div class="navbar navbar-default">
@@ -30,8 +38,8 @@ $user = Yii::$app->user->identity;
                 <span class="sr-only">Toggle navigation</span>
                 <span class="arrow-up"></span>
                 <span class="ellipsis ellipsis-vertical">
-                    <i class="ellipsis-object icon icon-user" style="font-size: 1.5em"></i>
-                   <!-- <img class="ellipsis-object" src="" width="32" height="32" alt="">-->
+                   <!-- <i class="ellipsis-object icon icon-user" style="font-size: 1.5em"></i>-->
+                    <img class="ellipsis-object" src="<?= $userIconSrc ?>" width="32" height="32" alt="">
                 </span>
             </button>
         </div>
@@ -56,7 +64,7 @@ $user = Yii::$app->user->identity;
 
                     <li class="dropdown hidden-xs">
                         <button class="navbar-account-btn" data-toggle="dropdown" aria-haspopup="true">
-                            <i class="icon icon-user" style="margin-top: 8px; font-size: 1.5em"></i>
+                            <img src="<?= $userIconSrc ?>" width="32" height="32" alt=""><!--<i class="icon icon-user" style="margin-top: 8px; font-size: 1.5em"></i>-->
                             <?= ucfirst($user->username) ?>
                             <span class="caret"></span>
                         </button>
