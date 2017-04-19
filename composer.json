@@ -1,5 +1,5 @@
 {
-  "name": "yiisoft/yii2-app-advanced",
+  "name": "ait/protus",
   "description": "Protus 3",
   "keywords": [
     "Protus"
@@ -11,32 +11,6 @@
     "issues": "http://ait.com/"
   },
   "minimum-stability": "stable",
-  "repositories": {
-    "ait-citrix": {
-      "type": "git",
-      "url": "git@gitlab.ait.com:ait/citrix.git"
-    },
-    "ait-guzzle": {
-      "type": "git",
-      "url": "git@gitlab.ait.com:ait/guzzle.git"
-    },
-    "ait-keystorage": {
-      "type": "git",
-      "url": "git@gitlab.ait.com:ait/keystorage.git"
-    },
-    "ait-extlib": {
-      "type": "package",
-      "package": {
-        "version": "1.0.1",
-        "name": "bower/ext-lib",
-        "source": {
-          "type": "git",
-          "url": "git@gitlab.ait.com:ait/extlib.git",
-          "reference": "1.0.1"
-        }
-      }
-    }
-  },
   "require": {
     "php": ">=5.5.9",
     "yiisoft/yii2": "~2.0.10",
@@ -48,7 +22,8 @@
     "ait/keystorage": "0.0.2",
     "bower/ext-lib": "^1.0.1",
     "yii2tech/ar-linkmany": "^1.0",
-    "ait/citrix": "1.0.9"
+    "ait/citrix": "^1.0.10",
+    "monolog/monolog": "^1.22"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.0.0",

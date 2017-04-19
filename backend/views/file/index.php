@@ -270,4 +270,6 @@ $view = $this;
 </div>
 
 <?php Pjax::end(); ?>
+<?php \backend\assets\InputUploadSubmitAsset::register($this);?>
 <?php \backend\assets\AlertHelperAsset::register($this);?>
+
