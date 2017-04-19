@@ -1,0 +1,74 @@
+<project name="make_project" basedir="." default="build">
+
+    <property name="JS_DIR" value="backend/web/js"/>
+    <property name="CSS_DIR" value="backend/web/css"/>
+
+    <fileset id="minjs" dir="${JS_DIR}/">
+        <include name="**/*.min.js"/>
+        <include name="*.min.js"/>
+    </fileset>
+
+    <fileset id="delminjs" dir="${JS_DIR}/">
+        <exclude name="**/vendor.min.js"/>
+        <exclude name="**/elephant.min.js"/>
+        <include name="**/*.min.js"/>
+        <include name="*.min.js"/>
+    </fileset>
+
+    <fileset id="tominjs" dir="${JS_DIR}/">
+        <exclude name="**/*.min.js"/>
+        <exclude name="*.min.js"/>
+        <include name="**/*.js"/>
+        <include name="*.js"/>
+    </fileset>
+
+    <fileset id="mincss" dir="${CSS_DIR}/">
+        <include name="*.min.css"/>
+        <include name="**/*.min.css"/>
+    </fileset>
+
+    <fileset id="delmincss" dir="${CSS_DIR}/">
+        <include name="*.min.css"/>
+        <include name="**/*.min.css"/>
+    </fileset>
+
+    <fileset id="tomincss" dir="${CSS_DIR}/">
+        <exclude name="*.min.css"/>
+        <exclude name="**/*.min.css"/>
+        <include name="*.css"/>
+        <include name="**/*.css"/>
+    </fileset>
+
+    <target name="remove_old">
+        <echo msg="Removing old min, gz files..."/>
+        <delete>
+            <fileset refid="delminjs"/>
+            <fileset refid="delmincss"/>
+            <fileset dir="${CSS_DIR}/">
+                <include name="*.gz"/>
+                <include name="**/*.gz"/>
+            </fileset>
+            <fileset dir="${JS_DIR}/">
+                <include name="*.gz"/>
+                <include name="**/*.gz"/>
+            </fileset>
+        </delete>
+    </target>
+
+    <target name="minifyjs">
+        <echo msg="Minifying JavaScript files..."/>
+        <jsmin targetDir="${JS_DIR}" suffix=".min">
+            <fileset refid="tominjs"/>
+        </jsmin>
+    </target>
+
+    <target name="minifycss">
+        <echo msg="Minifying CSS files..."/>
+        <jsmin targetDir="${CSS_DIR}" suffix=".min">
+            <fileset refid="tomincss"/>
+        </jsmin>
+    </target>
+
+    <target name="build" depends="remove_old, minifyjs, minifycss">
+    </target>
+</project>
