@@ -74,9 +74,18 @@
     //changes default applicants types when changing company
     $(document).on('change', investigationCompanyList, function (event) {
         var companyId = $(this).val(),
-            url = $(investigationForm).attr('action');
+            url = $('#types-container').data('url');
 
-        pjaxSendRequest(url, 'get', {companyId: companyId});
+        $.pjax({
+            url: url,
+            container: '#types-container',
+            type: 'get',
+            push: false,
+            replace: false,
+            timeout: 0,
+            scrollTo: false,
+            data: {companyId: companyId}
+        });
     });
 
 })(jQuery);

@@ -4,6 +4,7 @@
 /** @var bool $isUpdate */
 
 use backend\models\Company;
+use common\helpers\Url;
 
 $isShowCompany = Yii::$app->user->can('admin') && (Company::find()->count() > 0);
 
@@ -32,7 +33,11 @@ $isShowCompany = Yii::$app->user->can('admin') && (Company::find()->count() > 0)
             <?= $form->field($investigationForm, 'case_number')->textInput(['placeholder' => 'Case Number', 'maxlength' => true]) ?>
 
             <?php if (!empty($investigationTypes)): ?>
-            <?= $form->field($investigationForm, 'investigationTypeIds')-> checkboxList($investigationTypes, ['class' => 'investigation-types']) ?>
+            <?= $this->render('_investigation-types', [
+                'types' => $investigationTypes,
+                'form' => $form,
+                'model' => $investigationForm
+            ]) ?>
             <?php endif ?>
         </div>
         <div class="col-sm-6">

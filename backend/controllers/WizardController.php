@@ -13,6 +13,7 @@ use yii\base\UserException;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
+use backend\widgets\ActiveForm;
 
 class WizardController extends Controller
 {
@@ -246,6 +247,22 @@ class WizardController extends Controller
             'selected' => $investigation->company_id,
             'isUpdate' => $investigation->id > 0 ? true : false,
             'investigationTypes' => InvestigationType::find()->select('name')->indexBy('id')->column(),
+        ]);
+    }
+
+    /**
+     * @param $companyId
+     * @return string
+     */
+    public function actionUpdateTypes($companyId)
+    {
+        $model = new Investigation();
+        $model->investigationTypeIds = InvestigationType::getDefaultIdsForCompanyId($companyId);
+
+        return $this->render('partials/_investigation-types', [
+            'model' => $model,
+            'types' => InvestigationType::find()->select('name')->indexBy('id')->column(),
+            'form' => new ActiveForm(),
         ]);
     }
 
