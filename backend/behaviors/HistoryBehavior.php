@@ -92,7 +92,7 @@ class HistoryBehavior extends Behavior
     public function events()
     {
         return [
-            UndeletableActiveRecord::EVENT_BEFORE_ARCHIVE => 'afterArchive',
+            UndeletableActiveRecord::EVENT_BEFORE_ARCHIVE => 'beforeArchive',
         ];
     }
 
@@ -105,7 +105,7 @@ class HistoryBehavior extends Behavior
         if (empty($this->parent)) throw new InvalidParamException("Identity parent parameter");
     }
 
-    public function afterArchive($event)
+    public function beforeArchive($event)
     {
         if ($this->type instanceof \Closure) {
             $this->type = call_user_func($this->type, $this->owner);

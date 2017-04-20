@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "18fc8da0329441b05f9ea419d8887929",
+    "content-hash": "0148aac7466ada0a4a8303846595fb7b",
     "packages": [
         {
             "name": "ait/citrix",
-            "version": "1.0.15",
+            "version": "1.0.17",
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:ait/citrix.git",
-                "reference": "7ac8e08f88453c4d6ae3ac88c711edd75568acf9"
+                "reference": "0d2be95e1b6a9e4131a5b883bac92350a6799c69"
             },
             "dist": {
                 "type": "zip",
-                "url": "http://tp.ait.com:443/repo/private/dists/ait/citrix/1.0.15.0/7ac8e08f88453c4d6ae3ac88c711edd75568acf9.zip",
-                "reference": "7ac8e08f88453c4d6ae3ac88c711edd75568acf9",
+                "url": "http://tp.ait.com:443/repo/private/dists/ait/citrix/1.0.17.0/0d2be95e1b6a9e4131a5b883bac92350a6799c69.zip",
+                "reference": "0d2be95e1b6a9e4131a5b883bac92350a6799c69",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -28,6 +28,7 @@
             },
             "require": {
                 "ait/guzzle": "^6.2.2",
+                "ait/utilities": "^1.0.14",
                 "monolog/monolog": "^1.22",
                 "php": ">=5.5",
                 "yiisoft/yii2": "*"
@@ -38,11 +39,6 @@
                 "psr/log": "1.0.2"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.5-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "Citrix\\": "src/"
@@ -58,7 +54,7 @@
                 }
             ],
             "description": "Citrix Share File API implementation the class wrapper",
-            "time": "2017-04-19T20:06:28+00:00"
+            "time": "2017-04-20T08:38:35+00:00"
         },
         {
             "name": "ait/guzzle",
@@ -152,6 +148,45 @@
                 }
             ],
             "time": "2017-02-03T11:54:52+00:00"
+        },
+        {
+            "name": "ait/utilities",
+            "version": "1.0.14",
+            "source": {
+                "type": "git",
+                "url": "git@gitlab.ait.com:ait/utilities.git",
+                "reference": "f3510142f2be14d978776cd17334342b9d497fbd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "http://tp.ait.com:443/repo/private/dists/ait/utilities/1.0.14.0/f3510142f2be14d978776cd17334342b9d497fbd.zip",
+                "reference": "f3510142f2be14d978776cd17334342b9d497fbd",
+                "shasum": null,
+                "mirrors": [
+                    {
+                        "url": "http://tp.ait.com:443/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=5.6",
+                "yiisoft/yii2": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ait\\utilities\\": ""
+                }
+            },
+            "authors": [
+                {
+                    "name": "Serg Nochevny",
+                    "email": "serg.nochevny@engineering.ait.com"
+                }
+            ],
+            "description": "AIT Yii2 Utilities Library",
+            "time": "2017-04-20T08:36:25+00:00"
         },
         {
             "name": "bower-asset/bootstrap",
