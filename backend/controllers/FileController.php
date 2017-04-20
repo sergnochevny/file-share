@@ -61,7 +61,7 @@ class FileController extends PermissionController
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['download', 'upload', 'index'],
+                        'actions' => ['download', 'upload', 'index', 'archive'],
                         'roles' => ['@'],
                     ],
                     [
@@ -161,6 +161,7 @@ class FileController extends PermissionController
         $model = $this->findModel($id);
         $model->detachBehavior('uploadBehavior');
         $investigation = $model->investigations;
+
         try {
             if ($this->verifyPermission(VerifyPermissionBehavior::EVENT_VERIFY_FILE_PERMISSION,
                 ['investigation' => $investigation])
