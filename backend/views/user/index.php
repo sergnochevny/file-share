@@ -134,7 +134,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'aria-label' => "To archive",
                                             'data-confirm' => "Confirm removal",
                                             'data-method' => "post",
-                                            'data-pjax' => "0",
                                         ]
                                     );
                                 },

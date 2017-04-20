@@ -98,7 +98,6 @@ Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout
                             'aria-label' => "To archive",
                             'data-confirm' => "Confirm removal",
                             'data-method' => "post",
-                            'data-pjax' => "0",
                         ]
                     );
                 },
