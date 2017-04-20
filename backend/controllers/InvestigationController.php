@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use backend\behaviors\RememberUrlBehavior;
@@ -80,10 +81,15 @@ class InvestigationController extends Controller
      */
     public function actionArchive($id)
     {
-        $model = $this->findModel($id);
-        $model->detachBehavior('citrixFolderBehavior');
-        $model->archive();
-        Yii::$app->session->setFlash('success', 'Archived successfully');
+        $session = Yii::$app->getSession();
+        try {
+            $model = $this->findModel($id);
+            $model->detachBehavior('citrixFolderBehavior');
+            $model->archive();
+            $session->setFlash('success', 'Archived successfully');
+        } catch (\Exception $e) {
+            $session->setFlash('error', $e->getMessage());
+        }
 
         return $this->actionIndex();
     }

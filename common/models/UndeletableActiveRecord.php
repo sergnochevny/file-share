@@ -52,7 +52,7 @@ class UndeletableActiveRecord extends ActiveRecord
     public function archive()
     {
         $this->status = static::STATUS_IN_HISTORY;
-        if ($this->beforeArchive() && $this->save()) $this->afterArchive();
+        if ($this->beforeArchive() && $this->save(false)) $this->afterArchive();
     }
 
     /**

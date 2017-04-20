@@ -65,28 +65,8 @@ final class NotifyBehavior extends Behavior
             UndeletableActiveRecord::EVENT_AFTER_UPDATE => 'afterUpdate',
             UndeletableActiveRecord::EVENT_AFTER_ARCHIVE => 'afterArchive',
             UndeletableActiveRecord::EVENT_AFTER_DELETE => 'afterDelete',
-            UndeletableActiveRecord::EVENT_AFTER_VALIDATE => 'afterValidate',
         ];
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function afterValidate()
-    {
-        $this->mailer = \Yii::$app->getMailer();
-        $this->identity = \Yii::$app->getUser()->getIdentity();
-        if (null == $this->identity) {
-            throw new ErrorException('Current user (identity) NULL');
-        }
-
-        if (!isset($this->createTemplate, $this->updateTemplate, $this->archiveTemplate, $this->deleteTemplate)) {
-            throw new ErrorException('Need set createTemplate, updateTemplate, archiveTemplate, deleteTemplate for mails');
-        }
-
-        $this->sendFrom = isset($this->sendFrom) ? $this->sendFrom : 'noreply@example.com';
-    }
-
 
     /**
      *
@@ -127,6 +107,7 @@ final class NotifyBehavior extends Behavior
      */
     private function sendMessagesWithTemplate($template)
     {
+        $this->initialize();
         $messages = [];
         foreach ($this->collectAdminEmails() as $email) {
             $messages[] = $this->composeMailer('admin/' . $template)->setTo($email);
@@ -137,6 +118,24 @@ final class NotifyBehavior extends Behavior
         }
 
         $this->mailer->sendMultiple($messages);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    private function initialize()
+    {
+        $this->mailer = \Yii::$app->getMailer();
+        $this->identity = \Yii::$app->getUser()->getIdentity();
+        if (null == $this->identity) {
+            throw new ErrorException('Current user (identity) NULL');
+        }
+
+        if (!isset($this->createTemplate, $this->updateTemplate, $this->archiveTemplate, $this->deleteTemplate)) {
+            throw new ErrorException('Need set createTemplate, updateTemplate, archiveTemplate, deleteTemplate for mails');
+        }
+
+        $this->sendFrom = isset($this->sendFrom) ? $this->sendFrom : 'noreply@example.com';
     }
 
     /**
