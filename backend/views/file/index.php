@@ -213,7 +213,7 @@ $view = $this;
                                                     'aria-label' => "To archive",
                                                     'data-confirm' => "Confirm archiving",
                                                     'data-method' => "post",
-                                                    'data-pjax' => "0",
+                                                    'data-pjax' => true,
                                                 ]
                                             );
                                         return $content;
@@ -228,7 +228,7 @@ $view = $this;
                                                     'aria-label' => "Delete",
                                                     'data-confirm' => "Confirm removal",
                                                     'data-method' => "post",
-                                                    'data-pjax' => "0",
+                                                    'data-pjax' => true,
                                                 ]
                                             );
                                         return $content;
@@ -247,7 +247,7 @@ $view = $this;
                                                     'class' => "btn btn-warning btn-xs",
                                                     'title' => 'Download',
                                                     'aria-label' => "Download",
-                                                    'data-pjax' => "0",
+                                                    'data-pjax' => 0,
                                                 ]
                                             );
                                         return $content;
