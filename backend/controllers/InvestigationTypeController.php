@@ -64,7 +64,7 @@ class InvestigationTypeController extends Controller
                 return $this->redirect(['index']);
 
             } else {
-                $session->setFlash('danger', 'Type has not been added');
+                $session->setFlash('danger', 'Type hasn\'t been added');
             }
         }
 
@@ -88,7 +88,7 @@ class InvestigationTypeController extends Controller
                 return $this->redirect(['index']);
 
             } else {
-                $session->setFlash('danger', 'Type has not been updated');
+                $session->setFlash('danger', 'Type hasn\'t been updated');
             }
         }
 
