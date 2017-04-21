@@ -60,11 +60,11 @@ class InvestigationTypeController extends Controller
         $model = new InvestigationType();
         if ($request->isPost) {
             if ($model->load($request->post()) && $model->save()) {
-                $session->setFlash('success', 'Type was successfully added');
+                $session->setFlash('success', 'Type has been successfully added');
                 return $this->redirect(['index']);
 
             } else {
-                $session->setFlash('danger', 'Type was not added');
+                $session->setFlash('danger', 'Type has not been added');
             }
         }
 
@@ -84,11 +84,11 @@ class InvestigationTypeController extends Controller
         $model = $this->findModel($id);
         if ($request->isPost) {
             if ($model->load($request->post()) && $model->save()) {
-                $session->setFlash('success', 'Type was successfully updated');
+                $session->setFlash('success', 'Type has been successfully updated');
                 return $this->redirect(['index']);
 
             } else {
-                $session->setFlash('danger', 'Type was not updated');
+                $session->setFlash('danger', 'Type has not been updated');
             }
         }
 
@@ -98,7 +98,7 @@ class InvestigationTypeController extends Controller
     public function actionRemove($id)
     {
         $this->findModel($id)->delete();
-        Yii::$app->getSession()->setFlash('success', 'Type was successfully removed');
+        Yii::$app->getSession()->setFlash('success', 'Type has been successfully removed');
         return $this->redirect(['index']);
     }
 

@@ -287,8 +287,8 @@ class WizardController extends Controller
         $action = $isUpdate ? 'updated' : 'created';
         if (null === $message) {
             $message = ($type == 'success')
-                ? "The $entity was $action successfully"
-                : "The $entity was not $action";
+                ? "The $entity has been $action successfully"
+                : "The $entity has not been $action";
         }
 
         Yii::$app->getSession()->setFlash($type, $message);
