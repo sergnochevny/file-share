@@ -30,7 +30,7 @@ $fieldOptions2 = [
                 <?= $form ->field($model, 'identificator', $fieldOptions1)->textInput() ?>
                 <div class="row">
                     <div class="col-xs-12">
-                        <?= Html::submitButton('Send regeneration tooken', ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
+                        <?= Html::submitButton('Send regeneration token', ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
                     </div>
                 </div>
             <?php ActiveForm::end(); ?>
