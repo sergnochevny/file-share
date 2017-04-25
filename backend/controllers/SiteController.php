@@ -158,6 +158,7 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $this->resetUrl = Url::to(['/site/password-reset', 'token' => $model->generateRecoveryToken()], true);
             $this->trigger(self::EMAIL_USER);
+            return $this->goHome();
         }
 
         return $this->render('restore-password-request', ['model' => $model]);
