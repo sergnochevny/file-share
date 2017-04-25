@@ -32,8 +32,8 @@ $userCompany = Yii::$app->user->identity->company;
                     'options' => ['icon' => 'icon-folder-open-o'],
                 ];
                 $items[] = [
-                    'label' => 'Applicant Types',
-                    'url' => ['/investigation-type'],
+                    'label' => 'Investigative services',
+                    'url' => ['/investigative-services'],
                     'options' => ['icon' => 'icon-info-circle'],
                     'visible' => !User::isClient(),
                 ];

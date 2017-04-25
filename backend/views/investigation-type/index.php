@@ -12,7 +12,7 @@ use yii\grid\SerialColumn;
 /* @var $searchModel backend\models\CompanySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Applicant types';
+$this->title = 'Investigative Services';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="title-bar">
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <span class="d-ib"><span class="icon icon-info-circle"></span> <b><?= Html::encode($this->title) ?></b></span>
     </h1>
     <p class="title-bar-description">
-        <small>List of all applicant types</small>
+        <small>List of all investigative services</small>
     </p>
 </div>
 <div class="row gutter-xs">
@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <span class="btn-label">
                         <span class="icon icon-plus icon-lg icon-fw"></span>
                     </span>
-                    Create a new applicant type
+                    Create a new investigative services
                 </a>
             </div>
             <?php endif ?>
