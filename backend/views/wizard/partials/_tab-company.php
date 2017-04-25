@@ -66,10 +66,10 @@ $isReadOnly = User::isClient();
                 'readonly' => $isReadOnly
             ]) ?>
 
-            <?= $form->field($companyForm, 'description')->textarea([
-                'placeholder' => $isReadOnly ? '' : 'Describe Your Company',
-                'rows' => 4,
-                'readonly' => $isReadOnly
+            <?= $form->field($companyForm, 'case_number')->textInput([
+                'placeholder' => $isReadOnly ? '' : 'Case Number',
+                'readonly' => $isReadOnly,
+                'maxlength' => true,
             ]) ?>
         </div>
     </div>

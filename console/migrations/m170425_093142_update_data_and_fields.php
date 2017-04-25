@@ -20,6 +20,11 @@ class m170425_093142_update_data_and_fields extends Migration
 
         //file description not required
         $this->alterColumn('file', 'description', $this->text());
+        $this->alterColumn('company', 'description', $this->string());
+
+        //new fields to company
+        $this->addColumn('company', 'case_number', $this->string(20)->after('name'));
+        $this->createIndex('idx-company-case_number', 'company', 'case_number');
     }
 
     public function down()
