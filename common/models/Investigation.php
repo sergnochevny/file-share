@@ -182,7 +182,7 @@ class Investigation extends UndeletableActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
 
-            'investigationTypeIds' => 'Type'
+            'investigationTypeIds' => 'Investigation Services'
         ];
     }
 
