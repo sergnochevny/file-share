@@ -2,6 +2,7 @@
 namespace backend\models\forms;
 
 use backend\models\User;
+use kartik\password\StrengthValidator;
 use yii\base\Model;
 
 final class UserForm extends Model
@@ -67,7 +68,7 @@ final class UserForm extends Model
                 },
             ],
 
-            [['password', 'password_repeat'], 'string', 'min' => 8],
+            ['password', StrengthValidator::className(), 'preset'=>'fair'],
             ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match"],
 
 
