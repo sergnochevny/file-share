@@ -38,7 +38,7 @@ $userCompany = Yii::$app->user->identity->company;
                     'visible' => !User::isClient(),
                 ];
                 $items[] = ['label' => 'History', 'url' => ['/history'], 'options' => ['icon' => 'icon-history']];
-                $items[] = ['label' => 'Files', 'url' => ['/file'], 'options' => ['icon' => 'icon-save']];
+                $items[] = ['label' => 'Forms & templates', 'url' => ['/file'], 'options' => ['icon' => 'icon-save']];
                 $items[] = [
                     'label' => 'Users',
                     'url' => ['/user'],
