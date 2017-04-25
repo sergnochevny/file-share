@@ -59,24 +59,12 @@ use yii\helpers\Url;
                     </div>
                     <div class="col-sm-6">
                         <ul class="list-group">
-
-                            <li class="list-group-item">
+                            <!--<li class="list-group-item">
                                 <span class="pull-right"><span
-                                            class="label label-success"><?= $model->contact_person; ?></span></span>
-                                <span class="icon icon-user icon-lg icon-fw"></span>
-                                Contact person
-                            </li>
-                            <li class="list-group-item">
-                                <span class="pull-right"><span class="label label-success"><?= $model->phone; ?></span></span>
-                                <span class="icon icon-phone icon-lg icon-fw"></span>
-                                Phone number
-                            </li>
-                            <li class="list-group-item">
-                                <span class="pull-right"><span
-                                            class="label label-success"><?= Yii::$app->formatter->asEmail($model->email); ?></span></span>
+                                            class="label label-success"><?/*= Yii::$app->formatter->asEmail($model->email); */?></span></span>
                                 <span class="icon icon-envelope-o icon-lg icon-fw"></span>
                                 Email
-                            </li>
+                            </li>-->
                         </ul>
                     </div>
                 </div>

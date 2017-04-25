@@ -40,11 +40,6 @@ $isShowCompany = Yii::$app->user->can('admin') && (Company::find()->count() > 0)
             <?php endif ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($investigationForm, 'contact_person')->textInput(['placeholder' => 'Contact Person', 'maxlength' => true]) ?>
-
-            <?= $form->field($investigationForm, 'phone')->textInput(['placeholder' => 'Phone Number', 'maxlength' => true]) ?>
-
-            <?= $form->field($investigationForm, 'email')->textInput(['placeholder' => 'Contact Email Address', 'maxlength' => true]) ?>
         </div>
     </div>
 
