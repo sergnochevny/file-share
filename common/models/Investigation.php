@@ -77,7 +77,7 @@ class Investigation extends UndeletableActiveRecord
             [['company_id'], 'required', 'message' => 'Please select company'],
             [['company_id'], 'integer'],
             ['start_date', 'default', 'value' => new Expression('NOW()')],
-            [['name', 'case_number'], 'required'],
+            [['name'], 'required'],
             [['name', 'contact_person', 'case_number', 'email'], 'string', 'max' => 255],
             ['phone', 'string', 'max' => 15],
             ['phone', 'number'],

@@ -30,8 +30,6 @@ $isShowCompany = Yii::$app->user->can('admin') && (Company::find()->count() > 0)
 
             <?= $form->field($investigationForm, 'name')->textInput(['placeholder' => 'Name', 'maxlength' => true]) ?>
 
-            <?= $form->field($investigationForm, 'case_number')->textInput(['placeholder' => 'Case Number', 'maxlength' => true]) ?>
-
             <?php if (!empty($investigationTypes)): ?>
             <?= $this->render('_investigation-types', [
                 'types' => $investigationTypes,
