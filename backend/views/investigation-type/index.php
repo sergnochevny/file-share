@@ -102,6 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]
                 ],
             ]); ?>
+            <p>* Indicates additional information or form may be required</p>
             <?php Pjax::end(); ?>
         </div>
     </div>

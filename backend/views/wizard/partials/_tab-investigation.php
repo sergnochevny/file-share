@@ -38,6 +38,7 @@ $isShowCompany = Yii::$app->user->can('admin') && (Company::find()->count() > 0)
                 'form' => $form,
                 'model' => $investigationForm
             ]) ?>
+            <p>* Indicates additional information or form may be required</p>
             <?php endif ?>
         </div>
         <div class="col-sm-6">
