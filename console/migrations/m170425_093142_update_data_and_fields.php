@@ -18,7 +18,7 @@ class m170425_093142_update_data_and_fields extends Migration
             }
         }
 
-        //file description not required
+        //description not required
         $this->alterColumn('file', 'description', $this->text());
         $this->alterColumn('company', 'description', $this->string());
 
