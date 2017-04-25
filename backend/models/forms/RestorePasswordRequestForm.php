@@ -33,7 +33,7 @@ class RestorePasswordRequestForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user) {
-                $this->addError($attribute, 'Account with such username or email does not exists.');
+                $this->addError($attribute, 'Account with such username or email does not exist.');
             }
         }
     }
