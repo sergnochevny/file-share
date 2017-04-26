@@ -1,7 +1,8 @@
 (function ($) {
     $(document).on('change', '[type=file]', function (event) {
         event.preventDefault();
-        $('#file-description').modal('show');
+        //$('#file-description').modal('show');
+        $(this).closest('form').trigger('submit');
     });
 
     $(document).on('pjax:complete', function() {

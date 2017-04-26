@@ -7,8 +7,8 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model \common\models\InvestigationType */
 
-$this->title = 'Create Applicant Type';
-$this->params['breadcrumbs'][] = ['label' => 'Applicant Types', 'url' => ['index']];
+$this->title = 'Create Investigative Service';
+$this->params['breadcrumbs'][] = ['label' => 'Investigative Services', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

@@ -22,7 +22,8 @@
     "ait/keystorage": "0.0.2",
     "bower/ext-lib": "^1.0.1",
     "yii2tech/ar-linkmany": "^1.0",
-    "ait/citrix": "^1.0.17"
+    "ait/citrix": "^1.0.17",
+    "kartik-v/yii2-password": "^1.5"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.0.0",

@@ -71,8 +71,8 @@ return [
                 'wizard/applicant' => '/wizard/investigation',
                 'applicant' => '/investigation',
                 'applicant/<action>' => '/investigation/<action>',
-                'applicant-types' => '/investigation-type',
-                'applicant-types/<action>' => '/investigation-type/<action>',
+                'investigative-services' => '/investigation-type',
+                'investigative-services/<action>' => '/investigation-type/<action>',
             ]
         ],
         'formatter' => [

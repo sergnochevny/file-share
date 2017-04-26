@@ -66,10 +66,10 @@ $isReadOnly = User::isClient();
                 'readonly' => $isReadOnly
             ]) ?>
 
-            <?= $form->field($companyForm, 'description')->textarea([
-                'placeholder' => $isReadOnly ? '' : 'Describe Your Company',
-                'rows' => 4,
-                'readonly' => $isReadOnly
+            <?= $form->field($companyForm, 'case_number')->textInput([
+                'placeholder' => $isReadOnly ? '' : 'Case Number',
+                'readonly' => $isReadOnly,
+                'maxlength' => true,
             ]) ?>
         </div>
     </div>
@@ -78,6 +78,7 @@ $isReadOnly = User::isClient();
         <?php if (!empty($investigationTypes) && !User::isClient()): ?>
         <div class="col-sm-6 investigation-types">
             <?= $form->field($companyForm, 'investigationTypeIds')-> checkboxList($investigationTypes) ?>
+            <p>* Indicates additional information or form may be required</p>
         </div>
         <?php endif ?>
         <div class="clearfix"></div>

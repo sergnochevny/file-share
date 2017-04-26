@@ -53,7 +53,7 @@ class InvestigationType extends UndeletableActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Type',
+            'name' => 'Name of service',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];

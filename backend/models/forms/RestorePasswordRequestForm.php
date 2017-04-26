@@ -33,7 +33,7 @@ class RestorePasswordRequestForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user) {
-                $this->addError($attribute, 'Account with such username or email does not exists.');
+                $this->addError($attribute, 'Account with such username or email does not exist.');
             }
         }
     }
@@ -62,6 +62,31 @@ class RestorePasswordRequestForm extends Model
         return [
             'identificator' => 'Username or email',
         ];
+    }
+
+    /**
+     * @return bool
+     */
+    public function sendRestoreLink()
+    {
+        if (!$this->validate()) {
+            return false;
+        }
+        $resetToken =  $this->generateRecoveryToken();
+        if (!$resetToken) {
+            return false;
+        }
+
+        $user = $this->getUser();
+        $template = 'passwordResetToken';
+        return Yii::$app->mailer->compose([
+            'html' => "$template-html",
+            'text' => "$template-text",
+        ], ['user' => $user])
+            ->setTo([$user->email => $user->username])
+            ->setFrom(['noreply@protus3.com' => 'protus mail'])
+            ->setSubject('Restore password')
+            ->send();
     }
 
     /**

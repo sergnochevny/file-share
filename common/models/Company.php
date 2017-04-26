@@ -11,6 +11,7 @@ use yii2tech\ar\linkmany\LinkManyBehavior;
  *
  * @property integer $id
  * @property string $name
+ * @property string $case_number
  * @property string $address
  * @property string $description
  * @property string $city
@@ -62,7 +63,7 @@ class Company extends UndeletableActiveRecord
             [['name'], 'required'],
             [['name', 'address', 'city', 'state'], 'string', 'max' => 255],
             [['zip'], 'string', 'max' => 10],
-            ['description', 'default', 'value' => ''],
+            [['case_number'] , 'string', 'max' => 7],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_IN_HISTORY, self::STATUS_DELETED]],
             ['investigationTypeIds', 'safe'],

@@ -33,7 +33,9 @@ $this->title = 'Wizard';
                     <div class="panel-body panel-collapse">
                         <div align="center">
                             <h1>
-                                <span class="d-ib"><i class="fa fa-magic" aria-hidden="true"></i>Protus3 Wizard Form</span>
+                                <span class="d-ib"><i class="fa fa-magic" aria-hidden="true"></i><?=
+                                    User::isClient() ? 'Background Investigation Request' : 'Protus3 Wizard Form'
+                                ?></span>
                             </h1>
 
                             <p>
@@ -42,9 +44,6 @@ $this->title = 'Wizard';
 
                                 <?php elseif (User::isAdmin()): ?>
                                 <small>Add and edit Company and Users</small>
-
-                                <?php elseif (User::isClient()): ?>
-                                <small>Add and edit Applicants, see about your Company</small>
 
                                 <?php endif ?>
                             </p>

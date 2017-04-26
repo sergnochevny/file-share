@@ -1,19 +1,21 @@
 <?php
-namespace backend\controllers;
 
+namespace backend\controllers;
 
 use backend\behaviors\RememberUrlBehavior;
 use backend\models\forms\LoginForm;
 use backend\models\forms\PasswordResetForm;
 use backend\models\forms\RestorePasswordRequestForm;
 use backend\models\Graph;
+use backend\models\ResetPassword;
 use backend\models\Statistics;
-use common\helpers\Url;
 use keystorage\models\KeyStroageFormModel;
 use Yii;
+use yii\base\ErrorException;
 use yii\filters\AccessControl;
-use yii\filters\AccessRule;
 use yii\filters\VerbFilter;
+use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\Controller;
 
 /**
@@ -21,10 +23,6 @@ use yii\web\Controller;
  */
 class SiteController extends Controller
 {
-
-    const EMAIL_USER = 'email_user';
-    private $resetUrl;
-
     /**
      * Shows index page for admins
      * @return string
@@ -42,14 +40,6 @@ class SiteController extends Controller
             'stat' => $statistics,
             'graph' => $graph,
         ]);
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getResetUrl()
-    {
-        return $this->resetUrl;
     }
 
     /**
@@ -73,12 +63,12 @@ class SiteController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'logout'],
+                        'actions' => ['index', 'logout', 'error'],
                         'roles' => ['@'],
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['login', 'restore-password-request', 'password-reset'],
+                        'actions' => ['login', 'restore-password-request', 'password-reset', 'password-regenerate'],
                         'roles' => ['?', '@'],
                     ],
                     [
@@ -87,8 +77,8 @@ class SiteController extends Controller
                         'roles' => ['superAdmin']
                     ],
                     [
-                        'actions' => ['error'],
                         'allow' => true,
+                        'roles' => ['@'],
                     ],
                 ]
             ]
@@ -150,21 +140,50 @@ class SiteController extends Controller
      */
     public function actionRestorePasswordRequest()
     {
-        if (!Yii::$app->user->isGuest) $this->goHome();
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
 
         $this->layout = 'main-login';
         $model = new RestorePasswordRequestForm;
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $this->resetUrl = Url::to(['/site/password-reset', 'token' => $model->generateRecoveryToken()], true);
-            $this->trigger(self::EMAIL_USER);
+        if ($model->load(Yii::$app->request->post()) && $model->sendRestoreLink()) {
+            Yii::$app->session->setFlash('success', 'Mail with further instructions have been sent to your e-mail address.');
+            return $this->goHome();
         }
 
         return $this->render('restore-password-request', ['model' => $model]);
     }
 
     /**
-     * Password reset action
+     * Generates the new password and sends it to user
+     *
+     * @param string $token
+     * @return \yii\web\Response
+     */
+    public function actionPasswordRegenerate($token)
+    {
+        $session = Yii::$app->session;
+        try {
+            $resetPassword = new ResetPassword($token);
+            if ($resetPassword->sendNewOne()) {
+                $session->setFlash('success', 'The new password has been sent to your e-mail address');
+            } else {
+                $session->setFlash('danger', 'We couldn\'t send e-mail to this e-mail.
+                    If error repeats, please contact with support');
+            }
+
+        } catch (ErrorException $e) {
+            $url = Url::to(['/site/restore-password-request']);
+            $requestResetPassword = Html::a('request reset password', $url);
+            $session->setFlash('error', 'Seems to be token is invalid. Try to ' . $requestResetPassword . ' one more time.');
+        }
+
+        return $this->goHome();
+    }
+
+    /**
+     * Shows the form to set the new password
      *
      * @param $token
      * @return string
@@ -199,7 +218,7 @@ class SiteController extends Controller
                 ]);
             }
         } else {
-            return $this->redirect(['/']);
+            return $this->goHome();
         }
 
         return $this->render('password-reset', ['model' => $model]);

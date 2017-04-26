@@ -79,33 +79,6 @@ $view = $this;
                             'id' => "send",
                             'class' => 'btn btn-sm btn-labeled arrow-warning send-file-button'
                         ]); ?>
-                        <?php $this->beginBlock('fileDescription') ?>
-                        <div id="file-description" class="modal fade" role="dialog">
-                            <div class="modal-dialog">
-
-                                <!-- Modal content-->
-                                <div id="modal-file-description" class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">File Description (optional)</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <?= Html::activeTextarea($uploadModel, 'description', [
-                                            'form' => $uploadForm->id,
-                                            'class' => 'form-control',
-                                            'style' => 'width: 100%; height: 100px; color: #000;',
-                                        ]) ?>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button id="photo-upload" type="button" class="btn btn-default">
-                                            Upload
-                                        </button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <?php $this->endBlock() ?>
                     <?php endif; ?>
 
                     <?php
@@ -161,7 +134,6 @@ $view = $this;
                                     'class' => 'sorting',
                                 ]
                             ],
-                            'description:ntext:Description',
                             [
                                 'attribute' => 'created_at',
                                 'contentOptions' => [
