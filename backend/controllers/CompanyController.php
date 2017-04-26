@@ -76,10 +76,16 @@ class CompanyController extends Controller
      */
     public function actionArchive($id)
     {
+        $session = Yii::$app->getSession();
         $model = $this->findModel($id);
         $model->detachBehavior('citrixFolderBehavior');
-        $model->archive();
-        Yii::$app->session->setFlash('success', 'Archived successfully');
+        if ($model->hasActiveInvestigations()) {
+            $session->setFlash('error', 'There are uncompleted investigations in the company\'s profile.
+                You should close them before archive company');
+        } else {
+            $model->archive();
+            $session->setFlash('success', 'Company has been archived successfully');
+        }
 
         return $this->actionIndex();
     }

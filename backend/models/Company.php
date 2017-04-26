@@ -7,6 +7,7 @@ namespace backend\models;
 use backend\behaviors\CitrixFolderBehavior;
 use backend\behaviors\HistoryBehavior;
 use backend\behaviors\NotifyBehavior;
+use common\models\UndeletableActiveRecord;
 use yii\helpers\Inflector;
 
 /**
@@ -14,6 +15,7 @@ use yii\helpers\Inflector;
  * @package backend\models
  *
  * @property-read $citrixFolderName
+ * @property-read Investigation[] $investigations
  */
 class Company extends \common\models\Company
 {
@@ -85,11 +87,47 @@ class Company extends \common\models\Company
     }
 
     /**
+     * @return UndeletableActiveRecord
+     */
+    public function getInvestigations()
+    {
+        return $this->hasMany(Investigation::class, ['company_id' => 'id'])->inverseOf('company');
+    }
+
+    /**
      * @dev
      * @return string
      */
     public function getCitrixFolderName()
     {
         return Inflector::slug($this->name);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasActiveInvestigations()
+    {
+        $activeStatuses = [
+            Investigation::STATUS_IN_PROGRESS,
+            Investigation::STATUS_PENDING
+        ];
+
+        return static::find()
+            ->joinWith('investigations')
+            ->andWhere(['investigation.status' => $activeStatuses])
+            ->exists();
+    }
+
+    /**
+     * @return void
+     */
+    public function archive()
+    {
+        foreach ($this->investigations as $investigation) {
+            $investigation->detachBehavior('citrixFolderBehavior');
+            $investigation->archive();
+        }
+        parent::archive();
     }
 }
