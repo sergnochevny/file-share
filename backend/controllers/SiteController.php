@@ -7,11 +7,14 @@ use backend\models\forms\LoginForm;
 use backend\models\forms\PasswordResetForm;
 use backend\models\forms\RestorePasswordRequestForm;
 use backend\models\Graph;
+use backend\models\ResetPassword;
 use backend\models\Statistics;
 use keystorage\models\KeyStroageFormModel;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\Controller;
 
 /**
@@ -152,7 +155,29 @@ class SiteController extends Controller
     }
 
     /**
-     * Password reset action
+     * Generates the new password and sends it to user
+     *
+     * @param string $token
+     * @return \yii\web\Response
+     */
+    public function actionPasswordRegenerate($token)
+    {
+        $session = Yii::$app->session;
+        $resetPassword = new ResetPassword();
+        if ($resetPassword->validateToken($token)) {
+            $resetPassword->sendNewOne();
+            $session->setFlash('success', 'The new password has been sent to your e-mail address');
+        } else {
+            $url = Url::to(['/site/restore-password-request']);
+            $requestResetPassword = Html::a('request reset password', $url);
+            $session->setFlash('error', 'Seems to be token is invalid. Try to ' . $requestResetPassword . ' one more time.');
+        }
+
+        return $this->goHome();
+    }
+
+    /**
+     * Shows the form to set the new password
      *
      * @param $token
      * @return string
@@ -191,11 +216,6 @@ class SiteController extends Controller
         }
 
         return $this->render('password-reset', ['model' => $model]);
-    }
-
-    public function actionPasswordRegenerate($token)
-    {
-        $this->generatePassword(10);
     }
 
     /**
