@@ -7,7 +7,14 @@ namespace backend\models;
 use backend\behaviors\CitrixFolderBehavior;
 use backend\behaviors\HistoryBehavior;
 use backend\behaviors\NotifyBehavior;
+use yii\helpers\Inflector;
 
+/**
+ * Class Company
+ * @package backend\models
+ *
+ * @property-read $citrixFolderName
+ */
 class Company extends \common\models\Company
 {
     use FactoryTrait;
@@ -29,7 +36,7 @@ class Company extends \common\models\Company
     public function rules()
     {
         $rules = parent::rules();
-        $rules[] = ['name', 'match', 'pattern' => '/^[\w\s]*$/'];
+      //  $rules[] = ['name', 'match', 'pattern' => '/^[\w\s]*$/']; //todo unique what if user will create Company and then Company', what will be with folder in citrix
         $rules[] = [['name'], 'unique', 'when' => function ($model, $attribute) {
             /** @var $model Company */
             return $model->isAttributeChanged($attribute, false);
@@ -75,5 +82,14 @@ class Company extends \common\models\Company
         ];
 
         return $behaviors;
+    }
+
+    /**
+     * @dev
+     * @return string
+     */
+    public function getCitrixFolderName()
+    {
+        return Inflector::slug($this->name);
     }
 }
