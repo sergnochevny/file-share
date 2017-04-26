@@ -1,6 +1,6 @@
 <?php
-namespace backend\controllers;
 
+namespace backend\controllers;
 
 use backend\behaviors\RememberUrlBehavior;
 use backend\models\forms\LoginForm;
@@ -8,11 +8,9 @@ use backend\models\forms\PasswordResetForm;
 use backend\models\forms\RestorePasswordRequestForm;
 use backend\models\Graph;
 use backend\models\Statistics;
-use common\helpers\Url;
 use keystorage\models\KeyStroageFormModel;
 use Yii;
 use yii\filters\AccessControl;
-use yii\filters\AccessRule;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 
@@ -21,10 +19,6 @@ use yii\web\Controller;
  */
 class SiteController extends Controller
 {
-
-    const EMAIL_USER = 'email_user';
-    private $resetUrl;
-
     /**
      * Shows index page for admins
      * @return string
@@ -42,14 +36,6 @@ class SiteController extends Controller
             'stat' => $statistics,
             'graph' => $graph,
         ]);
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getResetUrl()
-    {
-        return $this->resetUrl;
     }
 
     /**
@@ -73,12 +59,12 @@ class SiteController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'logout'],
+                        'actions' => ['index', 'logout', 'error'],
                         'roles' => ['@'],
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['login', 'restore-password-request', 'password-reset'],
+                        'actions' => ['login', 'restore-password-request', 'password-reset', 'password-regenerate'],
                         'roles' => ['?', '@'],
                     ],
                     [
@@ -87,8 +73,8 @@ class SiteController extends Controller
                         'roles' => ['superAdmin']
                     ],
                     [
-                        'actions' => ['error'],
                         'allow' => true,
+                        'roles' => ['@'],
                     ],
                 ]
             ]
@@ -150,14 +136,15 @@ class SiteController extends Controller
      */
     public function actionRestorePasswordRequest()
     {
-        if (!Yii::$app->user->isGuest) $this->goHome();
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
 
         $this->layout = 'main-login';
         $model = new RestorePasswordRequestForm;
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $this->resetUrl = Url::to(['/site/password-reset', 'token' => $model->generateRecoveryToken()], true);
-            $this->trigger(self::EMAIL_USER);
+        if ($model->load(Yii::$app->request->post()) && $model->sendRestoreLink()) {
+            Yii::$app->session->setFlash('success', 'Mail with further instructions have been sent to your e-mail address.');
             return $this->goHome();
         }
 
@@ -200,10 +187,15 @@ class SiteController extends Controller
                 ]);
             }
         } else {
-            return $this->redirect(['/']);
+            return $this->goHome();
         }
 
         return $this->render('password-reset', ['model' => $model]);
+    }
+
+    public function actionPasswordRegenerate($token)
+    {
+        $this->generatePassword(10);
     }
 
     /**
@@ -277,5 +269,12 @@ class SiteController extends Controller
         }
 
         return $this->render('settings', ['model' => $model]);
+    }
+
+    private function generatePassword($length)
+    {
+        $chars = "!@#$%^&*()_-=+;:,.?abcdefghijklmnopqrstuvwxyzABCDEFGHI!@#$%^&*()_-=+;:,.?JKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-=+;:,.?";
+        $password = substr( str_shuffle(sha1(mt_rand() . time()) . $chars ), 0, $length );
+        return $password;
     }
 }
