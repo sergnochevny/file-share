@@ -5,7 +5,6 @@ namespace backend\models\forms;
 use common\models\User;
 use yii\base\Model;
 use Yii;
-use yii\helpers\Url;
 
 class RestorePasswordRequestForm extends Model
 {
@@ -85,7 +84,7 @@ class RestorePasswordRequestForm extends Model
             'text' => "$template-text",
         ], ['user' => $user])
             ->setTo([$user->email => $user->username])
-            ->setFrom(['noreply@protus.com' => 'protus mail'])
+            ->setFrom(['noreply@protus3.com' => 'protus mail'])
             ->setSubject('Restore password')
             ->send();
     }

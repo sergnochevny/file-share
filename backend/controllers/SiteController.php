@@ -11,6 +11,7 @@ use backend\models\ResetPassword;
 use backend\models\Statistics;
 use keystorage\models\KeyStroageFormModel;
 use Yii;
+use yii\base\ErrorException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Html;
@@ -163,11 +164,16 @@ class SiteController extends Controller
     public function actionPasswordRegenerate($token)
     {
         $session = Yii::$app->session;
-        $resetPassword = new ResetPassword();
-        if ($resetPassword->validateToken($token)) {
-            $resetPassword->sendNewOne();
-            $session->setFlash('success', 'The new password has been sent to your e-mail address');
-        } else {
+        try {
+            $resetPassword = new ResetPassword($token);
+            if ($resetPassword->sendNewOne()) {
+                $session->setFlash('success', 'The new password has been sent to your e-mail address');
+            } else {
+                $session->setFlash('danger', 'We couldn\'t send e-mail to this e-mail.
+                    If error repeats, please contact with support');
+            }
+
+        } catch (ErrorException $e) {
             $url = Url::to(['/site/restore-password-request']);
             $requestResetPassword = Html::a('request reset password', $url);
             $session->setFlash('error', 'Seems to be token is invalid. Try to ' . $requestResetPassword . ' one more time.');
@@ -289,12 +295,5 @@ class SiteController extends Controller
         }
 
         return $this->render('settings', ['model' => $model]);
-    }
-
-    private function generatePassword($length)
-    {
-        $chars = "!@#$%^&*()_-=+;:,.?abcdefghijklmnopqrstuvwxyzABCDEFGHI!@#$%^&*()_-=+;:,.?JKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-=+;:,.?";
-        $password = substr( str_shuffle(sha1(mt_rand() . time()) . $chars ), 0, $length );
-        return $password;
     }
 }
