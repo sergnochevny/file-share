@@ -35,35 +35,35 @@ use yii\helpers\Url;
                                 <span class="pull-right">
                                     <span class="label label-success"><?= Html::encode($model->first_name) ?></span>
                                 </span>
-                                <span class="icon icon-envelope-o icon-lg icon-fw"></span>
+                                <span class="icon icon-user icon-lg icon-fw"></span>
                                 First Name
                             </li>
                             <li class="list-group-item">
                                 <span class="pull-right">
                                     <span class="label label-success"><?= Html::encode($model->middle_name) ?></span>
                                 </span>
-                                <span class="icon icon-envelope-o icon-lg icon-fw"></span>
+                                <span class="icon icon-user icon-lg icon-fw"></span>
                                 Middle Name
                             </li>
                             <li class="list-group-item">
                                 <span class="pull-right">
                                     <span class="label label-success"><?= Html::encode($model->last_name) ?></span>
                                 </span>
-                                <span class="icon icon-envelope-o icon-lg icon-fw"></span>
+                                <span class="icon icon-user icon-lg icon-fw"></span>
                                 Last Name
                             </li>
                             <li class="list-group-item">
                                 <span class="pull-right">
-                                    <span class="label label-success"><?= Html::encode($model->ssn) ?></span>
+                                    <span class="label label-success"><?= $model->formattedSsn ?></span>
                                 </span>
-                                <span class="icon icon-envelope-o icon-lg icon-fw"></span>
+                                <span class="icon icon-info icon-lg icon-fw"></span>
                                 SSN
                             </li>
                             <li class="list-group-item">
                                 <span class="pull-right">
-                                    <span class="label label-success"><?= Yii::$app->formatter->asDate((int) $model->birth_date) ?></span>
+                                    <span class="label label-success"><?= Yii::$app->formatter->asDate($model->birth_date) ?></span>
                                 </span>
-                                <span class="icon icon-envelope-o icon-lg icon-fw"></span>
+                                <span class="icon icon-calendar icon-lg icon-fw"></span>
                                 Birth Date
                             </li>
                         </ul>

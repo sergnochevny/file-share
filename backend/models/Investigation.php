@@ -12,7 +12,8 @@ use yii\db\Query;
  * Class Investigation
  * @package backend\models
  *
- * @property-read $citrixFolderName
+ * @property-read string $citrixFolderName
+ * @property-read string $formattedSsn
  * @property array $statusesList
  * @property array $allCompaniesList
  *
@@ -124,5 +125,12 @@ class Investigation extends \common\models\Investigation
     public function getCreatedBy()
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
+    }
+
+    public function getFormattedSsn()
+    {
+
+        return preg_replace("#^(\d{3})-?(\d{2})-?(\d{4})$#", "$1-$2-$3", $this->ssn);
+
     }
 }

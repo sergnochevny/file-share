@@ -173,7 +173,7 @@ class Investigation extends UndeletableActiveRecord
     public function validateBirthDate($attribute, $params)
     {
         if (!$this->hasErrors()) {
-            $dateTime = DateTime::createFromFormat('m/d/Y', $this->birthDate);
+            $dateTime = DateTime::createFromFormat('m/d/Y/H/i/s', $this->birthDate . '/00/00/00');
             if ($dateTime === false) {
                 $this->addError($attribute, 'Birth Date is invalid');
                 return;
@@ -190,7 +190,7 @@ class Investigation extends UndeletableActiveRecord
     public function afterFind()
     {
         if (!empty($this->birth_date)) {
-            $date = new DateTime((int) $this->birth_date);
+            $date = new DateTime('@' . $this->birth_date);
             $this->birthDate = $date->format('m/d/Y');
         }
         parent::afterFind();
