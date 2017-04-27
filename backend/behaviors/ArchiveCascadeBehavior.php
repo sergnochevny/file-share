@@ -31,7 +31,7 @@ class ArchiveCascadeBehavior extends Behavior
             $transaction = Yii::$app->db->beginTransaction();
             try{
                 foreach ($investigations as $investigation){
-                    if ($investigation->status == Company::STATUS_ACTIVE) {
+                    if ($investigation->isNotCompleted()) {
                         throw new \Exception("There are active investigations in the company's profile.");
                     }
                     $investigation->detachBehavior('historyBehavior');
@@ -67,6 +67,9 @@ class ArchiveCascadeBehavior extends Behavior
          */
         $res = false;
         $investigation = $this->owner;
+        if ($investigation->isNotCompleted()) {
+            throw new \Exception("This is an active investigation");
+        }
         $files = $investigation->files;
         if( !empty($files) && (count($files)>0)){
             $transaction = Yii::$app->db->beginTransaction();

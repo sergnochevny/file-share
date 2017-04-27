@@ -4,6 +4,7 @@
 namespace backend\models;
 
 
+use backend\behaviors\ArchiveCascadeBehavior;
 use backend\behaviors\CitrixFolderBehavior;
 use backend\behaviors\HistoryBehavior;
 use backend\behaviors\NotifyBehavior;
@@ -83,6 +84,10 @@ class Company extends \common\models\Company
             'type' => 'company',
         ];
 
+        $behaviors['archiveCascadeBehavior'] = [
+            'class' => ArchiveCascadeBehavior::className(),
+        ];
+
         return $behaviors;
     }
 
@@ -117,17 +122,5 @@ class Company extends \common\models\Company
             ->joinWith('investigations')
             ->andWhere(['investigation.status' => $activeStatuses])
             ->exists();
-    }
-
-    /**
-     * @return void
-     */
-    public function archive()
-    {
-        foreach ($this->investigations as $investigation) {
-            $investigation->detachBehavior('citrixFolderBehavior');
-            $investigation->archive();
-        }
-        parent::archive();
     }
 }

@@ -3,6 +3,7 @@
 
 namespace backend\models;
 
+use backend\behaviors\ArchiveCascadeBehavior;
 use backend\behaviors\CitrixFolderBehavior;
 use backend\behaviors\HistoryBehavior;
 use backend\behaviors\NotifyBehavior;
@@ -86,6 +87,10 @@ class Investigation extends \common\models\Investigation
             'deleteTemplate' => 'delete',
         ];
 
+        $behaviors['archiveCascadeBehavior'] = [
+            'class' => ArchiveCascadeBehavior::className(),
+        ];
+
         return $behaviors;
     }
 
@@ -127,10 +132,24 @@ class Investigation extends \common\models\Investigation
         return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
 
+    /**
+     * @return string
+     */
     public function getFormattedSsn()
     {
-
         return preg_replace("#^(\d{3})-?(\d{2})-?(\d{4})$#", "$1-$2-$3", $this->ssn);
+    }
 
+    /**
+     * @return bool
+     */
+    public function isNotCompleted()
+    {
+        $activeStatuses = [
+            Investigation::STATUS_IN_PROGRESS,
+            Investigation::STATUS_PENDING
+        ];
+
+        return in_array($this->status, $activeStatuses);
     }
 }
