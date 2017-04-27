@@ -33,6 +33,45 @@ use yii\helpers\Url;
                         <ul class="list-group">
                             <li class="list-group-item">
                                 <span class="pull-right">
+                                    <span class="label label-success"><?= Html::encode($model->first_name) ?></span>
+                                </span>
+                                <span class="icon icon-envelope-o icon-lg icon-fw"></span>
+                                First Name
+                            </li>
+                            <li class="list-group-item">
+                                <span class="pull-right">
+                                    <span class="label label-success"><?= Html::encode($model->middle_name) ?></span>
+                                </span>
+                                <span class="icon icon-envelope-o icon-lg icon-fw"></span>
+                                Middle Name
+                            </li>
+                            <li class="list-group-item">
+                                <span class="pull-right">
+                                    <span class="label label-success"><?= Html::encode($model->last_name) ?></span>
+                                </span>
+                                <span class="icon icon-envelope-o icon-lg icon-fw"></span>
+                                Last Name
+                            </li>
+                            <li class="list-group-item">
+                                <span class="pull-right">
+                                    <span class="label label-success"><?= Html::encode($model->ssn) ?></span>
+                                </span>
+                                <span class="icon icon-envelope-o icon-lg icon-fw"></span>
+                                SSN
+                            </li>
+                            <li class="list-group-item">
+                                <span class="pull-right">
+                                    <span class="label label-success"><?= Yii::$app->formatter->asDate((int) $model->birth_date) ?></span>
+                                </span>
+                                <span class="icon icon-envelope-o icon-lg icon-fw"></span>
+                                Birth Date
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <span class="pull-right">
                                     <span class="label label-<?= Investigation::getStatusCSSClass($model->status) ?>">
                                         <?= Investigation::getStatusByCode($model->status)?>
                                     </span>
@@ -55,16 +94,6 @@ use yii\helpers\Url;
                                 Created By
                             </li>
                             <?php endif ?>
-                        </ul>
-                    </div>
-                    <div class="col-sm-6">
-                        <ul class="list-group">
-                            <!--<li class="list-group-item">
-                                <span class="pull-right"><span
-                                            class="label label-success"><?/*= Yii::$app->formatter->asEmail($model->email); */?></span></span>
-                                <span class="icon icon-envelope-o icon-lg icon-fw"></span>
-                                Email
-                            </li>-->
                         </ul>
                     </div>
                 </div>

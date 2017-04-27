@@ -5,8 +5,10 @@
 
 use backend\models\Company;
 use common\helpers\Url;
+use yii\widgets\MaskedInput;
 
-$isShowCompany = Yii::$app->user->can('admin') && (Company::find()->count() > 0);
+$isDbHasCompany = Company::find()->count() > 0;
+$isShowCompany = Yii::$app->user->can('admin') && $isDbHasCompany;
 
 ?>
 <div id="tab-3" class="tab-pane active">
@@ -27,8 +29,9 @@ $isShowCompany = Yii::$app->user->can('admin') && (Company::find()->count() > 0)
     <?php if($isShowCompany): ?><hr/><?php endif; ?>
     <div class="row">
         <div class="col-sm-6">
-
-            <?= $form->field($investigationForm, 'name')->textInput(['placeholder' => 'Name', 'maxlength' => true]) ?>
+            <?= $form->field($investigationForm, 'first_name')->textInput(['placeholder' => 'Name', 'maxlength' => true]) ?>
+            <?= $form->field($investigationForm, 'middle_name')->textInput(['placeholder' => 'Name', 'maxlength' => true]) ?>
+            <?= $form->field($investigationForm, 'last_name')->textInput(['placeholder' => 'Name', 'maxlength' => true]) ?>
 
             <?php if (!empty($investigationTypes)): ?>
             <?= $this->render('_investigation-types', [
@@ -40,6 +43,19 @@ $isShowCompany = Yii::$app->user->can('admin') && (Company::find()->count() > 0)
             <?php endif ?>
         </div>
         <div class="col-sm-6">
+
+            <?= $form->field($investigationForm, 'ssn')->widget(MaskedInput::className(), [
+                'mask' => '999-99-9999',
+                'clientOptions' => [
+                    'removeMaskOnSubmit' => true,
+                ]
+            ]) ?>
+            <?= $form->field($investigationForm, 'birthDate')->widget(MaskedInput::className(), [
+                //'mask' => '999-99-9999',
+                'clientOptions' => [
+                    'alias' =>  'mm/dd/yyyy',
+                ]
+            ]) ?>
         </div>
     </div>
 
@@ -47,12 +63,16 @@ $isShowCompany = Yii::$app->user->can('admin') && (Company::find()->count() > 0)
         <div class="clearfix"></div>
         <hr/>
         <div align="center">
+            <?php if ($isDbHasCompany): ?>
             <button id="company-create" class="btn btn-sm btn-labeled  arrow-warning" type="submit">
                 <span class="btn-label">
                     <span class="icon icon-check-square icon-lg icon-fw"></span>
                 </span>
                 <?= $isUpdate ? 'Update' : 'Create' ?>
             </button>
+            <?php else: ?>
+                <p class="text-danger">Please create at least one company before creating the applicant</p>
+            <?php endif ?>
         </div>
     </div>
     <?php \backend\widgets\ActiveForm::end() ?>

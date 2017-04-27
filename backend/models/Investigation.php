@@ -12,6 +12,7 @@ use yii\db\Query;
  * Class Investigation
  * @package backend\models
  *
+ * @property-read $citrixFolderName
  * @property array $statusesList
  * @property array $allCompaniesList
  *
@@ -50,7 +51,7 @@ class Investigation extends \common\models\Investigation
         $behaviors['citrixFolderBehavior'] = [
             'class' => CitrixFolderBehavior::className(),
             'attribute' => 'citrix_id',
-            'folder' => 'name',
+            'folder' => 'citrixFolderName',
             'subdomain' => \Yii::$app->keyStorage->get('citrix.subdomain'),
             'user' => \Yii::$app->keyStorage->get('citrix.user'),
             'pass' => \Yii::$app->keyStorage->get('citrix.pass'),
@@ -85,6 +86,19 @@ class Investigation extends \common\models\Investigation
         ];
 
         return $behaviors;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCitrixFolderName()
+    {
+        $lastName = '';
+        if (!empty($this->last_name)) {
+            $lastName = '-' . $this->last_name;
+        }
+
+        return $this->first_name . $lastName . '-' . $this->ssn;
     }
 
     /**

@@ -3,6 +3,8 @@
 namespace common\models;
 
 
+use DateTime;
+use Exception;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
 use yii2tech\ar\linkmany\LinkManyBehavior;
@@ -20,7 +22,13 @@ use yii2tech\ar\linkmany\LinkManyBehavior;
  * @property string $contact_person
  * @property string $phone
  * @property string $email
+ * @property string $first_name
+ * @property string $middle_name
+ * @property string $last_name
+ * @property string $previous_names
+ * @property string $ssn
  *
+ * @property integer $birth_date
  * @property integer $created_by
  *
  * @property integer $status
@@ -44,6 +52,9 @@ class Investigation extends UndeletableActiveRecord
     const STATUS_PENDING = 250;
     const STATUS_IN_PROGRESS = 300;
     const STATUS_COMPLETED = 400;
+
+    /** @var string */
+    public $birthDate;
 
     /**
      * @inheritdoc
@@ -75,13 +86,22 @@ class Investigation extends UndeletableActiveRecord
     {
         return [
             [['company_id'], 'required', 'message' => 'Please select company'],
-            [['company_id'], 'integer'],
+            [['first_name', 'last_name', 'ssn', 'birthDate'], 'required'],
+            [['birthDate'], 'validateBirthDate'],
+
+            [['company_id', 'birth_date'], 'integer'],
             ['start_date', 'default', 'value' => new Expression('NOW()')],
-            [['name'], 'required'],
-            [['name', 'contact_person', 'case_number', 'email'], 'string', 'max' => 255],
+            [['name', 'contact_person', 'case_number', 'email', 'previous_names'], 'string', 'max' => 255],
             ['phone', 'string', 'max' => 15],
             ['phone', 'number'],
             ['email', 'email'],
+
+            [['first_name', 'middle_name', 'last_name'], 'string', 'max' => 100],
+            [['ssn'], 'string', 'max' => 20],
+
+            //client validation input mask widget
+            [['ssn'], 'number', 'enableClientValidation' => false],
+
             [['description'], 'string', 'max' => 2000],
             ['status', 'default', 'value' => self::STATUS_IN_PROGRESS],
             ['status', 'in', 'range' => [
@@ -101,6 +121,32 @@ class Investigation extends UndeletableActiveRecord
 
             ['investigationTypeIds', 'safe'],
         ];
+    }
+
+    public function validateBirthDate($attribute, $params)
+    {
+        if (!$this->hasErrors()) {
+            $dateTime = DateTime::createFromFormat('m/d/Y', $this->birthDate);
+            if ($dateTime === false) {
+                $this->addError($attribute, 'Birth Date is invalid');
+                return;
+            }
+
+            $this->birth_date = $dateTime->getTimestamp();
+        }
+
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function afterFind()
+    {
+        if (!empty($this->birth_date)) {
+            $date = new DateTime((int) $this->birth_date);
+            $this->birthDate = $date->format('m/d/Y');
+        }
+        parent::afterFind();
     }
 
     /**
@@ -178,6 +224,7 @@ class Investigation extends UndeletableActiveRecord
             'contact_person' => 'Contact Person',
             'phone' => 'Phone',
             'email' => 'Email',
+            'ssn' => 'SSN',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
