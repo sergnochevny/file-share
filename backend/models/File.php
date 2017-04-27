@@ -7,8 +7,8 @@ use backend\behaviors\UploadBehavior;
 use common\models\UserCompany;
 
 /**
- * @property Investigation $investigations
- * @property User[] $users
+ * @property Investigation $investigation
+ * @property User[] $user
  */
 class File extends \common\models\File
 {
@@ -117,15 +117,15 @@ class File extends \common\models\File
     /**
      * @return Investigation
      */
-    public function getInvestigations()
+    public function getInvestigation()
     {
-        return $this->hasOne(Investigation::className(), ['citrix_id' => 'parent']);
+        return $this->hasOne(Investigation::className(), ['citrix_id' => 'parent'])->inverseOf('files');
     }
 
     /**
      * @return File
      */
-    public function getParents()
+    public function getParent()
     {
         return $this->hasOne(File::className(), ['citrix_id' => 'parent']);
     }

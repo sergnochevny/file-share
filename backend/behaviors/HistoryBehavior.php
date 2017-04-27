@@ -121,20 +121,24 @@ class HistoryBehavior extends Behavior
 
         $model = $this->owner;
         $history = new History();
-        if(!($history->load(
-            [
-                'name' => $model->{$this->attribute},
-                'type' => $this->type,
-                'parent' => $this->parent,
-                'company_id' => $this->company
-            ]
-        ) && $history->save())){
-            if ($history->hasErrors()){
-                $error = implode('|',$history->errors);
+        if (!($history->load(
+                [
+                    'name' => $model->{$this->attribute},
+                    'type' => $this->type,
+                    'parent' => $this->parent,
+                    'company_id' => $this->company
+                ]
+            ) && $history->save())
+        ) {
+            if ($history->hasErrors()) {
+                $m_errors = $history->errors;
+                foreach ($m_errors as $field => $f_errors) {
+                    $errors[] = $field . ': ' . implode('<br>', $f_errors);
+                }
             } else {
-                $error = 'Do`nt history save!';
+                $errors = ['Don`t history save!'];
             }
-            throw new InvalidParamException($error);
+            throw new InvalidParamException(implode('<br>', $errors));
         }
     }
 }

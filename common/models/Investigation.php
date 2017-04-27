@@ -41,6 +41,7 @@ use yii2tech\ar\linkmany\LinkManyBehavior;
  * @property array $statusLabels
  *
  * @property Company $company
+ * @property File[] $files
  * @property InvestigationType[] $investigationTypes
  * @property User $createdBy
  */
@@ -62,6 +63,52 @@ class Investigation extends UndeletableActiveRecord
     public static function tableName()
     {
         return '{{%investigation}}';
+    }
+
+    /**
+     * @return array
+     */
+    public static function getStatusesList()
+    {
+        return [
+            self::STATUS_PENDING => 'Pending',
+            self::STATUS_IN_PROGRESS => 'In progress',
+            self::STATUS_COMPLETED => 'Completed',
+            self::STATUS_IN_HISTORY => 'In history',
+            self::STATUS_CANCELLED => 'Cancelled',
+            self::STATUS_DELETED => 'Deleted',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public static function getStatusesCSSList()
+    {
+        return [
+            self::STATUS_PENDING => 'info',
+            self::STATUS_IN_PROGRESS => 'warning',
+            self::STATUS_COMPLETED => 'success',
+            self::STATUS_IN_HISTORY => 'default',
+            self::STATUS_CANCELLED => 'danger',
+            self::STATUS_DELETED => 'danger',
+        ];
+    }
+
+    /**
+     * @param $code
+     * @return string|null
+     */
+    public static function getStatusByCode($code)
+    {
+        $statuses = static::getStatusesList();
+        return isset($statuses[$code]) ? $statuses[$code] : null;
+    }
+
+    public static function getStatusCSSClass($code)
+    {
+        $statuses = static::getStatusesCSSList();
+        return isset($statuses[$code]) ? $statuses[$code] : null;
     }
 
     /**
@@ -166,50 +213,6 @@ class Investigation extends UndeletableActiveRecord
     }
 
     /**
-     * @return array
-     */
-    public static function getStatusesList()
-    {
-        return [
-            self::STATUS_PENDING => 'Pending',
-            self::STATUS_IN_PROGRESS => 'In progress',
-            self::STATUS_COMPLETED => 'Completed',
-            self::STATUS_IN_HISTORY => 'In history',
-            self::STATUS_CANCELLED => 'Cancelled',
-            self::STATUS_DELETED => 'Deleted',
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public static function getStatusesCSSList()
-    {
-        return [
-            self::STATUS_PENDING => 'info',
-            self::STATUS_IN_PROGRESS => 'warning',
-            self::STATUS_COMPLETED => 'success',
-            self::STATUS_IN_HISTORY => 'default',
-            self::STATUS_CANCELLED => 'danger',
-            self::STATUS_DELETED => 'danger',
-        ];
-    }
-    /**
-     * @param $code
-     * @return string|null
-     */
-    public static function getStatusByCode($code)
-    {
-        $statuses = static::getStatusesList();
-        return isset($statuses[$code]) ? $statuses[$code] : null;
-    }
-
-    public static function getStatusCSSClass($code)
-    {
-        $statuses = static::getStatusesCSSList();
-        return isset($statuses[$code]) ? $statuses[$code] : null;
-    }
-    /**
      * @inheritdoc
      */
     public function attributeLabels()
@@ -253,5 +256,13 @@ class Investigation extends UndeletableActiveRecord
     public function getCreatedBy()
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
+    }
+
+    /**
+     * @return UndeletableActiveQuery
+     */
+    public function getFiles()
+    {
+        return $this->hasMany(File::className(), ['parent' => 'citrix_id'])->inverseOf('investigation');
     }
 }

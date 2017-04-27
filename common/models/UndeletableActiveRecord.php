@@ -36,34 +36,13 @@ class UndeletableActiveRecord extends ActiveRecord
         return Yii::createObject(UndeletableActiveQuery::className(), [get_called_class()]);
     }
 
-    public static function getStatusesList(){
+    public static function getStatusesList()
+    {
         return [
             static::STATUS_ACTIVE => 'Active',
             static::STATUS_IN_HISTORY => 'Archived',
             static::STATUS_DELETED => 'Deleted',
         ];
-    }
-
-    /**
-     * Changes status of record to STATUS_IN_HISTORY
-     *
-     * @return void
-     */
-    public function archive()
-    {
-        $this->status = static::STATUS_IN_HISTORY;
-        if ($this->beforeArchive() && $this->save(false)) $this->afterArchive();
-    }
-
-    /**
-     * Changes status of record to STATUS_DELETED
-     *
-     * @return void
-     */
-    public function delete()
-    {
-        $this->status = static::STATUS_DELETED;
-        if ($this->beforeDelete() && $this->save(false)) $this->afterDelete();
     }
 
     /**
@@ -76,6 +55,37 @@ class UndeletableActiveRecord extends ActiveRecord
     public static function deleteAll($condition = '', $params = [])
     {
         return parent::updateAll(['status' => static::STATUS_DELETED], $condition, $params);
+    }
+
+    /**
+     * Changes status of record to STATUS_IN_HISTORY
+     *
+     * @return bool
+     */
+    public function archive()
+    {
+        $this->status = static::STATUS_IN_HISTORY;
+        if ($this->beforeArchive() && $this->save(false)) return $this->afterArchive();
+        return false;
+    }
+
+    public function afterDelete()
+    {
+        $event = new ModelEvent;
+        $this->trigger(self::EVENT_AFTER_DELETE, $event);
+        return $event->isValid;
+    }
+
+    /**
+     * Changes status of record to STATUS_DELETED
+     *
+     * @return void
+     */
+    public function delete()
+    {
+        $this->status = static::STATUS_DELETED;
+        if ($this->beforeDelete() && $this->save(false)) return $this->afterDelete();
+        return false;
     }
 
     public function afterArchive()
