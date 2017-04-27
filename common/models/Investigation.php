@@ -189,6 +189,7 @@ class Investigation extends UndeletableActiveRecord
      */
     public function afterFind()
     {
+        //fill birthDate for wizard editing
         if (!empty($this->birth_date)) {
             $date = new DateTime('@' . $this->birth_date);
             $this->birthDate = $date->format('m/d/Y');
