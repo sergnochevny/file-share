@@ -78,8 +78,12 @@ class CompanyController extends Controller
     {
         $model = $this->findModel($id);
         $model->detachBehavior('citrixFolderBehavior');
-        $model->archive();
-        Yii::$app->session->setFlash('success', 'Archived successfully');
+        try{
+            $model->archive();
+            Yii::$app->session->setFlash('success', 'Archived successfully');
+        } catch (\Exception $e){
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
 
         return $this->actionIndex();
     }
