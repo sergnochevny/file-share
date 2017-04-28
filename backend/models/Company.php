@@ -4,7 +4,7 @@
 namespace backend\models;
 
 
-use backend\behaviors\ArchiveCascadeBehavior;
+use common\behaviors\ArchiveCascadeBehavior;
 use backend\behaviors\CitrixFolderBehavior;
 use backend\behaviors\HistoryBehavior;
 use backend\behaviors\NotifyBehavior;
@@ -108,19 +108,5 @@ class Company extends \common\models\Company
         return Inflector::slug($this->name);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasActiveInvestigations()
-    {
-        $activeStatuses = [
-            Investigation::STATUS_IN_PROGRESS,
-            Investigation::STATUS_PENDING
-        ];
 
-        return static::find()
-            ->joinWith('investigations')
-            ->andWhere(['investigation.status' => $activeStatuses])
-            ->exists();
-    }
 }

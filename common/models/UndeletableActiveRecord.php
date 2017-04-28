@@ -64,14 +64,15 @@ class UndeletableActiveRecord extends ActiveRecord
      */
     public function archive()
     {
+        $res = false;
         if ($this->beforeArchive()) {
             $this->status = static::STATUS_IN_HISTORY;
             if ($this->save(false)) {
-                return $this->afterArchive();
+                $res = $this->afterArchive();
             }
         }
 
-        return false;
+        return $res;
     }
 
     public function afterDelete()
@@ -106,4 +107,21 @@ class UndeletableActiveRecord extends ActiveRecord
         $this->trigger(self::EVENT_BEFORE_ARCHIVE, $event);
         return $event->isValid;
     }
+
+    public function isArchivable(){
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDeleted()
+    {
+        $statuses = [
+            self::STATUS_DELETED,
+        ];
+
+        return in_array($this->status, $statuses);
+    }
+
 }

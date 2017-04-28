@@ -19,6 +19,7 @@ use yii\behaviors\TimestampBehavior;
  */
 class InvestigationType extends UndeletableActiveRecord
 {
+
     /**
      * @inheritdoc
      */

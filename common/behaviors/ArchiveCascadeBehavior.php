@@ -1,0 +1,237 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Serg
+ * Date: 25.01.2017
+ * Time: 12:48
+ */
+
+namespace common\behaviors;
+
+
+use backend\models\Company;
+use backend\models\Investigation;
+use common\models\RecoverableActiveRecord;
+use common\models\UndeletableActiveRecord;
+use Yii;
+use yii\base\Behavior;
+use yii\base\InvalidCallException;
+
+class ArchiveCascadeBehavior extends Behavior
+{
+
+    private function beforeCompanyArchive($event)
+    {
+        /**
+         * @var $company Company
+         */
+        $res = false;
+        $company = $this->owner;
+        $investigations = $company->investigations;
+        if (!empty($investigations) && (count($investigations) > 0)) {
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                foreach ($investigations as $investigation) {
+                    if (!$investigation->isDeleted()) {
+                        if (!$investigation->isArchivable()) {
+                            throw new \Exception("There are active investigations in the company's profile.");
+                        }
+                        $investigation->detachBehavior('historyBehavior');
+                        $res = $investigation->archive();
+                    } else $res = true;
+                }
+
+                $transaction->commit();
+
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                throw $e;
+            }
+        } else $res = true;
+
+        $event->isValid = $res;
+    }
+
+    private function beforeInvestigationArchive($event)
+    {
+        /**
+         * @var $investigation Investigation
+         */
+        $res = false;
+        $investigation = $this->owner;
+        if (!$investigation->isArchivable()) {
+            throw new \Exception("This investigation is unfinished.");
+        }
+        $files = $investigation->files;
+        if (!empty($files) && (count($files) > 0)) {
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                foreach ($files as $file) {
+                    if (!$file->isDeleted()) {
+                        if (!$file->isArchivable()) {
+                            throw new \Exception('File: "' . $file->name . '" doesn`t archiving');
+                        }
+                        $file->detachBehavior('historyBehavior');
+                        $res = $file->archive();
+                    } else $res = true;
+                }
+
+                $transaction->commit();
+
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                throw $e;
+            }
+        } else $res = true;
+
+        $event->isValid = $res;
+    }
+
+    private function beforeCompanyRecover($event)
+    {
+        /**
+         * @var $company Company
+         */
+        $res = false;
+        $company = $this->owner;
+        if (!$company->isRecoverable()) {
+            throw new \Exception("This company doesn`t to recover.");
+        }
+        $investigations = $company->investigations;
+        if (!empty($investigations) && (count($investigations) > 0)) {
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                foreach ($investigations as $investigation) {
+                    if (!$investigation->isDeleted()) {
+                        if (!$investigation->isRecoverable()) {
+                            throw new \Exception("This company doesn`t to recover.");
+                        }
+                        $investigation->detachBehavior('historyBehavior');
+                        $res = $investigation->recover();
+                    } else $res = true;
+                }
+
+                $transaction->commit();
+
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                throw $e;
+            }
+        } else $res = true;
+
+        $event->isValid = $res;
+    }
+
+    private function beforeInvestigationRecover($event)
+    {
+        /**
+         * @var $investigation Investigation
+         */
+        $res = false;
+        $investigation = $this->owner;
+        if (!$investigation->isRecoverable()) {
+            throw new \Exception("This investigation doesn`t to recover.");
+        }
+        $files = $investigation->files;
+        if (!empty($files) && (count($files) > 0)) {
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                foreach ($files as $file) {
+                    if (!$file->isDeleted()) {
+                        if (!$file->isRecoverable()) {
+                            throw new \Exception('File: "' . $file->name . '"" doesn`t to recover.');
+                        }
+                        $file->detachBehavior('historyBehavior');
+                        $res = $file->recover();
+                    } else $res = true;
+                }
+
+                $transaction->commit();
+
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                throw $e;
+            }
+        } else $res = true;
+
+        $event->isValid = $res;
+    }
+
+    private function afterCompanyArchive($event)
+    {
+        $event->isValid = true;
+    }
+
+    private function afterInvestigationArchive($event)
+    {
+        $event->isValid = true;
+    }
+
+    private function afterCompanyRecover($event)
+    {
+        $event->isValid = true;
+    }
+
+    private function afterInvestigationRecover($event)
+    {
+        $event->isValid = true;
+    }
+
+    public function events()
+    {
+        return [
+            UndeletableActiveRecord::EVENT_BEFORE_ARCHIVE => 'beforeArchive',
+            UndeletableActiveRecord::EVENT_AFTER_ARCHIVE => 'afterArchive',
+            RecoverableActiveRecord::EVENT_BEFORE_RECOVER => 'beforeRecover',
+            RecoverableActiveRecord::EVENT_AFTER_RECOVER => 'afterRecover',
+        ];
+    }
+
+    public function attach($owner)
+    {
+        parent::attach($owner);
+
+        if (!($this->owner instanceof UndeletableActiveRecord)) throw new InvalidCallException("This behavior is only for UndeletableActiveRecord");
+
+    }
+
+    public function afterArchive($event)
+    {
+        if ($this->owner instanceof Company) {
+            return $this->afterCompanyArchive($event);
+        } elseif ($this->owner instanceof Investigation) {
+            return $this->afterInvestigationArchive($event);
+        }
+
+    }
+
+    public function beforeArchive($event)
+    {
+        if ($this->owner instanceof Company) {
+            return $this->beforeCompanyArchive($event);
+        } elseif ($this->owner instanceof Investigation) {
+            return $this->beforeInvestigationArchive($event);
+        }
+
+    }
+
+    public function afterRecover($event)
+    {
+        if ($this->owner instanceof Company) {
+            return $this->afterCompanyRecover($event);
+        } elseif ($this->owner instanceof Investigation) {
+            return $this->afterInvestigationRecover($event);
+        }
+
+    }
+
+    public function beforeRecover($event)
+    {
+        if ($this->owner instanceof Company) {
+            return $this->beforeCompanyRecover($event);
+        } elseif ($this->owner instanceof Investigation) {
+            return $this->beforeInvestigationRecover($event);
+        }
+
+    }
+}
