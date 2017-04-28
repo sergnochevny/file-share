@@ -77,7 +77,8 @@ $isReadOnly = User::isClient();
     <div class="row">
         <?php if (!empty($investigationTypes) && !User::isClient()): ?>
         <div class="col-sm-6 investigation-types">
-            <?= $form->field($companyForm, 'investigationTypeIds')-> checkboxList($investigationTypes) ?>
+            <?= $form->field($companyForm, 'investigationTypeIds')-> checkboxList($investigationTypes + ['-1' => 'Other']) ?>
+            <?= $form->field($companyForm, 'other_type')->textInput()->label(false) ?>
             <p>* Indicates additional information or form may be required</p>
         </div>
         <?php endif ?>

@@ -15,5 +15,5 @@ use common\helpers\Url;
         'data-url' => Url::to(['/wizard/update-types'])
     ]
 ]) ?>
-<?= $form->field($model, 'investigationTypeIds')-> checkboxList($types, ['class' => 'investigation-types']) ?>
+<?= $form->field($model, 'investigationTypeIds')-> checkboxList($types + ['-1' => 'Other'], ['class' => 'investigation-types']) ?>
 <?php \yii\widgets\Pjax::end() ?>
