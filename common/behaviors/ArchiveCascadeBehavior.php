@@ -88,7 +88,7 @@ class ArchiveCascadeBehavior extends Behavior
         $event->isValid = $res;
     }
 
-    private function beforeCompanyRecover($event)
+    private function afterCompanyRecover($event)
     {
         /**
          * @var $company Company
@@ -119,7 +119,7 @@ class ArchiveCascadeBehavior extends Behavior
         $event->isValid = $res;
     }
 
-    private function beforeInvestigationRecover($event)
+    private function afterInvestigationRecover($event)
     {
         /**
          * @var $investigation Investigation
@@ -150,7 +150,7 @@ class ArchiveCascadeBehavior extends Behavior
         $event->isValid = $res;
     }
 
-    private function beforeFileRecover($event)
+    private function afterFileRecover($event)
     {
         /**
          * @var $file File
@@ -177,17 +177,17 @@ class ArchiveCascadeBehavior extends Behavior
         $event->isValid = true;
     }
 
-    private function afterCompanyRecover($event)
+    private function beforeCompanyRecover($event)
     {
         $event->isValid = true;
     }
 
-    private function afterInvestigationRecover($event)
+    private function beforeInvestigationRecover($event)
     {
         $event->isValid = true;
     }
 
-    private function afterFileRecover($event)
+    private function beforeFileRecover($event)
     {
         $event->isValid = true;
     }
