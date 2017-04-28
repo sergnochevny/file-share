@@ -95,10 +95,6 @@ class Investigation extends \common\models\Investigation
             'deleteTemplate' => 'delete',
         ];
 
-        $behaviors['archiveCascadeBehavior'] = [
-            'class' => ArchiveCascadeBehavior::className(),
-        ];
-
         return $behaviors;
     }
 

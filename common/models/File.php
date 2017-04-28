@@ -18,6 +18,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $created_at
  * @property string $updated_at
  * @property string $status
+ * @property Investigation $investigation
  */
 class File extends RecoverableActiveRecord
 {
@@ -120,6 +121,21 @@ class File extends RecoverableActiveRecord
     public function getInvestigation()
     {
         return $this->hasOne(Investigation::className(), ['citrix_id' => 'parent'])->inverseOf('files');
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRecoverable()
+    {
+        $f_statuses = [
+            File::STATUS_IN_HISTORY,
+        ];
+        $i_statuses = [
+            Investigation::STATUS_IN_HISTORY
+        ];
+
+        return (in_array($this->status, $f_statuses) && !in_array($this->investigation->status, $i_statuses));
     }
 
 }

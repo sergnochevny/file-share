@@ -84,10 +84,6 @@ class Company extends \common\models\Company
             'type' => 'company',
         ];
 
-        $behaviors['archiveCascadeBehavior'] = [
-            'class' => ArchiveCascadeBehavior::className(),
-        ];
-
         return $behaviors;
     }
 

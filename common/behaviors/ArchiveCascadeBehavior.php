@@ -11,6 +11,7 @@ namespace common\behaviors;
 
 use backend\models\Company;
 use backend\models\Investigation;
+use common\models\File;
 use common\models\RecoverableActiveRecord;
 use common\models\UndeletableActiveRecord;
 use Yii;
@@ -60,7 +61,7 @@ class ArchiveCascadeBehavior extends Behavior
         $res = false;
         $investigation = $this->owner;
         if (!$investigation->isArchivable()) {
-            throw new \Exception("This investigation is unfinished.");
+            throw new \Exception('Investigation: "' . $investigation->name . '"is unfinished.');
         }
         $files = $investigation->files;
         if (!empty($files) && (count($files) > 0)) {
@@ -95,7 +96,7 @@ class ArchiveCascadeBehavior extends Behavior
         $res = false;
         $company = $this->owner;
         if (!$company->isRecoverable()) {
-            throw new \Exception("This company doesn`t to recover.");
+            throw new \Exception('Company: "' . $company->name . '"doesn`t to recover.');
         }
         $investigations = $company->investigations;
         if (!empty($investigations) && (count($investigations) > 0)) {
@@ -103,9 +104,6 @@ class ArchiveCascadeBehavior extends Behavior
             try {
                 foreach ($investigations as $investigation) {
                     if (!$investigation->isDeleted()) {
-                        if (!$investigation->isRecoverable()) {
-                            throw new \Exception("This company doesn`t to recover.");
-                        }
                         $investigation->detachBehavior('historyBehavior');
                         $res = $investigation->recover();
                     } else $res = true;
@@ -130,7 +128,7 @@ class ArchiveCascadeBehavior extends Behavior
         $res = false;
         $investigation = $this->owner;
         if (!$investigation->isRecoverable()) {
-            throw new \Exception("This investigation doesn`t to recover.");
+            throw new \Exception('Investigation: "' . $investigation->name . '" doesn`t to recover.');
         }
         $files = $investigation->files;
         if (!empty($files) && (count($files) > 0)) {
@@ -138,9 +136,6 @@ class ArchiveCascadeBehavior extends Behavior
             try {
                 foreach ($files as $file) {
                     if (!$file->isDeleted()) {
-                        if (!$file->isRecoverable()) {
-                            throw new \Exception('File: "' . $file->name . '"" doesn`t to recover.');
-                        }
                         $file->detachBehavior('historyBehavior');
                         $res = $file->recover();
                     } else $res = true;
@@ -152,6 +147,23 @@ class ArchiveCascadeBehavior extends Behavior
                 $transaction->rollBack();
                 throw $e;
             }
+        } else $res = true;
+
+        $event->isValid = $res;
+    }
+
+    private function beforeFileRecover($event)
+    {
+        /**
+         * @var $file File
+         */
+        $res = false;
+        $file = $this->owner;
+        if (!$file->isDeleted()) {
+            if (!$file->isRecoverable()) {
+                throw new \Exception('File: "' . $file->name . '" doesn`t to recover.');
+            }
+            $res = true;
         } else $res = true;
 
         $event->isValid = $res;
@@ -173,6 +185,11 @@ class ArchiveCascadeBehavior extends Behavior
     }
 
     private function afterInvestigationRecover($event)
+    {
+        $event->isValid = true;
+    }
+
+    private function afterFileRecover($event)
     {
         $event->isValid = true;
     }
@@ -221,6 +238,8 @@ class ArchiveCascadeBehavior extends Behavior
             return $this->afterCompanyRecover($event);
         } elseif ($this->owner instanceof Investigation) {
             return $this->afterInvestigationRecover($event);
+        } elseif ($this->owner instanceof File) {
+            return $this->afterFileRecover($event);
         }
 
     }
@@ -231,7 +250,8 @@ class ArchiveCascadeBehavior extends Behavior
             return $this->beforeCompanyRecover($event);
         } elseif ($this->owner instanceof Investigation) {
             return $this->beforeInvestigationRecover($event);
+        } elseif ($this->owner instanceof Investigation) {
+            return $this->beforeFileRecover($event);
         }
-
     }
 }
