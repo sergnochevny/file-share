@@ -104,7 +104,6 @@ class ArchiveCascadeBehavior extends Behavior
             try {
                 foreach ($investigations as $investigation) {
                     if (!$investigation->isDeleted()) {
-                        $investigation->detachBehavior('historyBehavior');
                         $res = $investigation->recover();
                     } else $res = true;
                 }
@@ -136,7 +135,6 @@ class ArchiveCascadeBehavior extends Behavior
             try {
                 foreach ($files as $file) {
                     if (!$file->isDeleted()) {
-                        $file->detachBehavior('historyBehavior');
                         $res = $file->recover();
                     } else $res = true;
                 }

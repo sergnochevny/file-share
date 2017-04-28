@@ -82,7 +82,9 @@ class Investigation extends \common\models\Investigation
             'company' => function (Investigation $model) {
                 return $model->company_id;
             },
-            'attribute' => 'name',
+            'attribute' => function($model){
+                return $this->fullName;
+            },
         ];
         $behaviors['notify'] = [
             'class' => NotifyBehavior::class,

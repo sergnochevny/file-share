@@ -84,7 +84,7 @@ class File extends \common\models\File
             },
             'company' => function (File $model) {
                 $company_id = null;
-                $investigation = $model->investigations;
+                $investigation = $model->investigation;
                 if (!empty($investigation)) $company_id = $investigation->company_id;
                 return $company_id;
             },
@@ -129,5 +129,6 @@ class File extends \common\models\File
     {
         return $this->hasOne(File::className(), ['citrix_id' => 'parent']);
     }
+
 
 }

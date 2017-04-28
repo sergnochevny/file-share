@@ -115,15 +115,21 @@ class HistoryBehavior extends Behavior
             $this->company = call_user_func($this->company, $this->owner);
         }
 
+        $attributeAsValue = false;
+        if ($this->attribute instanceof \Closure) {
+            $this->attribute = call_user_func($this->attribute, $this->owner);
+            $attributeAsValue = true;
+        }
+
         $model = $this->owner;
-        if(! $model instanceof HistoryActiveRecord){
+        if (!$model instanceof HistoryActiveRecord) {
             throw new InvalidCallException('Model must be instance of the HistoryActiveRecord class!');
         }
         $history = new History();
         if (!($history->load(
                 [
-                    'name' => $model->{$this->attribute},
-                    'type' => $model->historyType,
+                    'name' => ($attributeAsValue ? $this->attribute : $model->getAttribute($this->attribute)),
+                    'type' => $model->getHistoryType(),
                     'parent' => $this->parent,
                     'company_id' => $this->company
                 ]
