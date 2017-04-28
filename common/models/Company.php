@@ -32,7 +32,7 @@ use yii2tech\ar\linkmany\LinkManyBehavior;
 class Company extends HistoryActiveRecord
 {
 
-    static public $type = 'company';
+    static public $history_type = 'company';
     public $recoverStatus = self::STATUS_ACTIVE;
 
     /**

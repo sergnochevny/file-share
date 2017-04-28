@@ -55,7 +55,7 @@ class Investigation extends HistoryActiveRecord
     const STATUS_IN_PROGRESS = 300;
     const STATUS_COMPLETED = 400;
 
-    static public $type = 'investigation';
+    static public $history_type = 'investigation';
 
     /** @var string */
     public $birthDate;
