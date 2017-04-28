@@ -96,13 +96,6 @@ class Company extends \common\models\Company
         return $this->hasMany(Investigation::class, ['company_id' => 'id'])->inverseOf('company');
     }
 
-    /**
-     * @return UndeletableActiveRecord
-     */
-    public function getInvestigationsWh()
-    {
-        return $this->hasMany(Investigation::class, ['company_id' => 'id'])->andArchived();
-    }
 
     /**
      * @dev

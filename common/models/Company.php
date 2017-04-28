@@ -114,6 +114,14 @@ class Company extends HistoryActiveRecord
     }
 
     /**
+     * @return UndeletableActiveRecord
+     */
+    public function getInvestigationsWh()
+    {
+        return $this->hasMany(Investigation::class, ['company_id' => 'id'])->andArchived();
+    }
+
+    /**
      * @return UndeletableActiveQuery
      */
     public function getUsers()
@@ -183,6 +191,5 @@ class Company extends HistoryActiveRecord
 
         return $res;
     }
-
 
 }
