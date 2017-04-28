@@ -37,6 +37,8 @@ use yii2tech\ar\linkmany\LinkManyBehavior;
  * @property integer $updated_at
  * @property string $citrix_id
  *
+ * @property-read string $fullName
+ *
  * @property array $investigationTypeIds
  *
  * @property array $statusLabels
@@ -271,6 +273,20 @@ class Investigation extends HistoryActiveRecord
     public function getFiles()
     {
         return $this->hasMany(File::className(), ['parent' => 'citrix_id'])->inverseOf('investigation');
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getFullName()
+    {
+        $midName = '';
+        if (!empty($this->middle_name)) {
+            $midName = ' ' . $this->middle_name;
+        }
+
+        return $this->first_name . $midName . ' ' . $this->last_name;
     }
 
     /**

@@ -27,7 +27,7 @@ Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout
             'label' => 'Company'
         ],
         [
-            'attribute' => 'name',
+            'attribute' => 'fullName',
             'label' => 'Applicant',
             'headerOptions' => [
                 'class' => 'hidden-sm hidden-xs',
