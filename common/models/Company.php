@@ -25,6 +25,8 @@ use yii2tech\ar\linkmany\LinkManyBehavior;
  * @property integer $created_at
  * @property integer $updated_at
  *
+ * @property string $other_type
+ *
  * @property Investigation[] $investigations
  * @property User[] $users
  * @property InvestigationType[] $investigationTypes
@@ -74,7 +76,7 @@ class Company extends HistoryActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['name', 'address', 'city', 'state'], 'string', 'max' => 255],
+            [['name', 'address', 'city', 'state', 'other_type'], 'string', 'max' => 255],
             [['zip'], 'string', 'max' => 10],
             [['case_number'], 'string', 'max' => 7],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
