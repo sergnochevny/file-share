@@ -330,7 +330,7 @@ class Investigation extends HistoryActiveRecord
                     $errors[] = $field . ': ' . implode('<br>', $f_errors);
                 }
             } else {
-                $errors = ['Investigation: "' . $this->name . '" doesn`t archiving!'];
+                $errors = ['Investigation: "' . $this->fullName . '" doesn`t archiving!'];
             }
             throw new \Exception(implode('<br>', $errors));
         }
@@ -351,7 +351,7 @@ class Investigation extends HistoryActiveRecord
                     $errors[] = $field . ': ' . implode('<br>', $f_errors);
                 }
             } else {
-                $errors = ['Investigation: "' . $this->name . '" doesn`t to recover!'];
+                $errors = ['Investigation: "' . $this->fullName . '" doesn`t to recover!'];
             }
             throw new \Exception(implode('<br>', $errors));
         }
