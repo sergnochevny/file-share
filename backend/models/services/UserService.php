@@ -131,6 +131,15 @@ final class UserService extends Component
     /**
      * @return void
      */
+    public function delete()
+    {
+        $this->user->delete();
+        $this->trigger(UndeletableActiveRecord::EVENT_AFTER_DELETE, new Event());
+    }
+
+    /**
+     * @return void
+     */
     public function archive()
     {
         $this->user->archive();

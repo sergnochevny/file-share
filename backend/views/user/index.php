@@ -127,12 +127,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                         return '';
                                     }
 
-                                    return Html::a('To archive', Url::to(['archive', 'id' => $model->id], true),
+                                    return Html::a('Remove', Url::to(['delete', 'id' => $model->id], true),
                                         [
                                             'class' => "btn btn-danger btn-xs",
-                                            'title' => 'To archive',
-                                            'aria-label' => "To archive",
-                                            'data-confirm' => "Confirm removal",
+                                            'title' => 'Remove',
+                                            'aria-label' => "Remove",
+                                            'data-confirm' => "Confirm user removal.",
                                             'data-method' => "post",
                                         ]
                                     );
