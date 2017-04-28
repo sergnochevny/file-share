@@ -6,5 +6,5 @@
         alert.hide(400, function () {
             alert.remove();
         });
-    }, 5001);
+    }, 11001);
 })(jQuery);
