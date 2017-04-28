@@ -101,7 +101,7 @@ class Company extends HistoryActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
 
-            'investigationTypeIds' => 'Investigation Types'
+            'investigationTypeIds' => 'Investigative Services'
         ];
     }
 
