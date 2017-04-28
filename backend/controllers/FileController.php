@@ -160,7 +160,7 @@ class FileController extends PermissionController
     {
         $model = $this->findModel($id);
         $model->detachBehavior('uploadBehavior');
-        $investigation = $model->investigations;
+        $investigation = $model->investigation;
 
         try {
             if ($this->verifyPermission(VerifyPermissionBehavior::EVENT_VERIFY_FILE_PERMISSION,
