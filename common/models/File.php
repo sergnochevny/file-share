@@ -137,10 +137,13 @@ class File extends HistoryActiveRecord
             File::STATUS_IN_HISTORY,
         ];
         $i_statuses = [
-            Investigation::STATUS_IN_HISTORY
+            Investigation::STATUS_IN_HISTORY,
+            Investigation::STATUS_DELETED,
         ];
 
-        return (in_array($this->status, $f_statuses) && !in_array($this->investigation->status, $i_statuses));
+        $res = in_array($this->status, $f_statuses);
+        if(!empty($this->investigation)) $res = $res && !in_array($this->investigation->status, $i_statuses);
+        return $res;
     }
 
 }
