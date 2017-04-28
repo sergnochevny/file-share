@@ -38,14 +38,9 @@ class CompanyController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'allow' => true,
-                        'actions' => ['index'],
-                        'roles' => ['admin'],
-                    ],
-                    [
                         //all actions
                         'allow' => true,
-                        'roles' => ['superAdmin']
+                        'roles' => ['admin', 'superAdmin']
                     ],
                 ]
             ]
