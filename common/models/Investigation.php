@@ -42,6 +42,8 @@ use yii2tech\ar\linkmany\LinkManyBehavior;
  * @property-read string $fullName
  *
  *
+ * @property array $investigationTypeIds
+ *
  * @property Company $company
  * @property File[] $files
  * @property File[] $filesWh
@@ -202,6 +204,9 @@ class Investigation extends HistoryActiveRecord
         if (!empty($this->birth_date)) {
             $date = new DateTime('@' . $this->birth_date);
             $this->birthDate = $date->format('m/d/Y');
+        }
+        if ($this->other_type) {
+            $this->investigationTypeIds += [-1];
         }
         parent::afterFind();
     }
