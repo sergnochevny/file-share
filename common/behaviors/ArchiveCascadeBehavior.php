@@ -9,9 +9,9 @@
 namespace common\behaviors;
 
 
-use backend\models\Company;
-use backend\models\Investigation;
+use common\models\Company;
 use common\models\File;
+use common\models\Investigation;
 use common\models\RecoverableActiveRecord;
 use common\models\UndeletableActiveRecord;
 use Yii;
@@ -61,7 +61,7 @@ class ArchiveCascadeBehavior extends Behavior
         $res = false;
         $investigation = $this->owner;
         if (!$investigation->isArchivable()) {
-            throw new \Exception('Investigation: "' . $investigation->name . '"is unfinished.');
+            throw new \Exception('Investigation: "' . $investigation->fullName . '" is unfinished.');
         }
         $files = $investigation->files;
         if (!empty($files) && (count($files) > 0)) {
@@ -96,9 +96,9 @@ class ArchiveCascadeBehavior extends Behavior
         $res = false;
         $company = $this->owner;
         if (!$company->isRecoverable()) {
-            throw new \Exception('Company: "' . $company->name . '"doesn`t to recover.');
+            throw new \Exception('Company: "' . $company->name . '" doesn`t to recover.');
         }
-        $investigations = $company->investigations;
+        $investigations = $company->investigationsWh;
         if (!empty($investigations) && (count($investigations) > 0)) {
             $transaction = Yii::$app->db->beginTransaction();
             try {
@@ -127,9 +127,9 @@ class ArchiveCascadeBehavior extends Behavior
         $res = false;
         $investigation = $this->owner;
         if (!$investigation->isRecoverable()) {
-            throw new \Exception('Investigation: "' . $investigation->name . '" doesn`t to recover.');
+            throw new \Exception('Investigation: "' . $investigation->fullName . '" doesn`t to recover.');
         }
-        $files = $investigation->files;
+        $files = $investigation->filesWh;
         if (!empty($files) && (count($files) > 0)) {
             $transaction = Yii::$app->db->beginTransaction();
             try {
@@ -248,7 +248,7 @@ class ArchiveCascadeBehavior extends Behavior
             return $this->beforeCompanyRecover($event);
         } elseif ($this->owner instanceof Investigation) {
             return $this->beforeInvestigationRecover($event);
-        } elseif ($this->owner instanceof Investigation) {
+        } elseif ($this->owner instanceof File) {
             return $this->beforeFileRecover($event);
         }
     }

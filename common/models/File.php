@@ -19,6 +19,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $updated_at
  * @property string $status
  * @property Investigation $investigation
+ * @property Investigation $investigationWh
  */
 class File extends HistoryActiveRecord
 {
@@ -129,6 +130,14 @@ class File extends HistoryActiveRecord
     }
 
     /**
+     * @return Investigation
+     */
+    public function getInvestigationWh()
+    {
+        return $this->hasOne(Investigation::className(), ['citrix_id' => 'parent'])->andArchived();
+    }
+
+    /**
      * @return bool
      */
     public function isRecoverable()
@@ -142,7 +151,7 @@ class File extends HistoryActiveRecord
         ];
 
         $res = in_array($this->status, $f_statuses);
-        if(!empty($this->investigation)) $res = $res && !in_array($this->investigation->status, $i_statuses);
+        if(!empty($this->investigationWh)) $res = $res && !in_array($this->investigationWh->status, $i_statuses);
         return $res;
     }
 

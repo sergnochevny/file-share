@@ -47,6 +47,7 @@ use yii2tech\ar\linkmany\LinkManyBehavior;
  *
  * @property Company $company
  * @property File[] $files
+ * @property File[] $filesWh
  * @property InvestigationType[] $investigationTypes
  * @property User $createdBy
  */
@@ -275,6 +276,14 @@ class Investigation extends HistoryActiveRecord
     public function getFiles()
     {
         return $this->hasMany(File::className(), ['parent' => 'citrix_id'])->inverseOf('investigation');
+    }
+
+    /**
+     * @return UndeletableActiveQuery
+     */
+    public function getFilesWh()
+    {
+        return $this->hasMany(File::className(), ['parent' => 'citrix_id'])->andArchived();
     }
 
 
