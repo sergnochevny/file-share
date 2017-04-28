@@ -4,6 +4,4 @@
         $(document.body).toggleClass('menu-open');
     });
 
-
-
 })(jQuery);

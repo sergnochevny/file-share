@@ -3,7 +3,7 @@
 
 namespace backend\models;
 
-use backend\behaviors\ArchiveCascadeBehavior;
+use common\behaviors\ArchiveCascadeBehavior;
 use backend\behaviors\CitrixFolderBehavior;
 use backend\behaviors\HistoryBehavior;
 use backend\behaviors\NotifyBehavior;
@@ -25,6 +25,14 @@ class Investigation extends \common\models\Investigation
     use FactoryTrait;
 
     /**
+     * @return array
+     */
+    public static function getStatusesList()
+    {
+        return array_slice(parent::getStatusesList(), -6, 5, true); //remove 'deleted' status
+    }
+
+    /**
      * @inheritdoc
      */
     public function rules()
@@ -35,7 +43,7 @@ class Investigation extends \common\models\Investigation
             /** @var $model Investigation */
             return $model->isAttributeChanged($attribute, false);
 
-        }, 'filter' => function(Query $query) {
+        }, 'filter' => function (Query $query) {
             if ($this->company_id) {
                 $query->andWhere(['company_id' => $this->company_id]);
             }
@@ -59,7 +67,7 @@ class Investigation extends \common\models\Investigation
             'pass' => \Yii::$app->keyStorage->get('citrix.pass'),
             'id' => \Yii::$app->keyStorage->get('citrix.id'),
             'secret' => \Yii::$app->keyStorage->get('citrix.secret'),
-            'parent' => function(Investigation $model){
+            'parent' => function (Investigation $model) {
                 /**
                  * @var Investigation $model
                  */
@@ -68,10 +76,10 @@ class Investigation extends \common\models\Investigation
         ];
         $behaviors['historyBehavior'] = [
             'class' => HistoryBehavior::class,
-            'parent' => function(Investigation $model){
+            'parent' => function (Investigation $model) {
                 return $model->id;
             },
-            'company' => function(Investigation $model){
+            'company' => function (Investigation $model) {
                 return $model->company_id;
             },
             'attribute' => 'name',
@@ -79,7 +87,7 @@ class Investigation extends \common\models\Investigation
         ];
         $behaviors['notify'] = [
             'class' => NotifyBehavior::class,
-            'companyId' => function(Investigation $model) {
+            'companyId' => function (Investigation $model) {
                 return $model->company_id;
             },
             'createTemplate' => 'create',
@@ -108,14 +116,6 @@ class Investigation extends \common\models\Investigation
     }
 
     /**
-     * @return array
-     */
-    public static function getStatusesList()
-    {
-        return array_slice(parent::getStatusesList(), -6, 5, true); //remove 'deleted' status
-    }
-
-    /**
      * @return array|\yii\db\ActiveRecord[]
      */
     public function getAllCompaniesList()
@@ -141,15 +141,11 @@ class Investigation extends \common\models\Investigation
     }
 
     /**
-     * @return bool
+     * @return UndeletableActiveQuery
      */
-    public function isNotCompleted()
+    public function getFiles()
     {
-        $activeStatuses = [
-            Investigation::STATUS_IN_PROGRESS,
-            Investigation::STATUS_PENDING
-        ];
-
-        return in_array($this->status, $activeStatuses);
+        return $this->hasMany(File::className(), ['parent' => 'citrix_id'])->inverseOf('investigation');
     }
+
 }
