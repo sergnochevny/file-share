@@ -10,16 +10,16 @@ namespace backend\behaviors;
 
 
 use common\models\History;
+use common\models\HistoryActiveRecord;
 use common\models\UndeletableActiveRecord;
 use yii\base\Behavior;
+use yii\base\InvalidCallException;
 use yii\base\InvalidParamException;
 
 class HistoryBehavior extends Behavior
 {
 
     private $attribute;
-
-    private $type = null;
 
     private $parent = null;
 
@@ -101,30 +101,21 @@ class HistoryBehavior extends Behavior
         parent::attach($owner);
 
         if (empty($this->attribute)) throw new InvalidParamException("Identity attribute parameter");
-        if (empty($this->type)) throw new InvalidParamException("Identity type parameter");
         if (empty($this->parent)) throw new InvalidParamException("Identity parent parameter");
     }
 
     public function beforeArchive($event)
     {
-        if ($this->type instanceof \Closure) {
-            $this->type = call_user_func($this->type, $this->owner);
-        }
-
-        if ($this->parent instanceof \Closure) {
-            $this->parent = call_user_func($this->parent, $this->owner);
-        }
-
-        if ($this->company instanceof \Closure) {
-            $this->company = call_user_func($this->company, $this->owner);
-        }
 
         $model = $this->owner;
+        if(! $model instanceof HistoryActiveRecord){
+            throw new InvalidCallException('Model must be instance of the HistoryActiveRecord class!');
+        }
         $history = new History();
         if (!($history->load(
                 [
                     'name' => $model->{$this->attribute},
-                    'type' => $this->type,
+                    'type' => $model->history_type,
                     'parent' => $this->parent,
                     'company_id' => $this->company
                 ]

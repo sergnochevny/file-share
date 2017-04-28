@@ -46,7 +46,7 @@ use yii2tech\ar\linkmany\LinkManyBehavior;
  * @property InvestigationType[] $investigationTypes
  * @property User $createdBy
  */
-class Investigation extends RecoverableActiveRecord
+class Investigation extends HistoryActiveRecord
 {
     const STATUS_DELETED = 0;
     const STATUS_CANCELLED = 100;
@@ -54,6 +54,8 @@ class Investigation extends RecoverableActiveRecord
     const STATUS_PENDING = 250;
     const STATUS_IN_PROGRESS = 300;
     const STATUS_COMPLETED = 400;
+
+    static public $type = 'investigation';
 
     /** @var string */
     public $birthDate;

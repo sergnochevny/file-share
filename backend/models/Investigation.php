@@ -83,7 +83,6 @@ class Investigation extends \common\models\Investigation
                 return $model->company_id;
             },
             'attribute' => 'name',
-            'type' => 'investigation',
         ];
         $behaviors['notify'] = [
             'class' => NotifyBehavior::class,
@@ -93,10 +92,6 @@ class Investigation extends \common\models\Investigation
             'createTemplate' => 'create',
             'updateTemplate' => 'update',
             'deleteTemplate' => 'delete',
-        ];
-
-        $behaviors['archiveCascadeBehavior'] = [
-            'class' => ArchiveCascadeBehavior::className(),
         ];
 
         return $behaviors;

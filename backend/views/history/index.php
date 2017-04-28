@@ -79,25 +79,25 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'width' => 100
                             ]
                         ],
-//                        [
-//                            'class' => 'yii\grid\ActionColumn',
-//                            'template' => '{details}',
-//                            'buttons' => [
-//                                'details' => function ($url, $model) {
-//                                    $content = Html::a('Details', Url::to(['/history/view', 'id' => $model->id], true),
-//                                        [
-//                                            'class' => "btn btn-primary btn-xs",
-//                                            'title' => 'Details',
-//                                            'aria-label' => "Details",
-//                                        ]
-//                                    );
-//                                    return $content;
-//                                },
-//                            ],
-//                            'contentOptions' => [
-//                                'width' => 80
-//                            ]
-//                        ],
+                        [
+                            'class' => 'yii\grid\ActionColumn',
+                            'template' => '{recovery}',
+                            'buttons' => [
+                                'recovery' => function ($url, $model) {
+                                    $content = Html::a('Details', Url::to(['/history/recover', 'id' => $model->id], true),
+                                        [
+                                            'class' => "btn btn-primary btn-xs",
+                                            'title' => 'Recovery',
+                                            'aria-label' => "Recovery",
+                                        ]
+                                    );
+                                    return $content;
+                                },
+                            ],
+                            'contentOptions' => [
+                                'width' => 80
+                            ]
+                        ],
                     ],
                     'pager' => [
                         'options' => [

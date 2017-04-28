@@ -29,9 +29,10 @@ use yii2tech\ar\linkmany\LinkManyBehavior;
  * @property User[] $users
  * @property InvestigationType[] $investigationTypes
  */
-class Company extends RecoverableActiveRecord
+class Company extends HistoryActiveRecord
 {
 
+    static public $type = 'company';
     public $recoverStatus = self::STATUS_ACTIVE;
 
     /**
@@ -40,6 +41,14 @@ class Company extends RecoverableActiveRecord
     public static function tableName()
     {
         return '{{%company}}';
+    }
+
+    final public static function getStatusesList()
+    {
+        return [
+            self::STATUS_DELETED => 'Deleted',
+            self::STATUS_ACTIVE => 'Active'
+        ];
     }
 
     /**
@@ -67,7 +76,7 @@ class Company extends RecoverableActiveRecord
             [['name'], 'required'],
             [['name', 'address', 'city', 'state'], 'string', 'max' => 255],
             [['zip'], 'string', 'max' => 10],
-            [['case_number'] , 'string', 'max' => 7],
+            [['case_number'], 'string', 'max' => 7],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_IN_HISTORY, self::STATUS_DELETED]],
             ['investigationTypeIds', 'safe'],
@@ -91,13 +100,6 @@ class Company extends RecoverableActiveRecord
             'updated_at' => 'Updated At',
 
             'investigationTypeIds' => 'Investigation Types'
-        ];
-    }
-
-    final public static function getStatusesList(){
-        return [
-            self::STATUS_DELETED => 'Deleted',
-            self::STATUS_ACTIVE => 'Active'
         ];
     }
 
