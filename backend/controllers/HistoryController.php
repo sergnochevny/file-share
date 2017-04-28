@@ -111,7 +111,11 @@ class HistoryController extends Controller
     public function actionRecover($id)
     {
         try{
-            $this->findModel($id)->recover();
+            $model = $this->findModel($id);
+            $model->recover();
+            if ($model->delete()) {
+                Yii::$app->session->setFlash('success', 'Entry has been recovered successful');
+            }
         } catch (\Exception $e ){
             Yii::$app->session->setFlash('error', $e->getMessage());
         }

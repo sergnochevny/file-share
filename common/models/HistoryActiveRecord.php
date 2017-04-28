@@ -21,4 +21,13 @@ class HistoryActiveRecord extends RecoverableActiveRecord
     public function getHistoryType(){
         return static::$history_type;
     }
+
+    /**
+     * @param $condition
+     * @return array|null|ActiveRecord
+     */
+    public static function findOneIncludeHistory($condition)
+    {
+        return parent::findByCondition($condition)->andArchived()->one();
+    }
 }

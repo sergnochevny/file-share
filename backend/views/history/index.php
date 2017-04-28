@@ -82,13 +82,16 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'class' => 'yii\grid\ActionColumn',
                             'template' => '{recovery}',
+                            'visible' => \backend\models\User::isSuperAdmin(),
                             'buttons' => [
                                 'recovery' => function ($url, $model) {
-                                    $content = Html::a('Details', Url::to(['/history/recover', 'id' => $model->id], true),
+                                    $content = Html::a('Recovery', Url::to(['/history/recover', 'id' => $model->id], true),
                                         [
                                             'class' => "btn btn-primary btn-xs",
                                             'title' => 'Recovery',
                                             'aria-label' => "Recovery",
+                                            'data-method' => 'post',
+                                            'data-pjax' => 1
                                         ]
                                     );
                                     return $content;

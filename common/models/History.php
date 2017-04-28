@@ -75,11 +75,11 @@ class History extends \yii\db\ActiveRecord
     public function recover()
     {
         if ($this->type == Company::$history_type){
-            $model = Company::findOne($this->parent);
+            $model = Company::findOneIncludeHistory($this->parent);
         } elseif ($this->type == Investigation::$history_type){
-            $model = Investigation::findOne($this->parent);
+            $model = Investigation::findOneIncludeHistory($this->parent);
         }elseif ($this->type == File::$history_type){
-            $model = File::findOne($this->parent);
+            $model = File::findOneIncludeHistory($this->parent);
         }
         if (!empty($model)){
             $model->recover();
