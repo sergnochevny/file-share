@@ -41,15 +41,13 @@ use yii2tech\ar\linkmany\LinkManyBehavior;
  *
  * @property-read string $fullName
  *
- * @property array $investigationTypeIds
- *
- * @property array $statusLabels
  *
  * @property Company $company
  * @property File[] $files
  * @property File[] $filesWh
  * @property InvestigationType[] $investigationTypes
  * @property User $createdBy
+ * @property History $history
  */
 class Investigation extends HistoryActiveRecord
 {
@@ -301,6 +299,14 @@ class Investigation extends HistoryActiveRecord
     }
 
     /**
+     * @return Investigation
+     */
+    public function getHistory()
+    {
+        return $this->hasOne(History::className(), ['parent' => 'id'])->andWhere(['type'=>self::$history_type]);
+    }
+
+    /**
      * @return bool
      */
     public function isArchivable()
@@ -368,5 +374,9 @@ class Investigation extends HistoryActiveRecord
         return $res;
     }
 
+    public function isDeleted()
+    {
+        return !empty($this->history) || parent::isDeleted();
+    }
 
 }

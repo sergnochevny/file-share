@@ -50,7 +50,7 @@ class ArchiveCascadeBehavior extends Behavior
             }
         } else $res = true;
 
-        $event->isValid = $res;
+        return $event->isValid = $res;
     }
 
     private function beforeInvestigationArchive($event)
@@ -85,7 +85,7 @@ class ArchiveCascadeBehavior extends Behavior
             }
         } else $res = true;
 
-        $event->isValid = $res;
+        return $event->isValid = $res;
     }
 
     private function afterCompanyRecover($event)
@@ -95,9 +95,6 @@ class ArchiveCascadeBehavior extends Behavior
          */
         $res = false;
         $company = $this->owner;
-        if (!$company->isRecoverable()) {
-            throw new \Exception('Company: "' . $company->name . '" doesn`t to recover.');
-        }
         $investigations = $company->investigationsWh;
         if (!empty($investigations) && (count($investigations) > 0)) {
             $transaction = Yii::$app->db->beginTransaction();
@@ -116,7 +113,7 @@ class ArchiveCascadeBehavior extends Behavior
             }
         } else $res = true;
 
-        $event->isValid = $res;
+        return $event->isValid = $res;
     }
 
     private function afterInvestigationRecover($event)
@@ -126,9 +123,6 @@ class ArchiveCascadeBehavior extends Behavior
          */
         $res = false;
         $investigation = $this->owner;
-        if (!$investigation->isRecoverable()) {
-            throw new \Exception('Investigation: "' . $investigation->fullName . '" doesn`t to recover.');
-        }
         $files = $investigation->filesWh;
         if (!empty($files) && (count($files) > 0)) {
             $transaction = Yii::$app->db->beginTransaction();
@@ -147,10 +141,10 @@ class ArchiveCascadeBehavior extends Behavior
             }
         } else $res = true;
 
-        $event->isValid = $res;
+        return $event->isValid = $res;
     }
 
-    private function afterFileRecover($event)
+    private function beforeFileRecover($event)
     {
         /**
          * @var $file File
@@ -164,32 +158,41 @@ class ArchiveCascadeBehavior extends Behavior
             $res = true;
         } else $res = true;
 
-        $event->isValid = $res;
+        return $event->isValid = $res;
     }
 
     private function afterCompanyArchive($event)
     {
-        $event->isValid = true;
+        return $event->isValid = true;
     }
 
     private function afterInvestigationArchive($event)
     {
-        $event->isValid = true;
+        return $event->isValid = true;
     }
 
     private function beforeCompanyRecover($event)
     {
-        $event->isValid = true;
+        $company = $this->owner;
+        if (!$company->isRecoverable()) {
+            throw new \Exception('Company: "' . $company->name . '" doesn`t to recover.');
+        }
+
+        return $event->isValid = true;
     }
 
     private function beforeInvestigationRecover($event)
     {
-        $event->isValid = true;
+        $investigation = $this->owner;
+        if (!$investigation->isRecoverable()) {
+            throw new \Exception('Investigation: "' . $investigation->fullName . '" doesn`t to recover.');
+        }
+        return $event->isValid = true;
     }
 
-    private function beforeFileRecover($event)
+    private function afterFileRecover($event)
     {
-        $event->isValid = true;
+        return $event->isValid = true;
     }
 
     public function events()

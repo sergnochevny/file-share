@@ -42,7 +42,7 @@ class RecoverableActiveRecord extends UndeletableActiveRecord
         if ($this->beforeRecover()) {
             $this->status = $this->recoverStatus;
             if ($this->save(false)) {
-                $res = $this->afterArchive();
+                $res = $this->afterRecover();
             }
         }
 

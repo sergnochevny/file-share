@@ -20,6 +20,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $status
  * @property Investigation $investigation
  * @property Investigation $investigationWh
+ * @property History $history
  */
 class File extends HistoryActiveRecord
 {
@@ -124,6 +125,14 @@ class File extends HistoryActiveRecord
     /**
      * @return Investigation
      */
+    public function getHistory()
+    {
+        return $this->hasOne(History::className(), ['parent' => 'id'])->andWhere(['type'=>self::$history_type]);
+    }
+
+    /**
+     * @return Investigation
+     */
     public function getInvestigation()
     {
         return $this->hasOne(Investigation::className(), ['citrix_id' => 'parent'])->inverseOf('files');
@@ -154,5 +163,11 @@ class File extends HistoryActiveRecord
         if(!empty($this->investigationWh)) $res = $res && !in_array($this->investigationWh->status, $i_statuses);
         return $res;
     }
+
+    public function isDeleted()
+    {
+        return !empty($this->history) || parent::isDeleted();
+    }
+
 
 }
