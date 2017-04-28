@@ -20,8 +20,10 @@ use yii\behaviors\TimestampBehavior;
  * @property string $status
  * @property Investigation $investigation
  */
-class File extends RecoverableActiveRecord
+class File extends HistoryActiveRecord
 {
+
+    static public $history_type = 'file';
 
     public $recoverStatus = self::STATUS_ACTIVE;
 
