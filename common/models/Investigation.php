@@ -206,7 +206,7 @@ class Investigation extends HistoryActiveRecord
             $this->birthDate = $date->format('m/d/Y');
         }
         if ($this->other_type) {
-            $this->investigationTypeIds += [-1];
+            $this->investigationTypeIds = array_merge($this->investigationTypeIds, [-1]);
         }
         parent::afterFind();
     }
@@ -247,7 +247,8 @@ class Investigation extends HistoryActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
 
-            'investigationTypeIds' => 'Investigation Services'
+            'investigationTypeIds' => 'Investigation Services',
+            'other_type' => 'Other Service'
         ];
     }
 
