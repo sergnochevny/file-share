@@ -77,7 +77,6 @@ class CompanyController extends Controller
     public function actionArchive($id)
     {
         $model = $this->findModel($id);
-        $model->detachBehavior('citrixFolderBehavior');
         try{
             $model->archive();
             Yii::$app->session->setFlash('success', 'Archived successfully');
