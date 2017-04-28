@@ -116,7 +116,7 @@ class HistoryBehavior extends Behavior
         }
 
         $model = $this->owner;
-        if(! $model instanceof HistoryActiveRecord){
+        if (!$model instanceof HistoryActiveRecord) {
             throw new InvalidCallException('Model must be instance of the HistoryActiveRecord class!');
         }
         $history = new History();
