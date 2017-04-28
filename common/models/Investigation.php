@@ -149,7 +149,8 @@ class Investigation extends HistoryActiveRecord
 
             [['company_id', 'birth_date'], 'integer'],
             ['start_date', 'default', 'value' => new Expression('NOW()')],
-            [['name', 'contact_person', 'case_number', 'email', 'previous_names', 'other_type'], 'string', 'max' => 255],
+            [['other_type'], 'string', 'max' => 60],
+            [['name', 'contact_person', 'case_number', 'email', 'previous_names'], 'string', 'max' => 255],
             ['phone', 'string', 'max' => 15],
             ['phone', 'number'],
             ['email', 'email'],
@@ -206,7 +207,7 @@ class Investigation extends HistoryActiveRecord
             $this->birthDate = $date->format('m/d/Y');
         }
         if ($this->other_type) {
-            $this->investigationTypeIds += [-1];
+            $this->investigationTypeIds = array_merge($this->investigationTypeIds, [-1]);
         }
         parent::afterFind();
     }
@@ -247,7 +248,8 @@ class Investigation extends HistoryActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
 
-            'investigationTypeIds' => 'Investigation Services'
+            'investigationTypeIds' => 'Investigation Services',
+            'other_type' => 'Other Service'
         ];
     }
 

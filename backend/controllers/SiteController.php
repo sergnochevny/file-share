@@ -77,6 +77,11 @@ class SiteController extends Controller
                         'roles' => ['superAdmin']
                     ],
                     [
+                        'allow' => false,
+                        'actions' => ['settings'],
+                        'roles' => ['@']
+                    ],
+                    [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
