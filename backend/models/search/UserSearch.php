@@ -75,11 +75,11 @@ class UserSearch extends User
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'first_name', $this->first_name])
-            ->andFilterWhere(['like', 'last_name', $this->last_name])
+        $query->andFilterWhere(['like', 'first_name', $this->name])
+            ->andFilterWhere(['like', 'last_name', $this->name])
             ->andFilterWhere(['like', 'phone_number', $this->phone_number])
-            ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'username', $this->username])
+            ->andFilterWhere(['like', 'email', $this->name])
+            ->andFilterWhere(['like', 'username', $this->name])
             ->andFilterWhere(['like', 'auth_key', $this->auth_key])
             ->andFilterWhere(['like', 'password_hash', $this->password_hash])
             ->andFilterWhere(['like', 'password_reset_token', $this->password_reset_token]);
