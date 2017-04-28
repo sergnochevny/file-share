@@ -107,6 +107,14 @@ class HistoryBehavior extends Behavior
     public function beforeArchive($event)
     {
 
+        if ($this->parent instanceof \Closure) {
+            $this->parent = call_user_func($this->parent, $this->owner);
+        }
+
+        if ($this->company instanceof \Closure) {
+            $this->company = call_user_func($this->company, $this->owner);
+        }
+
         $model = $this->owner;
         if(! $model instanceof HistoryActiveRecord){
             throw new InvalidCallException('Model must be instance of the HistoryActiveRecord class!');
