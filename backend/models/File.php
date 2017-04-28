@@ -5,10 +5,12 @@ namespace backend\models;
 use backend\behaviors\HistoryBehavior;
 use backend\behaviors\UploadBehavior;
 use common\models\UserCompany;
+use yii\db\ActiveRecord;
 
 /**
  * @property Investigation $investigation
  * @property User[] $user
+ * @property ActiveRecord $parents
  */
 class File extends \common\models\File
 {
@@ -110,7 +112,7 @@ class File extends \common\models\File
     public function getUserCompanies()
     {
         return $this->hasOne(UserCompany::className(), ['company_id' => 'company_id'])
-            ->via('investigations');
+            ->via('investigation');
     }
 
 
@@ -125,7 +127,7 @@ class File extends \common\models\File
     /**
      * @return File
      */
-    public function getParent()
+    public function getParents()
     {
         return $this->hasOne(File::className(), ['citrix_id' => 'parent']);
     }
