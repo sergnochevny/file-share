@@ -40,7 +40,7 @@ $isShowCompany = Yii::$app->user->can('admin') && $isDbHasCompany;
                 'model' => $investigationForm
             ]) ?>
             <div class="other<?= $investigationForm->other_type ? '' : ' hidden' ?>">
-                <?= $form->field($investigationForm, 'other_type')->textInput() ?>
+                <?= $form->field($investigationForm, 'other_type')->textInput(['maxlength' => true]) ?>
             </div>
             <p>* Indicates additional information or form may be required</p>
             <?php endif ?>
