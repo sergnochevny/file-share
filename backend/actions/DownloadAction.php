@@ -64,7 +64,7 @@ class DownloadAction extends PermissionAction
          */
 
         $model = File::findOne(['citrix_id' => $id]);
-        $investigation = $model->investigations;
+        $investigation = $model->investigation;
         if ($this->controller->verifyPermission(VerifyPermissionBehavior::EVENT_VERIFY_FILE_DOWNLOAD_PERMISSION,
             ['model' => $model, '$investigation' => $investigation])
         ) {

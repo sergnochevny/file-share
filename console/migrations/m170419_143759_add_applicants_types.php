@@ -6,11 +6,6 @@ class m170419_143759_add_applicants_types extends Migration
 {
     public function up()
     {
-        $this->execute('DELETE FROM `company`');
-        $this->execute("ALTER TABLE `company` AUTO_INCREMENT = 1");
-
-        $this->execute('DELETE FROM `file`');
-        $this->execute("ALTER TABLE `file` AUTO_INCREMENT = 1");
 
         $types = [
             'SSN verification and address history',
