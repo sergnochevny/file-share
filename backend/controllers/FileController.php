@@ -188,7 +188,7 @@ class FileController extends PermissionController
     {
         $model = $this->findModel($id);
         $model->detachBehavior('uploadBehavior');
-        $investigation = $model->investigations;
+        $investigation = $model->investigation;
         try {
             $model->delete();
             Yii::$app->session->setFlash('success', 'Deleted successfully');
