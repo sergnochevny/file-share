@@ -18,4 +18,7 @@ class HistoryActiveRecord extends RecoverableActiveRecord
 
     static public $history_type = 'default';
 
+    public function getHistoryType(){
+        return static::$history_type;
+    }
 }

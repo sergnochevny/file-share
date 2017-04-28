@@ -123,7 +123,7 @@ class HistoryBehavior extends Behavior
         if (!($history->load(
                 [
                     'name' => $model->{$this->attribute},
-                    'type' => $model->history_type,
+                    'type' => $model->historyType,
                     'parent' => $this->parent,
                     'company_id' => $this->company
                 ]
