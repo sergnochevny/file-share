@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <span class="btn-label">
                         <span class="icon icon-plus icon-lg icon-fw"></span>
                     </span>
-                    Create a new investigative services
+                    Create a new investigative service
                 </a>
             </div>
             <?php endif ?>
