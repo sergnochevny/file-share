@@ -50,6 +50,7 @@ $view = $this;
                 <div class="text-center m-b">
                     <?php if (!empty($investigation)) : ?>
                         <h3 class="m-b-0">Files</h3>
+                        <small>All files for this applicant</small>
                     <?php else : ?>
                         <h3 class="m-b-0">Forms and Templates</h3>
                     <?php endif; ?>

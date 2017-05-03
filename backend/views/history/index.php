@@ -20,7 +20,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <span class="d-ib"><span class="icon icon-history"></span> <b><?= Html::encode($this->title) ?></b></span>
     </h1>
     <p class="title-bar-description">
-        <small>List of all company accounts</small>
+        <?php if (\backend\models\User::isClient()): ?>
+            <small>List of all applicants</small>
+        <?php else: ?>
+            <small>List of all companies, applicants, files</small>
+        <?php endif ?>
     </p>
 </div>
 <div class="row gutter-xs">
