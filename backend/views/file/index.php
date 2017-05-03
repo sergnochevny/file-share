@@ -34,9 +34,7 @@ $view = $this;
     <p class="title-bar-description">
         <?php if (!empty($investigation)) : ?>
             <small>General information about the investigation</small>
-        <?php else : ?>
-            <small>Forms and Templates</small>
-        <?php endif; ?>
+        <?php endif ?>
     </p>
 </div>
 <?= !empty($investigation) ? $this->render('partials/_investigation', ['model' => $investigation]) : '' ?>
@@ -53,7 +51,7 @@ $view = $this;
                     <?php if (!empty($investigation)) : ?>
                         <h3 class="m-b-0">Files</h3>
                     <?php else : ?>
-                        <h3 class="m-b-0">Forms & Templates</h3>
+                        <h3 class="m-b-0">Forms and Templates</h3>
                     <?php endif; ?>
 
                     <br/>
