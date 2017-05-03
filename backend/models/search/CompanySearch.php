@@ -53,7 +53,7 @@ class CompanySearch extends Company
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['created_at' => SORT_ASC]],
+            'sort'=> ['defaultOrder' => ['created_at' => SORT_DESC]],
             //'pagination' => ['defaultPageSize' => 1]
         ]);
 

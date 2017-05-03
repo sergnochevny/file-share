@@ -82,7 +82,7 @@ class DownloadAction extends PermissionAction
                 ->setRedirect(CitrixApi::FALSE)
                 ->setIncludeAllVersions(CitrixApi::FALSE)
                 ->ItemContent;
-            $response = $this->controller->redirect($item_content->DownloadUrl);
+            $response = $this->controller->redirect($item_content->DownloadUrl, 308);
         }
 
         return $response;

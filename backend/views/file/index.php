@@ -220,6 +220,7 @@ $view = $this;
                                             $content = Html::a('Download', Url::to(['/file/download', 'id' => $model->citrix_id], true),
                                                 [
                                                     'class' => "btn btn-warning btn-xs",
+                                                    'data-download'=>true,
                                                     'title' => 'Download',
                                                     'aria-label' => "Download",
                                                     'data-pjax' => 0,
@@ -247,4 +248,5 @@ $view = $this;
 <?php Pjax::end(); ?>
 <?php \backend\assets\InputUploadSubmitAsset::register($this);?>
 <?php \backend\assets\AlertHelperAsset::register($this);?>
+<?php \backend\assets\DownloadAsset::register($this);?>
 
