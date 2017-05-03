@@ -16,7 +16,7 @@ if (!empty($investigation)) {
     $this->params['breadcrumbs'][] = ['label' => 'Investigations', 'url' => ['index']];
     $this->params['breadcrumbs'][] = $this->title;
 } else {
-    $this->title = 'Files';
+    $this->title = 'Forms & Templates';
     $this->params['breadcrumbs'][] = $this->title;
 }
 
@@ -35,7 +35,7 @@ $view = $this;
         <?php if (!empty($investigation)) : ?>
             <small>General information about the investigation</small>
         <?php else : ?>
-            <small>All files</small>
+            <small>Forms and Templates</small>
         <?php endif; ?>
     </p>
 </div>
@@ -50,8 +50,12 @@ $view = $this;
         <div class="panel">
             <div class="panel-body panel-collapse">
                 <div class="text-center m-b">
-                    <h3 class="m-b-0">All files</h3>
-                    <small>All downloaded files that relate to the present case</small>
+                    <?php if (!empty($investigation)) : ?>
+                        <h3 class="m-b-0">Files</h3>
+                    <?php else : ?>
+                        <h3 class="m-b-0">Forms & Templates</h3>
+                    <?php endif; ?>
+
                     <br/>
                     <br/>
                     <?php
