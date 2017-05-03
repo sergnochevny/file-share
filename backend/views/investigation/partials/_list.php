@@ -49,7 +49,7 @@ Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout
             ],
             'format' => 'html',
             'value' => function ($model, $key, $index, $column) {
-                $value = '<span class="label label-warning" >' . Yii::$app->formatter->asDate($model->{$column->attribute}) . '</span >';
+                $value = '<span class="label label-info" >' . Yii::$app->formatter->asDate($model->{$column->attribute}) . '</span >';
                 return $value;
             }
         ],
