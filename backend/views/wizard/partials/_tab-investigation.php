@@ -54,9 +54,9 @@ $isShowCompany = Yii::$app->user->can('admin') && $isDbHasCompany;
                 ]
             ]) ?>
             <?= $form->field($investigationForm, 'birthDate')->widget(MaskedInput::className(), [
-                //'mask' => '999-99-9999',
                 'clientOptions' => [
                     'alias' =>  'mm/dd/yyyy',
+                    'yearrange' => ['minyear' => 1920, 'maxyear' => 2000 ],
                 ]
             ]) ?>
         </div>

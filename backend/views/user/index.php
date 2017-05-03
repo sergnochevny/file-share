@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <span class="d-ib"><span class="icon icon-users"></span> <?= Html::encode($this->title) ?></span>
     </h1>
     <p class="title-bar-description">
-        <small>All files</small>
+        <small>All users</small>
     </p>
 </div>
 

@@ -49,7 +49,7 @@ Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout
             ],
             'format' => 'html',
             'value' => function ($model, $key, $index, $column) {
-                $value = '<span class="label label-warning" >' . Yii::$app->formatter->asDate($model->{$column->attribute}) . '</span >';
+                $value = '<span class="label label-info" >' . Yii::$app->formatter->asDate($model->{$column->attribute}) . '</span >';
                 return $value;
             }
         ],
@@ -91,11 +91,11 @@ Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout
                         return '';
                     }
 
-                    return Html::a('To archive', Url::to(['/investigation/archive', 'id' => $model->id], true),
+                    return Html::a('Archive', Url::to(['/investigation/archive', 'id' => $model->id], true),
                         [
-                            'class' => "btn btn-danger btn-xs",
-                            'title' => 'To archive',
-                            'aria-label' => "To archive",
+                            'class' => "btn btn-purple btn-xs",
+                            'title' => 'Archive',
+                            'aria-label' => "Archive",
                             'data-confirm' => "Confirm removal",
                             'data-method' => "post",
                         ]

@@ -70,7 +70,11 @@ class LoginForm extends Model
 
         if ($isLogged) {
             if ($this->rememberMe) {
-                $username = new Cookie(['name' => 'username', 'value' => $this->getUser()->username]);
+                $username = new Cookie([
+                    'name' => 'username',
+                    'value' => $this->getUser()->username,
+                    'expire' => time() + (100 * 365 * 24 * 60 * 60)
+                ]);
                 Yii::$app->response->cookies->add($username);
             } else {
                 Yii::$app->response->cookies->remove('username');

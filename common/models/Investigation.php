@@ -4,6 +4,7 @@ namespace common\models;
 
 
 use common\behaviors\ArchiveCascadeBehavior;
+use common\validators\SsnValidator;
 use DateTime;
 use Exception;
 use yii\behaviors\TimestampBehavior;
@@ -156,7 +157,7 @@ class Investigation extends HistoryActiveRecord
             ['email', 'email'],
 
             [['first_name', 'middle_name', 'last_name'], 'string', 'max' => 100],
-            [['ssn'], 'string', 'max' => 20],
+            [['ssn'], SsnValidator::className(), 'length' => 9],
 
             //client validation input mask widget
             [['ssn'], 'number', 'enableClientValidation' => false],
