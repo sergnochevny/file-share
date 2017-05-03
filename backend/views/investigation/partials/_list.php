@@ -91,9 +91,9 @@ Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout
                         return '';
                     }
 
-                    return Html::a('To archive', Url::to(['/investigation/archive', 'id' => $model->id], true),
+                    return Html::a('Archive', Url::to(['/investigation/archive', 'id' => $model->id], true),
                         [
-                            'class' => "btn btn-danger btn-xs",
+                            'class' => "btn btn-purple btn-xs",
                             'title' => 'To archive',
                             'aria-label' => "To archive",
                             'data-confirm' => "Confirm removal",
