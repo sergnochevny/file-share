@@ -33,7 +33,7 @@ $view = $this;
 
     <p class="title-bar-description">
         <?php if (!empty($investigation)) : ?>
-            <small>General information about the investigation</small>
+            <small>Applicant details</small>
         <?php endif ?>
     </p>
 </div>
