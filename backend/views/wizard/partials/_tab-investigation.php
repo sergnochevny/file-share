@@ -29,18 +29,19 @@ $isShowCompany = Yii::$app->user->can('admin') && $isDbHasCompany;
     <?php if($isShowCompany): ?><hr/><?php endif; ?>
     <div class="row">
         <div class="col-sm-6">
-            <?= $form->field($investigationForm, 'first_name')->textInput(['placeholder' => 'Name', 'maxlength' => true]) ?>
-            <?= $form->field($investigationForm, 'middle_name')->textInput(['placeholder' => 'Name', 'maxlength' => true]) ?>
-            <?= $form->field($investigationForm, 'last_name')->textInput(['placeholder' => 'Name', 'maxlength' => true]) ?>
+            <?= $form->field($investigationForm, 'first_name')->textInput(['tabindex' => 1, 'placeholder' => 'Name', 'maxlength' => true]) ?>
+            <?= $form->field($investigationForm, 'middle_name')->textInput(['tabindex' => 2,'placeholder' => 'Name', 'maxlength' => true]) ?>
+            <?= $form->field($investigationForm, 'last_name')->textInput(['tabindex' => 3,'placeholder' => 'Name', 'maxlength' => true]) ?>
 
             <?php if (!empty($investigationTypes)): ?>
+            <?php $typesCount = count($investigationTypes) ?>
             <?= $this->render('_investigation-types', [
                 'types' => $investigationTypes,
                 'form' => $form,
                 'model' => $investigationForm
             ]) ?>
             <div class="other<?= $investigationForm->other_type ? '' : ' hidden' ?>">
-                <?= $form->field($investigationForm, 'other_type')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($investigationForm, 'other_type')->textInput(['tabindex' => ($typesCount + 6), 'maxlength' => true]) ?>
             </div>
             <p>* Indicates additional information or form may be required</p>
             <?php endif ?>
@@ -51,13 +52,15 @@ $isShowCompany = Yii::$app->user->can('admin') && $isDbHasCompany;
                 'mask' => '999-99-9999',
                 'clientOptions' => [
                     'removeMaskOnSubmit' => true,
-                ]
+                ],
+                'options' => ['class' => 'form-control', 'tabindex' => 4]
             ]) ?>
             <?= $form->field($investigationForm, 'birthDate')->widget(MaskedInput::className(), [
                 'clientOptions' => [
                     'alias' =>  'mm/dd/yyyy',
                     'yearrange' => ['minyear' => 1920, 'maxyear' => 2000 ],
-                ]
+                ],
+                'options' => ['class' => 'form-control', 'tabindex' => 5]
             ]) ?>
         </div>
     </div>
@@ -67,7 +70,7 @@ $isShowCompany = Yii::$app->user->can('admin') && $isDbHasCompany;
         <hr/>
         <div align="center">
             <?php if ($isDbHasCompany): ?>
-            <button id="company-create" class="btn btn-sm btn-labeled  arrow-warning" type="submit">
+            <button tabindex="<?= ($typesCount + 7)  ?>" id="company-create" class="btn btn-sm btn-labeled  arrow-warning" type="submit">
                 <span class="btn-label">
                     <span class="icon icon-check-square icon-lg icon-fw"></span>
                 </span>
