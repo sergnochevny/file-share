@@ -18,7 +18,7 @@ use yii\helpers\Url;
                         <?= strtoupper($model->name) ?>
                         <?php if (Investigation::STATUS_COMPLETED !== $model->status && !User::isClient()): ?>
                             <a class="pull-right btn btn-xs btn-labeled arrow-success" href="<?= Url::to(['/investigation/complete', 'id' => $model->id]) ?>"
-                               data-confirm="Are you sure want to complete this investigation?">
+                               data-confirm="This action will mark the investigation as completed . Are you sure you want to proceed?">
                     <span class="btn-label">
                         <span class="icon icon-check icon-lg icon-fw"></span>
                     </span> Complete
