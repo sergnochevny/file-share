@@ -1,5 +1,6 @@
 <?php
 
+use backend\models\User;
 use backend\widgets\ActiveForm;
 use common\widgets\Alert;
 use yii\helpers\Html;
@@ -181,7 +182,7 @@ $view = $this;
                                                 Yii::$app->user->can('employee', ['investigation' => $investigation])
                                             )
                                         )
-                                            $content = Html::a('To archive', Url::to(['/file/archive', 'id' => $model->id], true),
+                                            $content = Html::a(User::isClient() ? 'Remove' : 'Archive', Url::to(['/file/archive', 'id' => $model->id], true),
                                                 [
                                                     'class' => "btn btn-primary btn-xs",
                                                     'title' => 'To archive',
