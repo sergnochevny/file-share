@@ -117,12 +117,8 @@ $view = $this;
                                 'format' => 'html',
                                 'value' => function ($model, $key, $index, $column) {
                                     $image = Html::tag('div', '', [
-                                            'class' => 'file-thumbnail file-thumbnail-' . \backend\models\FileUpload::fileExt($model->type)
-                                        ]) . Html::tag('div',
-                                            Html::tag('span', $model->type, ['class' => 'file-ext']) .
-                                            Html::tag('span', $model->{$column->attribute}, ['class' => 'file-name']),
-                                            ['class' => 'file-info']
-                                        );
+                                        'class' => 'file-thumbnail file-thumbnail-' . \backend\models\FileUpload::fileExt($model->type)
+                                    ]);
                                     return Html::tag('div',
                                         $image,
                                         ['class' => 'file']
@@ -138,6 +134,7 @@ $view = $this;
                                     'class' => 'sorting',
                                 ]
                             ],
+                            'name:ntext:Name',
                             [
                                 'attribute' => 'created_at',
                                 'contentOptions' => [
