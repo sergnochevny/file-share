@@ -96,7 +96,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ];
                                 //workaround for rename client
                                 $role = $model->{$column->attribute};
-                                $value = '<span class="label label-' . $suff[$role]['class'] . '" >' .
+                                $value = '<span class="' . $suff[$role]['class'] . '-text" >' .
                                     $suff[$role]['label'] .
                                     '</span >';
                                 return $value;
