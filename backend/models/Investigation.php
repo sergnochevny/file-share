@@ -113,6 +113,15 @@ class Investigation extends \common\models\Investigation
         return $this->first_name . $lastName . '-' . $this->ssn;
     }
 
+    public function getOldCitrixFolderName()
+    {
+        $lastName = '';
+        if (!empty($this->getOldAttribute('last_name'))) {
+            $lastName = '-' . $this->getOldAttribute('last_name');
+        }
+
+        return $this->getOldAttribute('first_name') . $lastName . '-' . $this->getOldAttribute('ssn');
+    }
     /**
      * @return array|\yii\db\ActiveRecord[]
      */

@@ -106,5 +106,9 @@ class Company extends \common\models\Company
         return Inflector::slug($this->name);
     }
 
+    public function getOldCitrixFolderName()
+    {
+        return Inflector::slug($this->getOldAttribute('name'));
+    }
 
 }

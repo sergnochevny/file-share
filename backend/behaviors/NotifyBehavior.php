@@ -11,6 +11,7 @@ use common\models\UndeletableActiveRecord;
 use yii\base\Behavior;
 use yii\base\ErrorException;
 use yii\db\ActiveRecord;
+use yii\db\AfterSaveEvent;
 
 class NotifyBehavior extends Behavior
 {
@@ -180,15 +181,17 @@ class NotifyBehavior extends Behavior
     /**
      *
      */
-    public function afterUpdate()
+    public function afterUpdate($event)
     {
         /**
          * @var $model ActiveRecord
+         * @var $event AfterSaveEvent
          */
         $model = $this->owner;
         if (($model instanceof \common\models\Investigation) &&
             ($model->attributes['status'] == Investigation::STATUS_COMPLETED) &&
-            ($model->attributes['status'] != $model->oldAttributes['status'])
+            (!empty($event->changedAttributes)) &&
+            (in_array('status', array_keys($event->changedAttributes) ))
         ) {
             $this->sendMessagesWithTemplate($this->completeTemplate, ['user' => true]);
         } else $this->sendMessagesWithTemplate($this->updateTemplate);

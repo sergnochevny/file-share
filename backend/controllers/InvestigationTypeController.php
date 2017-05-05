@@ -4,6 +4,7 @@
 namespace backend\controllers;
 
 
+use backend\behaviors\RememberUrlBehavior;
 use common\models\InvestigationType;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
@@ -13,6 +14,21 @@ use Yii;
 
 class InvestigationTypeController extends Controller
 {
+    /**
+     * @param int $id
+     * @return InvestigationType
+     * @throws NotFoundHttpException
+     */
+    private function findModel($id)
+    {
+        $type = InvestigationType::findOne($id);
+        if ($type) {
+            return $type;
+        }
+
+        throw new NotFoundHttpException('Type not found');
+    }
+
     /**
      * @inheritdoc
      */
@@ -33,7 +49,11 @@ class InvestigationTypeController extends Controller
                         'roles' => ['superAdmin']
                     ],
                 ]
-            ]
+            ],
+            'remember' => [
+                'class' => RememberUrlBehavior::className(),
+                'actions' => ['index','update','create'],
+            ],
         ];
     }
 
@@ -100,20 +120,5 @@ class InvestigationTypeController extends Controller
         $this->findModel($id)->delete();
         Yii::$app->getSession()->setFlash('success', 'Type has been successfully removed');
         return $this->redirect(['index']);
-    }
-
-    /**
-     * @param int $id
-     * @return InvestigationType
-     * @throws NotFoundHttpException
-     */
-    private function findModel($id)
-    {
-        $type = InvestigationType::findOne($id);
-        if ($type) {
-            return $type;
-        }
-
-        throw new NotFoundHttpException('Type not found');
     }
 }

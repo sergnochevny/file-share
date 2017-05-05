@@ -226,16 +226,19 @@ class CitrixFolderBehavior extends Behavior
          * @var Items $items
          */
 
+        $old = $this->owner->{'old'. ucfirst($this->folder)};
+        if( $old != $this->owner->{$this->folder}){
         $items = $this->Citrix->Items;
         $item = $items
             ->setExpandChildren(CitrixApi::FALSE)
             ->setOverwrite(CitrixApi::TRUE)
             ->setId($this->owner->{$this->attribute})
             ->Items;
-        $item->Name = $this->owner->{$this->folder};
-        $item->Description = 'Company ' . $this->owner->{$this->folder};
-        $folder = $items->UpdateItem($item);
-        $this->owner->setAttribute($this->attribute, $folder->Id);
+            $item->Name = $this->owner->{$this->folder};
+            $item->Description = 'Company ' . $this->owner->{$this->folder};
+            $folder = $items->UpdateItem($item);
+            $this->owner->setAttribute($this->attribute, $folder->Id);
+        }
     }
 
 }
