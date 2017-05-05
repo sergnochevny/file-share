@@ -49,7 +49,7 @@ Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout
             ],
             'format' => 'html',
             'value' => function ($model, $key, $index, $column) {
-                $value = '<span class="label label-info" >' . Yii::$app->formatter->asDate($model->{$column->attribute}) . '</span >';
+                $value = '<span class="" >' . Yii::$app->formatter->asDate($model->{$column->attribute}) . '</span >';
                 return $value;
             }
         ],
@@ -61,7 +61,7 @@ Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout
             'format' => 'html',
             'value' => function ($model, $key, $index, $column) {
                 $code = $model->{$column->attribute};
-                $value = '<span class="label label-'. Investigation::getStatusCSSClass($code) .'" >' . Investigation::getStatusByCode($code) . '</span >';
+                $value = '<span class=" '. Investigation::getStatusCSSClass($code) .'-text" >' . Investigation::getStatusByCode($code) . '</span >';
                 return $value;
             }
         ],

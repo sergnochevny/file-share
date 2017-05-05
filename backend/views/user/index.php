@@ -90,17 +90,14 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             'value' => function ($model, $key, $index, $column) {
                                 $suff = [
-                                    'superAdmin' => 'success',
-                                    'admin' => 'warning',
-                                    'Company User' => 'danger'
+                                    'superAdmin' => ['class'=>'success', 'label'=>'Super User'],
+                                    'admin' => ['class'=>'warning', 'label'=>'Admin'],
+                                    'client' => ['class'=>'danger', 'label'=>'Company User']
                                 ];
                                 //workaround for rename client
                                 $role = $model->{$column->attribute};
-                                if ($role == 'client') {
-                                    $role = 'Company User';
-                                }
-                                $value = '<span class="label label-' . $suff[$role] . '" >' .
-                                    $role .
+                                $value = '<span class="label label-' . $suff[$role]['class'] . '" >' .
+                                    $suff[$role]['label'] .
                                     '</span >';
                                 return $value;
                             }

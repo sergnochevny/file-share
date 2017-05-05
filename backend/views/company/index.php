@@ -98,11 +98,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                     );
                                 },
                                 'delete' => function ($url, $model) {
-                                    return Html::a('To archive', Url::to(['/company/archive', 'id' => $model->id], true),
+                                    return Html::a('Archive', Url::to(['/company/archive', 'id' => $model->id], true),
                                         [
-                                            'class' => "btn btn-danger btn-xs",
-                                            'title' => 'To archive',
-                                            'aria-label' => "To archive",
+                                            'class' => "btn btn-purple btn-xs",
+                                            'title' => 'Archive',
+                                            'aria-label' => "Archive",
                                             'data-confirm' => "Confirm removal",
                                             'data-method' => "post",
                                         ]

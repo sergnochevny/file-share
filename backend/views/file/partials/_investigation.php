@@ -73,7 +73,7 @@ use yii\helpers\Url;
                         <ul class="list-group">
                             <li class="list-group-item">
                                 <span class="pull-right">
-                                    <span class="label label-<?= Investigation::getStatusCSSClass($model->status) ?>">
+                                    <span class="<?= Investigation::getStatusCSSClass($model->status) ?>-text">
                                         <?= Investigation::getStatusByCode($model->status)?>
                                     </span>
 
@@ -83,7 +83,7 @@ use yii\helpers\Url;
                             </li>
                             <li class="list-group-item">
                                 <span class="pull-right"><span title="<?= Yii::$app->formatter->asDate($model->start_date, 'full') ?>"
-                                                               class="label label-success"><?= Yii::$app->formatter->asDate($model->start_date) ?></span></span>
+                                                               class=""><?= Yii::$app->formatter->asDate($model->start_date) ?></span></span>
                                 <span class="icon icon-calendar  icon-lg icon-fw"></span>
                                 Start date
                             </li>

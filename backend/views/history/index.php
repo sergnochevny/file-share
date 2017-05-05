@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute' => 'created_at',
                             'format' => 'html',
-                            'label' => 'Archived at',
+                            'label' => 'Archived on',
                             'value' => function ($model, $key, $index, $column) {
                                 $formatter = Yii::$app->getFormatter();
                                 $value = $model->{$column->attribute};
@@ -75,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 $date = $formatter->asDate($value);
 
                                 return Html::tag('span', $date, [
-                                    'class' => 'label label-warning',
+                                    'class' => '',
                                     'title' => $dateTime,
                                 ]);
                             },

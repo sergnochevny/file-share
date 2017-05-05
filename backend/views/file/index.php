@@ -143,7 +143,7 @@ $view = $this;
                                 ],
                                 'format' => 'html',
                                 'value' => function ($model, $key, $index, $column) {
-                                    $value = '<span class="label label-warning" >' . Yii::$app->formatter->asDate($model->{$column->attribute}) . '</span >';
+                                    $value = '<span class="" >' . Yii::$app->formatter->asDate($model->{$column->attribute}) . '</span >';
                                     return $value;
                                 },
                                 'headerOptions' => [
@@ -181,9 +181,9 @@ $view = $this;
                                         )
                                             $content = Html::a(User::isClient() ? 'Remove' : 'Archive', Url::to(['/file/archive', 'id' => $model->id], true),
                                                 [
-                                                    'class' => "btn btn-primary btn-xs",
-                                                    'title' => 'To archive',
-                                                    'aria-label' => "To archive",
+                                                    'class' => "btn btn-purple btn-xs",
+                                                    'title' => 'Archive',
+                                                    'aria-label' => "Archive",
                                                     'data-confirm' => "Confirm archiving",
                                                     'data-method' => "post",
                                                     'data-pjax' => true,
