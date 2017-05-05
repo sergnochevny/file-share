@@ -101,7 +101,13 @@ class InvestigationController extends Controller
     public function actionComplete($id)
     {
         $investigation = $this->findModel($id);
-        $investigation->updateAttributes(['status' => Investigation::STATUS_COMPLETED]);
+        $investigation->status = Investigation::STATUS_COMPLETED;
+        if ($investigation->save(true, ['status'])) {
+            Yii::$app->session->setFlash('success', 'Status has been changed');
+        } else {
+            Yii::$app->session->setFlash('error', 'Cannot change the status of applicant');
+        }
+
         return $this->redirect(['/file', 'id' => $id]);
     }
 

@@ -95,9 +95,10 @@ class NotifyBehavior extends Behavior
      */
     private function collectAdminEmails()
     {
-        $emails = User::findByRole('admin')->select(['email'])->asArray()->all();
+        $adminEmails =  User::findByRole('admin')->select(['email'])->column();
+        $superAdminEmails = User::findByRole('superAdmin')->select(['email'])->column();
 
-        return array_column($emails, 'email');
+        return array_merge($adminEmails, $superAdminEmails);
     }
 
     /**
