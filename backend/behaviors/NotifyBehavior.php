@@ -108,7 +108,7 @@ final class NotifyBehavior extends Behavior
     private function sendMessagesWithTemplate($template)
     {
         $this->initialize();
-        $messages = []; $b = $this->collectAdminEmails();
+        $messages = [];
         foreach ($this->collectAdminEmails() as $email) {
             $messages[] = $this->composeMailer('admin/' . $template)->setTo($email);
         }
