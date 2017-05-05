@@ -3,6 +3,10 @@
 namespace common\models;
 
 
+use common\behaviors\ArchiveCascadeBehavior;
+use common\validators\SsnValidator;
+use DateTime;
+use Exception;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
 use yii2tech\ar\linkmany\LinkManyBehavior;
@@ -20,7 +24,13 @@ use yii2tech\ar\linkmany\LinkManyBehavior;
  * @property string $contact_person
  * @property string $phone
  * @property string $email
+ * @property string $first_name
+ * @property string $middle_name
+ * @property string $last_name
+ * @property string $previous_names
+ * @property string $ssn
  *
+ * @property integer $birth_date
  * @property integer $created_by
  *
  * @property integer $status
@@ -28,15 +38,21 @@ use yii2tech\ar\linkmany\LinkManyBehavior;
  * @property integer $updated_at
  * @property string $citrix_id
  *
+ * @property string $other_type
+ *
+ * @property-read string $fullName
+ *
+ *
  * @property array $investigationTypeIds
  *
- * @property array $statusLabels
- *
  * @property Company $company
+ * @property File[] $files
+ * @property File[] $filesWh
  * @property InvestigationType[] $investigationTypes
  * @property User $createdBy
+ * @property History $history
  */
-class Investigation extends UndeletableActiveRecord
+class Investigation extends HistoryActiveRecord
 {
     const STATUS_DELETED = 0;
     const STATUS_CANCELLED = 100;
@@ -45,78 +61,19 @@ class Investigation extends UndeletableActiveRecord
     const STATUS_IN_PROGRESS = 300;
     const STATUS_COMPLETED = 400;
 
+    static public $history_type = 'investigation';
+
+    /** @var string */
+    public $birthDate;
+
+    public $recoverStatus = self::STATUS_COMPLETED;
+
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
         return '{{%investigation}}';
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::class,
-            [
-                'class' => LinkManyBehavior::class,
-                'relation' => 'investigationTypes',
-                'relationReferenceAttribute' => 'investigationTypeIds',
-            ],
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['company_id'], 'required', 'message' => 'Please select company'],
-            [['company_id'], 'integer'],
-            ['start_date', 'default', 'value' => new Expression('NOW()')],
-            [['name'], 'required'],
-            [['name', 'contact_person', 'case_number', 'email'], 'string', 'max' => 255],
-            ['phone', 'string', 'max' => 15],
-            ['phone', 'number'],
-            ['email', 'email'],
-            [['description'], 'string', 'max' => 2000],
-            ['status', 'default', 'value' => self::STATUS_IN_PROGRESS],
-            ['status', 'in', 'range' => [
-                self::STATUS_COMPLETED, self::STATUS_IN_PROGRESS, self::STATUS_PENDING,
-                self::STATUS_IN_HISTORY, self::STATUS_CANCELLED, self::STATUS_DELETED
-            ]],
-            [
-                ['company_id'], 'exist', 'skipOnError' => true,
-                'targetClass' => Company::className(),
-                'targetAttribute' => ['company_id' => 'id']
-            ],
-            [
-                ['created_by'], 'exist', 'skipOnError' => true,
-                'targetClass' => User::className(),
-                'targetAttribute' => ['created_by' => 'id']
-            ],
-
-            ['investigationTypeIds', 'safe'],
-        ];
-    }
-
-    /**
-     * Validates and converts date from jUI to Y-m-d mysql date
-     * @todo remove. Not needed any more
-     * @param $attribute
-     * @param $params
-     */
-    public function parseDates($attribute, $params)
-    {
-        if (!$this->hasErrors() && !empty($this->$attribute)) {
-            $date = \DateTime::createFromFormat('m.d.Y', $this->$attribute);
-            if ($date) {
-                $this->$attribute = $date->format('Y-m-d');
-            }
-        }
     }
 
     /**
@@ -148,6 +105,7 @@ class Investigation extends UndeletableActiveRecord
             self::STATUS_DELETED => 'danger',
         ];
     }
+
     /**
      * @param $code
      * @return string|null
@@ -163,6 +121,114 @@ class Investigation extends UndeletableActiveRecord
         $statuses = static::getStatusesCSSList();
         return isset($statuses[$code]) ? $statuses[$code] : null;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::class,
+            ArchiveCascadeBehavior::class,
+            [
+                'class' => LinkManyBehavior::class,
+                'relation' => 'investigationTypes',
+                'relationReferenceAttribute' => 'investigationTypeIds',
+            ],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['company_id'], 'required', 'message' => 'Please select company'],
+            [['first_name', 'last_name', 'ssn', 'birthDate'], 'required'],
+            [['birthDate'], 'validateBirthDate'],
+
+            [['company_id', 'birth_date'], 'integer'],
+            ['start_date', 'default', 'value' => new Expression('NOW()')],
+            [['other_type'], 'string', 'max' => 60],
+            [['name', 'contact_person', 'case_number', 'email', 'previous_names'], 'string', 'max' => 255],
+            ['phone', 'string', 'max' => 15],
+            ['phone', 'number'],
+            ['email', 'email'],
+
+            [['first_name', 'middle_name', 'last_name'], 'string', 'max' => 100],
+            [['ssn'], SsnValidator::className(), 'length' => 9],
+
+            //client validation input mask widget
+            [['ssn'], 'number', 'enableClientValidation' => false],
+
+            [['description'], 'string', 'max' => 2000],
+            ['status', 'default', 'value' => self::STATUS_IN_PROGRESS],
+            ['status', 'in', 'range' => [
+                self::STATUS_COMPLETED, self::STATUS_IN_PROGRESS, self::STATUS_PENDING,
+                self::STATUS_IN_HISTORY, self::STATUS_CANCELLED, self::STATUS_DELETED
+            ]],
+            [
+                ['company_id'], 'exist', 'skipOnError' => true,
+                'targetClass' => Company::className(),
+                'targetAttribute' => ['company_id' => 'id']
+            ],
+            [
+                ['created_by'], 'exist', 'skipOnError' => true,
+                'targetClass' => User::className(),
+                'targetAttribute' => ['created_by' => 'id']
+            ],
+
+            ['investigationTypeIds', 'safe'],
+        ];
+    }
+
+    public function validateBirthDate($attribute, $params)
+    {
+        if (!$this->hasErrors()) {
+            $dateTime = DateTime::createFromFormat('m/d/Y/H/i/s', $this->birthDate . '/00/00/00');
+            if ($dateTime === false) {
+                $this->addError($attribute, 'Birth Date is invalid');
+                return;
+            }
+
+            $this->birth_date = $dateTime->getTimestamp();
+        }
+
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function afterFind()
+    {
+        //fill birthDate for wizard editing
+        if (!empty($this->birth_date)) {
+            $date = new DateTime('@' . $this->birth_date);
+            $this->birthDate = $date->format('m/d/Y');
+        }
+        if ($this->other_type) {
+            $this->investigationTypeIds = array_merge($this->investigationTypeIds, [-1]);
+        }
+        parent::afterFind();
+    }
+
+    /**
+     * Validates and converts date from jUI to Y-m-d mysql date
+     * @todo remove. Not needed any more
+     * @param $attribute
+     * @param $params
+     */
+    public function parseDates($attribute, $params)
+    {
+        if (!$this->hasErrors() && !empty($this->$attribute)) {
+            $date = \DateTime::createFromFormat('m.d.Y', $this->$attribute);
+            if ($date) {
+                $this->$attribute = $date->format('Y-m-d');
+            }
+        }
+    }
+
     /**
      * @inheritdoc
      */
@@ -178,11 +244,13 @@ class Investigation extends UndeletableActiveRecord
             'contact_person' => 'Contact Person',
             'phone' => 'Phone',
             'email' => 'Email',
+            'ssn' => 'SSN',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
 
-            'investigationTypeIds' => 'Investigation Services'
+            'investigationTypeIds' => 'Investigation Services',
+            'other_type' => 'Other Service'
         ];
     }
 
@@ -207,4 +275,116 @@ class Investigation extends UndeletableActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
+
+    /**
+     * @return UndeletableActiveQuery
+     */
+    public function getFiles()
+    {
+        return $this->hasMany(File::className(), ['parent' => 'citrix_id'])->inverseOf('investigation');
+    }
+
+    /**
+     * @return UndeletableActiveQuery
+     */
+    public function getFilesWh()
+    {
+        return $this->hasMany(File::className(), ['parent' => 'citrix_id'])->andArchived();
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getFullName()
+    {
+        $midName = '';
+        if (!empty($this->middle_name)) {
+            $midName = ' ' . $this->middle_name;
+        }
+
+        return $this->first_name . $midName . ' ' . $this->last_name;
+    }
+
+    /**
+     * @return Investigation
+     */
+    public function getHistory()
+    {
+        return $this->hasOne(History::className(), ['parent' => 'id'])->andWhere(['type'=>self::$history_type]);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isArchivable()
+    {
+        $activeStatuses = [
+            Investigation::STATUS_COMPLETED,
+        ];
+
+        return in_array($this->status, $activeStatuses);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRecoverable()
+    {
+        $i_statuses = [
+            Investigation::STATUS_IN_HISTORY,
+        ];
+        $c_statuses = [
+            Company::STATUS_ACTIVE
+        ];
+
+        return (in_array($this->status, $i_statuses) && in_array($this->company->status, $c_statuses));
+    }
+
+    public function archive()
+    {
+        $this->detachBehavior('citrixFolderBehavior');
+        $res = parent::archive(); // TODO: Change the autogenerated stub
+
+        if (!$res) {
+            if ($this->hasErrors()) {
+                $m_errors = $this->errors;
+                foreach ($m_errors as $field => $f_errors) {
+                    $errors[] = $field . ': ' . implode('<br>', $f_errors);
+                }
+            } else {
+                $errors = ['Investigation: "' . $this->fullName . '" doesn`t archiving!'];
+            }
+            throw new \Exception(implode('<br>', $errors));
+        }
+
+        return $res;
+    }
+
+    public function recover()
+    {
+        $this->detachBehavior('citrixFolderBehavior');
+        $this->detachBehavior('historyBehavior');
+        $res = parent::recover(); // TODO: Change the autogenerated stub
+
+        if (!$res) {
+            if ($this->hasErrors()) {
+                $m_errors = $this->errors;
+                foreach ($m_errors as $field => $f_errors) {
+                    $errors[] = $field . ': ' . implode('<br>', $f_errors);
+                }
+            } else {
+                $errors = ['Investigation: "' . $this->fullName . '" doesn`t to recover!'];
+            }
+            throw new \Exception(implode('<br>', $errors));
+        }
+
+        return $res;
+    }
+
+    public function isDeleted()
+    {
+        return !empty($this->history) || parent::isDeleted();
+    }
+
 }

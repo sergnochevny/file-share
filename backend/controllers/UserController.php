@@ -18,6 +18,22 @@ use backend\models\User;
 class UserController extends Controller
 {
     /**
+     * Finds the User model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return User the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = User::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    /**
      * @inheritdoc
      */
     public function behaviors()
@@ -71,30 +87,18 @@ class UserController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionArchive($id)
+    public function actionDelete($id)
     {
         $model = $this->findModel($id);
         /** @var UserService $service */
         $service = Yii::createObject(UserService::class, [$model]);
-        $service->archive();
-        Yii::$app->session->setFlash('success', 'Archived successfully');
+        try {
+            $service->delete();
+            Yii::$app->session->setFlash('success', 'User deleted');
+        } catch (\Exception $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
 
         return $this->actionIndex();
-    }
-
-    /**
-     * Finds the User model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return User the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = User::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
 }

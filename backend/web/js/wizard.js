@@ -88,4 +88,16 @@
         });
     });
 
+
+    //other services
+    $(document).on('change', 'input:checkbox[value=-1]', function () {
+        if (this.checked) {
+            $('.other').removeClass('hidden');
+        } else {
+            var other = $('.other');
+            other.addClass('hidden');
+            other.find('input').val('');
+        }
+    });
+
 })(jQuery);

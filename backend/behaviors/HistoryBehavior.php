@@ -10,16 +10,16 @@ namespace backend\behaviors;
 
 
 use common\models\History;
+use common\models\HistoryActiveRecord;
 use common\models\UndeletableActiveRecord;
 use yii\base\Behavior;
+use yii\base\InvalidCallException;
 use yii\base\InvalidParamException;
 
 class HistoryBehavior extends Behavior
 {
 
     private $attribute;
-
-    private $type = null;
 
     private $parent = null;
 
@@ -101,15 +101,11 @@ class HistoryBehavior extends Behavior
         parent::attach($owner);
 
         if (empty($this->attribute)) throw new InvalidParamException("Identity attribute parameter");
-        if (empty($this->type)) throw new InvalidParamException("Identity type parameter");
         if (empty($this->parent)) throw new InvalidParamException("Identity parent parameter");
     }
 
     public function beforeArchive($event)
     {
-        if ($this->type instanceof \Closure) {
-            $this->type = call_user_func($this->type, $this->owner);
-        }
 
         if ($this->parent instanceof \Closure) {
             $this->parent = call_user_func($this->parent, $this->owner);
@@ -119,22 +115,35 @@ class HistoryBehavior extends Behavior
             $this->company = call_user_func($this->company, $this->owner);
         }
 
+        $attributeAsValue = false;
+        if ($this->attribute instanceof \Closure) {
+            $this->attribute = call_user_func($this->attribute, $this->owner);
+            $attributeAsValue = true;
+        }
+
         $model = $this->owner;
+        if (!$model instanceof HistoryActiveRecord) {
+            throw new InvalidCallException('Model must be instance of the HistoryActiveRecord class!');
+        }
         $history = new History();
-        if(!($history->load(
-            [
-                'name' => $model->{$this->attribute},
-                'type' => $this->type,
-                'parent' => $this->parent,
-                'company_id' => $this->company
-            ]
-        ) && $history->save())){
-            if ($history->hasErrors()){
-                $error = implode('|',$history->errors);
+        if (!($history->load(
+                [
+                    'name' => ($attributeAsValue ? $this->attribute : $model->getAttribute($this->attribute)),
+                    'type' => $model->getHistoryType(),
+                    'parent' => $this->parent,
+                    'company_id' => $this->company
+                ]
+            ) && $history->save())
+        ) {
+            if ($history->hasErrors()) {
+                $m_errors = $history->errors;
+                foreach ($m_errors as $field => $f_errors) {
+                    $errors[] = $field . ': ' . implode('<br>', $f_errors);
+                }
             } else {
-                $error = 'Do`nt history save!';
+                $errors = ['Don`t history save!'];
             }
-            throw new InvalidParamException($error);
+            throw new InvalidParamException(implode('<br>', $errors));
         }
     }
 }

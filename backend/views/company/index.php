@@ -98,9 +98,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                     );
                                 },
                                 'delete' => function ($url, $model) {
-                                    if (User::isAdmin()) {
-                                        return '';
-                                    }
                                     return Html::a('To archive', Url::to(['/company/archive', 'id' => $model->id], true),
                                         [
                                             'class' => "btn btn-danger btn-xs",

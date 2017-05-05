@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\base\InvalidCallException;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
 
@@ -71,5 +72,20 @@ class History extends \yii\db\ActiveRecord
         return '';
     }
 
+    public function recover()
+    {
+        if ($this->type == Company::$history_type){
+            $model = Company::findOneIncludeHistory($this->parent);
+        } elseif ($this->type == Investigation::$history_type){
+            $model = Investigation::findOneIncludeHistory($this->parent);
+        }elseif ($this->type == File::$history_type){
+            $model = File::findOneIncludeHistory($this->parent);
+        }
+        if (!empty($model)){
+            $model->recover();
+        } else {
+            throw new InvalidCallException('Model must be instance of the HistoryActiveRecord class!');
+        }
+    }
 
 }

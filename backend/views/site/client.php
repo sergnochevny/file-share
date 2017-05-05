@@ -14,7 +14,6 @@ $company = $user->company;
 
             </div>
             <div class="col-sm-6">
-                <i class="icon icon-user icon-6x"></i>
                 <!--<div class="p-a">
                     <strong><?/*= $user->first_name */?> <?/*= $user->last_name */?></strong>
                     <br> <?/*= $company->address */?> <?/*= $company->city*/?>, <?/*= $company->state */?> <?/*= $user->company->zip */?>

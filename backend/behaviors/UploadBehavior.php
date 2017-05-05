@@ -102,8 +102,12 @@ class UploadBehavior extends Behavior
                                 ->setItemType('file');
                             $search = $items->AdvansedSimpleSearch($query);
                             if (!empty($search->Results)) {
-                                $res = $search->Results[0];
-                                $id = $res->ItemID;
+                                foreach ($search->Results as $res){
+                                    if ($res->FileName === $this->owner->$attribute){
+                                        $id = $res->ItemID;
+                                        if(!empty($id)) break;
+                                    }
+                                }
                                 if(!empty($id)) break;
                             }
                             sleep(5);

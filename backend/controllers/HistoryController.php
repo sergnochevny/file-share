@@ -18,34 +18,6 @@ class HistoryController extends Controller
 {
 
     /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-            'remember' => [
-                'class' => RememberUrlBehavior::className(),
-                'actions' => ['index'],
-            ],
-            [
-                'class' => AccessControl::class,
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ]
-                ]
-            ]
-        ];
-    }
-
-    /**
      * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
@@ -59,6 +31,40 @@ class HistoryController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                    'recover' => ['POST'],
+                ],
+            ],
+            'remember' => [
+                'class' => RememberUrlBehavior::className(),
+                'actions' => ['index'],
+            ],
+            [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => ['recover'],
+                        'allow' => true,
+                        'roles' => ['superAdmin'],
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ]
+                ]
+            ]
+        ];
     }
 
     /**
@@ -102,4 +108,17 @@ class HistoryController extends Controller
 //        return $this->redirect(['index']);
 //    }
 
+    public function actionRecover($id)
+    {
+        try{
+            $model = $this->findModel($id);
+            $model->recover();
+            if ($model->delete()) {
+                Yii::$app->session->setFlash('success', 'Entry has been recovered successful');
+            }
+        } catch (\Exception $e ){
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+        return $this->run('index');
+    }
 }

@@ -23,7 +23,7 @@ class HistorySearch extends History
     public function rules()
     {
         return [
-            [['parent', 'created_at', 'type', 'created_at'], 'safe'],
+            [['parent', 'name', 'created_at', 'type', 'created_at'], 'safe'],
             [['pagesize'], 'integer']
         ];
     }
@@ -56,7 +56,7 @@ class HistorySearch extends History
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['created_at' => SORT_ASC]],
+            'sort'=> ['defaultOrder' => ['created_at' => SORT_DESC]],
             //'pagination' => ['defaultPageSize' => 1]
         ]);
 

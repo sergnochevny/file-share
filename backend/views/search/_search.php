@@ -35,7 +35,6 @@ $action = !empty($action) ? $action : Url::to([null], true);
             'template' => '<label>Show {input} entries</label>',
         ])->dropDownList([10 => 10, 25 => 25, 50 => 50, 100 => 100], [
             'class' => 'form-control input-sm',
-            'placeholder' => 'Search',
         ])->label(false) ?>
     </div>
     <div class="col-sm-6">

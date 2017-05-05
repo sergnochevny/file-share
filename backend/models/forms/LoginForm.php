@@ -5,6 +5,7 @@ namespace backend\models\forms;
 use common\models\User;
 use yii\base\Model;
 use Yii;
+use yii\web\Cookie;
 
 class LoginForm extends Model
 {
@@ -13,6 +14,14 @@ class LoginForm extends Model
     public $rememberMe = false;
 
     private $user;
+
+    public function init()
+    {
+        $username = Yii::$app->request->cookies->get('username');
+        if ($username) {
+            $this->username = $username->value;
+        }
+    }
 
 
     /**
@@ -54,7 +63,26 @@ class LoginForm extends Model
      */
     public function login()
     {
-        return $this->validate() ? Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0) : false;
+        $isLogged = false;
+        if ($this->validate()) {
+            $isLogged = Yii::$app->user->login($this->getUser());
+        }
+
+        if ($isLogged) {
+            if ($this->rememberMe) {
+                $username = new Cookie([
+                    'name' => 'username',
+                    'value' => $this->getUser()->username,
+                    'expire' => time() + (100 * 365 * 24 * 60 * 60)
+                ]);
+                Yii::$app->response->cookies->add($username);
+            } else {
+                Yii::$app->response->cookies->remove('username');
+            }
+
+        }
+
+        return $isLogged;
     }
 
     /**

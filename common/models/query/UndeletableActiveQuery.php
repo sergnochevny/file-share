@@ -78,6 +78,31 @@ class UndeletableActiveQuery extends ActiveQuery
     }
 
     /**
+     * Ignore hidden statuses. Useful when need to check uniqueness of AR with hidden statuses
+     *
+     * ```php
+     *  [
+     *       ['email'],
+     *       'unique',
+     *       'targetClass' => User::class,
+     *       'filter' => function (UndeletableActiveQuery $query) {
+     *          $query->ignoreHiddenStatuses();
+     *       },
+     *       'message' => 'Sorry, this email has already been taken',
+     *
+     *  ],
+     * ```
+     * @return $this
+     */
+    public function ignoreHiddenStatuses()
+    {
+        $modelClass = $this->modelClass;
+        $this->excludedHiddenStatuses[] = $modelClass::STATUS_IN_HISTORY;
+        $this->excludedHiddenStatuses[] = $modelClass::STATUS_DELETED;
+        return $this;
+    }
+
+    /**
      * @inheritdoc
      */
     public function prepare($builder)

@@ -8,25 +8,32 @@ use yii\helpers\Html;
 
 
 <?php if ($model instanceof \backend\models\Company): ?>
-    <p>The <b><?= Html::encode($model->name) ?></b> company was
+<tr>
+    <td colspan="2" style="padding: 20px 0; font-style: italic;">
+    The <b><?= Html::encode($model->name) ?></b> company was
         archived at <b><?= Yii::$app->formatter->asDatetime($model->updated_at) ?></b>
         by <b><?= Html::encode($identity->username) ?></b>
-    </p>
+    </td>
+</tr>
 
 
 <?php elseif ($model instanceof \backend\models\services\UserService): ?>
-    <p>
+<tr>
+    <td colspan="2" style="padding: 20px 0; font-style: italic;">
         The user <b><?= Html::encode($model->getUser()->username) ?></b> was
         archived at <b><?= Yii::$app->formatter->asDatetime($model->getUser()->updated_at) ?></b>
         by <b><?= Html::encode($identity->username) ?></b>
-    </p>
+    </td>
+</tr>
 
 <?php elseif ($model instanceof \backend\models\Investigation): ?>
-    <p>
+<tr>
+    <td colspan="2" style="padding: 20px 0; font-style: italic;">
         The applicant <b><?= Html::encode($model->name) ?></b>
         for <b><?= Html::encode($model->company->name) ?></b> company was
         archived at <b><?= Yii::$app->formatter->asDatetime($model->updated_at) ?></b>
         by <b><?= Html::encode($identity->username) ?></b>
-    </p>
+    </td>
+</tr>
 
 <?php endif ?>

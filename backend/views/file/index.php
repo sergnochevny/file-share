@@ -1,5 +1,6 @@
 <?php
 
+use backend\models\User;
 use backend\widgets\ActiveForm;
 use common\widgets\Alert;
 use yii\helpers\Html;
@@ -16,7 +17,7 @@ if (!empty($investigation)) {
     $this->params['breadcrumbs'][] = ['label' => 'Investigations', 'url' => ['index']];
     $this->params['breadcrumbs'][] = $this->title;
 } else {
-    $this->title = 'Files';
+    $this->title = 'Forms & Templates';
     $this->params['breadcrumbs'][] = $this->title;
 }
 
@@ -33,10 +34,8 @@ $view = $this;
 
     <p class="title-bar-description">
         <?php if (!empty($investigation)) : ?>
-            <small>General information about the investigation</small>
-        <?php else : ?>
-            <small>All files</small>
-        <?php endif; ?>
+            <small>Applicant details</small>
+        <?php endif ?>
     </p>
 </div>
 <?= !empty($investigation) ? $this->render('partials/_investigation', ['model' => $investigation]) : '' ?>
@@ -50,8 +49,13 @@ $view = $this;
         <div class="panel">
             <div class="panel-body panel-collapse">
                 <div class="text-center m-b">
-                    <h3 class="m-b-0">All files</h3>
-                    <small>All downloaded files that relate to the present case</small>
+                    <?php if (!empty($investigation)) : ?>
+                        <h3 class="m-b-0">Files</h3>
+                        <small>All files for this applicant</small>
+                    <?php else : ?>
+                        <h3 class="m-b-0">Forms and Templates</h3>
+                    <?php endif; ?>
+
                     <br/>
                     <br/>
                     <?php
@@ -113,12 +117,8 @@ $view = $this;
                                 'format' => 'html',
                                 'value' => function ($model, $key, $index, $column) {
                                     $image = Html::tag('div', '', [
-                                            'class' => 'file-thumbnail file-thumbnail-' . \backend\models\FileUpload::fileExt($model->type)
-                                        ]) . Html::tag('div',
-                                            Html::tag('span', $model->type, ['class' => 'file-ext']) .
-                                            Html::tag('span', $model->{$column->attribute}, ['class' => 'file-name']),
-                                            ['class' => 'file-info']
-                                        );
+                                        'class' => 'file-thumbnail file-thumbnail-' . \backend\models\FileUpload::fileExt($model->type)
+                                    ]);
                                     return Html::tag('div',
                                         $image,
                                         ['class' => 'file']
@@ -134,6 +134,7 @@ $view = $this;
                                     'class' => 'sorting',
                                 ]
                             ],
+                            'name:ntext:Name',
                             [
                                 'attribute' => 'created_at',
                                 'contentOptions' => [
@@ -178,7 +179,7 @@ $view = $this;
                                                 Yii::$app->user->can('employee', ['investigation' => $investigation])
                                             )
                                         )
-                                            $content = Html::a('To archive', Url::to(['/file/archive', 'id' => $model->id], true),
+                                            $content = Html::a(User::isClient() ? 'Remove' : 'Archive', Url::to(['/file/archive', 'id' => $model->id], true),
                                                 [
                                                     'class' => "btn btn-primary btn-xs",
                                                     'title' => 'To archive',
@@ -217,6 +218,7 @@ $view = $this;
                                             $content = Html::a('Download', Url::to(['/file/download', 'id' => $model->citrix_id], true),
                                                 [
                                                     'class' => "btn btn-warning btn-xs",
+                                                    'data-download'=>true,
                                                     'title' => 'Download',
                                                     'aria-label' => "Download",
                                                     'data-pjax' => 0,
@@ -244,4 +246,5 @@ $view = $this;
 <?php Pjax::end(); ?>
 <?php \backend\assets\InputUploadSubmitAsset::register($this);?>
 <?php \backend\assets\AlertHelperAsset::register($this);?>
+<?php \backend\assets\DownloadAsset::register($this);?>
 

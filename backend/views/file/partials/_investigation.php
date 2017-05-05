@@ -17,7 +17,8 @@ use yii\helpers\Url;
                     <div class="col-xs-12">
                         <?= strtoupper($model->name) ?>
                         <?php if (Investigation::STATUS_COMPLETED !== $model->status && !User::isClient()): ?>
-                            <a class="pull-right btn btn-xs btn-labeled arrow-success" href="<?= Url::to(['/investigation/complete', 'id' => $model->id]) ?>">
+                            <a class="pull-right btn btn-xs btn-labeled arrow-success" href="<?= Url::to(['/investigation/complete', 'id' => $model->id]) ?>"
+                               data-confirm="This action will mark the investigation as completed . Are you sure you want to proceed?">
                     <span class="btn-label">
                         <span class="icon icon-check icon-lg icon-fw"></span>
                     </span> Complete
@@ -29,6 +30,45 @@ use yii\helpers\Url;
             </div>
             <div class="panel-body panel-collapse">
                 <div class="row">
+                    <div class="col-sm-6">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <span class="pull-right">
+                                    <span class="label label-success"><?= Html::encode($model->first_name) ?></span>
+                                </span>
+                                <span class="icon icon-user icon-lg icon-fw"></span>
+                                First Name
+                            </li>
+                            <li class="list-group-item">
+                                <span class="pull-right">
+                                    <span class="label label-success"><?= Html::encode($model->middle_name) ?></span>
+                                </span>
+                                <span class="icon icon-user icon-lg icon-fw"></span>
+                                Middle Name
+                            </li>
+                            <li class="list-group-item">
+                                <span class="pull-right">
+                                    <span class="label label-success"><?= Html::encode($model->last_name) ?></span>
+                                </span>
+                                <span class="icon icon-user icon-lg icon-fw"></span>
+                                Last Name
+                            </li>
+                            <li class="list-group-item">
+                                <span class="pull-right">
+                                    <span class="label label-success"><?= $model->formattedSsn ?></span>
+                                </span>
+                                <span class="icon icon-info icon-lg icon-fw"></span>
+                                SSN
+                            </li>
+                            <li class="list-group-item">
+                                <span class="pull-right">
+                                    <span class="label label-success"><?= Yii::$app->formatter->asDate($model->birth_date) ?></span>
+                                </span>
+                                <span class="icon icon-calendar icon-lg icon-fw"></span>
+                                Birth Date
+                            </li>
+                        </ul>
+                    </div>
                     <div class="col-sm-6">
                         <ul class="list-group">
                             <li class="list-group-item">
@@ -55,16 +95,6 @@ use yii\helpers\Url;
                                 Created By
                             </li>
                             <?php endif ?>
-                        </ul>
-                    </div>
-                    <div class="col-sm-6">
-                        <ul class="list-group">
-                            <!--<li class="list-group-item">
-                                <span class="pull-right"><span
-                                            class="label label-success"><?/*= Yii::$app->formatter->asEmail($model->email); */?></span></span>
-                                <span class="icon icon-envelope-o icon-lg icon-fw"></span>
-                                Email
-                            </li>-->
                         </ul>
                     </div>
                 </div>

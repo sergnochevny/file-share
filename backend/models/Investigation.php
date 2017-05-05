@@ -3,6 +3,7 @@
 
 namespace backend\models;
 
+use common\behaviors\ArchiveCascadeBehavior;
 use backend\behaviors\CitrixFolderBehavior;
 use backend\behaviors\HistoryBehavior;
 use backend\behaviors\NotifyBehavior;
@@ -12,6 +13,8 @@ use yii\db\Query;
  * Class Investigation
  * @package backend\models
  *
+ * @property-read string $citrixFolderName
+ * @property-read string $formattedSsn
  * @property array $statusesList
  * @property array $allCompaniesList
  *
@@ -20,6 +23,14 @@ use yii\db\Query;
 class Investigation extends \common\models\Investigation
 {
     use FactoryTrait;
+
+    /**
+     * @return array
+     */
+    public static function getStatusesList()
+    {
+        return array_slice(parent::getStatusesList(), -6, 5, true); //remove 'deleted' status
+    }
 
     /**
      * @inheritdoc
@@ -32,7 +43,7 @@ class Investigation extends \common\models\Investigation
             /** @var $model Investigation */
             return $model->isAttributeChanged($attribute, false);
 
-        }, 'filter' => function(Query $query) {
+        }, 'filter' => function (Query $query) {
             if ($this->company_id) {
                 $query->andWhere(['company_id' => $this->company_id]);
             }
@@ -50,13 +61,13 @@ class Investigation extends \common\models\Investigation
         $behaviors['citrixFolderBehavior'] = [
             'class' => CitrixFolderBehavior::className(),
             'attribute' => 'citrix_id',
-            'folder' => 'name',
+            'folder' => 'citrixFolderName',
             'subdomain' => \Yii::$app->keyStorage->get('citrix.subdomain'),
             'user' => \Yii::$app->keyStorage->get('citrix.user'),
             'pass' => \Yii::$app->keyStorage->get('citrix.pass'),
             'id' => \Yii::$app->keyStorage->get('citrix.id'),
             'secret' => \Yii::$app->keyStorage->get('citrix.secret'),
-            'parent' => function(Investigation $model){
+            'parent' => function (Investigation $model) {
                 /**
                  * @var Investigation $model
                  */
@@ -65,18 +76,19 @@ class Investigation extends \common\models\Investigation
         ];
         $behaviors['historyBehavior'] = [
             'class' => HistoryBehavior::class,
-            'parent' => function(Investigation $model){
+            'parent' => function (Investigation $model) {
                 return $model->id;
             },
-            'company' => function(Investigation $model){
+            'company' => function (Investigation $model) {
                 return $model->company_id;
             },
-            'attribute' => 'name',
-            'type' => 'investigation',
+            'attribute' => function($model){
+                return $this->fullName;
+            },
         ];
         $behaviors['notify'] = [
             'class' => NotifyBehavior::class,
-            'companyId' => function(Investigation $model) {
+            'companyId' => function (Investigation $model) {
                 return $model->company_id;
             },
             'createTemplate' => 'create',
@@ -88,11 +100,16 @@ class Investigation extends \common\models\Investigation
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public static function getStatusesList()
+    public function getCitrixFolderName()
     {
-        return array_slice(parent::getStatusesList(), -6, 5, true); //remove 'deleted' status
+        $lastName = '';
+        if (!empty($this->last_name)) {
+            $lastName = '-' . $this->last_name;
+        }
+
+        return $this->first_name . $lastName . '-' . $this->ssn;
     }
 
     /**
@@ -111,4 +128,21 @@ class Investigation extends \common\models\Investigation
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
+
+    /**
+     * @return string
+     */
+    public function getFormattedSsn()
+    {
+        return preg_replace("#^(\d{3})-?(\d{2})-?(\d{4})$#", "$1-$2-$3", $this->ssn);
+    }
+
+    /**
+     * @return UndeletableActiveQuery
+     */
+    public function getFiles()
+    {
+        return $this->hasMany(File::className(), ['parent' => 'citrix_id'])->inverseOf('investigation');
+    }
+
 }

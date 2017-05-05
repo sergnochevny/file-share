@@ -43,7 +43,8 @@ return [
         ],
         'user' => [
             'identityClass' => \backend\models\User::class,
-            'enableAutoLogin' => true,
+            'enableAutoLogin' => false,
+            'authTimeout' => 600,
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
         ],
         'session' => [

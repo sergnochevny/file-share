@@ -75,7 +75,7 @@ $userIconSrc = Url::to(['/images/users/photo/' . $icon], true);
                                         <?= ucfirst($user->username) ?>
                                         <small class="navbar-upgrade-notification">
                                             Last Active
-                                            <?= Yii::$app->formatter->asDatetime($user->action_at) ?>
+                                            <?= Yii::$app->formatter->asDatetime($user->action_at) ?> UTC
                                         </small>
                                     </h5>
                                 </a>

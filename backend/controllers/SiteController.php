@@ -77,6 +77,11 @@ class SiteController extends Controller
                         'roles' => ['superAdmin']
                     ],
                     [
+                        'allow' => false,
+                        'actions' => ['settings'],
+                        'roles' => ['@']
+                    ],
+                    [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -148,7 +153,7 @@ class SiteController extends Controller
         $model = new RestorePasswordRequestForm;
 
         if ($model->load(Yii::$app->request->post()) && $model->sendRestoreLink()) {
-            Yii::$app->session->setFlash('success', 'Mail with further instructions have been sent to your e-mail address.');
+            Yii::$app->session->setFlash('success', 'Mail with further instructions has been sent to your e-mail address.');
             return $this->goHome();
         }
 

@@ -64,9 +64,9 @@ class DownloadAction extends PermissionAction
          */
 
         $model = File::findOne(['citrix_id' => $id]);
-        $investigation = $model->investigations;
+        $investigation = $model->investigation;
         if ($this->controller->verifyPermission(VerifyPermissionBehavior::EVENT_VERIFY_FILE_DOWNLOAD_PERMISSION,
-            ['model' => $model, '$investigation' => $investigation])
+            ['model' => $model, 'investigation' => $investigation])
         ) {
             $Citrix = CitrixApi::getInstance();
             $Citrix->setSubdomain($this->subdomain)
@@ -82,7 +82,7 @@ class DownloadAction extends PermissionAction
                 ->setRedirect(CitrixApi::FALSE)
                 ->setIncludeAllVersions(CitrixApi::FALSE)
                 ->ItemContent;
-            $response = $this->controller->redirect($item_content->DownloadUrl);
+            $response = $this->controller->redirect($item_content->DownloadUrl, 308);
         }
 
         return $response;

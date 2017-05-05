@@ -20,7 +20,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <span class="d-ib"><span class="icon icon-history"></span> <b><?= Html::encode($this->title) ?></b></span>
     </h1>
     <p class="title-bar-description">
-        <small>List of all company accounts</small>
+        <?php if (\backend\models\User::isClient()): ?>
+            <small>List of all applicants</small>
+        <?php else: ?>
+            <small>List of all companies, applicants, files</small>
+        <?php endif ?>
     </p>
 </div>
 <div class="row gutter-xs">
@@ -79,25 +83,28 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'width' => 100
                             ]
                         ],
-//                        [
-//                            'class' => 'yii\grid\ActionColumn',
-//                            'template' => '{details}',
-//                            'buttons' => [
-//                                'details' => function ($url, $model) {
-//                                    $content = Html::a('Details', Url::to(['/history/view', 'id' => $model->id], true),
-//                                        [
-//                                            'class' => "btn btn-primary btn-xs",
-//                                            'title' => 'Details',
-//                                            'aria-label' => "Details",
-//                                        ]
-//                                    );
-//                                    return $content;
-//                                },
-//                            ],
-//                            'contentOptions' => [
-//                                'width' => 80
-//                            ]
-//                        ],
+                        [
+                            'class' => 'yii\grid\ActionColumn',
+                            'template' => '{recovery}',
+                            'visible' => \backend\models\User::isSuperAdmin(),
+                            'buttons' => [
+                                'recovery' => function ($url, $model) {
+                                    $content = Html::a('Recovery', Url::to(['/history/recover', 'id' => $model->id], true),
+                                        [
+                                            'class' => "btn btn-primary btn-xs",
+                                            'title' => 'Recovery',
+                                            'aria-label' => "Recovery",
+                                            'data-method' => 'post',
+                                            'data-pjax' => 1
+                                        ]
+                                    );
+                                    return $content;
+                                },
+                            ],
+                            'contentOptions' => [
+                                'width' => 80
+                            ]
+                        ],
                     ],
                     'pager' => [
                         'options' => [

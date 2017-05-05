@@ -36,6 +36,7 @@ class AppAsset extends AssetBundle
         'js/theme/elephant.min.js',
         'js/theme/application.min.js',
         'js/theme/main.min.js',
+        'js/beforeunload.min.js',
     ];
 
     public $depends = [

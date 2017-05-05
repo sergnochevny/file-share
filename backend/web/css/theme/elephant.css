@@ -2433,6 +2433,46 @@ a.btn.disabled, fieldset[disabled] a.btn {
     color: #431f4d
 }
 
+.btn-purple {
+    background-color: #431f4d;
+    border-color: #431f4d;
+    color: #ffffff
+}
+
+.btn-purple.focus, .btn-purple:focus {
+    background-color: #431f4d;
+    border-color: #431f4d;
+    color: #fff
+}
+
+.btn-purple:hover {
+    background-color: #341040;
+    border-color: #341040;
+    color: #fff
+}
+
+.btn-purple.active, .btn-purple:active, .open > .btn-purple.dropdown-toggle {
+    background-color: #341040;
+    border-color: #341040;
+    color: #fff
+}
+
+.btn-purple.active.focus, .btn-purple.active:focus, .btn-purple.active:hover, .btn-purple:active.focus, .btn-purple:active:focus, .btn-purple:active:hover, .open > .btn-purple.dropdown-toggle.focus, .open > .btn-purple.dropdown-toggle:focus, .open > .btn-purple.dropdown-toggle:hover {
+    background-color: #341040;
+    border-color: #341040;
+    color: #fff
+}
+
+.btn-purple.disabled.focus, .btn-purple.disabled:focus, .btn-purple.disabled:hover, .btn-purple[disabled].focus, .btn-purple[disabled]:focus, .btn-purple[disabled]:hover, fieldset[disabled] .btn-purple.focus, fieldset[disabled] .btn-purple:focus, fieldset[disabled] .btn-purple:hover {
+    background-color: #431f4d;
+    border-color: #431f4d
+}
+
+.btn-purple .badge {
+    background-color: #fff;
+    color: #431f4d
+}
+
 .btn-primary {
     background-color: #87764E;
     border-color: #87764E;

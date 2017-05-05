@@ -7,6 +7,6 @@
 
 Hello <?= $user->username ?>,
 
-There are your new password: <?= $newPassword ?>
+There is your new password: <?= $newPassword ?>
 
 Keep it in secure place.
