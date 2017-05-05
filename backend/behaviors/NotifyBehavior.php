@@ -108,7 +108,7 @@ final class NotifyBehavior extends Behavior
     private function sendMessagesWithTemplate($template)
     {
         $this->initialize();
-        $messages = [];
+        $messages = []; $b = $this->collectAdminEmails();
         foreach ($this->collectAdminEmails() as $email) {
             $messages[] = $this->composeMailer('admin/' . $template)->setTo($email);
         }
@@ -145,9 +145,10 @@ final class NotifyBehavior extends Behavior
      */
     private function collectAdminEmails()
     {
-        $emails =  User::findByRole('admin')->select(['email'])->asArray()->all();
+        $adminEmails =  User::findByRole('admin')->select(['email'])->column();
+        $superAdminEmails = User::findByRole('superAdmin')->select(['email'])->column();
 
-        return array_column($emails, 'email');
+        return array_merge($adminEmails, $superAdminEmails);
     }
 
     /**
