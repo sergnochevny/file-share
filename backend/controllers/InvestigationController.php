@@ -3,17 +3,22 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\Investigation;
-use backend\models\InvestigationSearch;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use backend\behaviors\RememberUrlBehavior;
+use backend\models\Company;
+use backend\models\Investigation;
+use backend\models\search\InvestigationSearch;
 
 /**
  * InvestigationController implements the CRUD actions for Investigation model.
  */
 class InvestigationController extends Controller
 {
+
     /**
      * @inheritdoc
      */
@@ -26,101 +31,101 @@ class InvestigationController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'remember' => [
+                'class' => RememberUrlBehavior::className(),
+                'actions' => ['index'],
+            ],
+            [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['complete'],
+                        'roles' => ['superAdmin'],
+                    ],
+                    [
+                        'allow' => false,
+                        'actions' => ['complete'],
+                        'roles' => ['client'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'complete'],
+                        'roles' => ['admin']
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['superAdmin', 'client']
+                    ],
+                ]
+            ]
         ];
     }
 
     /**
      * Lists all Investigation models.
+     * @param null $parent
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($parent = null)
     {
-        $searchModel = new InvestigationSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        $renderParams = static::prepareRenderInvestigations($parent);
+        return $this->render('index', $renderParams);
     }
 
     /**
-     * Displays a single Investigation model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new Investigation model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Investigation();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Updates an existing Investigation model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Deletes an existing Investigation model.
+     * Archive an existing Investigation model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionArchive($id)
     {
-        $this->findModel($id)->delete();
+        $session = Yii::$app->getSession();
+        try {
+            $model = $this->findModel($id);
+            $model->detachBehavior('citrixFolderBehavior');
+            $model->archive();
+            $session->setFlash('success', 'Archived successfully');
+        } catch (\Exception $e) {
+            $session->setFlash('error', $e->getMessage());
+        }
 
-        return $this->redirect(['index']);
+        return $this->actionIndex();
     }
 
     /**
-     * Shows archived investigations
-     * @todo implement
-     *
-     * @return string
+     * @param $id
+     * @return mixed
      */
-    public function actionHistory()
+    public function actionComplete($id)
     {
-        $searchModel = new InvestigationSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $investigation = $this->findModel($id);
+        $investigation->updateAttributes(['status' => Investigation::STATUS_COMPLETED]);
+        return $this->redirect(['/file', 'id' => $id]);
+    }
 
-        return $this->render('index', [
+    /**
+     * @param mixed $parent
+     * @return array
+     */
+    public static function prepareRenderInvestigations($parent = null)
+    {
+        $company = null;
+        $searchModel = new InvestigationSearch();
+        if (!(Yii::$app->user->can('admin'))) {
+            $searchModel->parent = Yii::$app->user->identity->company->id;
+            $company = Company::findOne($searchModel->parent);
+            if(empty($company)) $searchModel->parent = 'no parent';
+        }
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination->pageSize = $searchModel->pagesize;
+        $renderParams = [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-        ]);
+        ];
+        if (!empty($company)) $renderParams['company'] = $company;
+        return $renderParams;
     }
 
     /**
@@ -138,4 +143,5 @@ class InvestigationController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
 }

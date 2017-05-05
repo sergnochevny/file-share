@@ -1,39 +1,45 @@
 <?php
 
-use yii\helpers\Html;
-use yii\grid\GridView;
-use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\InvestigationSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Investigations';
+use yii\helpers\Html;
+use common\helpers\Url;
+use backend\models\User;
+
+$this->title = 'Applicants';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="investigation-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('Create Investigation', ['create'], ['class' => 'btn btn-success']) ?>
+<div class="title-bar">
+    <div class="title-bar-actions">
+        <?= Html::a(Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-chevron-circle-left icon-lg icon-fw']), ['class' => 'btn-label']) . ' Back', Url::previous(), ['class' => 'btn btn-labeled arrow-default']) ?>
+    </div>
+    <h1 class="title-bar-title">
+        <span class="d-ib"><span class="icon icon-folder-open-o"></span> <?= Html::encode($this->title) ?></span>
+    </h1>
+    <p class="title-bar-description">
+        <small>List of all applicants</small>
     </p>
-<?php Pjax::begin(); ?>    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'company_id',
-            'start_date',
-            'end_date',
-            'description',
-            // 'status',
-            // 'created_at',
-            // 'updated_at',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-<?php Pjax::end(); ?></div>
+</div>
+<div class="row gutter-xs">
+    <div class="col-xs-12">
+        <div class="panel panel-default">
+            <?php if (!User::isAdmin()): ?>
+            <div class="panel-heading">
+                <a class="btn btn-sm btn-labeled arrow-success" href="<?= Url::to(['/wizard/investigation']) ?>">
+                    <span class="btn-label">
+                        <span class="icon icon-plus icon-lg icon-fw"></span>
+                    </span> Create a New Applicant
+                </a>
+            </div>
+            <?php endif ?>
+            <?= $this->render('partials/_list',
+                [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider
+                ]
+            ); ?>
+        </div>
+    </div>
+</div>

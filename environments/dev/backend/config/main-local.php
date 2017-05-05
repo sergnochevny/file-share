@@ -14,12 +14,25 @@ if (!YII_ENV_TEST) {
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
+        'as access' => [
+            'class' => 'common\behaviors\GlobalAccessBehavior',
+            'rules' => [
+                [
+                    'allow' => true,
+                ],
+            ],
+        ],
     ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
     ];
+
+    $config['modules']['utility'] = [
+        'class' => 'c006\utility\migration\Module',
+    ];
+
 }
 
 return $config;

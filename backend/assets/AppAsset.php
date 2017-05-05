@@ -1,47 +1,45 @@
 <?php
 
-
 namespace backend\assets;
 
+use yii\web\AssetBundle;
 
-use yii\base\Exception;
-
-class AppAsset extends \yii\web\AssetBundle
+/**
+ * Main backend application asset bundle.
+ */
+class AppAsset extends AssetBundle
 {
-    public $sourcePath = '@vendor/almasaeed2010/adminlte/dist';
-    public $css = [
-        'css/AdminLTE.min.css',
+    public $basePath = '@webroot';
+    public $baseUrl = '@web';
+
+    public $css = YII_ENV_DEV?[
+        'css/theme/application.css',
+        'css/theme/elephant.css',
+        'css/theme/login.css',
+        'css/theme/main.css',
+        'css/theme/profile.css',
+        'css/theme/vendor.css',
+    ]:[
+        'css/theme/application.min.css',
+        'css/theme/elephant.min.css',
+        'css/theme/login.min.css',
+        'css/theme/main.min.css',
+        'css/theme/profile.min.css',
+        'css/theme/vendor.min.css',
     ];
-    public $js = [
-        'js/app.min.js'
+
+    public $js = YII_ENV_DEV?[
+        'js/theme/elephant.min.js',
+        'js/theme/application.js',
+        'js/theme/main.js',
+    ]:[
+        'js/theme/elephant.min.js',
+        'js/theme/application.min.js',
+        'js/theme/main.min.js',
     ];
+
     public $depends = [
-        'rmrevin\yii\fontawesome\AssetBundle',
         'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
-        'yii\bootstrap\BootstrapPluginAsset',
+        'common\assets\ExtLibAsset'
     ];
-
-    /**
-     * @var string|bool Choose skin color, eg. `'skin-blue'` or set `false` to disable skin loading
-     * @see https://almsaeedstudio.com/themes/AdminLTE/documentation/index.html#layout
-     */
-    public $skin = '_all-skins';
-
-    /**
-     * @inheritdoc
-     */
-    public function init()
-    {
-        // Append skin color file if specified
-        if ($this->skin) {
-            if (('_all-skins' !== $this->skin) && (strpos($this->skin, 'skin-') !== 0)) {
-                throw new Exception('Invalid skin specified');
-            }
-
-            $this->css[] = sprintf('css/skins/%s.min.css', $this->skin);
-        }
-
-        parent::init();
-    }
 }

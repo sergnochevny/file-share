@@ -8,16 +8,41 @@ $params = array_merge(
 
 return [
     'id' => 'app-backend',
+    'name' => 'Protus',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'defaultRoute' => 'site',
+    'modules' => [
+        'admin' => [
+            'class' => 'mdm\admin\Module',
+        ],
+    ],
     'components' => [
+        'keyStorage' => [
+            'class' => 'keystorage\components\KeyStorage',
+        ],
+        'assetManager' => [
+            'linkAssets' => false,
+            'bundles' => [
+                'yii\web\JqueryAsset' => [
+                    'sourcePath' => null,
+                    'basePath' => '@webroot',
+                    'baseUrl' => '@web',
+                    'js' => [
+                        'js/theme/vendor.min.js',
+                    ]
+                ],
+            ],
+            'converter' => [
+                'class' => '\common\assets\AssetGzipConverter'
+            ]
+        ],
         'request' => [
             'csrfParam' => '_csrf-backend',
         ],
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => \backend\models\User::class,
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
         ],
@@ -37,14 +62,26 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
+            'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-            ],
+                '@<username:[\w-]+>/' => '/profile/index',
+                'wizard/applicant' => '/wizard/investigation',
+                'applicant' => '/investigation',
+                'applicant/<action>' => '/investigation/<action>',
+                'investigative-services' => '/investigation-type',
+                'investigative-services/<action>' => '/investigation-type/<action>',
+            ]
         ],
-        */
+        'formatter' => [
+            'dateFormat' => 'MM.dd.yyyy',
+            'sizeFormatBase' => 1000
+        ],
+    ],
+    'as beforeAction' => [
+        'class' => 'common\behaviors\LastActionBehavior',
     ],
     'params' => $params,
 ];

@@ -2,13 +2,15 @@
 
 namespace backend\controllers;
 
-use backend\models\UserForm;
+use backend\models\services\UserService;
 use Yii;
-use common\models\User;
-use backend\models\UserSearch;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use backend\behaviors\RememberUrlBehavior;
+use backend\models\search\UserSearch;
+use backend\models\User;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -27,6 +29,24 @@ class UserController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'remember' => [
+                'class' => RememberUrlBehavior::className(),
+                'actions' => ['index', 'wizard'],
+            ],
+            [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index'],
+                        'roles' => ['admin']
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['superAdmin']
+                    ],
+                ]
+            ]
         ];
     }
 
@@ -38,7 +58,7 @@ class UserController extends Controller
     {
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $dataProvider->pagination->pageSize = $searchModel->pagesize;
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -46,67 +66,20 @@ class UserController extends Controller
     }
 
     /**
-     * Displays a single User model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new User model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new UserForm(new User());
-        $model->scenario = UserForm::SCENARIO_CREATE;
-
-        if ($model->load(Yii::$app->request->post()) && $user = $model->saveUser()) {
-            return $this->redirect(['view', 'id' => $user->id]);
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Updates an existing User model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
-        $user = $this->findModel($id);
-        $model = new UserForm($user);
-
-        if ($model->load(Yii::$app->request->post()) && $user = $model->saveUser()) {
-            return $this->redirect(['view', 'id' => $user->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Deletes an existing User model.
+     * Archive an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionArchive($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        /** @var UserService $service */
+        $service = Yii::createObject(UserService::class, [$model]);
+        $service->archive();
+        Yii::$app->session->setFlash('success', 'Archived successfully');
 
-        return $this->redirect(['index']);
+        return $this->actionIndex();
     }
 
     /**

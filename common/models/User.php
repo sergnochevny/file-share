@@ -3,6 +3,8 @@
 namespace common\models;
 
 
+use backend\models\UserProfile;
+use common\models\query\UndeletableActiveQuery;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -26,14 +28,13 @@ use yii\web\IdentityInterface;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ * @property integer $action_at
  *
- * @property Investigation[] $investigations
+ * @property Company $company
+ * @property UserProfile $profile
  */
-class User extends AbstractUndeletableActiveRecord implements IdentityInterface
+class User extends UndeletableActiveRecord implements IdentityInterface
 {
-    const STATUS_DELETED = 0;
-    const STATUS_ACTIVE = 100;
-
     /**
      * @inheritdoc
      */
@@ -48,7 +49,7 @@ class User extends AbstractUndeletableActiveRecord implements IdentityInterface
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            TimestampBehavior::class,
         ];
     }
 
@@ -65,7 +66,7 @@ class User extends AbstractUndeletableActiveRecord implements IdentityInterface
             [['username'], 'unique'],
             [['password_reset_token'], 'unique'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_IN_HISTORY, self::STATUS_DELETED]],
         ];
     }
 
@@ -88,14 +89,6 @@ class User extends AbstractUndeletableActiveRecord implements IdentityInterface
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getInvestigations()
-    {
-        return $this->hasMany(Investigation::className(), ['id' => 'investigation_id'])->viaTable('investigation_user', ['user_id' => 'id']);
     }
 
     /**
@@ -236,4 +229,23 @@ class User extends AbstractUndeletableActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProfile()
+    {
+        return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return UndeletableActiveQuery
+     */
+    public function getCompany()
+    {
+        return $this->hasOne(Company::className(), ['id' => 'company_id'])
+            ->viaTable('user_company', ['user_id' => 'id']);
+    }
+
 }
