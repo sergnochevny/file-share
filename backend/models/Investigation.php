@@ -93,6 +93,7 @@ class Investigation extends \common\models\Investigation
             },
             'createTemplate' => 'create',
             'updateTemplate' => 'update',
+            'completeTemplate' => 'completed',
             'deleteTemplate' => 'delete',
         ];
 

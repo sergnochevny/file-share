@@ -5,12 +5,14 @@ namespace backend\behaviors;
 
 
 use backend\models\Company;
+use backend\models\Investigation;
 use backend\models\User;
 use common\models\UndeletableActiveRecord;
 use yii\base\Behavior;
 use yii\base\ErrorException;
+use yii\db\ActiveRecord;
 
-final class NotifyBehavior extends Behavior
+class NotifyBehavior extends Behavior
 {
     /** @var \yii\mail\MailerInterface */
     private $mailer;
@@ -28,6 +30,9 @@ final class NotifyBehavior extends Behavior
     public $updateTemplate = 'update';
 
     /** @var string */
+    public $completeTemplate = 'completed';
+
+    /** @var string */
     public $archiveTemplate = 'archive';
 
     /** @var string */
@@ -39,85 +44,30 @@ final class NotifyBehavior extends Behavior
     //@todo subject ??
 
     /**
-     * @param \Closure $companyId
-     */
-    public function setCompanyId(\Closure $companyId)
-    {
-        $this->companyId = $companyId;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCompanyId()
-    {
-        return call_user_func($this->companyId, $this->owner);
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    public function events()
-    {
-        return [
-            UndeletableActiveRecord::EVENT_AFTER_INSERT => 'afterInsert',
-            UndeletableActiveRecord::EVENT_AFTER_UPDATE => 'afterUpdate',
-            UndeletableActiveRecord::EVENT_AFTER_ARCHIVE => 'afterArchive',
-            UndeletableActiveRecord::EVENT_AFTER_DELETE => 'afterDelete',
-        ];
-    }
-
-    /**
-     *
-     */
-    public function afterInsert()
-    {
-        $this->sendMessagesWithTemplate($this->createTemplate);
-    }
-
-    /**
-     *
-     */
-    public function afterUpdate()
-    {
-        $this->sendMessagesWithTemplate($this->updateTemplate);
-    }
-
-    /**
-     *
-     */
-    public function afterArchive()
-    {
-        $this->sendMessagesWithTemplate($this->archiveTemplate);
-    }
-
-    /**
-     *
-     */
-    public function afterDelete()
-    {
-        $this->sendMessagesWithTemplate($this->deleteTemplate);
-    }
-
-    /**
      * Collects required emails and sends emails with template
      *
      * @param string $template
      */
-    private function sendMessagesWithTemplate($template)
+    private function sendMessagesWithTemplate($template, $destinations = ['admin' => true, 'user' => true])
     {
         $this->initialize();
         $messages = [];
-        foreach ($this->collectAdminEmails() as $email) {
-            $messages[] = $this->composeMailer('admin/' . $template)->setTo($email);
+        if (is_array($destinations)) {
+            if (!empty($destinations['admin']) && $destinations['admin']) {
+                foreach ($this->collectAdminEmails() as $email) {
+                    $messages[] = $this->composeMailer('admin/' . $template)->setTo($email);
+                }
+            }
+
+            if (!empty($destinations['user']) && $destinations['user']) {
+                foreach ($this->collectClientEmails() as $email) {
+                    $messages[] = $this->composeMailer('client/' . $template)->setTo($email);
+                }
+            }
+
+            if (!empty($messages)) $this->mailer->sendMultiple($messages);
         }
 
-        foreach ($this->collectClientEmails() as $email) {
-            $messages[] = $this->composeMailer('client/' . $template)->setTo($email);
-        }
-
-        $this->mailer->sendMultiple($messages);
     }
 
     /**
@@ -145,7 +95,7 @@ final class NotifyBehavior extends Behavior
      */
     private function collectAdminEmails()
     {
-        $emails =  User::findByRole('admin')->select(['email'])->asArray()->all();
+        $emails = User::findByRole('admin')->select(['email'])->asArray()->all();
 
         return array_column($emails, 'email');
     }
@@ -187,5 +137,75 @@ final class NotifyBehavior extends Behavior
             'model' => $this->owner,
             'identity' => $this->identity,
         ]);
+    }
+
+    /**
+     * @param \Closure $companyId
+     */
+    public function setCompanyId(\Closure $companyId)
+    {
+        $this->companyId = $companyId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCompanyId()
+    {
+        return call_user_func($this->companyId, $this->owner);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function events()
+    {
+        return [
+            UndeletableActiveRecord::EVENT_AFTER_INSERT => 'afterInsert',
+            UndeletableActiveRecord::EVENT_AFTER_UPDATE => 'afterUpdate',
+            UndeletableActiveRecord::EVENT_AFTER_ARCHIVE => 'afterArchive',
+            UndeletableActiveRecord::EVENT_AFTER_DELETE => 'afterDelete',
+        ];
+    }
+
+    /**
+     *
+     */
+    public function afterInsert()
+    {
+        $this->sendMessagesWithTemplate($this->createTemplate);
+    }
+
+    /**
+     *
+     */
+    public function afterUpdate()
+    {
+        /**
+         * @var $model ActiveRecord
+         */
+        $model = $this->owner;
+        if (($model instanceof \common\models\Investigation) &&
+            ($model->attributes['status'] == Investigation::STATUS_COMPLETED) &&
+            ($model->attributes['status'] != $model->oldAttributes['status'])
+        ) {
+            $this->sendMessagesWithTemplate($this->completeTemplate, ['user' => true]);
+        } else $this->sendMessagesWithTemplate($this->updateTemplate);
+    }
+
+    /**
+     *
+     */
+    public function afterArchive()
+    {
+        $this->sendMessagesWithTemplate($this->archiveTemplate);
+    }
+
+    /**
+     *
+     */
+    public function afterDelete()
+    {
+        $this->sendMessagesWithTemplate($this->deleteTemplate);
     }
 }
