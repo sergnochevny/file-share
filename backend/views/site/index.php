@@ -7,7 +7,6 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
 $this->registerJs("$(document).on('change', '#date-range-selector', function () {
-        console.log('hello');
         $(this).closest('form').trigger('submit');
     });", \yii\web\View::POS_READY);
 ?>

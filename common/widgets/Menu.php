@@ -67,7 +67,10 @@ class Menu extends \yii\widgets\Menu
             if ($route[0] !== '/' && Yii::$app->controller) {
                 $route = Yii::$app->controller->module->getUniqueId() . '/' . $route;
             }
-            if (ltrim($route, '/') !== str_replace('/index', '', $this->route)) {
+            if (
+                (ltrim($route, '/') !== str_replace('/index', '', $this->route)) &&
+                (ltrim($route, '/') !== $this->route)
+            ){
                 return false;
             }
             if (is_array($item['url'])) {

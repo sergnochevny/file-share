@@ -18,22 +18,22 @@ $userCompany = Yii::$app->user->identity->company;
             <nav id="sidenav" class="sidenav-collapse collapse">
                 <?php
                 $items[] = ['label' => 'Navigation', 'options' => ['class' => 'sidenav-heading']];
-                $items[] = ['label' => 'Home', 'url' => Url::to(['/site'], true), 'options' => ['icon' => 'icon-home']];
+                $items[] = ['label' => 'Home', 'url' => Url::to(['/site/index'], true), 'options' => ['icon' => 'icon-home']];
                 $items[] = [
                     'label' => 'Companies',
-                    'url' => ['/company'],
+                    'url' => ['/company/index'],
                     'options' => ['icon' => 'icon-contao'],
                     'visible' => !User::isClient()
                 ];
 
                 $items[] = [
                     'label' => 'Applicants',
-                    'url' => ['/investigation'],
+                    'url' => ['/investigation/index'],
                     'options' => ['icon' => 'icon-folder-open-o'],
                 ];
                 $items[] = [
                     'label' => 'Investigative services',
-                    'url' => ['/investigative-services'],
+                    'url' => ['/investigation-type/index'],
                     'options' => ['icon' => 'icon-info-circle'],
                     'visible' => !User::isClient(),
                 ];
@@ -41,7 +41,7 @@ $userCompany = Yii::$app->user->identity->company;
                 $items[] = ['label' => 'Forms & templates', 'url' => ['/file'], 'options' => ['icon' => 'icon-save']];
                 $items[] = [
                     'label' => 'Users',
-                    'url' => ['/user'],
+                    'url' => ['/user/index'],
                     'options' => ['icon' => 'icon-users'],
                     'visible' => !User::isClient(),
                 ];
@@ -60,11 +60,11 @@ $userCompany = Yii::$app->user->identity->company;
                         $res = null;
                         if (isset($item['url']) && isset($item['url'][0])) {
                             $route = is_array($item['url']) ? $item['url'][0] : $item['url'];
-                            if ((ltrim($route, '/') == 'investigation') &&
+                            if (((ltrim($route, '/') == 'investigation') || (ltrim($route, '/') == 'investigation/index'))&&
                                 (Yii::$app->controller->id == 'file') &&
                                 (Yii::$app->controller->action->id == 'index') &&
                                 (!empty(Yii::$app->controller->actionParams['id']))) $res = true;
-                            if ((ltrim($route, '/') == 'file') &&
+                            if (((ltrim($route, '/') == 'file') || (ltrim($route, '/') == 'file/index'))&&
                                 (Yii::$app->controller->id == 'file') &&
                                 (Yii::$app->controller->action->id == 'index') &&
                                 (!empty(Yii::$app->controller->actionParams['id']))) $res = false;

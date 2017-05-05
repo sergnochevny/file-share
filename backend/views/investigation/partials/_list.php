@@ -102,7 +102,7 @@ Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout
                     );
                 },
                 'view' => function ($url, $model) {
-                    return Html::a('Details', Url::to(['/file', 'id' => $model->id], true),
+                    return Html::a('Details', Url::to(['/file/index', 'id' => $model->id], true),
                         [
                             'class' => "btn btn-success btn-xs",
                             'title' => 'Details',
