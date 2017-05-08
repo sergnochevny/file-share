@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use ait\keystorage\models\KeyStorageFormModel;
 use backend\behaviors\RememberUrlBehavior;
 use backend\models\forms\LoginForm;
 use backend\models\forms\PasswordResetForm;
@@ -9,7 +10,6 @@ use backend\models\forms\RestorePasswordRequestForm;
 use backend\models\Graph;
 use backend\models\ResetPassword;
 use backend\models\Statistics;
-use keystorage\models\KeyStroageFormModel;
 use Yii;
 use yii\base\ErrorException;
 use yii\filters\AccessControl;
@@ -249,33 +249,39 @@ class SiteController extends Controller
             ['required'],
             ['string', 'max' => 100]
         ];
-        $model = new KeyStroageFormModel([
+        $model = new KeyStorageFormModel([
             'keys' => [
+                'system.sendfrom' =>
+                    [
+                        'label' => 'System Send From email',
+                        'type' => KeyStorageFormModel::TYPE_TEXTINPUT,
+                        'rules' => array_merge([['email']], $commonRules),
+                    ],
                 'citrix.id' =>
                     [
                         'label' => 'Citrix ID',
-                        'type' => KeyStroageFormModel::TYPE_TEXTINPUT,
+                        'type' => KeyStorageFormModel::TYPE_TEXTINPUT,
                         'rules' => $commonRules,
                     ],
                 'citrix.pass' =>
                     [
                         'label' => 'Citrix Password',
-                        'type' => KeyStroageFormModel::TYPE_TEXTINPUT,
+                        'type' => KeyStorageFormModel::TYPE_TEXTINPUT,
                         'rules' => $commonRules,
                     ],
                 'citrix.secret' => [
                     'label' => 'Citrix Secret',
-                    'type' => KeyStroageFormModel::TYPE_TEXTINPUT,
+                    'type' => KeyStorageFormModel::TYPE_TEXTINPUT,
                     'rules' => $commonRules,
                 ],
                 'citrix.subdomain' => [
                     'label' => 'Citrix Subdomain',
-                    'type' => KeyStroageFormModel::TYPE_TEXTINPUT,
+                    'type' => KeyStorageFormModel::TYPE_TEXTINPUT,
                     'rules' => $commonRules,
                 ],
                 'citrix.user' => [
                     'label' => 'Citrix User',
-                    'type' => KeyStroageFormModel::TYPE_TEXTINPUT,
+                    'type' => KeyStorageFormModel::TYPE_TEXTINPUT,
                     'rules' => [
                         ['trim'],
                         ['required'],

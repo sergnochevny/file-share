@@ -55,6 +55,9 @@ final class UserService extends Component
         return [
             [
                 'class' => NotifyBehavior::class,
+                'sendFrom' => function(){
+                    return \Yii::$app->keyStorage->get('system.sendfrom');
+                },
                 'companyId' => function(UserService $model) {
                     return $model->user->company ? $model->user->company->id : null;
                 },

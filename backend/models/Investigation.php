@@ -88,6 +88,9 @@ class Investigation extends \common\models\Investigation
         ];
         $behaviors['notify'] = [
             'class' => NotifyBehavior::class,
+            'sendFrom' => function(){
+                return \Yii::$app->keyStorage->get('system.sendfrom');
+            },
             'companyId' => function (Investigation $model) {
                 return $model->company_id;
             },

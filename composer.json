@@ -19,7 +19,7 @@
     "yiisoft/yii2-swiftmailer": "~2.0.0",
     "mdmsoft/yii2-admin": "~2.0",
     "kartik-v/yii2-widget-depdrop": "^1.0.0",
-    "ait/keystorage": "0.0.2",
+    "ait/keystorage": "^1.0.2",
     "bower/ext-lib": "^1.0.1",
     "yii2tech/ar-linkmany": "^1.0",
     "ait/citrix": "^1.0.17",

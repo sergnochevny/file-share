@@ -20,7 +20,7 @@ return [
     ],
     'components' => [
         'keyStorage' => [
-            'class' => 'keystorage\components\KeyStorage',
+            'class' => 'ait\keystorage\components\KeyStorage',
         ],
         'assetManager' => [
             'linkAssets' => false,

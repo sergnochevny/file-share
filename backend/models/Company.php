@@ -66,6 +66,9 @@ class Company extends \common\models\Company
         ];
         $behaviors['notify'] = [
             'class' => NotifyBehavior::class,
+            'sendFrom' => function(){
+                return \Yii::$app->keyStorage->get('system.sendfrom');
+            },
             'companyId' => function(Company $model) {
                 return $model->id;
             },

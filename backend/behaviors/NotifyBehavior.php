@@ -86,7 +86,8 @@ class NotifyBehavior extends Behavior
             throw new ErrorException('Need set createTemplate, updateTemplate, archiveTemplate, deleteTemplate for mails');
         }
 
-        $this->sendFrom = isset($this->sendFrom) ? $this->sendFrom : 'noreply@example.com';
+        if ($this->sendFrom instanceof \Closure) $this->sendFrom = call_user_func($this->sendFrom);
+        $this->sendFrom = !empty($this->sendFrom) ? $this->sendFrom : 'noreply@example.com';
     }
 
     /**
@@ -96,7 +97,7 @@ class NotifyBehavior extends Behavior
      */
     private function collectAdminEmails()
     {
-        $adminEmails =  User::findByRole('admin')->select(['email'])->column();
+        $adminEmails = User::findByRole('admin')->select(['email'])->column();
         $superAdminEmails = User::findByRole('superAdmin')->select(['email'])->column();
 
         return array_merge($adminEmails, $superAdminEmails);
@@ -138,7 +139,7 @@ class NotifyBehavior extends Behavior
         ], [
             'model' => $this->owner,
             'identity' => $this->identity,
-        ]);
+        ])->setFrom($this->sendFrom);
     }
 
     /**
@@ -191,7 +192,7 @@ class NotifyBehavior extends Behavior
         if (($model instanceof \common\models\Investigation) &&
             ($model->attributes['status'] == Investigation::STATUS_COMPLETED) &&
             (!empty($event->changedAttributes)) &&
-            (in_array('status', array_keys($event->changedAttributes) ))
+            (in_array('status', array_keys($event->changedAttributes)))
         ) {
             $this->sendMessagesWithTemplate($this->completeTemplate, ['user' => true]);
         } else $this->sendMessagesWithTemplate($this->updateTemplate);
