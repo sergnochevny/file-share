@@ -11,7 +11,7 @@ use yii\helpers\Html;
 <tr>
     <td colspan="2" style="padding: 20px 0; font-style: italic;">
         The <b><?= Html::encode($model->name) ?></b> company was
-        updated at <b><?= Yii::$app->formatter->asDatetime($model->updated_at) ?></b>
+        updated on <b><?= Yii::$app->formatter->asDatetime($model->updated_at) ?></b>
         by <b><?= Html::encode($identity->username) ?></b>
     </td>
 </tr>
@@ -21,7 +21,7 @@ use yii\helpers\Html;
 <tr>
     <td colspan="2" style="padding: 20px 0; font-style: italic;">
         The user <b><?= Html::encode($model->getUser()->username) ?></b> was
-        updated at <b><?= Yii::$app->formatter->asDatetime($model->getUser()->updated_at) ?></b>
+        updated on <b><?= Yii::$app->formatter->asDatetime($model->getUser()->updated_at) ?></b>
         by <b><?= Html::encode($identity->username) ?></b>
     </td>
 </tr>
@@ -31,7 +31,7 @@ use yii\helpers\Html;
     <td colspan="2" style="padding: 20px 0; font-style: italic;">
         The applicant <b><?= Html::encode($model->name) ?></b>
         for <b><?= Html::encode($model->company->name) ?></b> company was
-        updated at <b><?= Yii::$app->formatter->asDatetime($model->updated_at) ?></b>
+        updated on <b><?= Yii::$app->formatter->asDatetime($model->updated_at) ?></b>
         by <b><?= Html::encode($identity->username) ?></b>
     </td>
 </tr>
