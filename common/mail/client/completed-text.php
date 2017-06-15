@@ -5,6 +5,8 @@
 
 <?php if ($model instanceof \common\models\Investigation): ?>
 
-    The applicant <?= $model->name ?> for <?= $model->company->name ?> was completed on <?= Yii::$app->formatter->asDate($model->updated_at) ?> by <?= $identity->username ?>
+    The report for <?= Html::encode($model->name) ?> has been completed
+    and is ready for download as of <?= Yii::$app->formatter->asDate($model->updated_at) ?>.
+    If you have any questions or need additional information, please contact Protus3.
 
 <?php endif ?>

@@ -9,10 +9,9 @@ use yii\helpers\Html;
 <?php if ($model instanceof \common\models\Investigation): ?>
 <tr>
     <td colspan="2" style="padding: 20px 0;">
-        The applicant <?= Html::encode($model->name) ?>
-        for <?= Html::encode($model->company->name) ?> was
-        completed on <?= Yii::$app->formatter->asDate($model->updated_at) ?>
-        by <?= Html::encode($identity->username) ?>
+        The report for <?= Html::encode($model->name) ?> has been completed
+        and is ready for download as of <?= Yii::$app->formatter->asDate($model->updated_at) ?>.
+        <br>If you have any questions or need additional information, please contact Protus3.
     </td>
 </tr>
 <?php endif ?>
