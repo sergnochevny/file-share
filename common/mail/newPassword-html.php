@@ -7,10 +7,11 @@ use yii\helpers\Html;
 
 ?>
 <tr>
-    <td colspan="2" style="padding: 20px 0; font-style: italic;">
+    <td colspan="2" style="padding: 20px 0;">
         Hello <?= Html::encode($user->username) ?>, <br>
         <br>
         There is your new password: <?= $newPassword ?> <br>
-        Keep it in secure place.
+        Keep it in secure place.<br>
+        If you need additional assistance, please contact Protus3.
     </td>
 </tr>
