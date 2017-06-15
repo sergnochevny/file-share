@@ -10,9 +10,9 @@ use yii\helpers\Html;
 <?php if ($model instanceof \backend\models\Company): ?>
 <tr>
     <td colspan="2" style="padding: 20px 0;">
-    The <b><?= Html::encode($model->name) ?></b> company folder was
-        deleted on <b><?= Yii::$app->formatter->asDate($model->updated_at) ?></b>
-        by <b><?= Html::encode($identity->username) ?></b>
+    The <?= Html::encode($model->name) ?> company folder was
+        deleted on <?= Yii::$app->formatter->asDate($model->updated_at) ?>
+        by <?= Html::encode($identity->username) ?>
     </td>
 </tr>
 
@@ -20,19 +20,19 @@ use yii\helpers\Html;
 <?php elseif ($model instanceof \backend\models\services\UserService): ?>
 <tr>
     <td colspan="2" style="padding: 20px 0;">
-        The user <b><?= Html::encode($model->getUser()->username) ?></b> was
-        deleted on <b><?= Yii::$app->formatter->asDate($model->getUser()->updated_at) ?></b>
-        by <b><?= Html::encode($identity->username) ?></b>
+        The user <?= Html::encode($model->getUser()->username) ?> was
+        deleted on <?= Yii::$app->formatter->asDate($model->getUser()->updated_at) ?>
+        by <?= Html::encode($identity->username) ?>
     </td>
 </tr>
 
 <?php elseif ($model instanceof \backend\models\Investigation): ?>
 <tr>
     <td colspan="2" style="padding: 20px 0;">
-        The applicant <b><?= Html::encode($model->name) ?></b>
-        for <b><?= Html::encode($model->company->name) ?></b> was
-        deleted on <b><?= Yii::$app->formatter->asDate($model->updated_at) ?></b>
-        by <b><?= Html::encode($identity->username) ?></b>
+        The applicant <?= Html::encode($model->name) ?>
+        for <?= Html::encode($model->company->name) ?> was
+        deleted on <?= Yii::$app->formatter->asDate($model->updated_at) ?>
+        by <?= Html::encode($identity->username) ?>
     </td>
 </tr>
 
