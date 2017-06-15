@@ -10,7 +10,7 @@ use yii\helpers\Html;
 <?php if ($model instanceof \backend\models\Company): ?>
 <tr>
     <td colspan="2" style="padding: 20px 0; font-style: italic;">
-    The <b><?= Html::encode($model->name) ?></b> company was
+    The <b><?= Html::encode($model->name) ?></b> company folder was
         deleted on <b><?= Yii::$app->formatter->asDate($model->updated_at) ?></b>
         by <b><?= Html::encode($identity->username) ?></b>
     </td>
@@ -30,7 +30,7 @@ use yii\helpers\Html;
 <tr>
     <td colspan="2" style="padding: 20px 0; font-style: italic;">
         The applicant <b><?= Html::encode($model->name) ?></b>
-        for <b><?= Html::encode($model->company->name) ?></b> company was
+        for <b><?= Html::encode($model->company->name) ?></b> was
         deleted on <b><?= Yii::$app->formatter->asDate($model->updated_at) ?></b>
         by <b><?= Html::encode($identity->username) ?></b>
     </td>

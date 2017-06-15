@@ -8,6 +8,6 @@
     The user <?= $model->getUser()->username ?> was created on <?= Yii::$app->formatter->asDate($model->getUser()->created_at) ?> by <?= $identity->username ?>
 
 <?php elseif ($model instanceof \backend\models\Investigation): ?>
-    The applicant <?= $model->name ?> for <?= $model->company->name ?> company was created on <?= Yii::$app->formatter->asDate($model->created_at) ?> by <?= $identity->username ?>
+    The applicant <?= $model->name ?> for <?= $model->company->name ?> was created on <?= Yii::$app->formatter->asDate($model->created_at) ?> by <?= $identity->username ?>
 
 <?php endif ?>

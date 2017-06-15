@@ -29,7 +29,7 @@ use yii\helpers\Html;
 <tr>
     <td colspan="2" style="padding: 20px 0;">
     The applicant <?= Html::encode($model->name) ?>
-    for <?= Html::encode($model->company->name) ?> company was
+    for <?= Html::encode($model->company->name) ?> was
     created on <?= Yii::$app->formatter->asDate($model->created_at) ?>
     by <?= Html::encode($identity->username) ?>
     </td>
