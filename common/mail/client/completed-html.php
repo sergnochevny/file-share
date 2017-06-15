@@ -8,7 +8,7 @@ use yii\helpers\Html;
 
 <?php if ($model instanceof \common\models\Investigation): ?>
 <tr>
-    <td colspan="2" style="padding: 20px 0; font-style: italic;">
+    <td colspan="2" style="padding: 20px 0;">
         The applicant <b><?= Html::encode($model->name) ?></b>
         for <b><?= Html::encode($model->company->name) ?></b> was
         completed on <b><?= Yii::$app->formatter->asDate($model->updated_at) ?></b>

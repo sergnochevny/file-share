@@ -9,7 +9,7 @@ use yii\helpers\Html;
 
 <?php if ($model instanceof \backend\models\Company): ?>
 <tr>
-    <td colspan="2" style="padding: 20px 0; font-style: italic;">
+    <td colspan="2" style="padding: 20px 0;">
     The <b><?= Html::encode($model->name) ?></b> company folder was
         deleted on <b><?= Yii::$app->formatter->asDate($model->updated_at) ?></b>
         by <b><?= Html::encode($identity->username) ?></b>
@@ -19,7 +19,7 @@ use yii\helpers\Html;
 
 <?php elseif ($model instanceof \backend\models\services\UserService): ?>
 <tr>
-    <td colspan="2" style="padding: 20px 0; font-style: italic;">
+    <td colspan="2" style="padding: 20px 0;">
         The user <b><?= Html::encode($model->getUser()->username) ?></b> was
         deleted on <b><?= Yii::$app->formatter->asDate($model->getUser()->updated_at) ?></b>
         by <b><?= Html::encode($identity->username) ?></b>
@@ -28,7 +28,7 @@ use yii\helpers\Html;
 
 <?php elseif ($model instanceof \backend\models\Investigation): ?>
 <tr>
-    <td colspan="2" style="padding: 20px 0; font-style: italic;">
+    <td colspan="2" style="padding: 20px 0;">
         The applicant <b><?= Html::encode($model->name) ?></b>
         for <b><?= Html::encode($model->company->name) ?></b> was
         deleted on <b><?= Yii::$app->formatter->asDate($model->updated_at) ?></b>
