@@ -25,7 +25,7 @@ use yii\helpers\Url;
 </table>
 <table style="width: 50%;border: #431f4d 1px solid; background: #431f4d;" cellpadding="0" cellspacing="0" width="50%">
     <tr >
-        <td colspan="4" style="padding: 10px; text-align: center; color: #ccc0a3; font-size: 11px;" >PLAN. PROTECT. PROSPER</td>
+        <td colspan="4" style="padding: 10px; text-align: center; color: #ccc0a3; font-size: 11px;" >PLAN. PROTECT. <b>PROSPER</b>.</td>
     </tr>
 </table>
 <?php $this->endBody() ?>
