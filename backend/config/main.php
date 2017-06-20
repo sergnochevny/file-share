@@ -34,9 +34,9 @@ return [
                     ]
                 ],
             ],
-            'converter' => [
-                'class' => '\common\assets\AssetGzipConverter'
-            ]
+//            'converter' => [
+//                'class' => '\common\assets\AssetGzipConverter'
+//            ]
         ],
         'request' => [
             'csrfParam' => '_csrf-backend',

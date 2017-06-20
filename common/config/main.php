@@ -13,7 +13,7 @@ return [
             'class' => 'yii\caching\FileCache',
         ],
         'keyStorage' => [
-            'class' => 'keystorage\components\KeyStorage',
+            'class' => 'ait\keystorage\components\KeyStorage',
         ],
 
     ],
