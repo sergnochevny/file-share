@@ -17,6 +17,8 @@ use Yii;
  * @property string $avatar_src
  *
  * @property User $user
+
+ * @property string $fullName
  */
 class UserProfile extends ActiveRecord
 {
@@ -26,6 +28,15 @@ class UserProfile extends ActiveRecord
     public static function tableName()
     {
         return 'user_profile';
+    }
+
+    /**
+     * @inheritdoc
+     * @return \backend\models\query\UserProfileQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new UserProfileQuery(get_called_class());
     }
 
     /**
@@ -66,12 +77,8 @@ class UserProfile extends ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
-    /**
-     * @inheritdoc
-     * @return \backend\models\query\UserProfileQuery the active query used by this AR class.
-     */
-    public static function find()
+    public function getFullName()
     {
-        return new UserProfileQuery(get_called_class());
+        return $this->first_name . ' ' . $this->last_name;
     }
 }
