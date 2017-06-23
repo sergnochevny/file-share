@@ -139,7 +139,7 @@ class NotifyBehavior extends Behavior
         ], [
             'model' => $this->owner,
             'identity' => $this->identity,
-        ])->setFrom($this->sendFrom);
+        ])->setFrom($this->sendFrom)->setSubject("Protus3 BI App Notification");
     }
 
     /**

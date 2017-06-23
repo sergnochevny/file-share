@@ -12,6 +12,6 @@
     The user <?= $model->getUser()->username ?> was archived on <?= Yii::$app->formatter->asDate($model->getUser()->updated_at) ?> by <?= $identity->username ?>
 
 <?php elseif ($model instanceof \backend\models\Investigation): ?>
-    The applicant <?= $model->name ?> for <?= $model->company->name ?> was archived on <?= Yii::$app->formatter->asDate($model->updated_at) ?> by <?= $identity->username ?>
+    The applicant <?= $model->fullName ?> for <?= $model->company->name ?> was archived on <?= Yii::$app->formatter->asDate($model->updated_at) ?> by <?= $identity->username ?>
 
 <?php endif ?>
