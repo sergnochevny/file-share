@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 
-/** @var $model \keystorage\models\KeyStorageFormModel */
+/** @var $model ait\keystorage\models\KeyStorageFormModel */
 
 ?>
 <?php Pjax::begin(['enablePushState' => false, 'scrollTo' => 0, 'timeout' => 0]) ?>

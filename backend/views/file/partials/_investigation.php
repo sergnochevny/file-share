@@ -18,10 +18,10 @@ use yii\helpers\Url;
                         <?= strtoupper($model->fullName) ?>
                         <?php if (Investigation::STATUS_COMPLETED !== $model->status && !User::isClient()): ?>
                             <a class="pull-right btn btn-xs btn-labeled arrow-success" href="<?= Url::to(['/investigation/complete', 'id' => $model->id]) ?>"
-                               data-confirm="This action will mark the investigation as completed . Are you sure you want to proceed?">
-                    <span class="btn-label">
-                        <span class="icon icon-check icon-lg icon-fw"></span>
-                    </span> Complete
+                               data-confirm="This action will mark the investigation as completed . Are you sure you want to proceed?"
+                               data-pjax="1">
+                                <span class="btn-label"><span class="icon icon-check icon-lg icon-fw"></span></span>
+                                Complete
                             </a>
                         <?php endif ?>
                     </div>

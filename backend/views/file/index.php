@@ -38,9 +38,9 @@ $view = $this;
         <?php endif ?>
     </p>
 </div>
-<?= !empty($investigation) ? $this->render('partials/_investigation', ['model' => $investigation]) : '' ?>
 
-<?php Pjax::begin(['id' => 'file_index', 'enablePushState' => false, 'timeout' => 0]); ?>
+<?php Pjax::begin(['id' => 'file_index', 'enablePushState' => false, 'timeout' => false]); ?>
+<?= !empty($investigation) ? $this->render('partials/_investigation', ['model' => $investigation]) : '' ?>
 <div class="alert-container">
     <?= Alert::widget() ?>
 </div>
