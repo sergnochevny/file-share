@@ -194,7 +194,7 @@ class NotifyBehavior extends Behavior
             (!empty($event->changedAttributes)) &&
             (in_array('status', array_keys($event->changedAttributes)))
         ) {
-            $this->sendMessagesWithTemplate($this->completeTemplate, ['user' => true]);
+            $this->sendMessagesWithTemplate($this->completeTemplate, ['admin'=>true, 'user' => true]);
         } else $this->sendMessagesWithTemplate($this->updateTemplate);
     }
 
