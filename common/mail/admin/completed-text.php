@@ -10,8 +10,8 @@ use yii\helpers\Html;
     $byUser = $identity->fullName . ' (' . $identity->username . ')';
     ?>
 
-    Applicant <?= Html::encode($model->fullName) ?> has been complited on:
+    Applicant <?= Html::encode($model->fullName) ?> has been completed:
     Date: <?= Yii::$app->formatter->asDate($model->updated_at) ?>
-    Complited by: <?= $byUser; ?>
+    Completed by: <?= $byUser; ?>
 
 <?php endif ?>
