@@ -57,7 +57,7 @@ class Company extends \common\models\Company
         $behaviors['citrixFolderBehavior'] = [
             'class' => CitrixFolderBehavior::className(),
             'attribute' => 'citrix_id',
-            'folder' => 'name',
+            'folder' => 'citrixFolderName',
             'subdomain' => \Yii::$app->keyStorage->get('citrix.subdomain'),
             'user' => \Yii::$app->keyStorage->get('citrix.user'),
             'pass' => \Yii::$app->keyStorage->get('citrix.pass'),
