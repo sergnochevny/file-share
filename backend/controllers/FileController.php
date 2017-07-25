@@ -65,7 +65,7 @@ class FileController extends PermissionController
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['download', 'multi-download', 'upload', 'index', 'archive'],
+                        'actions' => ['download', 'download-archive', 'multi-download', 'upload', 'index', 'archive'],
                         'roles' => ['@'],
                     ],
                     [
@@ -226,5 +226,32 @@ class FileController extends PermissionController
         }
 
         throw new BadRequestHttpException($errorMessage);
+    }
+
+    /**
+     * @param $name
+     * @return Response
+     */
+    public function actionDownloadArchive($name)
+    {
+        set_time_limit(0); //!important
+
+        if (empty($name)) {
+            return $this->redirect(['/investigation/index']);
+        }
+
+        $name = $name . '.zip';
+        $path = Yii::getAlias('@webroot/temp/' . $name);
+
+        if (!is_file($path) || !is_readable($path)) {
+            return $this->redirect(['/investigation/index']);
+        }
+
+        Yii::$app->response->setDownloadHeaders($name, 'application/zip', false, filesize($path));
+        readfile($path);
+
+        if (is_writable($path)) {
+            unlink($path);
+        }
     }
 }
