@@ -113,6 +113,14 @@ $view = $this;
                         'layout' => "<div class='col-sm-12'>{items}</div>\n{summary}{pager}",
                         'columns' => [
                             [
+                                'class' => 'yii\grid\CheckboxColumn',
+                                'cssClass' => 'multi-download',
+                                'options' => [
+                                    'id' => 'selection-col',
+                                    'data-download-url' => Url::to(['/file/multi-download'], true),
+                                ]
+                            ],
+                            [
                                 'attribute' => 'name',
                                 'format' => 'html',
                                 'value' => function ($model, $key, $index, $column) {
@@ -243,6 +251,7 @@ $view = $this;
     </div>
 </div>
 
+<?php $this->registerJsFile('@web/js/file.multidownload.js', ['depends' => \yii\web\JqueryAsset::className()]) ?>
 <?php Pjax::end(); ?>
 <?php \backend\assets\InputUploadSubmitAsset::register($this);?>
 <?php \backend\assets\AlertHelperAsset::register($this);?>
