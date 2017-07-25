@@ -29,7 +29,7 @@
                 'method': 'POST',
                 'data': checkboxes.serialize(),
                 'error': function (data) {
-
+                    console.log(data.responseText);
                 },
                 'success': function (data) {
                     console.log(data.downloadUrl);

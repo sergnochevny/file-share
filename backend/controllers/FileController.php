@@ -8,14 +8,17 @@ use backend\behaviors\VerifyPermissionBehavior;
 use backend\models\File;
 use backend\models\FileUpload;
 use backend\models\Investigation;
+use backend\models\MultiDownload;
 use backend\models\search\FileSearch;
 use common\components\PermissionController;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
+use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Request;
+use yii\web\Response;
 
 /**
  * FileController implements the CRUD actions for File model.
@@ -50,6 +53,7 @@ class FileController extends PermissionController
                 'actions' => [
                     'delete' => ['POST'],
                     'upload' => ['POST'],
+                    'multi-download' => ['POST'],
                 ],
             ],
             'remember' => [
@@ -61,7 +65,7 @@ class FileController extends PermissionController
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['download', 'upload', 'index', 'archive'],
+                        'actions' => ['download', 'multi-download', 'upload', 'index', 'archive'],
                         'roles' => ['@'],
                     ],
                     [
@@ -198,5 +202,29 @@ class FileController extends PermissionController
         }
         if (!empty($investigation)) return $this->actionIndex($investigation->id);
         return $this->actionIndex();
+    }
+
+    /**
+     * Creates one archive with selected files and returns downloadUrl
+     *
+     * @return array
+     * @throws BadRequestHttpException
+     */
+    public function actionMultiDownload()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $model = new MultiDownload();
+        $errorMessage = 'Something went wrong';
+
+        if ($model->load(Yii::$app->request->post())) {
+            try {
+                return ['downloadUrl' => $model->downloadUrl];
+
+            } catch (\Exception $exception) {
+                $errorMessage = $exception->getMessage();
+            }
+        }
+
+        throw new BadRequestHttpException($errorMessage);
     }
 }
