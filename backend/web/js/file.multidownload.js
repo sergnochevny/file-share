@@ -4,19 +4,18 @@
      * Creates button Download All on checked
      */
     $(document).on('change', '.multi-download, .select-on-check-all', function () {
-        var btn = '&nbsp;',
-            actionColumn = $('th.action-column');
+        var actionColumn = $('th.action-column');
 
         actionColumn.removeAttr('style');
         if ($('.multi-download:checked').length > 0) {
-            btn = document.createElement('a')
+            var btn = document.createElement('a');
             btn.className = 'btn btn-warning btn-xs';
             btn.innerHTML = 'Download All';
             btn.id = 'download-all';
             actionColumn.attr('style', 'text-align: right; padding-right: 50px;')
         }
 
-        actionColumn.html(btn);
+        (!!btn && actionColumn.html(btn)) || (!btn && actionColumn.html('&nbsp;'));
     });
 
     /**
