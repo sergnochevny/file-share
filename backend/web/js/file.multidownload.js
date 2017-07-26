@@ -22,21 +22,32 @@
     $(document).on('click', '#download-all', function () {
         var checkboxes = $('.multi-download'),
             url = $('#selection-col').data('download-url');
-
+        //$.waitloader('show');
         if (checkboxes.length > 0 && url) {
             $.ajax({
                 'url': url,
                 'method': 'POST',
                 'data': checkboxes.serialize(),
                 'error': function (data) {
+                    // $.waitloader('remove');
+                    var response = JSON.parse(data.responseText);
+                    alert(response.message);
                     console.log(data.responseText);
                 },
                 'success': function (data) {
-                    console.log(data.downloadUrl);
+                    // $.waitloader('remove');
+
+                    if (data.downloadUrl) {
+                        window.location = data.downloadUrl
+                        return;
+                    }
+
+                    alert('Error');
                 }
             });
             return;
         }
+        // $.waitloader('remove');
         console.log('Cannot download, checkboxes unchecked or url does\'n set');
     });
 

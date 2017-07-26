@@ -5,17 +5,19 @@ namespace backend\models;
 
 
 use Citrix\CitrixApi;
+use GuzzleHttp\Psr7\Stream;
 use Yii;
 use yii\base\ErrorException;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\grid\CheckboxColumn;
+use ZipArchive;
 
 /**
  * Class MultiDownload
  * @package backend\models
  *
- * @property-read string $downloadUrl
+ * @property-read string $archiveFilename
  */
 class MultiDownload extends Model
 {
@@ -27,6 +29,9 @@ class MultiDownload extends Model
 
     /** @var CitrixApi */
     private $citrix;
+
+    /** @var string|null */
+    private $archiveFilename;
 
     /**
      * @inheritdoc
@@ -58,12 +63,11 @@ class MultiDownload extends Model
      * Searches files by ids (@see $this::selection),
      * packs them into archive and returns download link
      *
-     * @return string
      * @throws ErrorException
      */
-    public function getDownloadUrl()
+    public function packIntoArchive()
     {
-        if ($this->validate()) {
+        if (!$this->validate()) {
             throw new ErrorException('Input data is not valid');
         }
 
@@ -72,9 +76,46 @@ class MultiDownload extends Model
             throw new ErrorException('These files not found');
         }
 
+        $items = $this->citrix->getItemsService();
+        $zip = $this->createZip();
         foreach ($files as $file) {
+            $item = $items
+                ->setId($file->citrix_id)
+                ->setRedirect(CitrixApi::FALSE)
+                ->setIncludeAllVersions(CitrixApi::FALSE)
+                ->ItemContent;
 
+            $downloadUrl = $item->DownloadUrl;
+            $content = file_get_contents($downloadUrl);
+
+            $zip->addFromString($file->name, $content);
         }
+        $zip->close();
+    }
+
+    /**
+     * @return string
+     */
+    public function getArchiveFilename()
+    {
+        return $this->archiveFilename;
+    }
+
+    /**
+     * @return \ZipArchive
+     * @throws ErrorException
+     */
+    private function createZip()
+    {
+        $zip = new ZipArchive;
+        $this->archiveFilename = 'all-' . uniqid() . '.zip';
+        $zipFile = Yii::getAlias('@webroot/temp/' . $this->archiveFilename);
+        $res = $zip->open($zipFile, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+        if ($res !== true) {
+            throw new ErrorException('Cannot create zip archive');
+        }
+
+        return $zip;
     }
 
     /**

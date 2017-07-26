@@ -11,6 +11,7 @@ use backend\models\Investigation;
 use backend\models\MultiDownload;
 use backend\models\search\FileSearch;
 use common\components\PermissionController;
+use common\helpers\Url;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -212,13 +213,19 @@ class FileController extends PermissionController
      */
     public function actionMultiDownload()
     {
+        set_time_limit(0); //!important
+
         Yii::$app->response->format = Response::FORMAT_JSON;
         $model = new MultiDownload();
         $errorMessage = 'Something went wrong';
 
         if ($model->load(Yii::$app->request->post())) {
             try {
-                return ['downloadUrl' => $model->downloadUrl];
+                $model->packIntoArchive();
+                return ['downloadUrl' => Url::to(['download-archive',
+                        'name' => str_replace('.zip', '', $model->archiveFilename)
+                    ])
+                ];
 
             } catch (\Exception $exception) {
                 $errorMessage = $exception->getMessage();
@@ -248,10 +255,11 @@ class FileController extends PermissionController
         }
 
         Yii::$app->response->setDownloadHeaders($name, 'application/zip', false, filesize($path));
-        readfile($path);
 
-        if (is_writable($path)) {
-            unlink($path);
-        }
+        Yii::$app->response->sendFile($path)->send();
+
+//        if (is_writable($path)) {
+//            unlink($path);
+//        }
     }
 }

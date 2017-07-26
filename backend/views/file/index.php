@@ -251,7 +251,7 @@ $view = $this;
     </div>
 </div>
 
-<?php $this->registerJsFile('@web/js/file.multidownload.js', ['depends' => \yii\web\JqueryAsset::className()]) ?>
+<?php $this->registerJsFile('@web/js/file.multidownload.js', ['depends' => \common\assets\ExtLibAsset::className()]) ?>
 <?php Pjax::end(); ?>
 <?php \backend\assets\InputUploadSubmitAsset::register($this);?>
 <?php \backend\assets\AlertHelperAsset::register($this);?>
