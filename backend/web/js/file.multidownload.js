@@ -32,7 +32,14 @@
                 'data': checkboxes.serialize(),
                 'error': function (data) {
                     body.waitloader('remove');
-                    var response = JSON.parse(data.responseText);
+                    var response;
+                    try {
+                        response = JSON.parse(data.responseText);
+
+                    } catch (err) {
+                        response = {message: err.message};
+                    }
+
                     alert(response.message);
                     console.log(data.responseText);
                 },
@@ -40,7 +47,7 @@
                     body.waitloader('remove');
 
                     if (data.downloadUrl) {
-                        window.location = data.downloadUrl
+                        window.location = data.downloadUrl;
                         return;
                     }
 
