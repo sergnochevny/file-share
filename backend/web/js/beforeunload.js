@@ -3,7 +3,6 @@
     var refresh = false;
 
     $( window ).on("beforeunload", function( event ) {
-        debugger;
         if ( $( event.target.activeElement ).is("a") || refresh === true ){
             return false;
         }

@@ -53,7 +53,7 @@ class InvestigationSearch extends Investigation
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['created_at' => SORT_DESC]],
+            'sort'=> ['defaultOrder' => ['updated_at' => SORT_DESC]],
         ]);
 
         $dataProvider->sort->attributes['company_name'] = ([

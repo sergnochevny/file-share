@@ -5,6 +5,7 @@ namespace backend\models;
 use backend\behaviors\HistoryBehavior;
 use backend\behaviors\UploadBehavior;
 use common\models\UserCompany;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
 /**
@@ -92,7 +93,9 @@ class File extends \common\models\File
             },
             'attribute' => 'name',
             'type' => 'file',
-
+        ];
+        $behaviors['TimestampBehavior'] = [
+            'class' => TimestampBehavior::className()
         ];
         return $behaviors;
     }

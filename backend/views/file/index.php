@@ -1,11 +1,11 @@
 <?php
 
+use backend\models\FileUpload;
 use backend\models\User;
-use backend\widgets\ActiveForm;
-use common\widgets\Alert;
-use yii\helpers\Html;
 use common\helpers\Url;
+use common\widgets\Alert;
 use yii\grid\GridView;
+use yii\helpers\Html;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
@@ -39,11 +39,6 @@ $view = $this;
     </p>
 </div>
 
-<?php Pjax::begin(['id' => 'file_index', 'enablePushState' => false, 'timeout' => false]); ?>
-<?= !empty($investigation) ? $this->render('partials/_investigation', ['model' => $investigation]) : '' ?>
-<div class="alert-container">
-    <?= Alert::widget() ?>
-</div>
 <div class="row gutter-xs">
     <div class="col-xs-12">
         <div class="panel">
@@ -63,39 +58,19 @@ $view = $this;
                      * @var \common\models\Investigation $investigation
                      */
                     $url = (!empty($investigation)) ?
-                        Url::to(['/file/upload', 'parent' => $investigation->citrix_id], true) :
-                        Url::to(['/file/upload'], true);
-                    $uploadForm = ActiveForm::begin(
-                        [
-                            'id' => "upload-file",
-                            'method' => 'post',
-                            'action' => $url,
-                            'options' => [
-                                'data-pjax' => true,
-                                'class' => 'text-center',
-                                'enctype' => 'multipart/form-data'
-                            ]
-                        ]
-                    ); ?>
-                    <?php if (!empty($investigation) || Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin')): ?>
-                        <?= $uploadForm->field($uploadModel, 'file')->fileInput(['id' => "file"])->label(false); ?>
-                        <?= Html::button('<span class="btn-label"><span class="icon icon-upload  icon-lg icon-fw"></span></span>Upload', [
-                            'id' => "send",
-                            'class' => 'btn btn-sm btn-labeled arrow-warning send-file-button'
-                        ]); ?>
-                    <?php endif; ?>
-
-                    <?php
-                    \backend\widgets\ActiveForm::end();
+                        Url::to(['/file/multi-upload', 'parent' => $investigation->citrix_id], true) :
+                        Url::to(['/file/multi-upload'], true);
                     ?>
-                    <div class="panel panel-body btn-" data-toggle="match-height">
-                        <div class="progress progress-xs">
-                            <div class="progress-bar progress-bar-indicating progress-bar-warning" role="progressbar"
-                                 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                            </div>
-                        </div>
-                    </div>
+                    <?php if (!empty($investigation) || Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin')): ?>
+                        <?= $this->render('partials/_upload', ['model' => $uploadModel, 'action' => $url]) ?>
+                    <?php endif; ?>
                 </div>
+                <?php Pjax::begin(['id' => 'file_index', 'enablePushState' => false, 'timeout' => false]); ?>
+                <?= !empty($investigation) ? $this->render('partials/_investigation', ['model' => $investigation]) : '' ?>
+                <div class="alert-container">
+                    <?= Alert::widget() ?>
+                </div>
+
                 <div class="form-inline no-footer">
                     <?php
                     $action = empty($investigation) ?: Url::to([null, 'id' => $investigation->id]);
@@ -103,6 +78,7 @@ $view = $this;
                     <?= $this->render('/search/_search', ['model' => $searchModel, 'action' => $action]); ?>
 
                     <?= GridView::widget([
+                        'id' => 'files-grid',
                         'dataProvider' => $dataProvider,
                         'tableOptions' => [
                             'class' => "table table-hover table-striped",
@@ -117,7 +93,7 @@ $view = $this;
                                 'format' => 'html',
                                 'value' => function ($model, $key, $index, $column) {
                                     $image = Html::tag('div', '', [
-                                        'class' => 'file-thumbnail file-thumbnail-' . \backend\models\FileUpload::fileExt($model->type)
+                                        'class' => 'file-thumbnail file-thumbnail-' . FileUpload::fileExt($model->type)
                                     ]);
                                     return Html::tag('div',
                                         $image,
@@ -167,7 +143,7 @@ $view = $this;
                                 'class' => 'yii\grid\ActionColumn',
                                 'template' => '{archive}{delete}{download}',
                                 'contentOptions' => [
-                                    'width' => (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin')) ? 220:150
+                                    'width' => (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin')) ? 220 : 150
                                 ],
                                 'buttons' => [
                                     'archive' => function ($url, $model) use ($investigation, $view) {
@@ -186,7 +162,7 @@ $view = $this;
                                                     'aria-label' => "Archive",
                                                     'data-confirm' => "Confirm archiving",
                                                     'data-method' => "post",
-                                                    'data-pjax' => true,
+                                                    'data-pjax' => 1,
                                                 ]
                                             );
                                         return $content;
@@ -201,7 +177,7 @@ $view = $this;
                                                     'aria-label' => "Delete",
                                                     'data-confirm' => "Confirm removal",
                                                     'data-method' => "post",
-                                                    'data-pjax' => true,
+                                                    'data-pjax' => 1,
                                                 ]
                                             );
                                         return $content;
@@ -218,7 +194,7 @@ $view = $this;
                                             $content = Html::a('Download', Url::to(['/file/download', 'id' => $model->citrix_id], true),
                                                 [
                                                     'class' => "btn btn-warning btn-xs",
-                                                    'data-download'=>true,
+                                                    'data-download' => true,
                                                     'title' => 'Download',
                                                     'aria-label' => "Download",
                                                     'data-pjax' => 0,
@@ -238,13 +214,11 @@ $view = $this;
                     ]) ?>
 
                 </div>
+                <?php Pjax::end(); ?>
             </div>
         </div>
     </div>
 </div>
-
-<?php Pjax::end(); ?>
-<?php \backend\assets\InputUploadSubmitAsset::register($this);?>
-<?php \backend\assets\AlertHelperAsset::register($this);?>
-<?php \backend\assets\DownloadAsset::register($this);?>
+<?php \backend\assets\AlertHelperAsset::register($this); ?>
+<?php \backend\assets\DownloadAsset::register($this); ?>
 

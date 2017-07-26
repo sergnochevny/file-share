@@ -9,13 +9,18 @@ use backend\models\File;
 use backend\models\FileUpload;
 use backend\models\Investigation;
 use backend\models\search\FileSearch;
+use backend\models\User;
 use common\components\PermissionController;
+use common\helpers\Url;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Request;
+use yii\web\Response;
 
 /**
  * FileController implements the CRUD actions for File model.
@@ -61,7 +66,7 @@ class FileController extends PermissionController
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['download', 'upload', 'index', 'archive'],
+                        'actions' => ['download', 'upload', 'index', 'archive', 'multi-upload'],
                         'roles' => ['@'],
                     ],
                     [
@@ -128,6 +133,73 @@ class FileController extends PermissionController
         if (Yii::$app->request->isAjax)
             return $this->renderAjax('index', $renderParams);
         return $this->render('index', $renderParams);
+    }
+
+    public function actionMultiUpload($parent = null)
+    {
+        Yii::$app->response->getHeaders()->set('Vary', 'Accept');
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $response = [];
+        $model = new FileUpload(['parent' => $parent]);
+        $investigation = Investigation::findOne(['citrix_id' => $parent]);
+        if ($this->verifyPermission(VerifyPermissionBehavior::EVENT_VERIFY_FILE_PERMISSION,
+            ['investigation' => $investigation])
+        ) {
+            try {
+                if ($model->save()) {
+                    $item = [
+                        'id' => $model->model->id,
+                        'update' => $model->update,
+                        'name' => $model->file->name,
+                        'type' => FileUpload::fileExt($model->model->type),
+                        'size' => $model->file->size,
+                        'width' => (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin')) ? 220 : 150,
+
+                    ];
+                    if (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin')) {
+                        $item['deleteUrl'] = Url::to(['/file/delete', 'id' => $model->model->id], true);
+                    };
+                    if (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin') ||
+                        (
+                            !Yii::$app->user->can('admin') && !Yii::$app->user->can('superAdmin') &&
+                            ((!empty($investigation) && Yii::$app->user->can('employee', ['investigation' => $investigation])) ||
+                                (Yii::$app->user->can('employee', ['allfiles' => $model->model->parents->parent])))
+                        )
+                    ) {
+                        $item['downloadUrl'] = Url::to(['/file/download', 'id' => $model->model->citrix_id], true);
+                    };
+                    if (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin') ||
+                        (
+                            !Yii::$app->user->can('admin') && !Yii::$app->user->can('superAdmin') &&
+                            !empty($investigation) &&
+                            Yii::$app->user->can('employee', ['investigation' => $investigation])
+                        )
+                    ) {
+                        $item['archiveLabel'] = User::isClient() ? 'Remove' : 'Archive';
+                        $item['archiveUrl'] = Url::to(['/file/archive', 'id' => $model->model->id], true);
+                    }
+                    $response['files'][] = $item;
+                } else {
+                    if ($model->hasErrors([$model->file])) {
+                        $response[] = ['errors' => $model->getModelErrors()];
+                    } else {
+                        throw new HttpException(500, 'Could not upload file.');
+                    }
+                }
+
+            } catch (\Exception $e) {
+                $response[] = [
+                    'error' => 'Unable to save file: ' . $e->getMessage()
+                ];
+                @unlink($model->file->tempName);
+            }
+        } else {
+            $response[] = [
+                'error' => 'Unable to save file: You haven`t got permissions on this action!'
+            ];
+            @unlink($model->file->tempName);
+        }
+        return $response;
     }
 
     public function actionUpload($parent = null)

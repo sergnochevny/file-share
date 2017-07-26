@@ -50,7 +50,7 @@ class FileSearch extends File
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+            'sort' => ['defaultOrder' => ['updated_at' => SORT_DESC]],
             'pagination' => ['route' => 'file/index',],
 
         ]);

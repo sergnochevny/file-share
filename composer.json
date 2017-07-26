@@ -23,7 +23,8 @@
     "bower/ext-lib": "^1.0.1",
     "yii2tech/ar-linkmany": "^1.0",
     "ait/citrix": "^1.0.17",
-    "kartik-v/yii2-password": "^1.5"
+    "kartik-v/yii2-password": "^1.5",
+    "ait/yii2-fileupload":"^1.0.2"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.0.0",
@@ -34,12 +35,12 @@
     "c006/yii2-migration-utility": "^1.2"
   },
   "config": {
-    "process-timeout": 1800
-  },
-  "extra": {
-    "asset-installer-paths": {
-      "npm-asset-library": "vendor/npm",
-      "bower-asset-library": "vendor/bower"
+    "process-timeout": 1800,
+    "fxp-asset": {
+      "installer-paths": {
+        "npm-asset-library": "vendor/npm",
+        "bower-asset-library": "vendor/bower"
+      }
     }
   },
   "scripts": {

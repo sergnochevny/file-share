@@ -464,3 +464,11 @@ a.asc:after {
 a.desc:after {
     content: "\f0dd";
 }
+
+.form-upload{
+    border-bottom: 1px solid #fff;
+}
+
+.fileupload-progress{
+    margin: 15px 0 15px 0;
+}
