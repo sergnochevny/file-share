@@ -32,7 +32,9 @@ $isShowCompany = Yii::$app->user->can('admin') && $isDbHasCompany;
             <?= $form->field($investigationForm, 'first_name')->textInput(['tabindex' => 1, 'placeholder' => 'Name', 'maxlength' => true]) ?>
             <?= $form->field($investigationForm, 'middle_name')->textInput(['tabindex' => 2,'placeholder' => 'Name', 'maxlength' => true]) ?>
             <?= $form->field($investigationForm, 'last_name')->textInput(['tabindex' => 3,'placeholder' => 'Name', 'maxlength' => true]) ?>
-
+            <?= $form->field($investigationForm, 'annual_salary_75k')->radioList([1 => 'Yes', 0 => 'No'])
+                ->label('Will this position have an annual salary of more than $75,000?')
+            ?>
             <?php if (!empty($investigationTypes)): ?>
             <?php $typesCount = count($investigationTypes) ?>
             <?= $this->render('_investigation-types', [

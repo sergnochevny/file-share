@@ -32,6 +32,7 @@ use yii2tech\ar\linkmany\LinkManyBehavior;
  *
  * @property integer $birth_date
  * @property integer $created_by
+ * @property bool $annual_salary_75k
  *
  * @property integer $status
  * @property integer $created_at
@@ -145,6 +146,7 @@ class Investigation extends HistoryActiveRecord
     {
         return [
             [['company_id'], 'required', 'message' => 'Please select company'],
+            [['annual_salary_75k'], 'required', 'message' => 'Please select Yes or No'],
             [['first_name', 'last_name', 'ssn', 'birthDate'], 'required'],
             [['birthDate'], 'validateBirthDate'],
 
@@ -178,6 +180,8 @@ class Investigation extends HistoryActiveRecord
                 'targetClass' => User::className(),
                 'targetAttribute' => ['created_by' => 'id']
             ],
+
+            [['annual_salary_75k'], 'boolean'],
 
             ['investigationTypeIds', 'safe'],
         ];
