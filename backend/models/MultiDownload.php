@@ -4,7 +4,10 @@
 namespace backend\models;
 
 
+use Citrix\CitrixApi;
+use Yii;
 use yii\base\ErrorException;
+use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\grid\CheckboxColumn;
 
@@ -21,6 +24,17 @@ class MultiDownload extends Model
      * @var array|null
      */
     public $selection;
+
+    /** @var CitrixApi */
+    private $citrix;
+
+    /**
+     * @inheritdoc
+     */
+    public function init()
+    {
+        $this->initCitrix();
+    }
 
     /**
      * @inheritdoc
@@ -62,4 +76,33 @@ class MultiDownload extends Model
 
         }
     }
+
+    /**
+     * Initialize citrix from keyStorage component
+     *
+     * @return void
+     * @throws InvalidConfigException
+     */
+    private function initCitrix()
+    {
+        $ks = Yii::$app->get('keyStorage');
+        if (null === $ks) {
+            throw new InvalidConfigException('Component keyStorage does not set');
+        }
+
+        $get = function ($field) use ($ks) {
+            return $ks->get('citrix.' . $field);
+        };
+
+        $citrix = CitrixApi::getInstance();
+        $citrix->setSubdomain($get('subdomain'))
+            ->setUsername($get('user'))
+            ->setPassword($get('pass'))
+            ->setClientId($get('id'))
+            ->setClientSecret($get('secret'))
+            ->Initialize();
+
+        $this->citrix = $citrix;
+    }
+
 }
