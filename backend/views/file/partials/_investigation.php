@@ -70,7 +70,7 @@ use yii\helpers\Url;
                             <?php if ($model->annual_salary_75k): ?>
                             <li class="list-group-item">
                                 <span class="icon icon-check icon-lg icon-fw"></span>
-                                This position have an annual salary of more than $75,000
+                                This position has an annual salary of more than $75,000
                             </li>
                             <?php endif ?>
                         </ul>
