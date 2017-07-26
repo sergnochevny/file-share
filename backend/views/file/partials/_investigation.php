@@ -67,6 +67,12 @@ use yii\helpers\Url;
                                 <span class="icon icon-calendar icon-lg icon-fw"></span>
                                 Birth Date
                             </li>
+                            <?php if ($model->annual_salary_75k): ?>
+                            <li class="list-group-item">
+                                <span class="icon icon-check icon-lg icon-fw"></span>
+                                This position has an annual salary of more than $75,000
+                            </li>
+                            <?php endif ?>
                         </ul>
                     </div>
                     <div class="col-sm-6">

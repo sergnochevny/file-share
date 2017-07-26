@@ -8,6 +8,7 @@ use backend\behaviors\VerifyPermissionBehavior;
 use backend\models\File;
 use backend\models\FileUpload;
 use backend\models\Investigation;
+use backend\models\MultiDownload;
 use backend\models\search\FileSearch;
 use backend\models\User;
 use common\components\PermissionController;
@@ -16,6 +17,7 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
+use yii\web\BadRequestHttpException;
 use yii\helpers\Html;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
@@ -55,6 +57,7 @@ class FileController extends PermissionController
                 'actions' => [
                     'delete' => ['POST'],
                     'upload' => ['POST'],
+                    'multi-download' => ['POST'],
                 ],
             ],
             'remember' => [
@@ -66,7 +69,7 @@ class FileController extends PermissionController
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['download', 'upload', 'index', 'archive', 'multi-upload'],
+                        'actions' => ['download', 'download-archive', 'multi-download', 'upload', 'index', 'archive'],
                         'roles' => ['@'],
                     ],
                     [
@@ -270,5 +273,63 @@ class FileController extends PermissionController
         }
         if (!empty($investigation)) return $this->actionIndex($investigation->id);
         return $this->actionIndex();
+    }
+
+    /**
+     * Creates one archive with selected files and returns downloadUrl
+     *
+     * @return array
+     * @throws BadRequestHttpException
+     */
+    public function actionMultiDownload()
+    {
+        set_time_limit(0); //!important
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $model = new MultiDownload();
+        $errorMessage = 'Something went wrong';
+
+        if ($model->load(Yii::$app->request->post())) {
+            try {
+                $model->packIntoArchive();
+                return ['downloadUrl' => Url::to(['download-archive',
+                        'name' => str_replace('.zip', '', $model->archiveFilename)
+                    ])
+                ];
+
+            } catch (\Exception $exception) {
+                $errorMessage = $exception->getMessage();
+            }
+        }
+
+        throw new BadRequestHttpException($errorMessage);
+    }
+
+    /**
+     * @param $name
+     * @return Response
+     */
+    public function actionDownloadArchive($name)
+    {
+        set_time_limit(0); //!important
+
+        if (empty($name)) {
+            return $this->redirect(['/investigation/index']);
+        }
+
+        $name = $name . '.zip';
+        $path = Yii::getAlias('@webroot/temp/' . $name);
+
+        if (!is_file($path) || !is_readable($path)) {
+            return $this->redirect(['/investigation/index']);
+        }
+
+        Yii::$app->response->setDownloadHeaders($name, 'application/zip', false, filesize($path));
+
+        Yii::$app->response->sendFile($path)->send();
+
+        if (is_writable($path)) {
+            unlink($path);
+        }
     }
 }

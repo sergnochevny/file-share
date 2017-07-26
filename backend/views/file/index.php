@@ -2,10 +2,11 @@
 
 use backend\models\FileUpload;
 use backend\models\User;
-use common\helpers\Url;
+use backend\widgets\ActiveForm;
 use common\widgets\Alert;
-use yii\grid\GridView;
 use yii\helpers\Html;
+use common\helpers\Url;
+use yii\grid\GridView;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
@@ -88,6 +89,14 @@ $view = $this;
                         'options' => ['class' => 'row'],
                         'layout' => "<div class='col-sm-12'>{items}</div>\n{summary}{pager}",
                         'columns' => [
+                            [
+                                'class' => 'yii\grid\CheckboxColumn',
+                                'cssClass' => 'multi-download',
+                                'options' => [
+                                    'id' => 'selection-col',
+                                    'data-download-url' => Url::to(['/file/multi-download'], true),
+                                ]
+                            ],
                             [
                                 'attribute' => 'name',
                                 'format' => 'html',
@@ -219,6 +228,7 @@ $view = $this;
         </div>
     </div>
 </div>
+<?php $this->registerJsFile('@web/js/file.multidownload.js', ['depends' => \common\assets\ExtLibAsset::className()]) ?>
 <?php \backend\assets\AlertHelperAsset::register($this); ?>
 <?php \backend\assets\DownloadAsset::register($this); ?>
 
