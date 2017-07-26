@@ -258,8 +258,8 @@ class FileController extends PermissionController
 
         Yii::$app->response->sendFile($path)->send();
 
-//        if (is_writable($path)) {
-//            unlink($path);
-//        }
+        if (is_writable($path)) {
+            unlink($path);
+        }
     }
 }
