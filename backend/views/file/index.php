@@ -92,12 +92,14 @@ $view = $this;
                         'layout' => "<div class='col-sm-12'>{items}</div>\n{summary}{pager}",
                         'columns' => [
                             [
-                                'class' => 'yii\grid\CheckboxColumn',
+                                'class' => 'backend\widgets\CustomCheckboxColumn',
+                                'templateHeader' => '<div class="rounded">{input}</div>',
+                                'templateContent' => '<div class="rounded">{input}</div>',
                                 'cssClass' => 'multi-download',
                                 'options' => [
                                     'id' => 'selection-col',
                                     'data-download-url' => Url::to(['/file/multi-download'], true),
-                                    'data-alert' => 'To download several files you need to put check mark next to the file!',
+                                    'data-alert' => 'Please select documents to download.',
                                 ]
                             ],
                             [
