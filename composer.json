@@ -50,7 +50,8 @@
       "rm -rf backend/web/assets/*"
     ],
     "post-install-cmd": [
-      "php yii migrate --interactive=0"
+      "php yii migrate --interactive=0",
+      "rm -rf backend/web/assets/*"
     ]
   }
 }
