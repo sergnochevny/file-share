@@ -1,12 +1,14 @@
 <?php
 
+use ait\utilities\assets\ExtLibAsset;
+use backend\assets\AlertHelperAsset;
+use backend\assets\DownloadAsset;
 use backend\models\FileUpload;
 use backend\models\User;
-use backend\widgets\ActiveForm;
-use common\widgets\Alert;
-use yii\helpers\Html;
 use common\helpers\Url;
+use common\widgets\Alert;
 use yii\grid\GridView;
+use yii\helpers\Html;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
@@ -95,6 +97,7 @@ $view = $this;
                                 'options' => [
                                     'id' => 'selection-col',
                                     'data-download-url' => Url::to(['/file/multi-download'], true),
+                                    'data-alert' => 'To download several files you need put check next to the file!',
                                 ]
                             ],
                             [
@@ -151,6 +154,13 @@ $view = $this;
                             [
                                 'class' => 'yii\grid\ActionColumn',
                                 'template' => '{archive}{delete}{download}',
+                                'headerOptions' => [
+                                    'class' => 'action-column'
+                                ],
+                                'header' => (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin') ||
+                                    (!Yii::$app->user->can('admin') && !Yii::$app->user->can('superAdmin') &&
+                                        ((!empty($investigation) && Yii::$app->user->can('employee', ['investigation' => $investigation]))))
+                                ) ? '<a class="btn btn-warning btn-xs" id="download-all">Download All</a>' : '',
                                 'contentOptions' => [
                                     'width' => (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin')) ? 220 : 150
                                 ],
@@ -223,12 +233,12 @@ $view = $this;
                     ]) ?>
 
                 </div>
+                <?php AlertHelperAsset::register($this); ?>
                 <?php Pjax::end(); ?>
             </div>
         </div>
     </div>
 </div>
-<?php $this->registerJsFile('@web/js/file.multidownload.js', ['depends' => \common\assets\ExtLibAsset::className()]) ?>
-<?php \backend\assets\AlertHelperAsset::register($this); ?>
-<?php \backend\assets\DownloadAsset::register($this); ?>
+<?php $this->registerJsFile('@web/js/file.multidownload.js', ['depends' => ExtLibAsset::className()]) ?>
+<?php DownloadAsset::register($this); ?>
 

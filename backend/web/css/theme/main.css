@@ -472,3 +472,13 @@ a.desc:after {
 .fileupload-progress{
     margin: 15px 0 15px 0;
 }
+
+.table > caption + thead > tr:first-child > td.action-column,
+.table > caption + thead > tr:first-child > th.action-column,
+.table > colgroup + thead > tr:first-child > td.action-column,
+.table > colgroup + thead > tr:first-child > th.action-column,
+.table > thead:first-child > tr:first-child > td.action-column,
+.table > thead:first-child > tr:first-child > th.action-column{
+    text-align: right;
+    padding-right: 50px;
+}

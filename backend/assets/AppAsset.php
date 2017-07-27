@@ -41,6 +41,6 @@ class AppAsset extends AssetBundle
 
     public $depends = [
         'yii\web\YiiAsset',
-        'common\assets\ExtLibAsset'
+        'ait\utilities\assets\ExtLibAsset'
     ];
 }
