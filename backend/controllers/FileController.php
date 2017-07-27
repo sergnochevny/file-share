@@ -69,7 +69,7 @@ class FileController extends PermissionController
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['download', 'download-archive', 'multi-download', 'upload', 'index', 'archive'],
+                        'actions' => ['download', 'download-archive', 'multi-download', 'multi-upload', 'index', 'archive'],
                         'roles' => ['@'],
                     ],
                     [
@@ -138,6 +138,10 @@ class FileController extends PermissionController
         return $this->render('index', $renderParams);
     }
 
+    /**
+     * @param null $parent
+     * @return array
+     */
     public function actionMultiUpload($parent = null)
     {
         Yii::$app->response->getHeaders()->set('Vary', 'Accept');
@@ -205,6 +209,11 @@ class FileController extends PermissionController
         return $response;
     }
 
+    /**
+     * @param null $parent
+     * @return mixed
+     * @deprecated
+     */
     public function actionUpload($parent = null)
     {
         if ($this->verifyPermission(VerifyPermissionBehavior::EVENT_VERIFY_FILE_PERMISSION,

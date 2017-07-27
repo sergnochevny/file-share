@@ -163,16 +163,16 @@
         },
         {
             "name": "ait/utilities",
-            "version": "1.0.37",
+            "version": "1.0.38",
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:ait/utilities.git",
-                "reference": "ecee2c9cd6faca3659e2c684241e648ececa4c59"
+                "reference": "1b059df7850dbd02ac971b6b0d81146f8a3d4d3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/utilities/1.0.37.0/ecee2c9cd6faca3659e2c684241e648ececa4c59.zip",
-                "reference": "ecee2c9cd6faca3659e2c684241e648ececa4c59",
+                "url": "https://tp.ait.com/repo/private/dists/ait/utilities/1.0.38.0/1b059df7850dbd02ac971b6b0d81146f8a3d4d3b.zip",
+                "reference": "1b059df7850dbd02ac971b6b0d81146f8a3d4d3b",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -183,7 +183,7 @@
             },
             "require": {
                 "bower-asset/es5-shim": ">=4.5",
-                "bower/ext-lib": "^1.0",
+                "bower/ext-lib": ">=1.0.10",
                 "ext-zlib": ">=2.0",
                 "php": ">=5.6",
                 "yiisoft/yii2": ">=2.0.11"
@@ -201,20 +201,20 @@
                 }
             ],
             "description": "AIT Yii2 Utilities Library",
-            "time": "2017-06-22T15:27:27+00:00"
+            "time": "2017-07-27T12:16:54+00:00"
         },
         {
             "name": "ait/yii2-fileupload",
-            "version": "1.0.10",
+            "version": "1.0.11",
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:ait/yii2-fileupload.git",
-                "reference": "d10b53ef473085f865bc6d4aa00feeaccd79c490"
+                "reference": "a1ce1933ab97a6ed826c0432d259386e27bd12ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/yii2-fileupload/1.0.10.0/d10b53ef473085f865bc6d4aa00feeaccd79c490.zip",
-                "reference": "d10b53ef473085f865bc6d4aa00feeaccd79c490",
+                "url": "https://tp.ait.com/repo/private/dists/ait/yii2-fileupload/1.0.11.0/a1ce1933ab97a6ed826c0432d259386e27bd12ef.zip",
+                "reference": "a1ce1933ab97a6ed826c0432d259386e27bd12ef",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -253,7 +253,7 @@
                 "yii 2",
                 "yii2"
             ],
-            "time": "2017-07-26T16:28:10+00:00"
+            "time": "2017-07-27T12:36:01+00:00"
         },
         {
             "name": "ait/yii2-gallery",
@@ -697,16 +697,16 @@
         },
         {
             "name": "bower/ext-lib",
-            "version": "1.0.9",
+            "version": "1.0.14",
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:ait/extlib.git",
-                "reference": "07ba3f2369d8c3bbfc0c79bfcc9253d222fb4167"
+                "reference": "9d99ba27cdaea204de4053224f3d36bb6764b0bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/bower/ext-lib/1.0.9.0/07ba3f2369d8c3bbfc0c79bfcc9253d222fb4167.zip",
-                "reference": "07ba3f2369d8c3bbfc0c79bfcc9253d222fb4167",
+                "url": "https://tp.ait.com/repo/private/dists/bower/ext-lib/1.0.14.0/9d99ba27cdaea204de4053224f3d36bb6764b0bc.zip",
+                "reference": "9d99ba27cdaea204de4053224f3d36bb6764b0bc",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -716,7 +716,7 @@
                 ]
             },
             "require": {
-                "components/jquery": ">=1.10"
+                "bower-asset/jquery": "^2.2"
             },
             "type": "component",
             "extra": {
@@ -742,7 +742,7 @@
                 }
             ],
             "description": "JQuery Library Extensions",
-            "time": "2017-07-17T11:56:22+00:00"
+            "time": "2017-07-27T12:15:39+00:00"
         },
         {
             "name": "cebe/markdown",
@@ -809,54 +809,6 @@
                 "markdown-extra"
             ],
             "time": "2017-07-16T21:13:23+00:00"
-        },
-        {
-            "name": "components/jquery",
-            "version": "3.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/components/jquery.git",
-                "reference": "e5534d4ab8e80c159553d507e358ed20a806d3bf"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/components/jquery/zipball/e5534d4ab8e80c159553d507e358ed20a806d3bf",
-                "reference": "e5534d4ab8e80c159553d507e358ed20a806d3bf",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
-            },
-            "type": "component",
-            "extra": {
-                "component": {
-                    "scripts": [
-                        "jquery.js"
-                    ],
-                    "files": [
-                        "jquery.min.js",
-                        "jquery.min.map",
-                        "jquery.slim.js",
-                        "jquery.slim.min.js",
-                        "jquery.slim.min.map"
-                    ]
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "JS Foundation and other contributors"
-                }
-            ],
-            "description": "jQuery JavaScript Library",
-            "homepage": "http://jquery.com",
-            "time": "2017-03-21T07:01:49+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
