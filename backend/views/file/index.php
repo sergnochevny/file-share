@@ -97,7 +97,7 @@ $view = $this;
                                 'options' => [
                                     'id' => 'selection-col',
                                     'data-download-url' => Url::to(['/file/multi-download'], true),
-                                    'data-alert' => 'To download several files you need put check next to the file!',
+                                    'data-alert' => 'To download several files you need to put check mark next to the file!',
                                 ]
                             ],
                             [
@@ -160,7 +160,7 @@ $view = $this;
                                 'header' => (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin') ||
                                     (!Yii::$app->user->can('admin') && !Yii::$app->user->can('superAdmin') &&
                                         ((!empty($investigation) && Yii::$app->user->can('employee', ['investigation' => $investigation]))))
-                                ) ? '<a class="btn btn-warning btn-xs" id="download-all">Download All</a>' : '',
+                                ) ? '<a class="btn btn-warning btn-xs" id="download-all">Download selected</a>' : '',
                                 'contentOptions' => [
                                     'width' => (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin')) ? 220 : 150
                                 ],
