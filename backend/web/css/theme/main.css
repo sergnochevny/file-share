@@ -487,7 +487,6 @@ a.desc:after {
     height: 18px;
     position: relative;
     background: #ff8c00;
-    border-radius: 3px;
     border: 1px solid #a99c8b;
 }
 .rounded input[type=checkbox] {
