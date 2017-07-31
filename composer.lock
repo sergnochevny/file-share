@@ -205,16 +205,16 @@
         },
         {
             "name": "ait/yii2-fileupload",
-            "version": "1.0.11",
+            "version": "1.0.12",
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:ait/yii2-fileupload.git",
-                "reference": "a1ce1933ab97a6ed826c0432d259386e27bd12ef"
+                "reference": "f8faf789abb3ce71268e17383e25c839e8057124"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/yii2-fileupload/1.0.11.0/a1ce1933ab97a6ed826c0432d259386e27bd12ef.zip",
-                "reference": "a1ce1933ab97a6ed826c0432d259386e27bd12ef",
+                "url": "https://tp.ait.com/repo/private/dists/ait/yii2-fileupload/1.0.12.0/f8faf789abb3ce71268e17383e25c839e8057124.zip",
+                "reference": "f8faf789abb3ce71268e17383e25c839e8057124",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -253,20 +253,20 @@
                 "yii 2",
                 "yii2"
             ],
-            "time": "2017-07-27T12:36:01+00:00"
+            "time": "2017-07-29T12:17:15+00:00"
         },
         {
             "name": "ait/yii2-gallery",
-            "version": "1.0.3",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:ait/yii2-gallery.git",
-                "reference": "990d19459581813cbcd1e6d872ba313d7fb57433"
+                "reference": "e3ba1eacc407e7f75c38254cdef66f39f1214517"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/yii2-gallery/1.0.3.0/990d19459581813cbcd1e6d872ba313d7fb57433.zip",
-                "reference": "990d19459581813cbcd1e6d872ba313d7fb57433",
+                "url": "https://tp.ait.com/repo/private/dists/ait/yii2-gallery/1.0.4.0/e3ba1eacc407e7f75c38254cdef66f39f1214517.zip",
+                "reference": "e3ba1eacc407e7f75c38254cdef66f39f1214517",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -303,7 +303,7 @@
                 "yii 2",
                 "yii2"
             ],
-            "time": "2017-07-21T14:06:28+00:00"
+            "time": "2017-07-28T15:08:11+00:00"
         },
         {
             "name": "bower-asset/blueimp-canvas-to-blob",
@@ -697,16 +697,16 @@
         },
         {
             "name": "bower/ext-lib",
-            "version": "1.0.14",
+            "version": "1.0.15",
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:ait/extlib.git",
-                "reference": "9d99ba27cdaea204de4053224f3d36bb6764b0bc"
+                "reference": "a962619871baab02d1e5b9a8a75366567e479165"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/bower/ext-lib/1.0.14.0/9d99ba27cdaea204de4053224f3d36bb6764b0bc.zip",
-                "reference": "9d99ba27cdaea204de4053224f3d36bb6764b0bc",
+                "url": "https://tp.ait.com/repo/private/dists/bower/ext-lib/1.0.15.0/a962619871baab02d1e5b9a8a75366567e479165.zip",
+                "reference": "a962619871baab02d1e5b9a8a75366567e479165",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -742,7 +742,7 @@
                 }
             ],
             "description": "JQuery Library Extensions",
-            "time": "2017-07-27T12:15:39+00:00"
+            "time": "2017-07-31T13:41:33+00:00"
         },
         {
             "name": "cebe/markdown",
