@@ -24,7 +24,8 @@
     "yii2tech/ar-linkmany": "^1.0",
     "ait/citrix": "^1.0.17",
     "kartik-v/yii2-password": "^1.5",
-    "ait/yii2-fileupload":"^1.0.2"
+    "ait/yii2-fileupload":"^1.0.2",
+    "yiisoft/yii2-coding-standards": "^2.0"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.0.0",
