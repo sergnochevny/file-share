@@ -7,6 +7,7 @@ use backend\models\UserProfile;
 use common\models\query\UndeletableActiveQuery;
 use Yii;
 use yii\base\NotSupportedException;
+use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\web\IdentityInterface;
 
@@ -27,6 +28,7 @@ use yii\web\IdentityInterface;
  *
  * @property integer $status
  * @property integer $created_at
+ * @property integer $created_by
  * @property integer $updated_at
  * @property integer $action_at
  *
@@ -50,6 +52,11 @@ class User extends UndeletableActiveRecord implements IdentityInterface
     {
         return [
             TimestampBehavior::class,
+            [
+                'class' => BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => false,
+            ],
         ];
     }
 

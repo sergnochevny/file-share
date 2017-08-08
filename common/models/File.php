@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\behaviors\ArchiveCascadeBehavior;
+use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -16,6 +17,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $type
  * @property string $citrix_id
  * @property string $created_at
+ * @property string $created_by
  * @property string $updated_at
  * @property string $status
  * @property Investigation $investigation
@@ -42,6 +44,11 @@ class File extends HistoryActiveRecord
         return [
             'timestamp' => ['class' => TimestampBehavior::class],
             ArchiveCascadeBehavior::class,
+            [
+                'class' => BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => false,
+            ],
         ];
     }
 

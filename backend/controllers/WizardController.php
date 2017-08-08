@@ -227,7 +227,6 @@ class WizardController extends Controller
                     $investigation->company_id = Yii::$app->user->identity->company->id;
                 }
 
-                $investigation->created_by = Yii::$app->user->id;
                 if ($investigation->save()) {
                     $this->setFlashMessage('success', 'applicant', $isUpdate);
                     return $this->redirect(['/file', 'id' => $investigation->id]);

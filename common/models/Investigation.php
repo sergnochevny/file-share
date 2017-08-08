@@ -7,6 +7,7 @@ use common\behaviors\ArchiveCascadeBehavior;
 use common\validators\SsnValidator;
 use DateTime;
 use Exception;
+use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
 use yii2tech\ar\linkmany\LinkManyBehavior;
@@ -136,6 +137,11 @@ class Investigation extends HistoryActiveRecord
                 'relation' => 'investigationTypes',
                 'relationReferenceAttribute' => 'investigationTypeIds',
             ],
+            [
+                'class' => BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => false,
+            ],
         ];
     }
 
@@ -174,11 +180,6 @@ class Investigation extends HistoryActiveRecord
                 ['company_id'], 'exist', 'skipOnError' => true,
                 'targetClass' => Company::className(),
                 'targetAttribute' => ['company_id' => 'id']
-            ],
-            [
-                ['created_by'], 'exist', 'skipOnError' => true,
-                'targetClass' => User::className(),
-                'targetAttribute' => ['created_by' => 'id']
             ],
 
             [['annual_salary_75k'], 'boolean'],
