@@ -18,7 +18,8 @@ $userIconSrc = Url::to(['/images/users/photo/' . $icon], true);
     <div class="navbar navbar-default">
         <div class="navbar-header">
             <a class="navbar-brand navbar-brand-center" href="<?= Url::to(['/'], true) ?>">
-                <img class="navbar-brand-logo" src="<?= Url::to(['/images/logo.png'], true) ?>" alt="Plan. Protect. Prosper.">
+                <img class="navbar-brand-logo" src="<?= Url::to(['/images/logo.png'], true) ?>"
+                     alt="Plan. Protect. Prosper.">
             </a>
             <button class="navbar-toggler visible-xs-block collapsed" type="button" data-toggle="collapse"
                     data-target="#sidenav">
@@ -59,23 +60,26 @@ $userIconSrc = Url::to(['/images/users/photo/' . $icon], true);
                 </button>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="visible-xs-block">
-                        <h4 class="navbar-text text-center">Hi, <?= ucfirst($user->username) ?></h4>
+                        <h4 class="navbar-text text-center">
+                            Hi, <?= !empty($user) ? ucfirst($user->username) : ''; ?></h4>
                     </li>
 
                     <li class="dropdown hidden-xs">
                         <button class="navbar-account-btn" data-toggle="dropdown" aria-haspopup="true">
-                            <img src="<?= $userIconSrc ?>" width="32" height="32" alt=""><!--<i class="icon icon-user" style="margin-top: 8px; font-size: 1.5em"></i>-->
-                            <?= ucfirst($user->username) ?>
+                            <img src="<?= $userIconSrc ?>" width="32" height="32" alt="">
+                            <!--<i class="icon icon-user" style="margin-top: 8px; font-size: 1.5em"></i>-->
+                            <?= !empty($user) ? ucfirst($user->username) : ''; ?>
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <li>
                                 <a href="#">
                                     <h5 class="navbar-upgrade-heading">
-                                        <?= ucfirst($user->username) ?>
+                                        <?= !empty($user) ? ucfirst($user->username) : ''; ?>
                                         <small class="navbar-upgrade-notification">
                                             Last Active
-                                            <?= Yii::$app->formatter->asDatetime($user->action_at) ?> UTC
+                                            <?= !empty($user) ? Yii::$app->formatter->asDatetime($user->action_at) : ''; ?>
+                                            UTC
                                         </small>
                                     </h5>
                                 </a>

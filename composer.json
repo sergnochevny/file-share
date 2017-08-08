@@ -10,7 +10,7 @@
   "support": {
     "issues": "http://ait.com/"
   },
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "require": {
     "php": ">=5.5.9",
     "yiisoft/yii2": "~2.0.10",
@@ -25,7 +25,8 @@
     "ait/citrix": "^1.0.17",
     "kartik-v/yii2-password": "^1.5",
     "ait/yii2-fileupload":"^1.0.2",
-    "yiisoft/yii2-coding-standards": "^2.0"
+    "yiisoft/yii2-coding-standards": "^2.0",
+    "ait/auth": "dev-master"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.0.0",

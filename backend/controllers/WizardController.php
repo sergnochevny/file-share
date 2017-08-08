@@ -17,6 +17,9 @@ use backend\widgets\ActiveForm;
 
 class WizardController extends Controller
 {
+
+    public $layout = 'content';
+
     /**
      * @inheritdoc
      */
@@ -29,7 +32,7 @@ class WizardController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['company', 'investigation'],
-                        'roles' => ['client']
+                        'roles' => ['user']
                     ],
                     [
                         'allow' => true,
@@ -138,7 +141,7 @@ class WizardController extends Controller
             if ($request->isPost && $userForm->load($request->post())) {
                 if (User::isAdmin()) {
                     //admin can create only clients
-                    $userForm->role = 'client';
+                    $userForm->role = 'user';
                 }
                 //new user with admin role can't have company
                 if ($userForm->role == 'admin' || $userForm->role == 'superAdmin') {

@@ -117,7 +117,7 @@ class NotifyBehavior extends Behavior
         }
 
         $companyTbl = Company::tableName();
-        $emails = User::findByRole('client')
+        $emails = User::findByRole('user')
             ->select(["$companyTbl.id", 'email'])
             ->joinWith('company')
             ->andWhere(["$companyTbl.id" => $this->getCompanyId()])

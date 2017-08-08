@@ -14,6 +14,9 @@ use Yii;
 
 class InvestigationTypeController extends Controller
 {
+
+    public $layout = 'content';
+
     /**
      * @param int $id
      * @return InvestigationType

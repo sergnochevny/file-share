@@ -9,7 +9,8 @@ use yii\helpers\Html;
 
 
 /** @var Company|null $userCompany */
-$userCompany = Yii::$app->user->identity->company;
+$user = Yii::$app->user->identity;
+$userCompany = !empty($user) ? $user->company : null;
 ?>
 <div class="layout-sidebar">
     <div class="layout-sidebar-backdrop"></div>

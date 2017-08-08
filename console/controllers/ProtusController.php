@@ -46,16 +46,16 @@ class ProtusController extends Controller
             $manager->add($employee);
         }
 
-        if ($client = $manager->getRole('client')) {
+        if ($client = $manager->getRole('user')) {
             $answer = $this->prompt('You already have client role. Do you want overwrite it? y/yes:', ['required' => true]);
             if (in_array(strtolower($answer), ['y', 'yes'])) {
                 $manager->remove($client);
-                $client = $manager->createRole('client');
+                $client = $manager->createRole('user');
                 $manager->add($client);
                 $this->stdout('OK. Now will be overwrite client' . PHP_EOL, Console::FG_GREEN);
             }
         } else {
-            $client = $manager->createRole('client');
+            $client = $manager->createRole('user');
             $manager->add($client);
         }
 

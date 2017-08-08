@@ -19,6 +19,8 @@ use backend\models\search\InvestigationSearch;
 class InvestigationController extends Controller
 {
 
+    public $layout = 'content';
+
     /**
      * @param mixed $parent
      * @return array
@@ -85,7 +87,7 @@ class InvestigationController extends Controller
                     [
                         'allow' => false,
                         'actions' => ['complete'],
-                        'roles' => ['client'],
+                        'roles' => ['user'],
                     ],
                     [
                         'allow' => true,
@@ -94,7 +96,7 @@ class InvestigationController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'roles' => ['superAdmin', 'client']
+                        'roles' => ['superAdmin', 'user']
                     ],
                 ]
             ]
