@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use yii\base\InvalidCallException;
+use yii\behaviors\BlameableBehavior;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
 
@@ -16,6 +17,7 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $company_id
  * @property string $type
  * @property integer $created_at
+ * @property integer $created_by
  */
 class History extends \yii\db\ActiveRecord
 {
@@ -49,6 +51,11 @@ class History extends \yii\db\ActiveRecord
                     ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', false],
                     ActiveRecord::EVENT_BEFORE_UPDATE => false,
                 ],
+            ],
+            [
+                'class' => BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => false,
             ],
         ];
     }

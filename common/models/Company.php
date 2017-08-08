@@ -4,6 +4,7 @@ namespace common\models;
 
 use common\behaviors\ArchiveCascadeBehavior;
 use common\models\query\UndeletableActiveQuery;
+use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii2tech\ar\linkmany\LinkManyBehavior;
 
@@ -13,16 +14,18 @@ use yii2tech\ar\linkmany\LinkManyBehavior;
  * @property integer $id
  * @property string $name
  * @property string $case_number
- * @property string $address
  * @property string $description
+ * @property string $address
+ *
  * @property string $city
  * @property string $state
  * @property string $zip
  *
- * @property array $investigationTypeIds
+ * @property array $investigationTypeIds @see behaviors()
  *
  * @property integer $status
  * @property integer $created_at
+ * @property integer $created_by
  * @property integer $updated_at
  *
  * @property string $other_type
@@ -65,6 +68,11 @@ class Company extends HistoryActiveRecord
                 'class' => LinkManyBehavior::class,
                 'relation' => 'investigationTypes',
                 'relationReferenceAttribute' => 'investigationTypeIds',
+            ],
+            [
+                'class' => BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => false,
             ],
         ];
     }
