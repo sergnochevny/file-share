@@ -20,21 +20,7 @@ AppAsset::register($this);
             <title><?= Html::encode($this->title) ?></title>
             <?php $this->head() ?>
         </head>
-        <body class="layout layout-header-fixed">
-            <?php $this->beginBody() ?>
-            <?= $this->render('partials/_header.php') ?>
-            <div class="layout-main">
-                <?= $this->render('partials/_left.php') ?>
-                <?= Alert::widget() ?>
-                <div class="layout-content">
-                    <div class="layout-content-body">
-                        <?= $content ?>
-                    </div>
-                </div>
-            </div>
-            <?= isset($this->blocks['fileDescription']) ? $this->blocks['fileDescription'] : '' ?>
-            <?php $this->endBody() ?>
-        </body>
+        <?= $content ?>
     </html>
 <?php $this->endPage() ?>
 

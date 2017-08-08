@@ -18,6 +18,9 @@ use yii\web\NotFoundHttpException;
  */
 class CompanyController extends Controller
 {
+
+    public $layout = 'content';
+
     /**
      * @inheritdoc
      */

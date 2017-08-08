@@ -15,6 +15,8 @@ use backend\models\User;
 class ProfileController extends Controller
 {
 
+    public $layout = 'content';
+
     /**
      * @inheritdoc
      */

@@ -31,7 +31,7 @@ use backend\models\User;
                 <?= Html::activeDropDownList($userForm, 'role', [
                     'superAdmin' => 'Super Admin',
                     'admin' => 'Admin',
-                    'client' => 'Company User'
+                    'user' => 'Company User'
                 ],
                     ['id' => 'user-role', 'class' => 'form-control', 'prompt' => 'Select a Role']); ?>
                 <?= Html::error($userForm, 'role', ['class' => 'help-block']) ?>

@@ -30,6 +30,8 @@ use yii\web\Response;
 class FileController extends PermissionController
 {
 
+    public $layout = 'content';
+
     /**
      * Finds the File model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

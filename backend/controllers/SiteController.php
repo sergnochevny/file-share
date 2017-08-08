@@ -23,6 +23,9 @@ use yii\web\Controller;
  */
 class SiteController extends Controller
 {
+
+    public $layout = 'content';
+
     /**
      * Shows index page for admins
      * @return string
@@ -124,7 +127,9 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) $this->goHome();
+        if (!Yii::$app->user->isGuest) {
+            $this->goHome();
+        }
 
         $this->layout = 'main-login';
         $model = new LoginForm();
@@ -153,7 +158,8 @@ class SiteController extends Controller
         $model = new RestorePasswordRequestForm;
 
         if ($model->load(Yii::$app->request->post()) && $model->sendRestoreLink()) {
-            Yii::$app->session->setFlash('success', 'Mail with further instructions has been sent to your e-mail address.');
+            Yii::$app->session->setFlash('success',
+                'Mail with further instructions has been sent to your e-mail address.');
             return $this->goHome();
         }
 
@@ -181,7 +187,8 @@ class SiteController extends Controller
         } catch (ErrorException $e) {
             $url = Url::to(['/site/restore-password-request']);
             $requestResetPassword = Html::a('request reset password', $url);
-            $session->setFlash('error', 'Seems to be token is invalid. Try to ' . $requestResetPassword . ' one more time.');
+            $session->setFlash('error',
+                'Seems to be token is invalid. Try to ' . $requestResetPassword . ' one more time.');
         }
 
         return $this->goHome();
@@ -195,9 +202,10 @@ class SiteController extends Controller
      */
     public function actionPasswordReset($token = null)
     {
-        if (!Yii::$app->user->isGuest) $this->goHome();
+        if (!Yii::$app->user->isGuest) {
+            $this->goHome();
+        }
 
-        $this->layout = 'main-login';
         $model = null;
         if (!empty($token)) {
             try {

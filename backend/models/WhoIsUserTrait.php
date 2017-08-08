@@ -28,7 +28,7 @@ trait WhoIsUserTrait
     public static function isClient()
     {
         return !Yii::$app->user->isGuest
-            && Yii::$app->user->can('client')
+            && Yii::$app->user->can('user')
             && !self::isAdmin() && !self::isSuperAdmin();
     }
 

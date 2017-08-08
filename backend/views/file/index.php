@@ -29,7 +29,9 @@ $view = $this;
 <div class="title-bar">
 
     <div class="title-bar-actions">
-        <?= Html::a(Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-chevron-circle-left icon-lg icon-fw']), ['class' => 'btn-label']) . ' Back', Url::previous(), ['class' => 'btn btn-labeled arrow-default']) ?>
+        <?= Html::a(Html::tag('span',
+                Html::tag('span', '', ['class' => 'icon icon-chevron-circle-left icon-lg icon-fw']),
+                ['class' => 'btn-label']) . ' Back', Url::previous(), ['class' => 'btn btn-labeled arrow-default']) ?>
     </div>
     <h1 class="title-bar-title">
         <span class="d-ib"><span class="icon icon-save"></span> <?= Html::encode($this->title) ?></span>
@@ -69,7 +71,14 @@ $view = $this;
                     <?php endif; ?>
                 </div>
                 <?php Pjax::begin(['id' => 'file_index', 'enablePushState' => false, 'timeout' => false]); ?>
-                <?= !empty($investigation) ? $this->render('partials/_investigation', ['model' => $investigation]) : '' ?>
+                <?= !empty($investigation) ? $this->render('partials/_investigation',
+                    ['model' => $investigation]) : '' ?>
+                <div class="alert-container">
+                    <?= Alert::widget() ?>
+                </div>
+                <?php Pjax::begin(['id' => 'file_index', 'enablePushState' => false, 'timeout' => false]); ?>
+                <?= !empty($investigation) ? $this->render('partials/_investigation',
+                    ['model' => $investigation]) : '' ?>
                 <div class="alert-container">
                     <?= Alert::widget() ?>
                 </div>
@@ -161,7 +170,8 @@ $view = $this;
                                 ],
                                 'header' => (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin') ||
                                     (!Yii::$app->user->can('admin') && !Yii::$app->user->can('superAdmin') &&
-                                        ((!empty($investigation) && Yii::$app->user->can('employee', ['investigation' => $investigation]))))
+                                        ((!empty($investigation) && Yii::$app->user->can('employee',
+                                                ['investigation' => $investigation]))))
                                 ) ? '<a class="btn btn-warning btn-xs" id="download-all">Download selected</a>' : '',
                                 'contentOptions' => [
                                     'width' => (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin')) ? 220 : 150
@@ -175,8 +185,9 @@ $view = $this;
                                                 !empty($investigation) &&
                                                 Yii::$app->user->can('employee', ['investigation' => $investigation])
                                             )
-                                        )
-                                            $content = Html::a(User::isClient() ? 'Remove' : 'Archive', Url::to(['/file/archive', 'id' => $model->id], true),
+                                        ) {
+                                            $content = Html::a(User::isClient() ? 'Remove' : 'Archive',
+                                                Url::to(['/file/archive', 'id' => $model->id], true),
                                                 [
                                                     'class' => "btn btn-purple btn-xs",
                                                     'title' => 'Archive',
@@ -186,12 +197,14 @@ $view = $this;
                                                     'data-pjax' => 1,
                                                 ]
                                             );
+                                        }
                                         return $content;
                                     },
                                     'delete' => function ($url, $model) use ($investigation) {
                                         $content = '';
-                                        if (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin'))
-                                            $content = Html::a('Delete', Url::to(['/file/delete', 'id' => $model->id], true),
+                                        if (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin')) {
+                                            $content = Html::a('Delete',
+                                                Url::to(['/file/delete', 'id' => $model->id], true),
                                                 [
                                                     'class' => "btn btn-danger btn-xs",
                                                     'title' => 'Delete',
@@ -201,6 +214,7 @@ $view = $this;
                                                     'data-pjax' => 1,
                                                 ]
                                             );
+                                        }
                                         return $content;
                                     },
                                     'download' => function ($url, $model) use ($investigation) {
@@ -208,19 +222,24 @@ $view = $this;
                                         if (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin') ||
                                             (
                                                 !Yii::$app->user->can('admin') && !Yii::$app->user->can('superAdmin') &&
-                                                ((!empty($investigation) && Yii::$app->user->can('employee', ['investigation' => $investigation])) ||
-                                                    (Yii::$app->user->can('employee', ['allfiles' => $model->parents->parent])))
+                                                ((!empty($investigation) && Yii::$app->user->can('employee',
+                                                            ['investigation' => $investigation])) ||
+                                                    (Yii::$app->user->can('employee',
+                                                        ['allfiles' => $model->parents->parent])))
                                             )
-                                        )
-                                            $content = Html::a('Download', Url::to(['/file/download', 'id' => $model->citrix_id], true),
+                                        ) {
+                                            $content = Html::a(
+                                                'Download',
+                                                Url::to(['/file/download', 'id' => $model->citrix_id], true),
                                                 [
-                                                    'class' => "btn btn-warning btn-xs",
+                                                    'class' => 'btn btn-warning btn-xs',
                                                     'data-download' => true,
                                                     'title' => 'Download',
-                                                    'aria-label' => "Download",
+                                                    'aria-label' => 'Download',
                                                     'data-pjax' => 0,
                                                 ]
                                             );
+                                        }
                                         return $content;
                                     },
                                 ],
