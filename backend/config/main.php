@@ -34,7 +34,7 @@ return [
             'csrfParam' => '_csrf-backend',
         ],
         'user' => [
-            'class' => yii\web\User::class,
+            'class' => 'common\components\User',
             'identityClass' => \backend\models\User::class,
             'loginUrl' => ['auth/auth/login'],
             'enableAutoLogin' => false,
