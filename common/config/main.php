@@ -8,6 +8,7 @@ return [
         ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
+            'defaultRoles' => ['all']
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -15,6 +16,11 @@ return [
         'keyStorage' => [
             'class' => 'ait\keystorage\components\KeyStorage',
         ],
-
+    ],
+    'modules' => [
+        'auth' => [
+            'class' => 'ait\auth\Module',
+            'viewPath' => '@backend/views/auth'
+        ],
     ],
 ];

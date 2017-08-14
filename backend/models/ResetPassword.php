@@ -27,12 +27,12 @@ class ResetPassword
     /**
      * @return bool
      */
-    public function sendNewOne()
+    public function sendNew()
     {
         $newPassword = $this->generatePassword(10);
         $this->updatePassword($newPassword);
 
-        $template = 'newPassword';
+        $template = 'new-password';
         return Yii::$app->mailer->compose([
             'html' => "$template-html",
             'text' => "$template-text",

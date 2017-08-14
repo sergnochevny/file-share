@@ -56,11 +56,4 @@ class GlobalAccessBehavior extends Behavior
         ]);
     }
 
-    public function init() {
-        parent::init();
-        if(!Yii::$app->user->isGuest && Yii::$app->user->can('manager') && !Yii::$app->user->can('administrator')){
-            Yii::$app->session->set('user_id', Yii::$app->user->id);
-        }
-    }
-
 }

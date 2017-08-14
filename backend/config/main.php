@@ -13,15 +13,6 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'defaultRoute' => 'site',
-    'modules' => [
-        'admin' => [
-            'class' => 'mdm\admin\Module',
-        ],
-        'auth' => [
-            'class' => 'ait\auth\Module',
-            'viewPath' => '@backend/views/auth'
-        ],
-    ],
     'components' => [
         'keyStorage' => [
             'class' => 'ait\keystorage\components\KeyStorage',
@@ -43,7 +34,7 @@ return [
             'csrfParam' => '_csrf-backend',
         ],
         'user' => [
-            'class' => \ait\auth\web\User::class,
+            'class' => yii\web\User::class,
             'identityClass' => \backend\models\User::class,
             'loginUrl' => ['auth/auth/login'],
             'enableAutoLogin' => false,
@@ -73,7 +64,7 @@ return [
         ],
     ],
     'as access' =>[
-        'class' => \ait\auth\behaviors\AccessControl::class,
+        'class' => 'ait\auth\behaviors\AccessControl'
     ],
     'as beforeAction' => [
         'class' => 'common\behaviors\LastActionBehavior',

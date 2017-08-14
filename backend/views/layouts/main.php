@@ -20,7 +20,11 @@ AppAsset::register($this);
             <title><?= Html::encode($this->title) ?></title>
             <?php $this->head() ?>
         </head>
-        <?= $content ?>
+        <?php $this->beginBody() ?>
+        <body class="layout layout-header-fixed">
+            <?= $content ?>
+        </body>
+        <?php $this->endBody() ?>
     </html>
 <?php $this->endPage() ?>
 
