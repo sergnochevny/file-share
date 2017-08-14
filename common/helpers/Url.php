@@ -3,6 +3,7 @@
 namespace common\helpers;
 
 use Yii;
+use yii\base\InvalidParamException;
 use yii\helpers\BaseUrl;
 
 class Url extends BaseUrl

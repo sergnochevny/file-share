@@ -342,5 +342,6 @@ class FileController extends PermissionController
         if (is_writable($path)) {
             unlink($path);
         }
+        return;
     }
 }

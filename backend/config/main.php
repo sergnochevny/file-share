@@ -12,7 +12,7 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'defaultRoute' => 'site',
+    'defaultRoute' => 'site/index',
     'components' => [
         'keyStorage' => [
             'class' => 'ait\keystorage\components\KeyStorage',
@@ -34,7 +34,7 @@ return [
             'csrfParam' => '_csrf-backend',
         ],
         'user' => [
-            'class' => 'common\components\User',
+            'class' => 'ait\utilities\web\User',
             'identityClass' => \backend\models\User::class,
             'loginUrl' => ['auth/auth/login'],
             'enableAutoLogin' => false,

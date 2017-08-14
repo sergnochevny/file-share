@@ -19,38 +19,53 @@ $userCompany = !empty($user) ? $user->company : null;
             <nav id="sidenav" class="sidenav-collapse collapse">
                 <?php
                 $items[] = ['label' => 'Navigation', 'options' => ['class' => 'sidenav-heading']];
-                $items[] = ['label' => 'Home', 'url' => Url::to(['/site/index'], true), 'options' => ['icon' => 'icon-home']];
+                $items[] = [
+                    'label' => 'Home',
+                    'url' => Url::to(['/site/index'], true),
+                    'options' => ['icon' => 'icon-home'],
+                    'visible' => Yii::$app->user->can('company.index'),
+                ];
                 $items[] = [
                     'label' => 'Companies',
                     'url' => ['/company/index'],
                     'options' => ['icon' => 'icon-contao'],
-                    'visible' => !User::isClient()
+                    'visible' => Yii::$app->user->can('company.index'),
                 ];
 
                 $items[] = [
                     'label' => 'Applicants',
                     'url' => ['/investigation/index'],
                     'options' => ['icon' => 'icon-folder-open-o'],
+                    'visible' => Yii::$app->user->can('investigation.index'),
                 ];
                 $items[] = [
                     'label' => 'Investigative services',
                     'url' => ['/investigation-type/index'],
                     'options' => ['icon' => 'icon-info-circle'],
-                    'visible' => !User::isClient(),
+                    'visible' => Yii::$app->user->can('investigation-type.index'),
                 ];
-                $items[] = ['label' => 'History', 'url' => ['/history'], 'options' => ['icon' => 'icon-history']];
-                $items[] = ['label' => 'Forms & templates', 'url' => ['/file'], 'options' => ['icon' => 'icon-save']];
+                $items[] = [
+                    'label' => 'History',
+                    'url' => ['/history'],
+                    'options' => ['icon' => 'icon-history'],
+                ];
+                $items[] = [
+                        'label' => 'Forms & templates',
+                    'url' => ['/file/index'],
+                    'options' => ['icon' => 'icon-save'],
+                    'visible' => Yii::$app->user->can('file.index'),
+                ];
                 $items[] = [
                     'label' => 'Users',
                     'url' => ['/user/index'],
                     'options' => ['icon' => 'icon-users'],
-                    'visible' => !User::isClient(),
+                    'visible' => \Yii::$app->user->can('user.index'),
                 ];
                 $items[] = [
                     'label' => 'Settings',
                     'url' => ['/site/settings'],
                     'options' => ['icon' => 'icon-cogs'],
-                    'visible' => User::isSuperAdmin()
+                    'visible' => \Yii::$app->user->can('site.settings'),
                 ];
                 ?>
                 <?= Menu::widget([
@@ -61,14 +76,19 @@ $userCompany = !empty($user) ? $user->company : null;
                         $res = null;
                         if (isset($item['url']) && isset($item['url'][0])) {
                             $route = is_array($item['url']) ? $item['url'][0] : $item['url'];
-                            if (((ltrim($route, '/') == 'investigation') || (ltrim($route, '/') == 'investigation/index'))&&
+                            if (((ltrim($route, '/') == 'investigation') || (ltrim($route,
+                                            '/') == 'investigation/index')) &&
                                 (Yii::$app->controller->id == 'file') &&
                                 (Yii::$app->controller->action->id == 'index') &&
-                                (!empty(Yii::$app->controller->actionParams['id']))) $res = true;
-                            if (((ltrim($route, '/') == 'file') || (ltrim($route, '/') == 'file/index'))&&
+                                (!empty(Yii::$app->controller->actionParams['id']))) {
+                                $res = true;
+                            }
+                            if (((ltrim($route, '/') == 'file') || (ltrim($route, '/') == 'file/index')) &&
                                 (Yii::$app->controller->id == 'file') &&
                                 (Yii::$app->controller->action->id == 'index') &&
-                                (!empty(Yii::$app->controller->actionParams['id']))) $res = false;
+                                (!empty(Yii::$app->controller->actionParams['id']))) {
+                                $res = false;
+                            }
                         }
                         return $res;
                     },

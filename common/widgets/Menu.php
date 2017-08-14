@@ -1,4 +1,5 @@
 <?php
+
 namespace common\widgets;
 
 use Yii;
@@ -14,6 +15,29 @@ class Menu extends \yii\widgets\Menu
      * The signature of the callable should be `function ($widget, $item)`.
      */
     public $activeItem;
+
+    /**
+     * Auth model. add visible parameters to items on url based method.
+     * @param array $items the items to be normalized.
+     * @return array the prepared menu items
+     */
+    protected function prepareItems($items)
+    {
+        foreach ($items as $i => $item) {
+            if (isset($item['visible'])) {
+                if (isset($item['url'])) {
+                    $permission = str_replace('/', '.', ltrim(\yii\helpers\Url::to($item['url']), ['/']));
+                    $item['visible'] = $item['visible'] && \Yii::$app->user->can($permission);
+                }
+            }
+            if (isset($item['items'])) {
+                $items[$i]['items'] = $this->prepareItems($item['items']);
+            }
+        }
+
+        return array_values($items);
+    }
+
 
     /**
      * @inheritdoc
@@ -59,7 +83,9 @@ class Menu extends \yii\widgets\Menu
     {
         if (isset($this->activeItem) && ($this->activeItem instanceof \Closure)) {
             $res = call_user_func($this->activeItem, $this, $item);
-            if (isset($res)) return $res;
+            if (isset($res)) {
+                return $res;
+            }
         }
         if (isset($item['url']) && isset($item['url'][0])) {
             $route = is_array($item['url']) ? $item['url'][0] : $item['url'];
@@ -70,7 +96,7 @@ class Menu extends \yii\widgets\Menu
             if (
                 (ltrim($route, '/') !== str_replace('/index', '', $this->route)) &&
                 (ltrim($route, '/') !== $this->route)
-            ){
+            ) {
                 return false;
             }
             if (is_array($item['url'])) {

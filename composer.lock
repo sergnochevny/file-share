@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:ait/auth.git",
-                "reference": "d798bbfb9f99a44cacac91dd0ec116222cce3a78"
+                "reference": "27e7f7a083e21538738618cfcfb57dfed6d0e135"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/auth/9999999-dev/d798bbfb9f99a44cacac91dd0ec116222cce3a78.zip",
-                "reference": "d798bbfb9f99a44cacac91dd0ec116222cce3a78",
+                "url": "https://tp.ait.com/repo/private/dists/ait/auth/9999999-dev/27e7f7a083e21538738618cfcfb57dfed6d0e135.zip",
+                "reference": "27e7f7a083e21538738618cfcfb57dfed6d0e135",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -27,6 +27,7 @@
                 ]
             },
             "require": {
+                "ait/utilities": ">=1.0.39",
                 "php": ">=5.6.0",
                 "yiisoft/yii2": ">=2.0.11",
                 "yiisoft/yii2-bootstrap": "~2.0.0",
@@ -72,7 +73,7 @@
                 "yii 2",
                 "yii2"
             ],
-            "time": "2017-08-14 10:55:33"
+            "time": "2017-08-14 13:36:15"
         },
         {
             "name": "ait/citrix",
@@ -231,16 +232,16 @@
         },
         {
             "name": "ait/utilities",
-            "version": "1.0.38",
+            "version": "1.0.39",
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:ait/utilities.git",
-                "reference": "1b059df7850dbd02ac971b6b0d81146f8a3d4d3b"
+                "reference": "e81fc399678a6001469b6a9734573bf994e36efd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/utilities/1.0.38.0/1b059df7850dbd02ac971b6b0d81146f8a3d4d3b.zip",
-                "reference": "1b059df7850dbd02ac971b6b0d81146f8a3d4d3b",
+                "url": "https://tp.ait.com/repo/private/dists/ait/utilities/1.0.39.0/e81fc399678a6001469b6a9734573bf994e36efd.zip",
+                "reference": "e81fc399678a6001469b6a9734573bf994e36efd",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -269,7 +270,7 @@
                 }
             ],
             "description": "AIT Yii2 Utilities Library",
-            "time": "2017-07-27T12:16:54+00:00"
+            "time": "2017-08-14T13:20:33+00:00"
         },
         {
             "name": "ait/yii2-fileupload",

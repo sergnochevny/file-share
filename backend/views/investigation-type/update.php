@@ -30,11 +30,8 @@ $this->params['breadcrumbs'][] = 'Update';
     <div class="col-xs-12">
         <div class="panel panel-collapse">
             <div class="panel-body">
-                <?= $this->render('_form', [
-                    'model' => $model,
-                ]) ?>
+                <?= $this->render('_form', ['model' => $model,]) ?>
             </div>
-
         </div>
     </div>
 </div>
