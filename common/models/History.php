@@ -19,7 +19,7 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $created_at
  * @property integer $created_by
  */
-class History extends \yii\db\ActiveRecord
+class History extends ActiveRecord
 {
     /**
      * @inheritdoc
