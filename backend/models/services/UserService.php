@@ -4,8 +4,8 @@
 namespace backend\models\services;
 
 
-use ait\auth\models\forms\UserForm;
 use backend\behaviors\NotifyBehavior;
+use backend\models\forms\UserForm;
 use backend\models\User;
 use common\models\Company;
 use common\models\UndeleteableActiveRecord;
