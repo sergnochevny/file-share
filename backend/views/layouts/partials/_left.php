@@ -1,11 +1,8 @@
 <?php
 
-use common\widgets\Menu;
-use common\helpers\Url;
+use ait\auth\widgets\Menu;
+use ait\utilities\helpers\Url;
 use backend\models\Company;
-use backend\models\Investigation;
-use backend\models\User;
-use yii\helpers\Html;
 
 
 /** @var Company|null $userCompany */
@@ -21,28 +18,24 @@ $userCompany = !empty($user) ? $user->company : null;
                 $items[] = ['label' => 'Navigation', 'options' => ['class' => 'sidenav-heading']];
                 $items[] = [
                     'label' => 'Home',
-                    'url' => Url::to(['/site/index'], true),
+                    'url' => ['/site/index'],
                     'options' => ['icon' => 'icon-home'],
-                    'visible' => Yii::$app->user->can('company.index'),
                 ];
                 $items[] = [
                     'label' => 'Companies',
                     'url' => ['/company/index'],
                     'options' => ['icon' => 'icon-contao'],
-                    'visible' => Yii::$app->user->can('company.index'),
                 ];
 
                 $items[] = [
                     'label' => 'Applicants',
                     'url' => ['/investigation/index'],
                     'options' => ['icon' => 'icon-folder-open-o'],
-                    'visible' => Yii::$app->user->can('investigation.index'),
                 ];
                 $items[] = [
                     'label' => 'Investigative services',
                     'url' => ['/investigation-type/index'],
                     'options' => ['icon' => 'icon-info-circle'],
-                    'visible' => Yii::$app->user->can('investigation-type.index'),
                 ];
                 $items[] = [
                     'label' => 'History',
@@ -53,7 +46,6 @@ $userCompany = !empty($user) ? $user->company : null;
                         'label' => 'Forms & templates',
                     'url' => ['/file/index'],
                     'options' => ['icon' => 'icon-save'],
-                    'visible' => Yii::$app->user->can('file.index'),
                 ];
                 $items[] = [
                     'label' => 'Users',
@@ -65,7 +57,6 @@ $userCompany = !empty($user) ? $user->company : null;
                     'label' => 'Settings',
                     'url' => ['/site/settings'],
                     'options' => ['icon' => 'icon-cogs'],
-                    'visible' => \Yii::$app->user->can('site.settings'),
                 ];
                 ?>
                 <?= Menu::widget([

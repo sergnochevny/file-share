@@ -7,7 +7,7 @@ namespace backend\behaviors;
 use backend\models\Company;
 use backend\models\Investigation;
 use backend\models\User;
-use common\models\UndeletableActiveRecord;
+use common\models\UndeleteableActiveRecord;
 use yii\base\Behavior;
 use yii\base\ErrorException;
 use yii\db\ActiveRecord;
@@ -164,10 +164,10 @@ class NotifyBehavior extends Behavior
     public function events()
     {
         return [
-            UndeletableActiveRecord::EVENT_AFTER_INSERT => 'afterInsert',
-            UndeletableActiveRecord::EVENT_AFTER_UPDATE => 'afterUpdate',
-            UndeletableActiveRecord::EVENT_AFTER_ARCHIVE => 'afterArchive',
-            UndeletableActiveRecord::EVENT_AFTER_DELETE => 'afterDelete',
+            UndeleteableActiveRecord::EVENT_AFTER_INSERT => 'afterInsert',
+            UndeleteableActiveRecord::EVENT_AFTER_UPDATE => 'afterUpdate',
+            UndeleteableActiveRecord::EVENT_AFTER_ARCHIVE => 'afterArchive',
+            UndeleteableActiveRecord::EVENT_AFTER_DELETE => 'afterDelete',
         ];
     }
 

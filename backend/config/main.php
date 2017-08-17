@@ -1,4 +1,7 @@
 <?php
+
+use backend\models\User;
+
 $params = array_merge(
     require(__DIR__ . '/../../common/config/params.php'),
     require(__DIR__ . '/../../common/config/params-local.php'),
@@ -35,7 +38,7 @@ return [
         ],
         'user' => [
             'class' => 'ait\utilities\web\User',
-            'identityClass' => \backend\models\User::class,
+            'identityClass' => User::class,
             'loginUrl' => ['auth/auth/login'],
             'enableAutoLogin' => false,
             'authTimeout' => 600,

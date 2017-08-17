@@ -3,7 +3,7 @@
 namespace common\models;
 
 use common\behaviors\ArchiveCascadeBehavior;
-use common\models\query\UndeletableActiveQuery;
+use common\models\query\UndeleteableActiveQuery;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii2tech\ar\linkmany\LinkManyBehavior;
@@ -114,7 +114,7 @@ class Company extends HistoryActiveRecord
     }
 
     /**
-     * @return UndeletableActiveQuery
+     * @return UndeleteableActiveQuery
      */
     public function getInvestigations()
     {
@@ -122,7 +122,7 @@ class Company extends HistoryActiveRecord
     }
 
     /**
-     * @return UndeletableActiveRecord
+     * @return UndeleteableActiveRecord
      */
     public function getInvestigationsWh()
     {
@@ -130,7 +130,7 @@ class Company extends HistoryActiveRecord
     }
 
     /**
-     * @return UndeletableActiveQuery
+     * @return UndeleteableActiveQuery
      */
     public function getUsers()
     {

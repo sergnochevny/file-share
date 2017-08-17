@@ -2,11 +2,10 @@
 
 /* @var $this \yii\web\View */
 
-use common\helpers\Url;
+use ait\utilities\helpers\Url;
+use backend\models\User;
 use common\widgets\Alert;
 use yii\widgets\Pjax;
-use yii\web\JqueryAsset;
-use backend\models\User;
 
 
 $activeClass = ' active';
@@ -107,5 +106,5 @@ $this->title = 'Wizard';
                 </div>
             </div>
         </div>
-    <?php \yii\widgets\Pjax::end() ?>
+    <?php Pjax::end() ?>
 </div>

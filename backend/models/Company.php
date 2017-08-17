@@ -8,7 +8,7 @@ use common\behaviors\ArchiveCascadeBehavior;
 use backend\behaviors\CitrixFolderBehavior;
 use backend\behaviors\HistoryBehavior;
 use backend\behaviors\NotifyBehavior;
-use common\models\UndeletableActiveRecord;
+use common\models\UndeleteableActiveRecord;
 use yii\helpers\Inflector;
 
 /**
@@ -92,7 +92,7 @@ class Company extends \common\models\Company
     }
 
     /**
-     * @return UndeletableActiveRecord
+     * @return UndeleteableActiveRecord
      */
     public function getInvestigations()
     {

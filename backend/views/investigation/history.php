@@ -1,13 +1,13 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\InvestigationSearch */
+/* @var $searchModel backend\models\search\InvestigationSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+use ait\utilities\helpers\Url;
 use common\widgets\Alert;
 use yii\helpers\Html;
 use yii\grid\GridView;
-use common\helpers\Url;
 use yii\widgets\Pjax;
 
 $this->title = 'History';

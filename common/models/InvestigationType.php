@@ -17,7 +17,7 @@ use yii\behaviors\TimestampBehavior;
  * @property InvestigationInvestigationType[] $investigationInvestigationTypes
  * @property Investigation[] $investigations
  */
-class InvestigationType extends UndeletableActiveRecord
+class InvestigationType extends UndeleteableActiveRecord
 {
 
     /**

@@ -118,7 +118,7 @@ class InvestigationTypeController extends Controller
         return $this->render('update', ['model' => $model]);
     }
 
-    public function actionRemove($id)
+    public function actionDelete($id)
     {
         $this->findModel($id)->delete();
         Yii::$app->getSession()->setFlash('success', 'Type has been successfully removed');

@@ -13,7 +13,7 @@ use common\models\Company;
 use common\models\File;
 use common\models\Investigation;
 use common\models\RecoverableActiveRecord;
-use common\models\UndeletableActiveRecord;
+use common\models\UndeleteableActiveRecord;
 use Yii;
 use yii\base\Behavior;
 use yii\base\InvalidCallException;
@@ -198,8 +198,8 @@ class ArchiveCascadeBehavior extends Behavior
     public function events()
     {
         return [
-            UndeletableActiveRecord::EVENT_BEFORE_ARCHIVE => 'beforeArchive',
-            UndeletableActiveRecord::EVENT_AFTER_ARCHIVE => 'afterArchive',
+            UndeleteableActiveRecord::EVENT_BEFORE_ARCHIVE => 'beforeArchive',
+            UndeleteableActiveRecord::EVENT_AFTER_ARCHIVE => 'afterArchive',
             RecoverableActiveRecord::EVENT_BEFORE_RECOVER => 'beforeRecover',
             RecoverableActiveRecord::EVENT_AFTER_RECOVER => 'afterRecover',
         ];
@@ -209,7 +209,7 @@ class ArchiveCascadeBehavior extends Behavior
     {
         parent::attach($owner);
 
-        if (!($this->owner instanceof UndeletableActiveRecord)) throw new InvalidCallException("This behavior is only for UndeletableActiveRecord");
+        if (!($this->owner instanceof UndeleteableActiveRecord)) throw new InvalidCallException("This behavior is only for UndeletableActiveRecord");
 
     }
 

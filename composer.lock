@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:ait/auth.git",
-                "reference": "27e7f7a083e21538738618cfcfb57dfed6d0e135"
+                "reference": "bd98444246e0a47de50ae8a6e8147da3c96d0b6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/auth/9999999-dev/27e7f7a083e21538738618cfcfb57dfed6d0e135.zip",
-                "reference": "27e7f7a083e21538738618cfcfb57dfed6d0e135",
+                "url": "https://tp.ait.com/repo/private/dists/ait/auth/9999999-dev/bd98444246e0a47de50ae8a6e8147da3c96d0b6e.zip",
+                "reference": "bd98444246e0a47de50ae8a6e8147da3c96d0b6e",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -27,6 +27,7 @@
                 ]
             },
             "require": {
+                "ait/rbac": "dev-master",
                 "ait/utilities": ">=1.0.39",
                 "php": ">=5.6.0",
                 "yiisoft/yii2": ">=2.0.11",
@@ -51,14 +52,10 @@
             },
             "scripts": {
                 "post-update-cmd": [
-                    "yii\\composer\\Installer::postInstall",
-                    "php yii migrate --migrationPath=@yii/rbac/migrations --interactive=0",
-                    "php yii migrate --migrationPath=@ait/auth/migrations --interactive=0"
+                    "yii\\composer\\Installer::postInstall"
                 ],
                 "post-install-cmd": [
-                    "yii\\composer\\Installer::postInstall",
-                    "php yii migrate --migrationPath=@yii/rbac/migrations --interactive=0",
-                    "php yii migrate --migrationPath=@ait/auth/migrations --interactive=0"
+                    "yii\\composer\\Installer::postInstall"
                 ]
             },
             "license": [
@@ -73,7 +70,7 @@
                 "yii 2",
                 "yii2"
             ],
-            "time": "2017-08-14 13:36:15"
+            "time": "2017-08-16T18:05:09+00:00"
         },
         {
             "name": "ait/citrix",
@@ -231,17 +228,75 @@
             "time": "2017-04-21T13:10:00+00:00"
         },
         {
-            "name": "ait/utilities",
-            "version": "1.0.39",
+            "name": "ait/rbac",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@gitlab.ait.com:ait/utilities.git",
-                "reference": "e81fc399678a6001469b6a9734573bf994e36efd"
+                "url": "git@gitlab.ait.com:ait/rbac.git",
+                "reference": "5e75b9911bf246b4bc50a49a06439ddda584b131"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/utilities/1.0.39.0/e81fc399678a6001469b6a9734573bf994e36efd.zip",
-                "reference": "e81fc399678a6001469b6a9734573bf994e36efd",
+                "url": "https://tp.ait.com/repo/private/dists/ait/rbac/9999999-dev/5e75b9911bf246b4bc50a49a06439ddda584b131.zip",
+                "reference": "5e75b9911bf246b4bc50a49a06439ddda584b131",
+                "shasum": null,
+                "mirrors": [
+                    {
+                        "url": "https://tp.ait.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=5.6.0",
+                "yiisoft/yii2": ">=2.0.11"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "yii\\composer\\Installer::postInstall": {
+                    "copyFiles": [
+                        []
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ait\\rbac\\": ""
+                }
+            },
+            "scripts": {
+                "post-update-cmd": [
+                    "yii\\composer\\Installer::postInstall"
+                ],
+                "post-install-cmd": [
+                    "yii\\composer\\Installer::postInstall"
+                ]
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "AIT RBAC",
+            "keywords": [
+                "ait",
+                "rbac",
+                "yii",
+                "yii 2",
+                "yii2"
+            ],
+            "time": "2017-08-16T17:55:40+00:00"
+        },
+        {
+            "name": "ait/utilities",
+            "version": "1.0.41",
+            "source": {
+                "type": "git",
+                "url": "git@gitlab.ait.com:ait/utilities.git",
+                "reference": "0c847fa7557417ec2119c313bfbfe398ca578a8e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://tp.ait.com/repo/private/dists/ait/utilities/1.0.41.0/0c847fa7557417ec2119c313bfbfe398ca578a8e.zip",
+                "reference": "0c847fa7557417ec2119c313bfbfe398ca578a8e",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -270,7 +325,7 @@
                 }
             ],
             "description": "AIT Yii2 Utilities Library",
-            "time": "2017-08-14T13:20:33+00:00"
+            "time": "2017-08-14T15:29:39+00:00"
         },
         {
             "name": "ait/yii2-fileupload",
@@ -389,7 +444,7 @@
                 "shasum": ""
             },
             "type": "bower-asset-library",
-            "time": "2017-07-26 09:23:22"
+            "time": "2017-07-26T09:23:22+00:00"
         },
         {
             "name": "bower-asset/blueimp-file-upload",
@@ -485,7 +540,7 @@
                 "shasum": ""
             },
             "type": "bower-asset-library",
-            "time": "2017-07-26 13:56:58"
+            "time": "2017-07-26T13:56:58+00:00"
         },
         {
             "name": "bower-asset/blueimp-tmpl",
@@ -502,7 +557,7 @@
                 "shasum": ""
             },
             "type": "bower-asset-library",
-            "time": "2017-07-26 14:06:40"
+            "time": "2017-07-26T14:06:40+00:00"
         },
         {
             "name": "bower-asset/bootstrap",
@@ -589,7 +644,7 @@
                 "polyfill",
                 "shim"
             ],
-            "time": "2017-06-27 00:21:38"
+            "time": "2017-06-27T00:21:38+00:00"
         },
         {
             "name": "bower-asset/inputmask",
@@ -881,7 +936,7 @@
                 "markdown",
                 "markdown-extra"
             ],
-            "time": "2017-07-16 21:15:25"
+            "time": "2017-07-16T21:15:25+00:00"
         },
         {
             "name": "doctrine/lexer",
@@ -941,7 +996,7 @@
                 "lexer",
                 "parser"
             ],
-            "time": "2017-07-24 09:37:08"
+            "time": "2017-07-24T09:37:08+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -1114,7 +1169,7 @@
             "keywords": [
                 "promise"
             ],
-            "time": "2017-05-20 23:14:18"
+            "time": "2017-05-20T23:14:18+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -1185,7 +1240,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2017-07-17 09:11:21"
+            "time": "2017-07-17T09:11:21+00:00"
         },
         {
             "name": "kartik-v/dependent-dropdown",
@@ -1238,7 +1293,7 @@
                 "option",
                 "select"
             ],
-            "time": "2017-08-01 11:43:55"
+            "time": "2017-08-01T11:43:55+00:00"
         },
         {
             "name": "kartik-v/strength-meter",
@@ -1343,7 +1398,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2017-05-04 12:34:30"
+            "time": "2017-05-04T12:34:30+00:00"
         },
         {
             "name": "kartik-v/yii2-password",
@@ -1519,7 +1574,7 @@
                 "rbac",
                 "yii"
             ],
-            "time": "2016-12-01 03:31:21"
+            "time": "2016-12-01T03:31:21+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -1603,7 +1658,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2017-06-19 01:22:40"
+            "time": "2017-06-19T01:22:40+00:00"
         },
         {
             "name": "psr/http-message",
@@ -1659,7 +1714,7 @@
                 "request",
                 "response"
             ],
-            "time": "2016-08-06 14:39:51"
+            "time": "2016-08-06T14:39:51+00:00"
         },
         {
             "name": "psr/log",
@@ -1712,7 +1767,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10 12:19:37"
+            "time": "2016-10-10T12:19:37+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -1796,7 +1851,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2017-07-13 01:37:12"
+            "time": "2017-07-13T01:37:12+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -1857,7 +1912,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2017-08-10 12:27:54"
+            "time": "2017-08-10T12:27:54+00:00"
         },
         {
             "name": "yii2tech/ar-linkmany",
@@ -1914,7 +1969,7 @@
                 "relaton",
                 "yii2"
             ],
-            "time": "2017-07-27 13:32:07"
+            "time": "2017-07-27T13:32:07+00:00"
         },
         {
             "name": "yiisoft/yii2",
@@ -1922,12 +1977,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "9ceac4f27311466c893d7e6c0c27017728e11ea7"
+                "reference": "5c9c2e5cf741f96b62f745390416a519124d7dd3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/9ceac4f27311466c893d7e6c0c27017728e11ea7",
-                "reference": "9ceac4f27311466c893d7e6c0c27017728e11ea7",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/5c9c2e5cf741f96b62f745390416a519124d7dd3",
+                "reference": "5c9c2e5cf741f96b62f745390416a519124d7dd3",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -2020,7 +2075,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2017-08-14 09:11:59"
+            "time": "2017-08-16T05:04:35+00:00"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -2072,7 +2127,7 @@
                 "bootstrap",
                 "yii2"
             ],
-            "time": "2017-08-02 13:52:13"
+            "time": "2017-08-02T13:52:13+00:00"
         },
         {
             "name": "yiisoft/yii2-coding-standards",
@@ -2202,7 +2257,7 @@
                 "extension installer",
                 "yii2"
             ],
-            "time": "2017-08-01 14:22:25"
+            "time": "2017-08-01T14:22:25+00:00"
         },
         {
             "name": "yiisoft/yii2-jui",
@@ -2254,7 +2309,7 @@
                 "jQuery UI",
                 "yii2"
             ],
-            "time": "2017-08-01 19:29:58"
+            "time": "2017-08-01T19:29:58+00:00"
         },
         {
             "name": "yiisoft/yii2-swiftmailer",
@@ -2310,7 +2365,7 @@
                 "swiftmailer",
                 "yii2"
             ],
-            "time": "2017-08-04 10:48:54"
+            "time": "2017-08-04T10:48:54+00:00"
         }
     ],
     "packages-dev": [
@@ -2377,7 +2432,7 @@
                 "gherkin",
                 "parser"
             ],
-            "time": "2016-10-30 11:50:56"
+            "time": "2016-10-30T11:50:56+00:00"
         },
         {
             "name": "bower-asset/typeahead.js",
@@ -2449,7 +2504,7 @@
                 "tables",
                 "yii2"
             ],
-            "time": "2015-07-18 23:51:00"
+            "time": "2015-07-18T23:51:00+00:00"
         },
         {
             "name": "codeception/base",
@@ -2548,7 +2603,7 @@
                 "functional testing",
                 "unit testing"
             ],
-            "time": "2017-08-10 20:41:08"
+            "time": "2017-08-10T20:41:08+00:00"
         },
         {
             "name": "codeception/verify",
@@ -2650,7 +2705,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2015-06-14 21:17:01"
+            "time": "2015-06-14T21:17:01+00:00"
         },
         {
             "name": "fzaninotto/faker",
@@ -2658,12 +2713,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "2d9813dbd31509dfaa1df5b78947fd19755e3c84"
+                "reference": "d3ed4cc37051c1ca52d22d76b437d14809fc7e0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/2d9813dbd31509dfaa1df5b78947fd19755e3c84",
-                "reference": "2d9813dbd31509dfaa1df5b78947fd19755e3c84",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/d3ed4cc37051c1ca52d22d76b437d14809fc7e0d",
+                "reference": "d3ed4cc37051c1ca52d22d76b437d14809fc7e0d",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -2683,7 +2738,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.7-dev"
+                    "dev-master": "1.8-dev"
                 }
             },
             "autoload": {
@@ -2706,7 +2761,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2017-08-11 09:58:57"
+            "time": "2017-08-15T16:48:10+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -2754,7 +2809,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2017-04-12 18:52:22"
+            "time": "2017-04-12T18:52:22+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -2815,7 +2870,7 @@
                 }
             ],
             "description": "Component for reading phar.io manifest information from a PHP Archive (PHAR)",
-            "time": "2017-04-07 07:07:10"
+            "time": "2017-04-07T07:07:10+00:00"
         },
         {
             "name": "phar-io/version",
@@ -2928,7 +2983,7 @@
                 "reflection",
                 "static analysis"
             ],
-            "time": "2017-04-30 11:58:12"
+            "time": "2017-04-30T11:58:12+00:00"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -3076,7 +3131,7 @@
                 }
             ],
             "description": "A comprehensive library for generating differences between two hashable objects (strings or arrays).",
-            "time": "2016-04-07 12:29:16"
+            "time": "2016-04-07T12:29:16+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -3145,7 +3200,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2017-07-19 07:44:25"
+            "time": "2017-07-19T07:44:25+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -3215,7 +3270,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-08-03 14:42:12"
+            "time": "2017-08-03T14:42:12+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -3268,7 +3323,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2016-10-03 07:40:28"
+            "time": "2016-10-03T07:40:28+00:00"
         },
         {
             "name": "phpunit/php-text-template",
@@ -3370,7 +3425,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2017-03-07 15:42:04"
+            "time": "2017-03-07T15:42:04+00:00"
         },
         {
             "name": "phpunit/php-token-stream",
@@ -3425,7 +3480,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2017-08-03 14:21:49"
+            "time": "2017-08-03T14:21:49+00:00"
         },
         {
             "name": "phpunit/phpunit",
@@ -3515,7 +3570,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-08-03 13:59:28"
+            "time": "2017-08-03T13:59:28+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -3580,7 +3635,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2017-08-03 14:08:16"
+            "time": "2017-08-03T14:08:16+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -3631,7 +3686,7 @@
             ],
             "description": "Looks up which function or method a line of code belongs to",
             "homepage": "https://github.com/sebastianbergmann/code-unit-reverse-lookup/",
-            "time": "2017-03-04 10:23:55"
+            "time": "2017-03-04T10:23:55+00:00"
         },
         {
             "name": "sebastian/comparator",
@@ -3759,7 +3814,7 @@
             "keywords": [
                 "diff"
             ],
-            "time": "2017-05-22 07:24:03"
+            "time": "2017-05-22T07:24:03+00:00"
         },
         {
             "name": "sebastian/environment",
@@ -3815,7 +3870,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2017-07-01 08:51:00"
+            "time": "2017-07-01T08:51:00+00:00"
         },
         {
             "name": "sebastian/exporter",
@@ -3888,7 +3943,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2017-04-03 13:19:02"
+            "time": "2017-04-03T13:19:02+00:00"
         },
         {
             "name": "sebastian/global-state",
@@ -3945,7 +4000,7 @@
             "keywords": [
                 "global state"
             ],
-            "time": "2017-04-27 15:39:26"
+            "time": "2017-04-27T15:39:26+00:00"
         },
         {
             "name": "sebastian/object-enumerator",
@@ -3998,7 +4053,7 @@
             ],
             "description": "Traverses array structures and object graphs to enumerate all referenced objects",
             "homepage": "https://github.com/sebastianbergmann/object-enumerator/",
-            "time": "2017-08-03 12:35:26"
+            "time": "2017-08-03T12:35:26+00:00"
         },
         {
             "name": "sebastian/object-reflector",
@@ -4049,7 +4104,7 @@
             ],
             "description": "Allows reflection of object attributes, including inherited and non-public ones",
             "homepage": "https://github.com/sebastianbergmann/object-reflector/",
-            "time": "2017-03-29 09:07:27"
+            "time": "2017-03-29T09:07:27+00:00"
         },
         {
             "name": "sebastian/recursion-context",
@@ -4108,7 +4163,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2017-03-07 15:09:59"
+            "time": "2017-03-07T15:09:59+00:00"
         },
         {
             "name": "sebastian/resource-operations",
@@ -4156,7 +4211,7 @@
             ],
             "description": "Provides a list of PHP built-in functions that operate on resources",
             "homepage": "https://www.github.com/sebastianbergmann/resource-operations",
-            "time": "2016-10-03 07:43:09"
+            "time": "2016-10-03T07:43:09+00:00"
         },
         {
             "name": "sebastian/version",
@@ -4205,7 +4260,7 @@
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
-            "time": "2016-10-03 07:35:21"
+            "time": "2016-10-03T07:35:21+00:00"
         },
         {
             "name": "stecman/symfony-console-completion",
@@ -4319,7 +4374,7 @@
             ],
             "description": "Symfony BrowserKit Component",
             "homepage": "https://symfony.com",
-            "time": "2017-08-03 09:34:20"
+            "time": "2017-08-03T09:34:20+00:00"
         },
         {
             "name": "symfony/console",
@@ -4327,12 +4382,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "f5ba4c6753a7260f2fbff5e01d96697eb3a024d8"
+                "reference": "094d1ac303515f276cd3f7c0fc96926064312ae0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/f5ba4c6753a7260f2fbff5e01d96697eb3a024d8",
-                "reference": "f5ba4c6753a7260f2fbff5e01d96697eb3a024d8",
+                "url": "https://api.github.com/repos/symfony/console/zipball/094d1ac303515f276cd3f7c0fc96926064312ae0",
+                "reference": "094d1ac303515f276cd3f7c0fc96926064312ae0",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -4355,7 +4410,6 @@
                 "symfony/config": "~3.3|~4.0",
                 "symfony/dependency-injection": "~3.3|~4.0",
                 "symfony/event-dispatcher": "~2.8|~3.0|~4.0",
-                "symfony/http-kernel": "~2.8|~3.0|~4.0",
                 "symfony/lock": "~3.4|~4.0",
                 "symfony/process": "~3.3|~4.0"
             },
@@ -4395,7 +4449,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-08-12 08:14:42"
+            "time": "2017-08-15T13:32:22+00:00"
         },
         {
             "name": "symfony/css-selector",
@@ -4454,7 +4508,7 @@
             ],
             "description": "Symfony CssSelector Component",
             "homepage": "https://symfony.com",
-            "time": "2017-08-03 09:34:20"
+            "time": "2017-08-03T09:34:20+00:00"
         },
         {
             "name": "symfony/debug",
@@ -4516,7 +4570,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2017-08-10 07:07:17"
+            "time": "2017-08-10T07:07:17+00:00"
         },
         {
             "name": "symfony/dom-crawler",
@@ -4524,12 +4578,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
-                "reference": "c89fa997e1efeb04dee651ca3634e1ed389340f4"
+                "reference": "93866c238cd9532d48c24cf286167c416dda3859"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/c89fa997e1efeb04dee651ca3634e1ed389340f4",
-                "reference": "c89fa997e1efeb04dee651ca3634e1ed389340f4",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/93866c238cd9532d48c24cf286167c416dda3859",
+                "reference": "93866c238cd9532d48c24cf286167c416dda3859",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -4578,7 +4632,7 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "https://symfony.com",
-            "time": "2017-08-03 12:04:31"
+            "time": "2017-08-15T13:32:22+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -4647,7 +4701,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2017-08-03 09:34:20"
+            "time": "2017-08-03T09:34:20+00:00"
         },
         {
             "name": "symfony/finder",
@@ -4702,7 +4756,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2017-08-03 09:34:20"
+            "time": "2017-08-03T09:34:20+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -4767,7 +4821,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2017-06-14 15:44:48"
+            "time": "2017-06-14T15:44:48+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -4828,7 +4882,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-08-04 13:29:48"
+            "time": "2017-08-04T13:29:48+00:00"
         },
         {
             "name": "theseer/tokenizer",
@@ -4930,7 +4984,7 @@
                 "check",
                 "validate"
             ],
-            "time": "2016-11-23 20:04:41"
+            "time": "2016-11-23T20:04:41+00:00"
         },
         {
             "name": "yiisoft/yii2-debug",
@@ -4938,12 +4992,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-debug.git",
-                "reference": "9dc50cb57d1cf995d07350471b758e748209f680"
+                "reference": "5ae958b6ffc034deb7ec5d5c0f5c661d3fac221d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/9dc50cb57d1cf995d07350471b758e748209f680",
-                "reference": "9dc50cb57d1cf995d07350471b758e748209f680",
+                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/5ae958b6ffc034deb7ec5d5c0f5c661d3fac221d",
+                "reference": "5ae958b6ffc034deb7ec5d5c0f5c661d3fac221d",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -4983,7 +5037,7 @@
                 "debugger",
                 "yii2"
             ],
-            "time": "2017-08-01 17:56:04"
+            "time": "2017-08-14T20:52:17+00:00"
         },
         {
             "name": "yiisoft/yii2-faker",
@@ -5036,7 +5090,7 @@
                 "faker",
                 "yii2"
             ],
-            "time": "2017-08-02 13:01:06"
+            "time": "2017-08-02T13:01:06+00:00"
         },
         {
             "name": "yiisoft/yii2-gii",
@@ -5095,7 +5149,7 @@
                 "gii",
                 "yii2"
             ],
-            "time": "2017-08-02 13:12:51"
+            "time": "2017-08-02T13:12:51+00:00"
         }
     ],
     "aliases": [],

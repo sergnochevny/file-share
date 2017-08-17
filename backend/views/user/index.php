@@ -1,10 +1,9 @@
 <?php
 
-use backend\models\User;
+use ait\utilities\helpers\Url;
 use common\widgets\Alert;
 use yii\helpers\Html;
 use yii\grid\GridView;
-use common\helpers\Url;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
@@ -16,7 +15,9 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="title-bar">
     <div class="title-bar-actions">
-        <?= Html::a(Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-chevron-circle-left icon-lg icon-fw']), ['class' => 'btn-label']) . ' Back', Url::previous(), ['class' => 'btn btn-labeled arrow-default']) ?>
+        <?= Html::a(Html::tag('span',
+                Html::tag('span', '', ['class' => 'icon icon-chevron-circle-left icon-lg icon-fw']),
+                ['class' => 'btn-label']) . ' Back', Url::previous(), ['class' => 'btn btn-labeled arrow-default']) ?>
     </div>
     <h1 class="title-bar-title">
         <span class="d-ib"><span class="icon icon-users"></span> <?= Html::encode($this->title) ?></span>
@@ -30,11 +31,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-xs-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <?= Html::a(Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-plus icon-lg icon-fw']), ['class' => 'btn-label']) . ' Add a New User', Url::to(['/wizard/user']), ['class' => 'btn btn-sm btn-labeled arrow-success']) ?>
+                <?= Html::a(Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-plus icon-lg icon-fw']),
+                        ['class' => 'btn-label']) . ' Add a New User', Url::to(['/wizard/user']),
+                    ['class' => 'btn btn-sm btn-labeled arrow-success']) ?>
             </div>
             <div class="form-inline no-footer">
 
-                <?php Pjax::begin(['id' => 'user_index', 'enablePushState' => false, 'timeout' => 0, 'options' => ['class' => 'panel-body panel-collapse']]); ?>
+                <?php Pjax::begin([
+                    'id' => 'user_index',
+                    'enablePushState' => false,
+                    'timeout' => 0,
+                    'options' => ['class' => 'panel-body panel-collapse']
+                ]); ?>
                 <div class="alert-container">
                     <?= Alert::widget() ?>
                 </div>
@@ -90,9 +98,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             'value' => function ($model, $key, $index, $column) {
                                 $suff = [
-                                    'superAdmin' => ['class'=>'success', 'label'=>'Super User'],
-                                    'admin' => ['class'=>'warning', 'label'=>'Admin'],
-                                    'user' => ['class'=>'danger', 'label'=>'Company User']
+                                    'sadmin' => ['class' => 'success', 'label' => 'Super User'],
+                                    'admin' => ['class' => 'warning', 'label' => 'Admin'],
+                                    'user' => ['class' => 'danger', 'label' => 'Company User']
                                 ];
                                 //workaround for rename client
                                 $role = $model->{$column->attribute};
@@ -108,6 +116,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             'contentOptions' => [
                                 'width' => 120,
                             ],
+                            'visibleButtons' => [
+                                'edit' => \Yii::$app->user->can('wizard.user'),
+                                'delete' => \Yii::$app->user->can('user.delete'),
+                            ],
                             'buttons' => [
                                 'edit' => function ($url, $model) {
                                     return Html::a('Edit', Url::to(['/wizard/user', 'id' => $model->id], true),
@@ -120,10 +132,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                     );
                                 },
                                 'delete' => function ($url, $model) {
-                                    if (!User::isSuperAdmin()) {
-                                        return '';
-                                    }
-
                                     return Html::a('Remove', Url::to(['delete', 'id' => $model->id], true),
                                         [
                                             'class' => "btn btn-danger btn-xs",

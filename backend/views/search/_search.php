@@ -1,15 +1,15 @@
 <?php
 
-use yii\helpers\Html;
-use common\helpers\Url;
-use yii\widgets\ActiveForm;
+use ait\utilities\helpers\Url;
+use backend\assets\FormSearchAsset;
+use backend\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\FileSearch */
+/* @var $model backend\models\search\FileSearch */
 /* @var $form yii\widgets\ActiveForm */
 
 
-\backend\assets\FormSearchAsset::register($this);
+FormSearchAsset::register($this);
 
 $action = !empty($action) ? $action : Url::to([null], true);
 ?>

@@ -1,5 +1,7 @@
 <?php
-use common\helpers\Url;
+
+use ait\utilities\helpers\Url;
+use yii\widgets\Pjax;
 
 
 /** @var $form \backend\widgets\ActiveForm */
@@ -7,7 +9,7 @@ use common\helpers\Url;
 /** @var $types array */
 ?>
 
-<?php \yii\widgets\Pjax::begin([
+<?php Pjax::begin([
     'id' => 'types-container',
     'enablePushState' => false,
     'timeout' => 0,
@@ -22,4 +24,4 @@ use common\helpers\Url;
     },
     'class' => 'investigation-types'
 ]) ?>
-<?php \yii\widgets\Pjax::end() ?>
+<?php Pjax::end() ?>

@@ -1,8 +1,10 @@
 <?php
 
-use yii\helpers\Html;
-use yii\helpers\Url;
+use ait\utilities\helpers\Url;
 use backend\models\User;
+use backend\widgets\ActiveForm;
+use kartik\depdrop\DepDrop;
+use yii\helpers\Html;
 
 /** @var $this \yii\web\View */
 /** @var $userForm \backend\models\forms\UserForm */
@@ -12,7 +14,7 @@ use backend\models\User;
 ?>
 
 <div id="tab-2" class="tab-pane active">
-    <?php $form = \backend\widgets\ActiveForm::begin([
+    <?php $form = ActiveForm::begin([
         'id' => 'user-form',
         'action' => ['user', 'id' => $isUpdate ? $userForm->getUser()->id : null],
         'options' => [
@@ -22,34 +24,34 @@ use backend\models\User;
     ]) ?>
     <?php if (Yii::$app->user->can('admin')): ?>
         <?php if (Yii::$app->user->can('superAdmin')): ?>
-        <div class="col-lg-6 col-lg-offset-3">
-            <h2 align="center">
-                <span class="d-ib">Select Role</span>
-            </h2>
+            <div class="col-lg-6 col-lg-offset-3">
+                <h2 align="center">
+                    <span class="d-ib">Select Role</span>
+                </h2>
 
-            <div class="form-group<?= $userForm->hasErrors('role') ? ' has-error' : '' ?>">                            <?php /*todo get this list from db */ ?>
-                <?= Html::activeDropDownList($userForm, 'role', [
-                    'superAdmin' => 'Super Admin',
-                    'admin' => 'Admin',
-                    'user' => 'Company User'
-                ],
-                    ['id' => 'user-role', 'class' => 'form-control', 'prompt' => 'Select a Role']); ?>
-                <?= Html::error($userForm, 'role', ['class' => 'help-block']) ?>
+                <div class="form-group<?= $userForm->hasErrors('role') ? ' has-error' : '' ?>">                            <?php /*todo get this list from db */ ?>
+                    <?= Html::activeDropDownList($userForm, 'role', [
+                        'superAdmin' => 'Super Admin',
+                        'admin' => 'Admin',
+                        'user' => 'Company User'
+                    ],
+                        ['id' => 'user-role', 'class' => 'form-control', 'prompt' => 'Select a Role']); ?>
+                    <?= Html::error($userForm, 'role', ['class' => 'help-block']) ?>
+                </div>
             </div>
-        </div>
         <?php endif ?>
 
-    <div class="col-lg-6 col-lg-offset-3" id="company-list-container" <?=
-    $userForm->company_id || User::isAdmin() ? '' : 'style="display: none"'
-    ?>>
-        <h2 align="center">
-            <span class="d-ib">Select Company</span>
-        </h2>
+        <div class="col-lg-6 col-lg-offset-3" id="company-list-container" <?=
+        $userForm->company_id || User::isAdmin() ? '' : 'style="display: none"'
+        ?>>
+            <h2 align="center">
+                <span class="d-ib">Select Company</span>
+            </h2>
 
-        <div class="form-group">
-            <?= $this->render('_select-company', ['model' => $userForm]) ?>
+            <div class="form-group">
+                <?= $this->render('_select-company', ['model' => $userForm]) ?>
+            </div>
         </div>
-    </div>
     <?php endif ?>
 
     <div class="col-lg-6 col-lg-offset-3" id="user-list-container" <?=
@@ -60,20 +62,20 @@ use backend\models\User;
         </h2>
 
         <div class="form-group">
-            <?= \kartik\depdrop\DepDrop::widget([
+            <?= DepDrop::widget([
                 'name' => 'user',
                 'data' => $isUpdate
                     ? $userForm->getUser()->getColleaguesList()
                     : [],
-                'pluginOptions'=>[
-                    'depends'=>['company-list', 'user-role'],
+                'pluginOptions' => [
+                    'depends' => ['company-list', 'user-role'],
                     'placeholder' => 'Create a New User',
                     'url' => Url::to(['company-users'])
                 ],
                 'options' => [
-                    'id'=>'user-list',
+                    'id' => 'user-list',
                     'prompt' => 'Create a New User',
-                    'options' => [$selectedUser => ['selected'=>'selected']]
+                    'options' => [$selectedUser => ['selected' => 'selected']]
                 ],
             ]) ?>
         </div>
@@ -84,46 +86,35 @@ use backend\models\User;
     <hr/>
     <div class="row">
         <div class="col-sm-6">
-
-
             <?= $form->field($userForm, 'username')->textInput(['placeholder' => 'User Name']) ?>
-
             <?= $form->field($userForm, 'email')->textInput(['placeholder' => 'Actual Email Address']) ?>
-
             <?= $form->field($userForm, 'password')->passwordInput(['placeholder' => 'Your Password']) ?>
-
             <?= $form->field($userForm, 'password_repeat')->passwordInput(['placeholder' => 'Confirm Your Password']) ?>
         </div>
         <div class="col-sm-6">
             <?= $form->field($userForm, 'first_name')->textInput(['placeholder' => 'First Name']) ?>
-
             <?= $form->field($userForm, 'last_name')->textInput(['placeholder' => 'Last Name']) ?>
-
             <?= $form->field($userForm, 'phone_number')->textInput(['placeholder' => 'Phone Number']) ?>
-
-
-
         </div>
         <div class="clearfix"></div>
         <hr/>
         <div align="center">
             <button class="btn btn-sm btn-labeled  arrow-warning" type="submit">
-                                                        <span class="btn-label">
-                                                            <span
-                                                                class="icon icon-check-square   icon-lg icon-fw"></span>
-                                                        </span>
+                <span class="btn-label">
+                    <span class="icon icon-check-square   icon-lg icon-fw"></span>
+                </span>
                 <?= $isUpdate ? 'Update' : 'Create' ?>
             </button>
-            <?php if (!User::isAdmin()): ?>
-            <a href="<?= \yii\helpers\Url::to(['investigation'], true) ?>" class="<?= $isUpdate ? '' : 'hidden ' ?>btn btn-sm btn-labeled  arrow-success">
-                                                        <span class="btn-label">
-                                                            <span
-                                                                class="icon icon-chevron-circle-right  icon-lg icon-fw"></span>
-                                                        </span>
-                Next
-            </a>
+            <?php if (\Yii::$app->user->can('wizard.investigation')): ?>
+                <a href="<?= Url::to(['investigation'], true) ?>"
+                   class="<?= $isUpdate ? '' : 'hidden ' ?>btn btn-sm btn-labeled  arrow-success">
+                    <span class="btn-label">
+                        <span class="icon icon-chevron-circle-right  icon-lg icon-fw"></span>
+                    </span>
+                    Next
+                </a>
             <?php endif ?>
         </div>
     </div>
-    <?php \backend\widgets\ActiveForm::end() ?>
+    <?php ActiveForm::end() ?>
 </div>

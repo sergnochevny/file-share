@@ -1,10 +1,11 @@
 <?php
 
+use ait\utilities\helpers\Url;
 use common\widgets\Alert;
-use yii\helpers\Html;
 use yii\grid\GridView;
-use common\helpers\Url;
+use yii\helpers\Html;
 use yii\widgets\Pjax;
+
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\search\HistorySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -86,7 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'class' => 'yii\grid\ActionColumn',
                             'template' => '{recovery}',
-                            'visible' => \backend\models\User::isSuperAdmin(),
+                            'visible' => \Yii::$app->user->can('history.recover'),
                             'buttons' => [
                                 'recovery' => function ($url, $model) {
                                     $content = Html::a('Recovery', Url::to(['/history/recover', 'id' => $model->id], true),

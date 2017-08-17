@@ -4,7 +4,7 @@ namespace common\models;
 
 
 use backend\models\UserProfile;
-use common\models\query\UndeletableActiveQuery;
+use common\models\query\UndeleteableActiveQuery;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\BlameableBehavior;
@@ -35,7 +35,7 @@ use yii\web\IdentityInterface;
  * @property Company $company
  * @property UserProfile $profile
  */
-class User extends UndeletableActiveRecord implements IdentityInterface
+class User extends UndeleteableActiveRecord implements IdentityInterface
 {
     /**
      * @inheritdoc
@@ -247,7 +247,7 @@ class User extends UndeletableActiveRecord implements IdentityInterface
     }
 
     /**
-     * @return UndeletableActiveQuery
+     * @return UndeleteableActiveQuery
      */
     public function getCompany()
     {

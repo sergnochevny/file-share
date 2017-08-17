@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use common\models\query\UndeletableActiveQuery;
+use common\models\query\UndeleteableActiveQuery;
 use yii\base\ModelEvent;
 use yii\db\ActiveRecord;
 use Yii;
@@ -13,14 +13,29 @@ use Yii;
  *
  * @property int $status
  */
-class UndeletableActiveRecord extends ActiveRecord
+class UndeleteableActiveRecord extends ActiveRecord
 {
 
+    /**
+     *
+     */
     const STATUS_DELETED = 0;
+    /**
+     *
+     */
     const STATUS_ACTIVE = 100;
+    /**
+     *
+     */
     const STATUS_IN_HISTORY = 200;
 
+    /**
+     *
+     */
     const EVENT_AFTER_ARCHIVE = 'afterArchive';
+    /**
+     *
+     */
     const EVENT_BEFORE_ARCHIVE = 'beforeArchive';
 
     /**
@@ -29,13 +44,16 @@ class UndeletableActiveRecord extends ActiveRecord
      * NOT from UndeletableAcitveQuery
      *
      * @inheritdoc
-     * @return UndeletableActiveQuery
+     * @return UndeleteableActiveQuery
      */
     public static function find()
     {
-        return Yii::createObject(UndeletableActiveQuery::className(), [get_called_class()]);
+        return Yii::createObject(UndeleteableActiveQuery::className(), [get_called_class()]);
     }
 
+    /**
+     * @return array
+     */
     public static function getStatusesList()
     {
         return [
@@ -75,6 +93,9 @@ class UndeletableActiveRecord extends ActiveRecord
         return $res;
     }
 
+    /**
+     * @return bool
+     */
     public function afterDelete()
     {
         $event = new ModelEvent;
@@ -84,16 +105,29 @@ class UndeletableActiveRecord extends ActiveRecord
 
     /**
      * Changes status of record to STATUS_DELETED
-     *
-     * @return void
+     * @return bool
      */
     public function delete()
     {
+        $res = false;
         $this->status = static::STATUS_DELETED;
-        if ($this->beforeDelete() && $this->save(false)) return $this->afterDelete();
-        return false;
+        if ($this->beforeDelete() && $this->save(false)) {
+            $res = $this->afterDelete();
+        }
+        return $res;
     }
 
+    /**
+     * @return false|int
+     */
+    public function just_delete()
+    {
+        return parent::delete();
+    }
+
+    /**
+     * @return bool
+     */
     public function afterArchive()
     {
         $event = new ModelEvent;
@@ -101,6 +135,9 @@ class UndeletableActiveRecord extends ActiveRecord
         return $event->isValid;
     }
 
+    /**
+     * @return bool
+     */
     public function beforeArchive()
     {
         $event = new ModelEvent;
@@ -108,7 +145,11 @@ class UndeletableActiveRecord extends ActiveRecord
         return $event->isValid;
     }
 
-    public function isArchivable(){
+    /**
+     * @return bool
+     */
+    public function isArchivable()
+    {
         return true;
     }
 
@@ -121,7 +162,7 @@ class UndeletableActiveRecord extends ActiveRecord
             self::STATUS_DELETED,
         ];
 
-        return in_array($this->status, $statuses);
+        return isset($statuses[$this->status]);
     }
 
 }

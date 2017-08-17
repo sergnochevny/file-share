@@ -37,16 +37,6 @@ class CompanyController extends Controller
                 'class' => RememberUrlBehavior::className(),
                 'actions' => ['index'],
             ],
-            [
-                'class' => AccessControl::class,
-                'rules' => [
-                    [
-                        //all actions
-                        'allow' => true,
-                        'roles' => ['admin', 'superAdmin']
-                    ],
-                ]
-            ]
         ];
     }
 

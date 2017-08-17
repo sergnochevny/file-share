@@ -8,7 +8,7 @@ use backend\behaviors\NotifyBehavior;
 use backend\models\forms\UserForm;
 use backend\models\User;
 use common\models\Company;
-use common\models\UndeletableActiveRecord;
+use common\models\UndeleteableActiveRecord;
 use yii\base\Component;
 use yii\base\Event;
 use yii\base\Exception;
@@ -137,7 +137,7 @@ final class UserService extends Component
     public function delete()
     {
         $this->user->delete();
-        $this->trigger(UndeletableActiveRecord::EVENT_AFTER_DELETE, new Event());
+        $this->trigger(UndeleteableActiveRecord::EVENT_AFTER_DELETE, new Event());
     }
 
     /**
@@ -146,7 +146,7 @@ final class UserService extends Component
     public function archive()
     {
         $this->user->archive();
-        $this->trigger(UndeletableActiveRecord::EVENT_AFTER_ARCHIVE, new Event());
+        $this->trigger(UndeleteableActiveRecord::EVENT_AFTER_ARCHIVE, new Event());
     }
 
     /**
@@ -155,7 +155,7 @@ final class UserService extends Component
     public function afterValidate()
     {
         $event = new ModelEvent;
-        $this->trigger(UndeletableActiveRecord::EVENT_AFTER_VALIDATE, $event);
+        $this->trigger(UndeleteableActiveRecord::EVENT_AFTER_VALIDATE, $event);
 
         return $event->isValid;
     }
@@ -167,7 +167,7 @@ final class UserService extends Component
     public function beforeSave($insert)
     {
         $event = new ModelEvent;
-        $this->trigger($insert ? UndeletableActiveRecord::EVENT_BEFORE_INSERT : UndeletableActiveRecord::EVENT_BEFORE_UPDATE, $event);
+        $this->trigger($insert ? UndeleteableActiveRecord::EVENT_BEFORE_INSERT : UndeleteableActiveRecord::EVENT_BEFORE_UPDATE, $event);
 
         return $event->isValid;
     }
@@ -178,7 +178,7 @@ final class UserService extends Component
      */
     public function afterSave($insert)
     {
-        $this->trigger($insert ? UndeletableActiveRecord::EVENT_AFTER_INSERT : UndeletableActiveRecord::EVENT_AFTER_UPDATE, new Event());
+        $this->trigger($insert ? UndeleteableActiveRecord::EVENT_AFTER_INSERT : UndeleteableActiveRecord::EVENT_AFTER_UPDATE, new Event());
     }
 
 

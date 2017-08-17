@@ -7,7 +7,7 @@ return [
             'identityClass' => 'common\models\User',
         ],
         'authManager' => [
-            'class' => 'yii\rbac\DbManager',
+            'class' => 'ait\rbac\DbManager',
             'defaultRoles' => ['all']
         ],
         'cache' => [

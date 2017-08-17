@@ -75,30 +75,6 @@ class InvestigationController extends Controller
             'remember' => [
                 'class' => RememberUrlBehavior::className(),
                 'actions' => ['index'],
-            ],
-            [
-                'class' => AccessControl::class,
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'actions' => ['complete'],
-                        'roles' => ['superAdmin'],
-                    ],
-                    [
-                        'allow' => false,
-                        'actions' => ['complete'],
-                        'roles' => ['user'],
-                    ],
-                    [
-                        'allow' => true,
-                        'actions' => ['index', 'complete'],
-                        'roles' => ['admin']
-                    ],
-                    [
-                        'allow' => true,
-                        'roles' => ['superAdmin', 'user']
-                    ],
-                ]
             ]
         ];
     }

@@ -5,7 +5,7 @@ namespace backend\models;
 
 
 use backend\behaviors\HistoryBehavior;
-use common\models\query\UndeletableActiveQuery;
+use common\models\query\UndeleteableActiveQuery;
 use Yii;
 
 /**
@@ -27,7 +27,7 @@ class User extends \common\models\User
      * Finds by role and returns ActiveQuery
      *
      * @param $role
-     * @return UndeletableActiveQuery
+     * @return UndeleteableActiveQuery
      */
     public static function findByRole($role)
     {

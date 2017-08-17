@@ -8,7 +8,7 @@ use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
- * Class AbstractUndeletableActiveQuery
+ * Class UndeleteableActiveQuery
  * @package common\query
  *
  * This class implements query for hiding records with a status which in the list of $hiddenStatuses
@@ -34,7 +34,7 @@ use yii\db\ActiveRecord;
  * Record::find()->andDeleted()->all();
  * You get all records including with status deleted
  */
-class UndeletableActiveQuery extends ActiveQuery
+class UndeleteableActiveQuery extends ActiveQuery
 {
 
     protected $hiddenStatuses = [];

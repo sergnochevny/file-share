@@ -11,7 +11,7 @@ namespace backend\behaviors;
 
 use common\models\History;
 use common\models\HistoryActiveRecord;
-use common\models\UndeletableActiveRecord;
+use common\models\UndeleteableActiveRecord;
 use yii\base\Behavior;
 use yii\base\InvalidCallException;
 use yii\base\InvalidParamException;
@@ -92,7 +92,7 @@ class HistoryBehavior extends Behavior
     public function events()
     {
         return [
-            UndeletableActiveRecord::EVENT_BEFORE_ARCHIVE => 'beforeArchive',
+            UndeleteableActiveRecord::EVENT_BEFORE_ARCHIVE => 'beforeArchive',
         ];
     }
 
