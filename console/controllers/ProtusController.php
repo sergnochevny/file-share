@@ -206,7 +206,7 @@ class ProtusController extends Controller
         if ($user) {
             $manager = \Yii::$app->getAuthManager();
             $manager->revokeAll($user->id);
-            $rows = \Yii::$app->getDb()->createCommand("DELETE FROM `user` WHERE `id` = {$user->id}")->execute();
+            $rows = $user->just_delete();
             if ($rows > 0) {
                 return $this->stdout('User was removed' . PHP_EOL, Console::FG_GREEN);
             } else {

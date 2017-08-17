@@ -1,12 +1,15 @@
 <?php
 
 namespace console\migrations;
+
+use yii\db\Migration;
+
 /**
  * Class AbstractBaseMigration
  *
  * For check if db is MySQL for adjust settings
  */
-abstract class AbstractBaseMigration extends \yii\db\Migration
+abstract class AbstractBaseMigration extends Migration
 {
     /**
      * @var null|string

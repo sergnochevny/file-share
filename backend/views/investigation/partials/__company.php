@@ -1,6 +1,7 @@
 <?php
-use common\widgets\Menu;
-use common\helpers\Url;
+
+use ait\auth\widgets\Menu;
+use ait\utilities\helpers\Url;
 ?>
 <div class="profile">
     <div class="profile-header">

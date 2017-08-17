@@ -4,9 +4,8 @@
 /* @var $searchModel backend\models\InvestigationSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+use ait\utilities\helpers\Url;
 use yii\helpers\Html;
-use common\helpers\Url;
-use backend\models\User;
 
 $this->title = 'Applicants';
 $this->params['breadcrumbs'][] = $this->title;
@@ -25,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="row gutter-xs">
     <div class="col-xs-12">
         <div class="panel panel-default">
-            <?php if (!User::isAdmin()): ?>
+            <?php if (\Yii::$app->user->can('applicant.create')): ?>
             <div class="panel-heading">
                 <a class="btn btn-sm btn-labeled arrow-success" href="<?= Url::to(['/wizard/investigation']) ?>">
                     <span class="btn-label">

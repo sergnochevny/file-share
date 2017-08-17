@@ -7,10 +7,6 @@ use common\widgets\Alert;
 
 ?>
 <?php $this->beginContent(Yii::$app->layoutPath . DIRECTORY_SEPARATOR . Yii::$app->layout . '.php') ?>
-    <body class="login-page">
-    <?php $this->beginBody() ?>
-        <?= $content ?>
-        <?= Alert::widget() ?>
-    <?php $this->endBody() ?>
-    </body>
+    <?= $content ?>
+    <?= Alert::widget() ?>
 <?php $this->endContent() ?>

@@ -1,10 +1,10 @@
 <?php
 
+use ait\utilities\helpers\Url;
 use backend\models\Investigation;
 use common\widgets\Alert;
 use yii\grid\GridView;
 use yii\helpers\Html;
-use common\helpers\Url;
 use yii\widgets\Pjax;
 use backend\models\User;
 
@@ -71,6 +71,11 @@ Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout
             'contentOptions' => [
                 'width' => 150,
             ],
+            'visibleButtons' => [
+                    'edit' => \Yii::$app->user->can('wizard.investigation'),
+                    'delete' => \Yii::$app->user->can('investigation.archive'),
+                    'view' => \Yii::$app->user->can('file.index'),
+            ],
             'buttons' => [
                 'edit' => function ($url, $model) {
                     if (User::isAdmin()) {
@@ -87,10 +92,6 @@ Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout
                     );
                 },
                 'delete' => function ($url, $model) {
-                    if (User::isAdmin()) {
-                        return '';
-                    }
-
                     return Html::a('Archive', Url::to(['/investigation/archive', 'id' => $model->id], true),
                         [
                             'class' => "btn btn-purple btn-xs",

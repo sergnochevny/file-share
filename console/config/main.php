@@ -12,10 +12,6 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'console\controllers',
     'controllerMap' => [
-        'migrate-rbac' => [
-            'class' => 'yii\console\controllers\MigrateController',
-            'migrationPath' => '@yii/rbac/migrations',
-        ],
         'migrate-keystorage' => [
             'class' => 'yii\console\controllers\MigrateController',
             'migrationPath' => '@vendor/ait/keystorage/migrations',

@@ -1,11 +1,11 @@
 <?php
 
 use ait\utilities\assets\ExtLibAsset;
+use ait\utilities\helpers\Url;
 use backend\assets\AlertHelperAsset;
 use backend\assets\DownloadAsset;
 use backend\models\FileUpload;
 use backend\models\User;
-use common\helpers\Url;
 use common\widgets\Alert;
 use yii\grid\GridView;
 use yii\helpers\Html;
@@ -31,7 +31,8 @@ $view = $this;
     <div class="title-bar-actions">
         <?= Html::a(Html::tag('span',
                 Html::tag('span', '', ['class' => 'icon icon-chevron-circle-left icon-lg icon-fw']),
-                ['class' => 'btn-label']) . ' Back', Url::previous(), ['class' => 'btn btn-labeled arrow-default']) ?>
+                ['class' => 'btn-label']) . ' Back', Url::previous(),
+            ['class' => 'btn btn-labeled arrow-default']) ?>
     </div>
     <h1 class="title-bar-title">
         <span class="d-ib"><span class="icon icon-save"></span> <?= Html::encode($this->title) ?></span>
@@ -152,7 +153,8 @@ $view = $this;
                             [
                                 'attribute' => 'size',
                                 'value' => function ($model, $key, $index, $column) {
-                                    return Yii::$app->formatter->asShortSize($model->{$column->attribute}, 0, [], []);
+                                    return Yii::$app->formatter->asShortSize($model->{$column->attribute}, 0, [],
+                                        []);
                                 },
                                 'headerOptions' => [
                                     'class' => 'hidden-sm hidden-xs',
@@ -176,70 +178,56 @@ $view = $this;
                                 'contentOptions' => [
                                     'width' => (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin')) ? 220 : 150
                                 ],
+                                'visibleButtons' => [
+                                    'archive' => Yii::$app->user->can('file.archive') ||
+                                        Yii::$app->user->can('employee', ['investigation' => $investigation]),
+                                    'delete' => Yii::$app->user->can('file.delete'),
+                                    'download' => Yii::$app->user->can('file.download') ||
+                                        (!empty($investigation) && Yii::$app->user->can('employee',
+                                                ['investigation' => $investigation]) ||
+                                            Yii::$app->user->can('employee',
+                                                ['allfiles' => $model->parents->parent]))
+                                ],
                                 'buttons' => [
                                     'archive' => function ($url, $model) use ($investigation, $view) {
-                                        $content = '';
-                                        if (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin') ||
-                                            (
-                                                !Yii::$app->user->can('admin') && !Yii::$app->user->can('superAdmin') &&
-                                                !empty($investigation) &&
-                                                Yii::$app->user->can('employee', ['investigation' => $investigation])
-                                            )
-                                        ) {
-                                            $content = Html::a(User::isClient() ? 'Remove' : 'Archive',
-                                                Url::to(['/file/archive', 'id' => $model->id], true),
-                                                [
-                                                    'class' => "btn btn-purple btn-xs",
-                                                    'title' => 'Archive',
-                                                    'aria-label' => "Archive",
-                                                    'data-confirm' => "Confirm archiving",
-                                                    'data-method' => "post",
-                                                    'data-pjax' => 1,
-                                                ]
-                                            );
-                                        }
+                                        $content = Html::a('Archive',
+                                            Url::to(['/file/archive', 'id' => $model->id], true),
+                                            [
+                                                'class' => "btn btn-purple btn-xs",
+                                                'title' => 'Archive',
+                                                'aria-label' => "Archive",
+                                                'data-confirm' => "Confirm archiving",
+                                                'data-method' => "post",
+                                                'data-pjax' => 1,
+                                            ]
+                                        );
                                         return $content;
                                     },
                                     'delete' => function ($url, $model) use ($investigation) {
-                                        $content = '';
-                                        if (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin')) {
-                                            $content = Html::a('Delete',
-                                                Url::to(['/file/delete', 'id' => $model->id], true),
-                                                [
-                                                    'class' => "btn btn-danger btn-xs",
-                                                    'title' => 'Delete',
-                                                    'aria-label' => "Delete",
-                                                    'data-confirm' => "Confirm removal",
-                                                    'data-method' => "post",
-                                                    'data-pjax' => 1,
-                                                ]
-                                            );
-                                        }
+                                        $content = Html::a('Delete',
+                                            Url::to(['/file/delete', 'id' => $model->id], true),
+                                            [
+                                                'class' => "btn btn-danger btn-xs",
+                                                'title' => 'Delete',
+                                                'aria-label' => "Delete",
+                                                'data-confirm' => "Confirm removal",
+                                                'data-method' => "post",
+                                                'data-pjax' => 1,
+                                            ]
+                                        );
                                         return $content;
                                     },
                                     'download' => function ($url, $model) use ($investigation) {
-                                        $content = '';
-                                        if (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin') ||
-                                            (
-                                                !Yii::$app->user->can('admin') && !Yii::$app->user->can('superAdmin') &&
-                                                ((!empty($investigation) && Yii::$app->user->can('employee',
-                                                            ['investigation' => $investigation])) ||
-                                                    (Yii::$app->user->can('employee',
-                                                        ['allfiles' => $model->parents->parent])))
-                                            )
-                                        ) {
-                                            $content = Html::a(
-                                                'Download',
-                                                Url::to(['/file/download', 'id' => $model->citrix_id], true),
-                                                [
-                                                    'class' => 'btn btn-warning btn-xs',
-                                                    'data-download' => true,
-                                                    'title' => 'Download',
-                                                    'aria-label' => 'Download',
-                                                    'data-pjax' => 0,
-                                                ]
-                                            );
-                                        }
+                                        $content = Html::a('Download',
+                                            Url::to(['/file/download', 'id' => $model->citrix_id], true),
+                                            [
+                                                'class' => 'btn btn-warning btn-xs',
+                                                'data-download' => true,
+                                                'title' => 'Download',
+                                                'aria-label' => 'Download',
+                                                'data-pjax' => 0,
+                                            ]
+                                        );
                                         return $content;
                                     },
                                 ],

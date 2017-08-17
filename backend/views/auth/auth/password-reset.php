@@ -1,13 +1,14 @@
 <?php
+
+use ait\utilities\helpers\Url;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use common\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \backend\models\forms\PasswordResetForm */
+/* @var $model ait\auth\models\forms\PasswordResetForm */
 
-$this->title = 'Sign In';
+$this->title = 'Password Reset';
 
 $fieldOptions1 = [
     'options' => ['class' => 'form-group has-feedback'],
@@ -20,7 +21,6 @@ $fieldOptions1 = [
         <?php if (isset($model)): ?>
         <h3 class="login-heading"><b>Set new password</b></h3>
         <div class="login-form">
-
             <?php $form = ActiveForm::begin(['id' => 'password-reset-form', 'enableClientValidation' => false]); ?>
                 <?= $form->field($model, 'password', $fieldOptions1)->passwordInput() ?>
                 <div class="row">
@@ -28,10 +28,7 @@ $fieldOptions1 = [
                         <?= Html::submitButton('Save new password', ['class' => 'btn btn-primary btn-block btn-flat']) ?>
                     </div>
                 </div>
-
-
             <?php ActiveForm::end(); ?>
-
         </div>
         <?php else: ?>
             <div class="text-center">

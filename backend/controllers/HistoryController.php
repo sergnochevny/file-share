@@ -85,31 +85,6 @@ class HistoryController extends Controller
         ]);
     }
 
-//    /**
-//     * Displays a single File model.
-//     * @param string $id
-//     * @return mixed
-//     */
-//    public function actionView($id)
-//    {
-//        $model = $this->findModel($id);
-//        return $this->render('view', [
-//            'model' => $model,
-//        ]);
-//    }
-//
-//    /**
-//     * Deletes an existing Company model.
-//     * If deletion is successful, the browser will be redirected to the 'index' page.
-//     * @param integer $id
-//     * @return mixed
-//     */
-//    public function actionDelete($id)
-//    {
-//        $this->findModel($id)->delete();
-//        return $this->redirect(['index']);
-//    }
-
     public function actionRecover($id)
     {
         try{

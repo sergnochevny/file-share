@@ -1,5 +1,6 @@
 <?php
 
+use ait\utilities\helpers\Url;
 use yii\helpers\Html;
 use backend\models\Company;
 
@@ -24,7 +25,7 @@ $dropDown = function ($model = null, $name, $list, array $options) use ($form) {
     <?php
     $options = [
         'id' => 'company-list',
-        'data-info-url' => \yii\helpers\Url::to(['company-info'], true),
+        'data-info-url' => Url::to(['company-info'], true),
         'class' => 'form-control',
         'prompt' => $model ? 'Select Company' : 'Create a New Company',
     ];

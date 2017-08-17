@@ -4,7 +4,7 @@
 namespace backend\models;
 
 
-use common\models\query\UndeletableActiveQuery;
+use common\models\query\UndeleteableActiveQuery;
 use yii\base\ErrorException;
 use yii\base\Model;
 
@@ -22,7 +22,7 @@ use yii\base\Model;
  * @property DateTime $startDateTime
  * @property DateTime $dndDateTime
  * @property \DateInterval $dateInterval
- * @property UndeletableActiveQuery $investigationQuery
+ * @property UndeleteableActiveQuery $investigationQuery
  */
 class Statistics extends Model
 {
@@ -153,7 +153,7 @@ class Statistics extends Model
      * Gets main query.
      * All queries must builds from this query if you need apply date range
      *
-     * @return UndeletableActiveQuery
+     * @return UndeleteableActiveQuery
      * @throws \ErrorException when validation failed
      */
     public function getInvestigationQuery()

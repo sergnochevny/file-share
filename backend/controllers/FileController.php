@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use ait\utilities\helpers\Url;
 use backend\actions\DownloadAction;
 use backend\behaviors\RememberUrlBehavior;
 use backend\behaviors\VerifyPermissionBehavior;
@@ -12,13 +13,11 @@ use backend\models\MultiDownload;
 use backend\models\search\FileSearch;
 use backend\models\User;
 use common\components\PermissionController;
-use common\helpers\Url;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\web\BadRequestHttpException;
-use yii\helpers\Html;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Request;
@@ -74,11 +73,6 @@ class FileController extends PermissionController
                         'actions' => ['download', 'download-archive', 'multi-download', 'multi-upload', 'index', 'archive'],
                         'roles' => ['@'],
                     ],
-                    [
-                        'allow' => true,
-                        'actions' => ['delete'],
-                        'roles' => ['admin', 'superAdmin'],
-                    ]
                 ]
             ],
             'permission' => VerifyPermissionBehavior::className()
@@ -318,7 +312,7 @@ class FileController extends PermissionController
 
     /**
      * @param $name
-     * @return Response
+     * @return Response|void
      */
     public function actionDownloadArchive($name)
     {
@@ -342,5 +336,6 @@ class FileController extends PermissionController
         if (is_writable($path)) {
             unlink($path);
         }
+        return;
     }
 }

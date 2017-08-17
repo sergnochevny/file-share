@@ -1,7 +1,7 @@
 <?php
 
+use ait\utilities\helpers\Url;
 use yii\helpers\Html;
-use yii\helpers\Url;
 
 
 /* @var $this yii\web\View */
@@ -29,11 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-xs-12">
         <div class="panel panel-collapse">
             <div class="panel-body">
-                <?= $this->render('_form', [
-                    'model' => $model,
-                ]) ?>
+                <?= $this->render('_form', ['model' => $model,]) ?>
             </div>
-
         </div>
     </div>
 </div>

@@ -9,7 +9,7 @@
 namespace backend\behaviors;
 
 
-use common\helpers\Url;
+use ait\utilities\helpers\Url;
 use Yii;
 use yii\base\ActionEvent;
 use yii\base\Behavior;

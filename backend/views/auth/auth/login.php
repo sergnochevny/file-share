@@ -1,11 +1,12 @@
 <?php
+
+use ait\utilities\helpers\Url;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use common\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \common\models\LoginForm */
+/* @var $model ait\auth\models\forms\LoginForm */
 
 $this->title = 'Sign In';
 
@@ -24,17 +25,13 @@ $fieldOptions2 = [
         <?= Html::a(Html::a(Html::img(Url::to('@web/images/logo.png', true), ['class' => 'img-responsive']), ['/']), Url::to(['/'], true), ['class' => 'login-brand']) ?>
         <h3 class="login-heading"><b>Sign in</b></h3>
         <div class="login-form">
-
         <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
-
             <?= $form
                 ->field($model, 'username', $fieldOptions1)
                 ->textInput(['placeholder' => $model->getAttributeLabel('username')]) ?>
-
             <?= $form
                 ->field($model, 'password', $fieldOptions2)
                 ->passwordInput(['placeholder' => $model->getAttributeLabel('password')]) ?>
-
             <div class="row">
                 <div class="col-xs-12">
                     <?= Html::submitButton('Sign in', ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
@@ -42,14 +39,12 @@ $fieldOptions2 = [
                 <!-- /.col -->
                 <div class="col-xs-12 text-center">
                     <?= $form->field($model, 'rememberMe')->checkbox() ?>
-                    <a href="<?= Url::to(['/site/restore-password-request'], true) ?>">Forgot password?</a>
+                    <a href="<?= Url::to(['/auth/auth/password-restore'], true) ?>">Forgot password?</a>
                 </div>
                 <!-- /.col -->
             </div>
 
-
         <?php ActiveForm::end(); ?>
-
         </div>
     </div>
     <div class="login-footer">

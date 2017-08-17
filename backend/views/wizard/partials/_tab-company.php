@@ -4,9 +4,10 @@
 /** @var $isUpdate bool */
 ///** @var $companyId int|bool If user is not client then false */
 
+use ait\utilities\helpers\Url;
 use backend\models\Company;
 use backend\models\User;
-use yii\helpers\Url;
+use backend\widgets\ActiveForm;
 
 
 $isShowSelectCompany = !User::isClient() && (Company::find()->count() > 0);
@@ -14,7 +15,7 @@ $isReadOnly = User::isClient();
 ?>
 
 <div id="tab-1" class="tab-pane active">
-    <?php $form = \backend\widgets\ActiveForm::begin([
+    <?php $form = ActiveForm::begin([
         'action' => ['company', 'id' => $companyForm->id],
         'id' => 'company-form',
         'options' => [
@@ -92,7 +93,7 @@ $isReadOnly = User::isClient();
                 <?= $isUpdate ? 'Update' : 'Create' ?>
             </button>
             <?php endif ?>
-            <a href="<?= \yii\helpers\Url::to([User::isClient() ? 'investigation' : 'user'], true) ?>" class="<?= $isUpdate ? '' : 'hidden ' ?>btn btn-sm btn-labeled  arrow-success" type="button">
+            <a href="<?= Url::to([User::isClient() ? 'investigation' : 'user'], true) ?>" class="<?= $isUpdate ? '' : 'hidden ' ?>btn btn-sm btn-labeled  arrow-success" type="button">
                 <span class="btn-label">
                     <span class="icon icon-chevron-circle-right  icon-lg icon-fw"></span>
                 </span>
@@ -100,5 +101,5 @@ $isReadOnly = User::isClient();
             </a>
         </div>
     </div>
-    <?php \backend\widgets\ActiveForm::end() ?>
+    <?php ActiveForm::end() ?>
 </div>

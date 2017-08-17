@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use common\models\query\UndeletableActiveQuery;
+use common\models\query\UndeleteableActiveQuery;
 use yii\base\InvalidConfigException;
 use yii\base\ModelEvent;
 use yii\db\ActiveRecord;
@@ -13,7 +13,7 @@ use Yii;
  * @package common\models
  *
  */
-class RecoverableActiveRecord extends UndeletableActiveRecord
+class RecoverableActiveRecord extends UndeleteableActiveRecord
 {
 
     const EVENT_AFTER_RECOVER = 'afterRecover';

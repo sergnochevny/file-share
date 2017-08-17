@@ -23,35 +23,6 @@ class WizardController extends Controller
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => AccessControl::class,
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'actions' => ['company', 'investigation'],
-                        'roles' => ['user']
-                    ],
-                    [
-                        'allow' => true,
-                        'actions' => ['company', 'user', 'company-users'],
-                        'roles' => ['admin'],
-                    ],
-                    [
-                        //all actions
-                        'allow' => true,
-                        'roles' => ['superAdmin']
-                    ],
-                ]
-            ]
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
     public $defaultAction = 'company';
 
 
