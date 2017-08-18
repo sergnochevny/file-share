@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:ait/auth.git",
-                "reference": "bd98444246e0a47de50ae8a6e8147da3c96d0b6e"
+                "reference": "fb5a290706cac7a9d9ef092b30011696cb7c09d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/auth/9999999-dev/bd98444246e0a47de50ae8a6e8147da3c96d0b6e.zip",
-                "reference": "bd98444246e0a47de50ae8a6e8147da3c96d0b6e",
+                "url": "https://tp.ait.com/repo/private/dists/ait/auth/9999999-dev/fb5a290706cac7a9d9ef092b30011696cb7c09d1.zip",
+                "reference": "fb5a290706cac7a9d9ef092b30011696cb7c09d1",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -70,7 +70,7 @@
                 "yii 2",
                 "yii2"
             ],
-            "time": "2017-08-16T18:05:09+00:00"
+            "time": "2017-08-17T17:27:55+00:00"
         },
         {
             "name": "ait/citrix",
@@ -1977,12 +1977,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "5c9c2e5cf741f96b62f745390416a519124d7dd3"
+                "reference": "7348d5c26b4e9253b962c6d81e345b1de1470b32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/5c9c2e5cf741f96b62f745390416a519124d7dd3",
-                "reference": "5c9c2e5cf741f96b62f745390416a519124d7dd3",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/7348d5c26b4e9253b962c6d81e345b1de1470b32",
+                "reference": "7348d5c26b4e9253b962c6d81e345b1de1470b32",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -2075,7 +2075,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2017-08-16T05:04:35+00:00"
+            "time": "2017-08-17T15:18:51+00:00"
         },
         {
             "name": "yiisoft/yii2-bootstrap",

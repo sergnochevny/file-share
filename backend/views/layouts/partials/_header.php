@@ -85,11 +85,11 @@ $userIconSrc = Url::to(['/images/users/photo/' . $icon], true);
                                 </a>
                             </li>
                             <li class="divider"></li>
-                            <li><a href="<?= Url::to(['/site/logout'], true) ?>" data-method="POST">Sign out</a></li>
+                            <li><a href="<?= Url::to(['/auth/auth/logout'], true) ?>" data-method="POST">Sign out</a></li>
                         </ul>
                     </li>
                     <li class="visible-xs-block">
-                        <a href="<?= Url::to(['/site/logout'], true) ?>" data-method="POST">
+                        <a href="<?= Url::to(['/auth/auth/logout'], true) ?>" data-method="POST">
                             <span class="icon icon-power-off icon-lg icon-fw"></span>
                             Sign out
                         </a>

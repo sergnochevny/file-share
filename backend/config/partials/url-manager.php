@@ -28,13 +28,14 @@ return [
         '/sign-up' => '/auth/auth/sign-up',
         '/password-reset' => '/auth/auth/password-reset',
         '/password-restore' => '/auth/auth/password-restore',
-        '<module:\w+>/<controller:\w+>' => '<module>/<controller>/index',
-        '<module:\w+>/<controller:\w+>/<action>/<id:\d+>' => '<module>/<controller>/<action>',
-        '<module:\w+>/<controller:\w+>/<action>/<id:[\w\d-]+>' => '<module>/<controller>/<action>',
-        '<module:\w+>/<controller:\w+>/<action>' => '<module>/<controller>/<action>',
+
+        '/<module:\w+>/<controller:\w+>' => '<module>/<controller>/index',
+        '/<module:\w+>/<controller:\w+>/<action>' => '<module>/<controller>/<action>',
+
         '/<controller:\w+>' => '/<controller>/index',
         '/<controller:\w+>/<action>/<id:\d+>' => '/<controller>/<action>',
         '/<controller:\w+>/<action>/<id:[\w\d-]+>' => '/<controller>/<action>',
         '/<controller:\w+>/<action>' => '/<controller>/<action>',
-    ]
+
+   ]
 ];

@@ -39,15 +39,20 @@ class Investigation extends \common\models\Investigation
     {
         $rules = parent::rules();
         $rules[] = ['name', 'match', 'pattern' => '/^[\w\s]*$/'];
-        $rules[] = [['name'], 'unique', 'when' => function ($model, $attribute) {
-            /** @var $model Investigation */
-            return $model->isAttributeChanged($attribute, false);
+        $rules[] = [
+            ['name'],
+            'unique',
+            'when' => function ($model, $attribute) {
+                /** @var $model Investigation */
+                return $model->isAttributeChanged($attribute, false);
 
-        }, 'filter' => function (Query $query) {
-            if ($this->company_id) {
-                $query->andWhere(['company_id' => $this->company_id]);
+            },
+            'filter' => function (Query $query) {
+                if ($this->company_id) {
+                    $query->andWhere(['company_id' => $this->company_id]);
+                }
             }
-        }];
+        ];
 
         return $rules;
     }
@@ -82,13 +87,13 @@ class Investigation extends \common\models\Investigation
             'company' => function (Investigation $model) {
                 return $model->company_id;
             },
-            'attribute' => function($model){
+            'attribute' => function ($model) {
                 return $this->fullName;
             },
         ];
         $behaviors['notify'] = [
             'class' => NotifyBehavior::class,
-            'sendFrom' => function(){
+            'sendFrom' => function () {
                 return \Yii::$app->keyStorage->get('system.sendfrom');
             },
             'companyId' => function (Investigation $model) {
@@ -125,6 +130,7 @@ class Investigation extends \common\models\Investigation
 
         return $this->getOldAttribute('first_name') . $lastName . '-' . $this->getOldAttribute('ssn');
     }
+
     /**
      * @return array|\yii\db\ActiveRecord[]
      */
