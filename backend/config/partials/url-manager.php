@@ -28,6 +28,7 @@ return [
         '/sign-up' => '/auth/auth/sign-up',
         '/password-reset' => '/auth/auth/password-reset',
         '/password-restore' => '/auth/auth/password-restore',
+        '/user/<action>' => '/user/<action>',
 
         '/<module:\w+>/<controller:\w+>' => '<module>/<controller>/index',
         '/<module:\w+>/<controller:\w+>/<action>' => '<module>/<controller>/<action>',
