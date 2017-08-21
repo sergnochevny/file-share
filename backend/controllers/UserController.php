@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use ait\rbac\Item;
 use backend\models\services\UserService;
 use Yii;
 use yii\filters\AccessControl;
@@ -61,7 +62,7 @@ class UserController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new UserSearch();
+        $searchModel = new UserSearch();//var_dump(Yii::$app->request->queryParams);exit;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
         return $this->render('index', [
@@ -89,5 +90,24 @@ class UserController extends Controller
         }
 
         return $this->actionIndex();
+    }
+
+    public function actionProtus()
+    {
+        $this->setAdditionalQueryParams(['role_type' => Item::TYPE_ROLE]);
+        return $this->runAction('index');
+    }
+
+    public function actionOthers()
+    {
+        $this->setAdditionalQueryParams(['role_type' => Item::TYPE_CUSTOM_ROLE]);
+        return $this->runAction('index');
+    }
+
+    private function setAdditionalQueryParams(array $params)
+    {
+        $rq = Yii::$app->request;
+        $params = array_merge($rq->queryParams, $params);
+        $rq->setQueryParams($params);
     }
 }
