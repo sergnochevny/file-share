@@ -65,16 +65,6 @@ class FileController extends PermissionController
                 'class' => RememberUrlBehavior::className(),
                 'actions' => ['index'],
             ],
-            [
-                'class' => AccessControl::class,
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'actions' => ['download', 'download-archive', 'multi-download', 'multi-upload', 'index', 'archive'],
-                        'roles' => ['@'],
-                    ],
-                ]
-            ],
             'permission' => VerifyPermissionBehavior::className()
         ];
     }
@@ -156,24 +146,23 @@ class FileController extends PermissionController
                         'name' => $model->file->name,
                         'type' => FileUpload::fileExt($model->model->type),
                         'size' => $model->file->size,
-                        'width' => (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin')) ? 220 : 150,
-
+                        'width' => (Yii::$app->user->can('admin') || Yii::$app->user->can('sadmin')) ? 220 : 150,
                     ];
-                    if (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin')) {
+                    if (Yii::$app->user->can('admin') || Yii::$app->user->can('sadmin')) {
                         $item['deleteUrl'] = Url::to(['/file/delete', 'id' => $model->model->id], true);
                     };
-                    if (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin') ||
+                    if (Yii::$app->user->can('admin') || Yii::$app->user->can('sadmin') ||
                         (
-                            !Yii::$app->user->can('admin') && !Yii::$app->user->can('superAdmin') &&
+                            !Yii::$app->user->can('admin') && !Yii::$app->user->can('sadmin') &&
                             ((!empty($investigation) && Yii::$app->user->can('employee', ['investigation' => $investigation])) ||
                                 (Yii::$app->user->can('employee', ['allfiles' => $model->model->parents->parent])))
                         )
                     ) {
                         $item['downloadUrl'] = Url::to(['/file/download', 'id' => $model->model->citrix_id], true);
                     };
-                    if (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin') ||
+                    if (Yii::$app->user->can('admin') || Yii::$app->user->can('sadmin') ||
                         (
-                            !Yii::$app->user->can('admin') && !Yii::$app->user->can('superAdmin') &&
+                            !Yii::$app->user->can('admin') && !Yii::$app->user->can('sadmin') &&
                             !empty($investigation) &&
                             Yii::$app->user->can('employee', ['investigation' => $investigation])
                         )

@@ -51,20 +51,6 @@ class HistoryController extends Controller
             'remember' => [
                 'class' => RememberUrlBehavior::className(),
                 'actions' => ['index'],
-            ],
-            [
-                'class' => AccessControl::class,
-                'rules' => [
-                    [
-                        'actions' => ['recover'],
-                        'allow' => true,
-                        'roles' => ['superAdmin'],
-                    ],
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ]
-                ]
             ]
         ];
     }

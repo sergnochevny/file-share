@@ -72,16 +72,16 @@ class ProtusController extends Controller
             $manager->add($admin);
         }
 
-        if ($superAdmin = $manager->getRole('superAdmin')) {
-            $answer = $this->prompt('You already have superAdmin role. Do you want overwrite it? y/yes:', ['required' => true]);
+        if ($superAdmin = $manager->getRole('sadmin')) {
+            $answer = $this->prompt('You already have sadmin role. Do you want overwrite it? y/yes:', ['required' => true]);
             if (in_array(strtolower($answer), ['y', 'yes'])) {
                 $manager->remove($superAdmin);
-                $superAdmin = $manager->createRole('superAdmin');
+                $superAdmin = $manager->createRole('sadmin');
                 $manager->add($superAdmin);
-                $this->stdout('OK. Now will be overwrite superAdmin' . PHP_EOL, Console::FG_GREEN);
+                $this->stdout('OK. Now will be overwrite sadmin' . PHP_EOL, Console::FG_GREEN);
             }
         } else {
-            $superAdmin = $manager->createRole('superAdmin');
+            $superAdmin = $manager->createRole('sadmin');
             $manager->add($superAdmin);
         }
 
@@ -94,7 +94,7 @@ class ProtusController extends Controller
 
     private function createSuperAdminAccount($username, $email, $password)
     {
-        return $this->actionCreateUser("$username:$email:$password:superAdmin");
+        return $this->actionCreateUser("$username:$email:$password:sadmin");
     }
 
     /**

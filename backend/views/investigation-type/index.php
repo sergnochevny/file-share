@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="row gutter-xs">
     <div class="col-xs-12">
         <div class="panel panel-default">
-            <?php if (!User::isAdmin()): ?>
+            <?php if (!Yii::$app->user->can('investigation.archive')): ?>
                 <div class="panel-heading">
                     <a class="btn btn-sm btn-labeled arrow-success" href="<?= Url::to(['create']) ?>">
                     <span class="btn-label">

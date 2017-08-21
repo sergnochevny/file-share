@@ -67,7 +67,7 @@ $view = $this;
                         Url::to(['/file/multi-upload', 'parent' => $investigation->citrix_id], true) :
                         Url::to(['/file/multi-upload'], true);
                     ?>
-                    <?php if (!empty($investigation) || Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin')): ?>
+                    <?php if (!empty($investigation) || Yii::$app->user->can('admin') || Yii::$app->user->can('sadmin')): ?>
                         <?= $this->render('partials/_upload', ['model' => $uploadModel, 'action' => $url]) ?>
                     <?php endif; ?>
                 </div>
@@ -170,13 +170,13 @@ $view = $this;
                                 'headerOptions' => [
                                     'class' => 'action-column'
                                 ],
-                                'header' => (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin') ||
-                                    (!Yii::$app->user->can('admin') && !Yii::$app->user->can('superAdmin') &&
+                                'header' => (Yii::$app->user->can('admin') || Yii::$app->user->can('sadmin') ||
+                                    (!Yii::$app->user->can('admin') && !Yii::$app->user->can('sadmin') &&
                                         ((!empty($investigation) && Yii::$app->user->can('employee',
                                                 ['investigation' => $investigation]))))
                                 ) ? '<a class="btn btn-warning btn-xs" id="download-all">Download selected</a>' : '',
                                 'contentOptions' => [
-                                    'width' => (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin')) ? 220 : 150
+                                    'width' => (Yii::$app->user->can('admin') || Yii::$app->user->can('sadmin')) ? 220 : 150
                                 ],
                                 'visibleButtons' => [
                                     'archive' => Yii::$app->user->can('file.archive') ||

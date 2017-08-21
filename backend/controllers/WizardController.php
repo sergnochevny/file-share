@@ -115,7 +115,7 @@ class WizardController extends Controller
                     $userForm->role = 'user';
                 }
                 //new user with admin role can't have company
-                if ($userForm->role == 'admin' || $userForm->role == 'superAdmin') {
+                if ($userForm->role == 'admin' || $userForm->role == 'sadmin') {
                     $userForm->company_id = null;
                 }
 
@@ -153,7 +153,7 @@ class WizardController extends Controller
         $companyId = isset($depDrops['company-list']) ? (int)$depDrops['company-list'] : false;
         $userRole = isset($depDrops['user-role']) ? $depDrops['user-role'] : false;
 
-        if ('admin' == $userRole || 'superAdmin' == $userRole) {
+        if ('admin' == $userRole || 'sadmin' == $userRole) {
             $userList = User::findByRole($userRole)->select(['id', 'username as name'])->asArray()->all();
         } else if ($companyId) {
             $company = Company::findOne($companyId);

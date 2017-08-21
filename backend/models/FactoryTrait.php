@@ -16,8 +16,12 @@ trait FactoryTrait
      */
     public static function create($id)
     {
-        $id = (int) $id;
-        if ($id > 0) {
+        try {
+            $id = (int)$id;
+        } catch (\Exception $e){
+            $id = null;
+        }
+        if (!empty($id)) {
             return static::findOne($id);
         }
 

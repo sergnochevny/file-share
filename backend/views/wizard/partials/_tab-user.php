@@ -23,7 +23,7 @@ use yii\helpers\Html;
         ],
     ]) ?>
     <?php if (Yii::$app->user->can('admin')): ?>
-        <?php if (Yii::$app->user->can('superAdmin')): ?>
+        <?php if (Yii::$app->user->can('sadmin')): ?>
             <div class="col-lg-6 col-lg-offset-3">
                 <h2 align="center">
                     <span class="d-ib">Select Role</span>
@@ -31,7 +31,7 @@ use yii\helpers\Html;
 
                 <div class="form-group<?= $userForm->hasErrors('role') ? ' has-error' : '' ?>">                            <?php /*todo get this list from db */ ?>
                     <?= Html::activeDropDownList($userForm, 'role', [
-                        'superAdmin' => 'Super Admin',
+                        'sadmin' => 'Super Admin',
                         'admin' => 'Admin',
                         'user' => 'Company User'
                     ],
