@@ -52,20 +52,6 @@ class UserController extends Controller
                 'class' => RememberUrlBehavior::className(),
                 'actions' => ['index', 'wizard'],
             ],
-            [
-                'class' => AccessControl::class,
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'actions' => ['index'],
-                        'roles' => ['admin']
-                    ],
-                    [
-                        'allow' => true,
-                        'roles' => ['superAdmin']
-                    ],
-                ]
-            ]
         ];
     }
 

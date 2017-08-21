@@ -38,21 +38,6 @@ class InvestigationTypeController extends Controller
     public function behaviors()
     {
         return [
-            [
-                'class' => AccessControl::class,
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'actions' => ['index'],
-                        'roles' => ['admin'],
-                    ],
-                    [
-                        //all actions
-                        'allow' => true,
-                        'roles' => ['superAdmin']
-                    ],
-                ]
-            ],
             'remember' => [
                 'class' => RememberUrlBehavior::className(),
                 'actions' => ['index','update','create'],

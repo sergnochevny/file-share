@@ -47,7 +47,7 @@ class UserSearch extends User
     public function search($params)
     {
         $query = static::find();
-        if (!Yii::$app->user->can('superAdmin')) {
+        if (!Yii::$app->user->can('sadmin')) {
             //admin can edit only company users
             $query->rightJoin('user_company', User::tableName() . '.[[id]] = [[user_company]].[[user_id]]');
         }

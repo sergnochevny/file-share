@@ -21,8 +21,7 @@ class DownloadAction extends PermissionAction
 
     protected function renderFile($id)
     {
-        if (isset($id)) {
-        } else {
+        if (!isset($id)) {
             throw new InvalidParamException("Expected id parameter");
         }
     }

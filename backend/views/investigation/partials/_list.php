@@ -78,10 +78,6 @@ Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout
             ],
             'buttons' => [
                 'edit' => function ($url, $model) {
-                    if (User::isAdmin()) {
-                        return '';
-                    }
-
                     return Html::a('Edit', Url::to(['/wizard/investigation', 'id' => $model->id], true),
                         [
                             'class' => "btn btn-primary btn-xs",

@@ -10,7 +10,7 @@ use Yii;
  * @package backend\models
  *
  * These checks not for "can user something?", they are for check "who is user"
- * because superAdmin can "client" but he is not client
+ * because sadmin can "client" but he is not client
  */
 trait WhoIsUserTrait
 {
@@ -45,6 +45,6 @@ trait WhoIsUserTrait
      */
     public static function isSuperAdmin()
     {
-        return Yii::$app->user->can('superAdmin');
+        return Yii::$app->user->can('sadmin');
     }
 }

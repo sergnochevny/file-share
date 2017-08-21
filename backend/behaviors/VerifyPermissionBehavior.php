@@ -46,8 +46,8 @@ class VerifyPermissionBehavior extends Behavior
     {
         $prms = $event->parameters;
 
-        $event->isTruest = (Yii::$app->user->can('superAdmin') || Yii::$app->user->can('admin') ||
-            (!Yii::$app->user->can('superAdmin') && !Yii::$app->user->can('admin') ||
+        $event->isTruest = (Yii::$app->user->can('sadmin') || Yii::$app->user->can('admin') ||
+            (!Yii::$app->user->can('sadmin') && !Yii::$app->user->can('admin') ||
                 Yii::$app->user->can('employee', $prms)));
 
         return $event->isTruest;
@@ -63,9 +63,9 @@ class VerifyPermissionBehavior extends Behavior
         $investigation = $prms['investigation'];
         $model = $prms['model'];
 
-        $event->isTruest = (Yii::$app->user->can('admin') || Yii::$app->user->can('superAdmin') ||
+        $event->isTruest = (Yii::$app->user->can('admin') || Yii::$app->user->can('sadmin') ||
             (
-                !Yii::$app->user->can('admin') && !Yii::$app->user->can('superAdmin') &&
+                !Yii::$app->user->can('admin') && !Yii::$app->user->can('sadmin') &&
                 ((!empty($investigation) && Yii::$app->user->can('employee', ['investigation' => $investigation])) ||
                     (Yii::$app->user->can('employee', ['allfiles' => $model->parents->parent])))
             )
