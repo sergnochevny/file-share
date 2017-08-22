@@ -21,7 +21,7 @@ return [
         '/applicant' => '/investigation/index',
         '/applicant/<action:\w+>/<id:\d+>' => '/investigation/<action>',
         '/company/edit/<id:\d+>' => '/wizard/company',
-        '/company/create' => '/wizard/company',
+//        '/company/create' => '/wizard/company',
         '/user/edit/<id:\d+>' => '/wizard/user',
         '/login'=>'/auth/auth/login',
         '/logout' => '/auth/auth/logout',
@@ -29,6 +29,8 @@ return [
         '/password-reset' => '/auth/auth/password-reset',
         '/password-restore' => '/auth/auth/password-restore',
         '/user/<action>' => '/user/<action>',
+
+        '/wizard/<action>' => '/wizard/<action>',
 
         '/<module:\w+>/<controller:\w+>' => '<module>/<controller>/index',
         '/<module:\w+>/<controller:\w+>/<action>' => '<module>/<controller>/<action>',

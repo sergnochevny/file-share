@@ -7,15 +7,13 @@ use backend\models\forms\UserForm;
 use backend\models\Investigation;
 use backend\models\services\UserService;
 use backend\models\User;
+use backend\widgets\ActiveForm;
 use common\models\InvestigationType;
 use Yii;
 use yii\base\UserException;
-use yii\filters\AccessControl;
-use yii\web\Controller;
 use yii\web\Response;
-use backend\widgets\ActiveForm;
 
-class WizardController extends Controller
+class WizardController extends BaseController
 {
 
     public $layout = 'content';
@@ -34,6 +32,22 @@ class WizardController extends Controller
      * @throws UserException
      */
     public function actionCompany($id = null)
+    {
+        if ($id !== null) {
+            return $this->run('/company/update', ['id' => $id]);
+        }
+
+        return $this->run('/company/create');
+    }
+
+    /**
+     * Shows Company tab
+     *
+     * @param string $id
+     * @return string
+     * @throws UserException
+     */
+    public function actionCompanyO($id = null)
     {
         if (User::isClient()) {
             $user = User::getIdentity();
@@ -237,34 +251,6 @@ class WizardController extends Controller
             'types' => InvestigationType::find()->select('name')->indexBy('id')->column(),
             'form' => new ActiveForm(),
         ]);
-    }
-
-    /**
-     * @param $view
-     * @param array $viewData
-     * @return string
-     */
-    private function smartRender($view, array $viewData)
-    {
-        return Yii::$app->getRequest()->isPjax ? $this->renderAjax($view, $viewData) : $this->render($view, $viewData);
-    }
-
-    /**
-     * @param $type
-     * @param $entity
-     * @param $isUpdate
-     * @param string|null $message
-     */
-    private function setFlashMessage($type, $entity, $isUpdate = false, $message = null)
-    {
-        $action = $isUpdate ? 'updated' : 'created';
-        if (null === $message) {
-            $message = ($type == 'success')
-                ? "The $entity has been $action successfully"
-                : "The $entity hasn't been $action";
-        }
-
-        Yii::$app->getSession()->setFlash($type, $message);
     }
 
 }
