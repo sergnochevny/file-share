@@ -25,6 +25,8 @@ return [
         '/password-restore' => '/auth/auth/password-restore',
         '/user/<action>' => '/user/<action>',
 
+        '/wizard/<action>' => '/wizard/<action>',
+
         '/<module:\w+>/<controller:\w+>' => '<module>/<controller>/index',
         '/<module:\w+>/<controller:\w+>/<action>' => '<module>/<controller>/<action>',
 

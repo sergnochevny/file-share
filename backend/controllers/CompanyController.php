@@ -2,21 +2,21 @@
 
 namespace backend\controllers;
 
-
+use backend\models\User;
 use backend\behaviors\RememberUrlBehavior;
 use backend\models\Company;
 use backend\models\search\CompanySearch;
 use common\helpers\Url;
+use common\models\InvestigationType;
 use Yii;
-use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\base\UserException;
 
 /**
  * CompanyController implements the CRUD actions for Company model.
  */
-class CompanyController extends Controller
+class CompanyController extends BaseController
 {
 
     public $layout = 'content';
@@ -55,18 +55,85 @@ class CompanyController extends Controller
         ]);
     }
 
+    /**
+     * @return string
+     */
     public function actionCreate()
     {
         $rq = Yii::$app->getRequest();
+        //after create gives ability to update new created record
+        $isUpdate = false;
+
         try {
+            $company = new Company();
+            if ($rq->isPost && $company->load($rq->post())) {
+                if ($company->save()) {
+                    $this->setFlashMessage('success', 'company', $isUpdate);
+                    $isUpdate = true;
+
+                } else {
+                    $this->setFlashMessage('error', 'company', $isUpdate);
+                }
+            }
         } catch (\Exception $e){
             $this->setFlashMessage('error', 'company', $isUpdate, $e->getMessage());
         }
 
+        return $this->smartRender('//wizard/index', [
+            'isCompany' => true,
+            'companyForm' => $company,
+            'selected' => $company->id,
+            'isUpdate' => $isUpdate,
+            'investigationTypes' => $this->getListOfInvestigationTypes(),
+        ]);
+
     }
 
-    public function actionUpdate()
+    /**
+     * @param $id
+     * @return string
+     * @throws UserException
+     */
+    public function actionUpdate($id)
     {
+        $rq = Yii::$app->getRequest();
+        //after create gives ability to update new created record
+        $isUpdate = true;
+        $company = null;
+
+        $user = User::getIdentity();
+        if ($user && $user->company) {
+            $id = $user->company->id;
+        }
+
+        try {
+            $company = Company::findOne($id);
+            if ($company === null) {
+                $company = new Company(); //to prevent NPE
+                throw new UserException('The company does not exists');
+            }
+
+            if ($rq->isPost && $company->load($rq->post())) {
+                if ($company->save()) {
+                    $this->setFlashMessage('success', 'company', $isUpdate);
+                    $isUpdate = true;
+
+                } else {
+                    $this->setFlashMessage('error', 'company', $isUpdate);
+                }
+            }
+
+        } catch (\Exception $e){
+            $this->setFlashMessage('error', 'company', $isUpdate, $e->getMessage());
+        }
+
+        return $this->smartRender('//wizard/index', [
+            'isCompany' => true,
+            'companyForm' => $company,
+            'selected' => $company->id,
+            'isUpdate' => $isUpdate,
+            'investigationTypes' => $this->getListOfInvestigationTypes(),
+        ]);
 
     }
 
@@ -103,5 +170,10 @@ class CompanyController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    private function getListOfInvestigationTypes()
+    {
+        return InvestigationType::find()->select('name')->indexBy('id')->column();
     }
 }

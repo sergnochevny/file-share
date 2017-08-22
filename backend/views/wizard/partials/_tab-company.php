@@ -16,11 +16,11 @@ $isReadOnly = User::isClient();
 
 <div id="tab-1" class="tab-pane active">
     <?php $form = ActiveForm::begin([
-        'action' => ['company', 'id' => $companyForm->id],
+        'action' => ['/wizard/company', 'id' => $companyForm->id],
         'id' => 'company-form',
         'options' => [
             'data-pjax' => 'wizard-container',
-            'data-create-url' => Url::to(['company'], true), //when select prompt send request to create url
+            'data-create-url' => Url::to(['/wizard/company'], true), //when select prompt send request to create url
         ],
     ]) ?>
 

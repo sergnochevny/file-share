@@ -53,7 +53,7 @@ $this->title = 'Wizard';
                                 <hr/>
                                 <ul class="steps">
                                     <li class="step <?= $col_xs_x ?><?= $companyActive ?>">
-                                        <a class="step-segment" href="<?= Url::to(['company'], true) ?>">
+                                        <a class="step-segment" href="<?= Url::to(['/wizard/company'], true) ?>">
                                             <span class="step-icon icon icon-contao"></span>
                                         </a>
 
@@ -64,7 +64,7 @@ $this->title = 'Wizard';
 
                                     <?php if (!User::isClient()): ?>
                                     <li class="step <?= $col_xs_x ?><?= $userActive ?>">
-                                        <a class="step-segment" href="<?= Url::to(['user'], true) ?>">
+                                        <a class="step-segment" href="<?= Url::to(['/wizard/user'], true) ?>">
                                             <span class="step-icon icon icon-users"></span>
                                         </a>
 
@@ -76,7 +76,7 @@ $this->title = 'Wizard';
 
                                     <?php if (!User::isAdmin()): ?>
                                     <li class="step <?= $col_xs_x ?><?= $investigationActive ?>">
-                                        <a class="step-segment" href="<?= Url::to(['investigation'], true) ?>">
+                                        <a class="step-segment" href="<?= Url::to(['/wizard/investigation'], true) ?>">
                                             <span class="step-icon icon icon-folder-open-o"></span>
                                         </a>
 
