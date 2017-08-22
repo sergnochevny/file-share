@@ -40,6 +40,8 @@ class RecoverableActiveRecord extends UndeleteableActiveRecord
     {
         $res = false;
         if ($this->beforeRecover()) {
+            $this->off(ActiveRecord::EVENT_BEFORE_UPDATE);
+            $this->off(ActiveRecord::EVENT_AFTER_UPDATE);
             $this->status = $this->recoverStatus;
             if ($this->save(false)) {
                 $res = $this->afterRecover();

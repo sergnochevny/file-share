@@ -23,6 +23,7 @@ class Company extends \common\models\Company
 {
     use FactoryTrait;
 
+
     /**
      * Gets list [id => name] of companies
      *
@@ -30,8 +31,24 @@ class Company extends \common\models\Company
      */
     public static function getList()
     {
-        $companies = self::find()->select(['id', 'name'])->asArray()->all();
+        $companies = static::find()->select(['id', 'name'])->asArray()->all();
         return array_column($companies, 'name', 'id');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected static function extendFindConditionByPermissions(&$query)
+    {
+        $permissions = ['company.find.all'];
+        $can = false;
+        foreach ($permissions as $permission) {
+            $can = $can || \Yii::$app->user->can($permission);
+        }
+        if (!$can) {
+            $query->joinWith('users');
+            $query->andWhere(['user.id' => \Yii::$app->user->id]);
+        }
     }
 
     /**
@@ -40,11 +57,15 @@ class Company extends \common\models\Company
     public function rules()
     {
         $rules = parent::rules();
-      //  $rules[] = ['name', 'match', 'pattern' => '/^[\w\s]*$/']; //todo unique what if user will create Company and then Company', what will be with folder in citrix
-        $rules[] = [['name'], 'unique', 'when' => function ($model, $attribute) {
-            /** @var $model Company */
-            return $model->isAttributeChanged($attribute, false);
-        }];
+        //  $rules[] = ['name', 'match', 'pattern' => '/^[\w\s]*$/']; //todo unique what if user will create Company and then Company', what will be with folder in citrix
+        $rules[] = [
+            ['name'],
+            'unique',
+            'when' => function ($model, $attribute) {
+                /** @var $model Company */
+                return $model->isAttributeChanged($attribute, false);
+            }
+        ];
         return $rules;
     }
 
@@ -66,10 +87,10 @@ class Company extends \common\models\Company
         ];
         $behaviors['notify'] = [
             'class' => NotifyBehavior::class,
-            'sendFrom' => function(){
+            'sendFrom' => function () {
                 return \Yii::$app->keyStorage->get('system.sendfrom');
             },
-            'companyId' => function(Company $model) {
+            'companyId' => function (Company $model) {
                 return $model->id;
             },
             'createTemplate' => 'create',
@@ -78,10 +99,10 @@ class Company extends \common\models\Company
         ];
         $behaviors['historyBehavior'] = [
             'class' => HistoryBehavior::class,
-            'parent' => function(Company $model){
+            'parent' => function (Company $model) {
                 return $model->id;
             },
-            'company' => function(Company $model){
+            'company' => function (Company $model) {
                 return $model->id;
             },
             'attribute' => 'name',

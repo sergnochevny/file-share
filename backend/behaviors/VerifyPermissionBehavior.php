@@ -6,8 +6,12 @@
 
 namespace backend\behaviors;
 
+use common\models\UndeleteableActiveRecord;
 use Yii;
 use yii\base\Behavior;
+use yii\base\Model;
+use yii\base\ModelEvent;
+use yii\db\ActiveRecord;
 
 /**
  * Class VerifyPermissionBehavior
@@ -34,7 +38,12 @@ class VerifyPermissionBehavior extends Behavior
     {
         return [
             self::EVENT_VERIFY_FILE_PERMISSION => 'verifyFilePermission',
-            self::EVENT_VERIFY_FILE_DOWNLOAD_PERMISSION => 'verifyFileDownloadPermission'
+            self::EVENT_VERIFY_FILE_DOWNLOAD_PERMISSION => 'verifyFileDownloadPermission',
+            Model::EVENT_BEFORE_VALIDATE => 'beforeValidate',
+            ActiveRecord::EVENT_BEFORE_INSERT => 'beforeInsert',
+            ActiveRecord::EVENT_BEFORE_UPDATE => 'beforeUpdate',
+            ActiveRecord::EVENT_BEFORE_DELETE => 'beforeDelete',
+            UndeleteableActiveRecord::EVENT_BEFORE_ARCHIVE => 'beforeArchive'
         ];
     }
 
@@ -72,6 +81,22 @@ class VerifyPermissionBehavior extends Behavior
         );
 
         return $event->isTruest;
+    }
+
+    public function beforeInsert(ModelEvent $event){
+        return $event->isValid = true;
+    }
+
+    public function beforeUpdate(ModelEvent $event){
+        return $event->isValid = true;
+    }
+
+    public function beforeDelete(ModelEvent $event){
+        return $event->isValid = true;
+    }
+
+    public function beforeArchive(ModelEvent $event){
+        return $event->isValid = true;
     }
 
 }

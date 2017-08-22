@@ -6,9 +6,13 @@ use common\widgets\Alert;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
-use backend\models\User;
 
-Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout' => 0, 'options' => ['class' => 'panel-body panel-collapse']]);
+Pjax::begin([
+    'id' => 'investigation_index',
+    'enablePushState' => false,
+    'timeout' => 0,
+    'options' => ['class' => 'panel-body panel-collapse']
+]);
 ?>
 <div class="alert-container">
     <?= Alert::widget() ?>
@@ -61,7 +65,7 @@ Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout
             'format' => 'html',
             'value' => function ($model, $key, $index, $column) {
                 $code = $model->{$column->attribute};
-                $value = '<span class=" '. Investigation::getStatusCSSClass($code) .'-text" >' . Investigation::getStatusByCode($code) . '</span >';
+                $value = '<span class=" ' . Investigation::getStatusCSSClass($code) . '-text" >' . Investigation::getStatusByCode($code) . '</span >';
                 return $value;
             }
         ],
@@ -72,9 +76,9 @@ Pjax::begin(['id' => 'investigation_index', 'enablePushState' => false, 'timeout
                 'width' => 150,
             ],
             'visibleButtons' => [
-                    'edit' => \Yii::$app->user->can('wizard.investigation'),
-                    'delete' => \Yii::$app->user->can('investigation.archive'),
-                    'view' => \Yii::$app->user->can('file.index'),
+                'edit' => \Yii::$app->user->can('wizard.investigation'),
+                'delete' => \Yii::$app->user->can('investigation.archive'),
+                'view' => \Yii::$app->user->can('file.index'),
             ],
             'buttons' => [
                 'edit' => function ($url, $model) {

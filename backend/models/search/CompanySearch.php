@@ -15,6 +15,19 @@ class CompanySearch extends Company
 
     public $pagesize = 10;
 
+    protected static function extendFindConditionByPermissions(&$query)
+    {
+        $permissions = ['company.find.all'];
+        $can = false;
+        foreach ($permissions as $permission) {
+            $can = $can || \Yii::$app->user->can($permission);
+        }
+        if (!$can) {
+            $query->joinWith('users');
+            $query->andWhere(['user.id' => \Yii::$app->user->id]);
+        }
+    }
+
     /**
      * @inheritdoc
      */
@@ -44,16 +57,11 @@ class CompanySearch extends Company
      */
     public function search($params)
     {
-        $query = Company::find();
-
-        if (!\Yii::$app->user->can('admin')){
-            $query->joinWith('users');
-            $query->andWhere(['user.id' => \Yii::$app->user->id]);
-        }
+        $query = static::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['created_at' => SORT_DESC]],
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
             //'pagination' => ['defaultPageSize' => 1]
         ]);
 

@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:ait/auth.git",
-                "reference": "fb5a290706cac7a9d9ef092b30011696cb7c09d1"
+                "reference": "8a79a0f5a6fce1710073668a3d489436b4b29eb0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/auth/9999999-dev/fb5a290706cac7a9d9ef092b30011696cb7c09d1.zip",
-                "reference": "fb5a290706cac7a9d9ef092b30011696cb7c09d1",
+                "url": "https://tp.ait.com/repo/private/dists/ait/auth/9999999-dev/8a79a0f5a6fce1710073668a3d489436b4b29eb0.zip",
+                "reference": "8a79a0f5a6fce1710073668a3d489436b4b29eb0",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -70,7 +70,7 @@
                 "yii 2",
                 "yii2"
             ],
-            "time": "2017-08-17T17:27:55+00:00"
+            "time": "2017-08-21T11:30:50+00:00"
         },
         {
             "name": "ait/citrix",
@@ -233,12 +233,12 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:ait/rbac.git",
-                "reference": "5e75b9911bf246b4bc50a49a06439ddda584b131"
+                "reference": "93205612e20ee799ff29a6f8088ca017069ad282"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/rbac/9999999-dev/5e75b9911bf246b4bc50a49a06439ddda584b131.zip",
-                "reference": "5e75b9911bf246b4bc50a49a06439ddda584b131",
+                "url": "https://tp.ait.com/repo/private/dists/ait/rbac/9999999-dev/93205612e20ee799ff29a6f8088ca017069ad282.zip",
+                "reference": "93205612e20ee799ff29a6f8088ca017069ad282",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -283,7 +283,7 @@
                 "yii 2",
                 "yii2"
             ],
-            "time": "2017-08-16T17:55:40+00:00"
+            "time": "2017-08-21T18:15:36+00:00"
         },
         {
             "name": "ait/utilities",
@@ -1977,12 +1977,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "7348d5c26b4e9253b962c6d81e345b1de1470b32"
+                "reference": "56460647d7715dc36f318e5cee24f6b1d78aa8ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/7348d5c26b4e9253b962c6d81e345b1de1470b32",
-                "reference": "7348d5c26b4e9253b962c6d81e345b1de1470b32",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/56460647d7715dc36f318e5cee24f6b1d78aa8ab",
+                "reference": "56460647d7715dc36f318e5cee24f6b1d78aa8ab",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -2075,7 +2075,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2017-08-17T15:18:51+00:00"
+            "time": "2017-08-21T14:37:01+00:00"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -3433,12 +3433,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "8c0bca4db90bb0a0b400ad8e90fee3210081701d"
+                "reference": "9a02332089ac48e704c70f6cefed30c224e3c0b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/8c0bca4db90bb0a0b400ad8e90fee3210081701d",
-                "reference": "8c0bca4db90bb0a0b400ad8e90fee3210081701d",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/9a02332089ac48e704c70f6cefed30c224e3c0b0",
+                "reference": "9a02332089ac48e704c70f6cefed30c224e3c0b0",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -3480,7 +3480,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2017-08-03T14:21:49+00:00"
+            "time": "2017-08-20T05:47:52+00:00"
         },
         {
             "name": "phpunit/phpunit",
@@ -4992,12 +4992,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-debug.git",
-                "reference": "5ae958b6ffc034deb7ec5d5c0f5c661d3fac221d"
+                "reference": "51fa1ddbe0356903eb0d6d54d47cc7bd2dc6bb82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/5ae958b6ffc034deb7ec5d5c0f5c661d3fac221d",
-                "reference": "5ae958b6ffc034deb7ec5d5c0f5c661d3fac221d",
+                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/51fa1ddbe0356903eb0d6d54d47cc7bd2dc6bb82",
+                "reference": "51fa1ddbe0356903eb0d6d54d47cc7bd2dc6bb82",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -5037,7 +5037,7 @@
                 "debugger",
                 "yii2"
             ],
-            "time": "2017-08-14T20:52:17+00:00"
+            "time": "2017-08-20T16:59:36+00:00"
         },
         {
             "name": "yiisoft/yii2-faker",

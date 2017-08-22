@@ -65,6 +65,14 @@ class RbacController extends Controller
         ['name' => 'file.upload', 'description' => 'Files upload'],
         ['name' => 'file.multi-upload', 'description' => 'Files multiple upload'],
         ['name' => 'file.archive', 'description' => 'Files delete'],
+
+// Modules permissions..............................................................................................
+
+        ['name' => 'company.find.all', 'description' => 'Model permission all companies list'],
+        ['name' => 'company.archive.all', 'description' => 'Model permission all companies archiving'],
+        ['name' => 'investigation.find.all', 'description' => 'Model permission all investigations list'],
+        ['name' => 'investigation.complete.all', 'description' => 'Model permission all investigations completion'],
+        ['name' => 'investigation.archive.all', 'description' => 'Model permission all investigations archiving'],
     ];
 
     protected $dependencies = [
@@ -94,7 +102,10 @@ class RbacController extends Controller
                 'wizard.user' => true,
                 'wizard.company-users' => true,
                 'investigation-type.index' => true,
-                'file.delete' => true
+                'file.delete' => true,
+                'company.find.all' => true,
+                'investigation.find.all' => true,
+                'investigation.complete.all' => true,
             ]
         ],
         'user' => [

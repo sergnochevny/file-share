@@ -1,7 +1,7 @@
 <?php
 
+use ait\auth\widgets\Menu;
 use ait\utilities\helpers\Url;
-use common\widgets\Menu;
 ?>
 <div class="profile">
     <div class="profile-header">
@@ -17,13 +17,13 @@ use common\widgets\Menu;
                         'options' => ['class' => 'profile-nav'],
                         'items' => [[
                             'label' => 'Applicants',
-                            'url' => Url::to(['/investigation'],true)
+                            'url' => Url::to(['/investigation/index'],true)
                         ],[
                             'label' => 'History',
-                            'url' => Url::to(['/history'],true)
+                            'url' => Url::to(['/history/index'],true)
                         ],[
                             'label' => 'Files',
-                            'url' => Url::to(['/file'],true)
+                            'url' => Url::to(['/file/index'],true)
                         ]]
                     ]) ?>
                 </div>

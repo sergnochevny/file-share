@@ -84,6 +84,8 @@ class UndeleteableActiveRecord extends ActiveRecord
     {
         $res = false;
         if ($this->beforeArchive()) {
+            $this->off(ActiveRecord::EVENT_BEFORE_UPDATE);
+            $this->off(ActiveRecord::EVENT_AFTER_UPDATE);
             $this->status = static::STATUS_IN_HISTORY;
             if ($this->save(false)) {
                 $res = $this->afterArchive();
@@ -111,8 +113,12 @@ class UndeleteableActiveRecord extends ActiveRecord
     {
         $res = false;
         $this->status = static::STATUS_DELETED;
-        if ($this->beforeDelete() && $this->save(false)) {
-            $res = $this->afterDelete();
+        if ($this->beforeDelete()) {
+            $this->off(ActiveRecord::EVENT_BEFORE_UPDATE);
+            $this->off(ActiveRecord::EVENT_AFTER_UPDATE);
+            if ($this->save(false)) {
+                $res = $this->afterDelete();
+            }
         }
         return $res;
     }

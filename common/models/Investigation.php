@@ -3,6 +3,7 @@
 namespace common\models;
 
 
+use backend\models\PermissionsModelTrait;
 use common\behaviors\ArchiveCascadeBehavior;
 use common\validators\SsnValidator;
 use DateTime;
@@ -56,6 +57,9 @@ use yii2tech\ar\linkmany\LinkManyBehavior;
  */
 class Investigation extends HistoryActiveRecord
 {
+
+    use PermissionsModelTrait;
+
     const STATUS_DELETED = 0;
     const STATUS_CANCELLED = 100;
     const STATUS_IN_HISTORY = 200;
@@ -312,11 +316,20 @@ class Investigation extends HistoryActiveRecord
     }
 
     /**
-     * @return Investigation
+     * @return UndeletableActiveQuery
      */
     public function getHistory()
     {
         return $this->hasOne(History::className(), ['parent' => 'id'])->andWhere(['type'=>self::$history_type]);
+    }
+
+    /**
+     * @return UndeletableActiveQuery
+     */
+    public function getUsers()
+    {
+        return $this->hasMany(User::class, ['id' => 'user_id'])
+            ->viaTable('user_company', ['company_id' => 'company_id']);
     }
 
     /**
@@ -391,5 +404,6 @@ class Investigation extends HistoryActiveRecord
     {
         return !empty($this->history) || parent::isDeleted();
     }
+
 
 }

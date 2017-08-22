@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use backend\models\PermissionsModelTrait;
 use Yii;
 use yii\base\InvalidCallException;
 use yii\behaviors\BlameableBehavior;
@@ -21,6 +22,8 @@ use yii\behaviors\TimestampBehavior;
  */
 class History extends ActiveRecord
 {
+    use PermissionsModelTrait;
+
     /**
      * @inheritdoc
      */

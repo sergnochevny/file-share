@@ -16,6 +16,20 @@ class FileSearch extends File
 
     public $pagesize = 10;
 
+    protected static function extendFindConditionByPermissions(&$query)
+    {
+        $can = false;
+
+        $permissions = ['file.find.all'];
+        foreach ($permissions as $permission) {
+            $can = $can || \Yii::$app->user->can($permission);
+        }
+        if (!$can) {
+            $query->andWhere(['created_by' => \Yii::$app->user->id]);
+        }
+    }
+
+
     public function scenarios()
     {
         $scenario = parent::scenarios();
@@ -44,7 +58,7 @@ class FileSearch extends File
      */
     public function search($params)
     {
-        $query = File::find();
+        $query = static::find();
 
         // add conditions that should always apply here
 
@@ -65,10 +79,11 @@ class FileSearch extends File
 
         if (!empty($this->parent)) {
             if ($this->scenario == self::SCENARIO_APP) {
-                if (!Yii::$app->user->can('admin'))
+                if (!Yii::$app->user->can('admin')) {
                     $query
                         ->joinWith(['users'])
                         ->andWhere(['user.id' => Yii::$app->user->id]);
+                }
             }
             $query->andWhere(['file.parent' => $this->parent]);
         }

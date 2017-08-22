@@ -29,18 +29,12 @@ class InvestigationController extends Controller
     {
         $company = null;
         $searchModel = new InvestigationSearch();
-        if (!(Yii::$app->user->can('admin'))) {
-            $searchModel->parent = Yii::$app->user->identity->company->id;
-            $company = Company::findOne($searchModel->parent);
-            if (empty($company)) $searchModel->parent = 'no parent';
-        }
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
         $renderParams = [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ];
-        if (!empty($company)) $renderParams['company'] = $company;
         return $renderParams;
     }
 

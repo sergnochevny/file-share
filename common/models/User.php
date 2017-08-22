@@ -3,6 +3,7 @@
 namespace common\models;
 
 
+use backend\models\PermissionsModelTrait;
 use backend\models\UserProfile;
 use common\models\query\UndeleteableActiveQuery;
 use Yii;
@@ -37,6 +38,9 @@ use yii\web\IdentityInterface;
  */
 class User extends UndeleteableActiveRecord implements IdentityInterface
 {
+
+    use PermissionsModelTrait;
+
     /**
      * @inheritdoc
      */

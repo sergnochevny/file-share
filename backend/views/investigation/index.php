@@ -1,7 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\InvestigationSearch */
+/* @var $searchModel backend\models\search\InvestigationSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 use ait\utilities\helpers\Url;
@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="row gutter-xs">
     <div class="col-xs-12">
         <div class="panel panel-default">
-            <?php if (\Yii::$app->user->can('applicant.create')): ?>
+            <?php if (\Yii::$app->user->can('wizard.investigation')): ?>
             <div class="panel-heading">
                 <a class="btn btn-sm btn-labeled arrow-success" href="<?= Url::to(['/wizard/investigation']) ?>">
                     <span class="btn-label">

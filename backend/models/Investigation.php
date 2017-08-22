@@ -19,6 +19,7 @@ use yii\db\Query;
  * @property array $allCompaniesList
  *
  * @property User $createdBy
+ * @property [Users] $users
  */
 class Investigation extends \common\models\Investigation
 {
@@ -30,6 +31,35 @@ class Investigation extends \common\models\Investigation
     public static function getStatusesList()
     {
         return array_slice(parent::getStatusesList(), -6, 5, true); //remove 'deleted' status
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected static function extendFindConditionByPermissions(&$query)
+    {
+        $permissions = ['investigation.find.all'];
+        $can = false;
+        foreach ($permissions as $permission) {
+            $can = $can || \Yii::$app->user->can($permission);
+        }
+        if (!$can) {
+            $permissions = ['investigation.find.group'];
+            $can = false;
+            foreach ($permissions as $permission) {
+                $can = $can || \Yii::$app->user->can($permission);
+            }
+            if (!$can) {
+                $query->andWhere(['investigation.created_by' => \Yii::$app->user->id]);
+            } else {
+
+            }
+        } else {
+            if (!\Yii::$app->user->can('company.find.all')) {
+                $query->joinWith('users');
+                $query->andWhere(['user.id' => \Yii::$app->user->id]);
+            }
+        }
     }
 
     /**

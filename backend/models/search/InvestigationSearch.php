@@ -17,6 +17,31 @@ class InvestigationSearch extends Investigation
     public $company_name;
     public $parent;
 
+    protected static function extendFindConditionByPermissions(&$query)
+    {
+        $permissions = ['investigation.find.all'];
+        $can = false;
+        foreach ($permissions as $permission) {
+            $can = $can || \Yii::$app->user->can($permission);
+        }
+        if (!$can) {
+            $permissions = ['investigation.find.group'];
+            $can = false;
+            foreach ($permissions as $permission) {
+                $can = $can || \Yii::$app->user->can($permission);
+            }
+            if (!$can) {
+                $query->andWhere(['investigation.created_by' => \Yii::$app->user->id]);
+            }
+        } else {
+            if(!\Yii::$app->user->can('company.find.all')) {
+                $query->joinWith('users');
+                $query->andWhere(['user.id' => \Yii::$app->user->id]);
+            }
+        }
+    }
+
+
     /**
      * @inheritdoc
      */
@@ -46,14 +71,16 @@ class InvestigationSearch extends Investigation
      */
     public function search($params)
     {
-        $query = Investigation::find()->joinWith('company');
-        if(!empty($this->parent)) $query->andWhere(['investigation.company_id' => $this->parent]);
+        $query = static::find()->joinWith('company');
+//        if (!empty($this->parent)) {
+//            $query->andWhere(['investigation.company_id' => $this->parent]);
+//        }
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['updated_at' => SORT_DESC]],
+            'sort' => ['defaultOrder' => ['updated_at' => SORT_DESC]],
         ]);
 
         $dataProvider->sort->attributes['company_name'] = ([
@@ -82,7 +109,8 @@ class InvestigationSearch extends Investigation
         ]);
 
         $query->andFilterWhere(['like', 'description', $this->description]);
-        $query->andFilterWhere(['OR',
+        $query->andFilterWhere([
+            'OR',
             ['like', 'company.name', $this->name],
             ['like', 'investigation.name', $this->name],
         ]);

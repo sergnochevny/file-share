@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use backend\models\PermissionsModelTrait;
 use common\behaviors\ArchiveCascadeBehavior;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -26,6 +27,8 @@ use yii\behaviors\TimestampBehavior;
  */
 class File extends HistoryActiveRecord
 {
+
+    use PermissionsModelTrait;
 
     static public $history_type = 'file';
 
