@@ -100,7 +100,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 $suff = [
                                     'sadmin' => ['class' => 'success', 'label' => 'Super User'],
                                     'admin' => ['class' => 'warning', 'label' => 'Admin'],
-                                    'user' => ['class' => 'danger', 'label' => 'Company User']
+                                    'user' => ['class' => 'danger', 'label' => 'Company User'],
+                                    'all' => ['class' => '', 'label' => 'All'],
                                 ];
                                 //workaround for rename client
                                 $role = $model->{$column->attribute};

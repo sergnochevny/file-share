@@ -2,10 +2,12 @@
 
 namespace backend\models\search;
 
+use ait\rbac\Item;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\User;
+use yii\db\Query;
 use yii\rbac\Role;
 
 /**
@@ -17,6 +19,8 @@ class UserSearch extends User
     public $pagesize = 10;
     public $name;
 
+    public $type;
+
     /**
      * @inheritdoc
      */
@@ -24,7 +28,7 @@ class UserSearch extends User
     {
         return [
             [['id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'pagesize', 'first_name', 'last_name', 'phone_number', 'email', 'username', 'auth_key', 'password_hash', 'password_reset_token'], 'safe'],
+            [['type', 'name', 'pagesize', 'first_name', 'last_name', 'phone_number', 'email', 'username', 'auth_key', 'password_hash', 'password_reset_token'], 'safe'],
         ];
     }
 
@@ -68,6 +72,13 @@ class UserSearch extends User
         }
 
         // grid filtering conditions
+        if (!empty($params['role_type'])) {
+            $this->type = $params['role_type'];
+            $roleNames = (new Query())->select(['name'])->from('auth_item')->where(['type' => $this->type])->column();
+            $userIds = (new Query())->select(['user_id'])->from('auth_assignment')->where(['item_name' => $roleNames])->column();
+            $query->andWhere(['id' => $userIds]);
+        }
+
         $query->andFilterWhere([
             'id' => $this->id,
             'status' => $this->status,

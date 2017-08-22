@@ -82,7 +82,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/citrix/1.0.17.0/0d2be95e1b6a9e4131a5b883bac92350a6799c69.zip",
+                "url": "http://tp.ait.com:443/repo/private/dists/ait/citrix/1.0.17.0/0d2be95e1b6a9e4131a5b883bac92350a6799c69.zip",
                 "reference": "0d2be95e1b6a9e4131a5b883bac92350a6799c69",
                 "shasum": null,
                 "mirrors": [

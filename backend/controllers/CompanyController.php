@@ -55,6 +55,21 @@ class CompanyController extends Controller
         ]);
     }
 
+    public function actionCreate()
+    {
+        $rq = Yii::$app->getRequest();
+        try {
+        } catch (\Exception $e){
+            $this->setFlashMessage('error', 'company', $isUpdate, $e->getMessage());
+        }
+
+    }
+
+    public function actionUpdate()
+    {
+
+    }
+
     /**
      * Archive an existing Company model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

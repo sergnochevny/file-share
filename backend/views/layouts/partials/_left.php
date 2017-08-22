@@ -48,10 +48,14 @@ $userCompany = !empty($user) ? $user->company : null;
                     'options' => ['icon' => 'icon-save'],
                 ];
                 $items[] = [
-                    'label' => 'Users',
-                    'url' => ['/user/index'],
+                    'label' => 'Protus users',
+                    'url' => ['/user/protus'],
                     'options' => ['icon' => 'icon-users'],
-                    'visible' => \Yii::$app->user->can('user.index'),
+                ];
+                $items[] = [
+                    'label' => 'Other users',
+                    'url' => ['/user/others'],
+                    'options' => ['icon' => 'icon-users'],
                 ];
                 $items[] = [
                     'label' => 'Settings',
