@@ -8,6 +8,7 @@ use yii\base\InvalidCallException;
 use yii\behaviors\BlameableBehavior;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
+use yii\db\Query;
 
 /**
  * This is the model class for table "history".
@@ -77,25 +78,41 @@ class History extends ActiveRecord
         ];
     }
 
+    /**
+     * @return string
+     */
     public function formName()
     {
         return '';
     }
 
+    /**
+     * @return bool
+     */
     public function recover()
     {
-        if ($this->type == Company::$history_type){
+        if ($this->type == Company::$history_type) {
             $model = Company::findOneIncludeHistory($this->parent);
-        } elseif ($this->type == Investigation::$history_type){
+        } elseif ($this->type == Investigation::$history_type) {
             $model = Investigation::findOneIncludeHistory($this->parent);
-        }elseif ($this->type == File::$history_type){
+        } elseif ($this->type == File::$history_type) {
             $model = File::findOneIncludeHistory($this->parent);
         }
-        if (!empty($model)){
-            $model->recover();
+        if (!empty($model)) {
+            return $model->recover();
         } else {
             throw new InvalidCallException('Model must be instance of the HistoryActiveRecord class!');
         }
     }
+
+    /**
+     * @return Query
+     */
+    public function getUsers()
+    {
+        return $this->hasMany(User::class, ['id' => 'user_id'])
+            ->viaTable('user_company', ['company_id' => 'company_id']);
+    }
+
 
 }

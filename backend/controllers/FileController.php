@@ -80,38 +80,34 @@ class FileController extends PermissionController
      * @param null $parent
      * @return mixed
      */
-    public function actionIndex($id = null, $parent = null)
+    public function actionIndex($id = null)
     {
         $investigation = null;
-        if (!empty($id) && empty($parent)) {
-            $investigation = Investigation::findOne(['id' => $id]);
+        if (!empty($id)) {
+            $investigation = Investigation::findOne($id);
             if (!empty($investigation)) {
                 $parent = $investigation->citrix_id;
-            } else $parent = 'no investigation';
+            } else {
+                $parent = 'no investigation';
+            }
         } else {
             $parent = File::findOne(['parent' => 'root']);
             if (!empty($parent)) {
                 $parent = $parent->citrix_id;
             }
         }
-        $uploadModel = new FileUpload;
+        $uploadModel = new FileUpload();
         if (!empty($id) && !empty($parent)) {
-            $searchModel = new FileSearch(['scenario' => FileSearch::SCENARIO_APP]);
+            $searchModel = FileSearch::getInstance(['scenario' => FileSearch::SCENARIO_APP]);
         } else {
-            $searchModel = new FileSearch;
+            $searchModel = FileSearch::getInstance();
         }
         if (!empty($parent)) {
             $uploadModel->parent = $parent;
             $searchModel->parent = $parent;
         }
-        //Save request params, except parent
-        // if parent set then loads all files instead of investigation's files
-        /** @var Request $rq */
-        $params = Yii::$app->request->queryParams;
-        $params['parent'] = $parent;
-        $params['id'] = $id;
 
-        $dataProvider = $searchModel->search($params);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
         $renderParams = [
             'searchModel' => $searchModel,
@@ -119,8 +115,9 @@ class FileController extends PermissionController
             'uploadModel' => $uploadModel,
             'investigation' => $investigation,
         ];
-        if (Yii::$app->request->isAjax)
+        if (Yii::$app->request->isAjax) {
             return $this->renderAjax('index', $renderParams);
+        }
         return $this->render('index', $renderParams);
     }
 
@@ -154,7 +151,8 @@ class FileController extends PermissionController
                     if (Yii::$app->user->can('admin') || Yii::$app->user->can('sadmin') ||
                         (
                             !Yii::$app->user->can('admin') && !Yii::$app->user->can('sadmin') &&
-                            ((!empty($investigation) && Yii::$app->user->can('employee', ['investigation' => $investigation])) ||
+                            ((!empty($investigation) && Yii::$app->user->can('employee',
+                                        ['investigation' => $investigation])) ||
                                 (Yii::$app->user->can('employee', ['allfiles' => $model->model->parents->parent])))
                         )
                     ) {
@@ -216,7 +214,9 @@ class FileController extends PermissionController
 
         $inv = Investigation::findOne(['citrix_id' => $parent]);
 
-        if (!empty($parent)) return $this->actionIndex($inv->id);
+        if (!empty($parent)) {
+            return $this->actionIndex($inv->id);
+        }
         return $this->actionIndex();
     }
 
@@ -244,7 +244,9 @@ class FileController extends PermissionController
         } catch (\Exception $e) {
             Yii::$app->session->setFlash('error', $e->getMessage());
         }
-        if (!empty($investigation)) return $this->actionIndex($investigation->id);
+        if (!empty($investigation)) {
+            return $this->actionIndex($investigation->id);
+        }
         return $this->actionIndex();
     }
 
@@ -265,7 +267,9 @@ class FileController extends PermissionController
         } catch (\Exception $e) {
             Yii::$app->session->setFlash('error', $e->getMessage());
         }
-        if (!empty($investigation)) return $this->actionIndex($investigation->id);
+        if (!empty($investigation)) {
+            return $this->actionIndex($investigation->id);
+        }
         return $this->actionIndex();
     }
 
@@ -286,7 +290,9 @@ class FileController extends PermissionController
         if ($model->load(Yii::$app->request->post())) {
             try {
                 $model->packIntoArchive();
-                return ['downloadUrl' => Url::to(['download-archive',
+                return [
+                    'downloadUrl' => Url::to([
+                        'download-archive',
                         'name' => str_replace('.zip', '', $model->archiveFilename)
                     ])
                 ];
@@ -301,7 +307,7 @@ class FileController extends PermissionController
 
     /**
      * @param $name
-     * @return Response|void
+     * @return Response
      */
     public function actionDownloadArchive($name)
     {
@@ -319,12 +325,10 @@ class FileController extends PermissionController
         }
 
         Yii::$app->response->setDownloadHeaders($name, 'application/zip', false, filesize($path));
-
         Yii::$app->response->sendFile($path)->send();
 
         if (is_writable($path)) {
             unlink($path);
         }
-        return;
     }
 }

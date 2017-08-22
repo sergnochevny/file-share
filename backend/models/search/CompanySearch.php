@@ -13,8 +13,14 @@ use common\models\Company;
 class CompanySearch extends Company
 {
 
+    /**
+     * @var int
+     */
     public $pagesize = 10;
 
+    /**
+     * @param \yii\db\ActiveQuery $query
+     */
     protected static function extendFindConditionByPermissions(&$query)
     {
         $permissions = ['company.find.all'];
@@ -57,6 +63,10 @@ class CompanySearch extends Company
      */
     public function search($params)
     {
+        if (!empty($this->formName()) && !isset($params[$this->formName()])) {
+            $params = [$this->formName() => $params];
+        }
+
         $query = static::find();
 
         $dataProvider = new ActiveDataProvider([

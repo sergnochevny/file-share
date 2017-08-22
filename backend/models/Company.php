@@ -4,11 +4,10 @@
 namespace backend\models;
 
 
-use common\behaviors\ArchiveCascadeBehavior;
 use backend\behaviors\CitrixFolderBehavior;
 use backend\behaviors\HistoryBehavior;
 use backend\behaviors\NotifyBehavior;
-use common\models\UndeleteableActiveRecord;
+use yii\db\Query;
 use yii\helpers\Inflector;
 
 /**
@@ -23,10 +22,8 @@ class Company extends \common\models\Company
 {
     use FactoryTrait;
 
-
     /**
      * Gets list [id => name] of companies
-     *
      * @return array
      */
     public static function getList()
@@ -113,7 +110,7 @@ class Company extends \common\models\Company
     }
 
     /**
-     * @return UndeleteableActiveRecord
+     * @return Query
      */
     public function getInvestigations()
     {
@@ -122,7 +119,6 @@ class Company extends \common\models\Company
 
 
     /**
-     * @dev
      * @return string
      */
     public function getCitrixFolderName()
@@ -130,6 +126,9 @@ class Company extends \common\models\Company
         return Inflector::slug($this->name);
     }
 
+    /**
+     * @return string
+     */
     public function getOldCitrixFolderName()
     {
         return Inflector::slug($this->getOldAttribute('name'));

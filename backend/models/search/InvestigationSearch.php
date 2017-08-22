@@ -5,6 +5,7 @@ namespace backend\models\search;
 use common\models\Investigation;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\db\ActiveQuery;
 
 /**
  * InvestigationSearch represents the model behind the search form about `common\models\Investigation`.
@@ -15,10 +16,10 @@ class InvestigationSearch extends Investigation
     public $pagesize = 10;
     public $name;
     public $company_name;
-    public $parent;
 
     protected static function extendFindConditionByPermissions(&$query)
     {
+        $query->joinWith('company');
         $permissions = ['investigation.find.all'];
         $can = false;
         foreach ($permissions as $permission) {
@@ -30,7 +31,9 @@ class InvestigationSearch extends Investigation
             foreach ($permissions as $permission) {
                 $can = $can || \Yii::$app->user->can($permission);
             }
-            if (!$can) {
+            if ($can) {
+
+            } else {
                 $query->andWhere(['investigation.created_by' => \Yii::$app->user->id]);
             }
         } else {
@@ -71,12 +74,11 @@ class InvestigationSearch extends Investigation
      */
     public function search($params)
     {
-        $query = static::find()->joinWith('company');
-//        if (!empty($this->parent)) {
-//            $query->andWhere(['investigation.company_id' => $this->parent]);
-//        }
+        if (!empty($this->formName()) && !isset($params[$this->formName()])) {
+            $params = [$this->formName() => $params];
+        }
 
-        // add conditions that should always apply here
+        $query = static::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

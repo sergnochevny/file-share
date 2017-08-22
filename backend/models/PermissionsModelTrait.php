@@ -9,6 +9,7 @@ namespace backend\models;
 
 use common\models\query\UndeleteableActiveQuery;
 use Yii;
+use yii\db\ActiveQuery;
 
 /**
  * Trait PermissionsModelTrait
@@ -28,25 +29,8 @@ trait PermissionsModelTrait
         return $query;
     }
 
-    protected static function getPermissionFromAction()
-    {
-        $action = Yii::$app->requestedAction;
-
-        $permissions = array_filter([
-            str_replace('/', '.', $action->getUniqueId()),
-            str_replace('/', '.', $action->controller->getUniqueId()),
-            str_replace('/', '.', $action->controller->module->getUniqueId())
-        ]);
-
-        array_walk($permissions, function (&$item) {
-            $item .= '.all';
-        });
-
-        return $permissions;
-    }
-
     /**
-     * @param $query
+     * @param ActiveQuery $query
      */
     protected static function extendFindConditionByPermissions(&$query)
     {
