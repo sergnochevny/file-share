@@ -20,6 +20,8 @@ class RbacController extends Controller
 
     protected $permissions = [
         ['name' => 'company.index', 'description' => 'company.index'],
+        ['name' => 'company.create', 'description' => 'company.create'],
+        ['name' => 'company.update', 'description' => 'company.update'],
         ['name' => 'company.archive', 'description' => 'company.archive'],
 
         ['name' => 'history.index', 'description' => 'history.index'],
@@ -97,6 +99,8 @@ class RbacController extends Controller
                 'user.others' => true,
                 'user.protus' => true,
                 'company.index' => true,
+                'company.create' => true,
+                'company.update' => true,
                 'company.archive' => true,
                 'history.index' => true,
                 'history.recover' => true,
