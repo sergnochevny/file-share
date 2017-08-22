@@ -37,6 +37,8 @@ class RbacController extends Controller
         ['name' => 'site.captcha', 'description' => 'Captcha generation'],
 
         ['name' => 'user.index', 'description' => 'Users view'],
+        ['name' => 'user.others', 'description' => 'Other users'],
+        ['name' => 'user.protus', 'description' => 'Protus3 users'],
         ['name' => 'user.delete', 'description' => 'Delete users'],
 
         ['name' => 'wizard.update-types', 'description' => 'Wizard update types'],
@@ -84,6 +86,8 @@ class RbacController extends Controller
         'admin' => [
             'permission' => [
                 'user.index' => true,
+                'user.others' => true,
+                'user.protus' => true,
                 'company.index' => true,
                 'company.archive' => true,
                 'history.index' => true,
