@@ -4,24 +4,16 @@ namespace backend\controllers;
 
 use ait\keystorage\models\KeyStorageFormModel;
 use backend\behaviors\RememberUrlBehavior;
-use backend\models\forms\LoginForm;
-use backend\models\forms\PasswordResetForm;
-use backend\models\forms\RestorePasswordRequestForm;
 use backend\models\Graph;
-use backend\models\ResetPassword;
 use backend\models\Statistics;
+use common\components\BaseController;
 use Yii;
-use yii\base\ErrorException;
-use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\web\Controller;
 
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends BaseController
 {
 
     public $layout = 'content';
@@ -39,7 +31,7 @@ class SiteController extends Controller
         $step = new \DateInterval('P1D');
         $graph = new Graph($interval, $step);
 
-        return $this->render('index', [
+        return $this->smartRender('index', [
             'stat' => $statistics,
             'graph' => $graph,
         ]);
@@ -87,7 +79,7 @@ class SiteController extends Controller
             return $this->renderIndex();
         } else {
             $renderParams = InvestigationController::prepareRenderInvestigations();
-            return $this->render('client', $renderParams);
+            return $this->smartRender('client', $renderParams);
         }
     }
 
@@ -156,6 +148,6 @@ class SiteController extends Controller
             $session->setFlash($flashType, $flashBody);
         }
 
-        return $this->render('settings', ['model' => $model]);
+        return $this->smartRender('settings', ['model' => $model]);
     }
 }

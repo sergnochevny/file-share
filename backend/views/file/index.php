@@ -77,12 +77,6 @@ $view = $this;
                 <div class="alert-container">
                     <?= Alert::widget() ?>
                 </div>
-                <?php Pjax::begin(['id' => 'file_index', 'enablePushState' => false, 'timeout' => false]); ?>
-                <?= !empty($investigation) ? $this->render('partials/_investigation',
-                    ['model' => $investigation]) : '' ?>
-                <div class="alert-container">
-                    <?= Alert::widget() ?>
-                </div>
 
                 <div class="form-inline no-footer">
                     <?php

@@ -77,8 +77,8 @@ class FileController extends PermissionController
     /**
      * Lists all File models.
      * @param null $id
-     * @param null $parent
      * @return mixed
+     * @internal param null $parent
      */
     public function actionIndex($id = null)
     {
@@ -109,16 +109,13 @@ class FileController extends PermissionController
 
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
-        $renderParams = [
+
+        return $this->smartRender('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'uploadModel' => $uploadModel,
             'investigation' => $investigation,
-        ];
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('index', $renderParams);
-        }
-        return $this->render('index', $renderParams);
+        ]);
     }
 
     /**

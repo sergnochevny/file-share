@@ -6,7 +6,7 @@ use backend\models\User;
 use backend\behaviors\RememberUrlBehavior;
 use backend\models\Company;
 use backend\models\search\CompanySearch;
-use common\helpers\Url;
+use common\components\BaseController;
 use common\models\InvestigationType;
 use Yii;
 use yii\filters\VerbFilter;
@@ -20,6 +20,27 @@ class CompanyController extends BaseController
 {
 
     public $layout = 'content';
+
+    private function getListOfInvestigationTypes()
+    {
+        return InvestigationType::find()->select('name')->indexBy('id')->column();
+    }
+
+    /**
+     * Finds the Company model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return Company the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Company::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
 
     /**
      * @inheritdoc
@@ -75,7 +96,7 @@ class CompanyController extends BaseController
                     $this->setFlashMessage('error', 'company', $isUpdate);
                 }
             }
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             $this->setFlashMessage('error', 'company', $isUpdate, $e->getMessage());
         }
 
@@ -123,7 +144,7 @@ class CompanyController extends BaseController
                 }
             }
 
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             $this->setFlashMessage('error', 'company', $isUpdate, $e->getMessage());
         }
 
@@ -146,34 +167,13 @@ class CompanyController extends BaseController
     public function actionArchive($id)
     {
         $model = $this->findModel($id);
-        try{
+        try {
             $model->archive();
             Yii::$app->session->setFlash('success', 'Archived successfully');
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             Yii::$app->session->setFlash('error', $e->getMessage());
         }
 
         return $this->actionIndex();
-    }
-
-    /**
-     * Finds the Company model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Company the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Company::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-
-    private function getListOfInvestigationTypes()
-    {
-        return InvestigationType::find()->select('name')->indexBy('id')->column();
     }
 }

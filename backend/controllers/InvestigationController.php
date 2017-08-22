@@ -2,21 +2,18 @@
 
 namespace backend\controllers;
 
-use Yii;
-use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
-use yii\helpers\Json;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use backend\behaviors\RememberUrlBehavior;
-use backend\models\Company;
 use backend\models\Investigation;
 use backend\models\search\InvestigationSearch;
+use common\components\BaseController;
+use Yii;
+use yii\filters\VerbFilter;
+use yii\web\NotFoundHttpException;
 
 /**
  * InvestigationController implements the CRUD actions for Investigation model.
  */
-class InvestigationController extends Controller
+class InvestigationController extends BaseController
 {
 
     public $layout = 'content';
@@ -79,7 +76,7 @@ class InvestigationController extends Controller
     public function actionIndex()
     {
         $renderParams = static::prepareRenderInvestigations();
-        return $this->render('index', $renderParams);
+        return $this->smartRender('index', $renderParams);
     }
 
     /**

@@ -31,6 +31,9 @@ return [
                         'js/theme/vendor.min.js',
                     ]
                 ],
+                'yii\bootstrap\BootstrapPluginAsset' => [
+                    'js' => []
+                ],
             ],
         ],
         'request' => [
@@ -66,7 +69,7 @@ return [
             'sizeFormatBase' => 1000
         ],
     ],
-    'as access' =>[
+    'as access' => [
         'class' => 'ait\auth\behaviors\AccessControl'
     ],
     'as beforeAction' => [

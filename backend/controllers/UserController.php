@@ -3,20 +3,19 @@
 namespace backend\controllers;
 
 use ait\rbac\Item;
-use backend\models\services\UserService;
-use Yii;
-use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use backend\behaviors\RememberUrlBehavior;
 use backend\models\search\UserSearch;
+use backend\models\services\UserService;
 use backend\models\User;
+use common\components\BaseController;
+use Yii;
+use yii\filters\VerbFilter;
+use yii\web\NotFoundHttpException;
 
 /**
  * UserController implements the CRUD actions for User model.
  */
-class UserController extends Controller
+class UserController extends BaseController
 {
 
     public $layout = 'content';
@@ -62,10 +61,11 @@ class UserController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new UserSearch();//var_dump(Yii::$app->request->queryParams);exit;
+        $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
-        return $this->render('index', [
+
+        return $this->smartRender('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

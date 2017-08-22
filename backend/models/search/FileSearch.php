@@ -36,12 +36,12 @@ class FileSearch extends File
         $can = false;
         $self = static::getInstance();
         if (!empty($self->parent)) {
+            if (!Yii::$app->user->can('company.find.all')) {
+                $query
+                    ->joinWith(['users'])
+                    ->andWhere(['user.id' => Yii::$app->user->id]);
+            }
             if ($self->scenario == self::SCENARIO_APP) {
-                if (!Yii::$app->user->can('company.find.all')) {
-                    $query
-                        ->joinWith(['users'])
-                        ->andWhere(['user.id' => Yii::$app->user->id]);
-                }
             }
             $query->andWhere(['file.parent' => $self->parent]);
         }
@@ -51,7 +51,7 @@ class FileSearch extends File
             $can = $can || \Yii::$app->user->can($permission);
         }
         if (!$can) {
-            $query->andWhere(['created_by' => \Yii::$app->user->id]);
+            $query->andWhere(['file.created_by' => \Yii::$app->user->id]);
         }
     }
 
