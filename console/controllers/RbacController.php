@@ -74,11 +74,20 @@ class RbacController extends Controller
 
         ['name' => 'company.find.all', 'description' => 'Model permission all companies list'],
         ['name' => 'company.archive.all', 'description' => 'Model permission all companies archiving'],
+
         ['name' => 'investigation.find.all', 'description' => 'Model permission all investigations list'],
-//        ['name' => 'investigation.complete.all', 'description' => 'Model permission all investigations completion'],
-//        ['name' => 'investigation.archive.all', 'description' => 'Model permission all investigations archiving'],
+        ['name' => 'investigation.complete.all', 'description' => 'Model permission all investigations completion'],
+        ['name' => 'investigation.archive.all', 'description' => 'Model permission all investigations archiving'],
         ['name' => 'investigation.find.group', 'description' => 'Model permission group investigations archiving'],
-        ['name' => 'history.find.all', 'description' => 'Model permission all history archiving'],
+        ['name' => 'investigation.complete.group', 'description' => 'Model permission group investigations completion'],
+
+        ['name' => 'history.find.all', 'description' => 'Model permission all history list'],
+        ['name' => 'history.find.group', 'description' => 'Model permission group history list'],
+        ['name' => 'history.recover.all', 'description' => 'Model permission all history recovering'],
+        ['name' => 'history.recover.group', 'description' => 'Model permission group history recovering'],
+
+        ['name' => 'file.find.all', 'description' => 'Model permission all files list'],
+        ['name' => 'file.find.group', 'description' => 'Model permission group files list'],
     ];
 
     protected $dependencies = [
