@@ -68,9 +68,9 @@ class VerifyPermissionBehavior extends Behavior
      */
     public function verifyFileDownloadPermission(PermissionEvent $event)
     {
-        $prms = $event->parameters;
-        $investigation = $prms['investigation'];
-        $model = $prms['model'];
+        $parameters = $event->parameters;
+        $investigation = $parameters['investigation'];
+        $model = $parameters['model'];
 
         $event->isTruest = (Yii::$app->user->can('admin') || Yii::$app->user->can('sadmin') ||
             (
