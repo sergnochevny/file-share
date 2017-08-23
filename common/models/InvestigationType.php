@@ -73,6 +73,14 @@ class InvestigationType extends UndeleteableActiveRecord
             ->column();
     }
 
+    /**
+     * @return array
+     */
+    public static  function getListOfInvestigationTypes()
+    {
+        return self::find()->select('name')->indexBy('id')->column();
+    }
+
 //    /**
 //     * @return \yii\db\ActiveQuery
 //     */
