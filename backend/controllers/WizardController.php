@@ -46,6 +46,7 @@ class WizardController extends BaseController
      * @param string $id
      * @return string
      * @throws UserException
+     * @deprecated
      */
     public function actionCompanyO($id = null)
     {
@@ -186,6 +187,23 @@ class WizardController extends BaseController
      * @throws UserException
      */
     public function actionInvestigation($id = null, $companyId = null)
+    {
+        if ($id !== null) {
+            return $this->run('/investigation/update', ['id' => $id, 'companyId' => $companyId]);
+        }
+
+        return $this->run('/investigation/create', ['companyId' => $companyId]);
+    }
+
+    /**
+     * Shows Investigation(Applicant) tab
+     *
+     * @param string $id
+     * @return string
+     * @throws UserException
+     * @deprecated
+     */
+    public function actionInvestigationO($id = null, $companyId = null)
     {
         $request = Yii::$app->getRequest();
         try {

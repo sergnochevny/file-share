@@ -17,7 +17,7 @@ $isShowCompany = Yii::$app->user->can('admin') && $isDbHasCompany;
     <?php $form = ActiveForm::begin([
         'id' => 'investigation-form',
         'options' => ['data-pjax' => 'wizard-container'],
-        'action' => ['investigation', 'id' => $investigationForm->id],
+        'action' => ['/wizard/investigation', 'id' => $investigationForm->id],
     ]) ?>
     <?php if ($isShowCompany): ?>
         <div class="col-lg-6 col-lg-offset-3">

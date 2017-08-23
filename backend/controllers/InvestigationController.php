@@ -2,21 +2,20 @@
 
 namespace backend\controllers;
 
-use Yii;
-use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
-use yii\helpers\Json;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use backend\behaviors\RememberUrlBehavior;
-use backend\models\Company;
 use backend\models\Investigation;
 use backend\models\search\InvestigationSearch;
+use backend\models\User;
+use Yii;
+use yii\filters\VerbFilter;
+use yii\web\NotFoundHttpException;
+use common\models\InvestigationType;
+
 
 /**
  * InvestigationController implements the CRUD actions for Investigation model.
  */
-class InvestigationController extends Controller
+class InvestigationController extends BaseController
 {
 
     public $layout = 'content';
@@ -82,6 +81,100 @@ class InvestigationController extends Controller
     {
         $renderParams = static::prepareRenderInvestigations($parent);
         return $this->render('index', $renderParams);
+    }
+
+    public function actionCreate($companyId = null)
+    {
+        $rq = Yii::$app->getRequest();
+        $isUpdate = false;
+        $investigation = new Investigation();
+
+        try {
+            // fills defaults investigation types
+            // for selected company when selecting in dropdown
+            if ($companyId !== null && User::isSuperAdmin()) {
+                $investigation->investigationTypeIds = InvestigationType::getDefaultIdsForCompanyId($companyId);
+                $investigation->company_id = $companyId;
+            }
+
+            // fills defaults investigation types
+            // when client creates a new investigation
+            if (User::isClient()) {
+                $companyId = User::getIdentity()->company->id;
+                $investigation->investigationTypeIds = InvestigationType::getDefaultIdsForCompanyId($companyId);
+            }
+
+            if ($rq->isPost && $investigation->load($rq->post())) {
+                if (User::isClient()) {
+                    //set company_id before validation in save
+                    $investigation->company_id = Yii::$app->user->identity->company->id;
+                }
+
+                if ($investigation->save()) {
+                    $this->setFlashMessage('success', 'applicant', $isUpdate);
+                    return $this->redirect(['/file', 'id' => $investigation->id]);
+
+                } else {
+                    $this->setFlashMessage('error', 'applicant', $isUpdate);
+                }
+            }
+        } catch (\Exception $e) {
+            $this->setFlashMessage('error', null, null, $e->getMessage());
+        }
+
+        return $this->smartRender('//wizard/index', [
+            'isInvestigation' => true,
+            'investigationForm' => $investigation,
+            'selected' => $investigation->company_id,
+            'isUpdate' => $isUpdate,
+            'investigationTypes' => InvestigationType::find()->select('name')->indexBy('id')->column(),
+        ]);
+    }
+
+    public function actionUpdate($id, $companyId = null)
+    {
+        $rq = Yii::$app->getRequest();
+        $isUpdate = true;
+
+        try {
+            $investigation = Investigation::findOne($id);
+            if ($investigation === null) {
+                $investigation = new Investigation();
+                throw new UserException('The applicant does not exits');
+            }
+
+            // fills defaults investigation types
+            // for selected company when selecting in dropdown
+            if ($companyId !== null && User::isSuperAdmin()) {
+                $investigation->investigationTypeIds = InvestigationType::getDefaultIdsForCompanyId($companyId);
+                $investigation->company_id = $companyId;
+            }
+
+            if ($rq->isPost && $investigation->load($rq->post())) {
+                if (User::isClient()) {
+                    $investigation->company_id = Yii::$app->user->identity->company->id;
+                }
+
+                if ($investigation->save()) {
+                    $this->setFlashMessage('success', 'applicant', $isUpdate);
+                    return $this->redirect(['/file', 'id' => $investigation->id]);
+
+                } else {
+                    $this->setFlashMessage('error', 'applicant', $isUpdate);
+                }
+            }
+
+        } catch (\Exception $e) {
+            $this->setFlashMessage('error', null, null, $e->getMessage());
+        }
+
+        return $this->smartRender('//wizard/index', [
+            'isInvestigation' => true,
+            'investigationForm' => $investigation,
+            'selected' => $investigation->company_id,
+            'isUpdate' => $isUpdate,
+            'investigationTypes' => InvestigationType::find()->select('name')->indexBy('id')->column(),
+        ]);
     }
 
     /**
