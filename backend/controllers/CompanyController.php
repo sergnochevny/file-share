@@ -84,7 +84,7 @@ class CompanyController extends BaseController
             'companyForm' => $company,
             'selected' => $company->id,
             'isUpdate' => $isUpdate,
-            'investigationTypes' => $this->getListOfInvestigationTypes(),
+            'investigationTypes' => InvestigationType::getListOfInvestigationTypes(),
         ]);
 
     }
@@ -132,7 +132,7 @@ class CompanyController extends BaseController
             'companyForm' => $company,
             'selected' => $company->id,
             'isUpdate' => $isUpdate,
-            'investigationTypes' => $this->getListOfInvestigationTypes(),
+            'investigationTypes' => InvestigationType::getListOfInvestigationTypes(),
         ]);
 
     }
@@ -170,10 +170,5 @@ class CompanyController extends BaseController
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-
-    private function getListOfInvestigationTypes()
-    {
-        return InvestigationType::find()->select('name')->indexBy('id')->column();
     }
 }
