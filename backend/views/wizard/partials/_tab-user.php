@@ -16,10 +16,10 @@ use yii\helpers\Html;
 <div id="tab-2" class="tab-pane active">
     <?php $form = ActiveForm::begin([
         'id' => 'user-form',
-        'action' => ['user', 'id' => $isUpdate ? $userForm->getUser()->id : null],
+        'action' => ['/wizard/user', 'id' => $isUpdate ? $userForm->getUser()->id : null],
         'options' => [
             'data-pjax' => true,
-            'data-create-url' => Url::to(['user'], true), //when select prompt in user send request to create url
+            'data-create-url' => Url::to(['/wizard/user'], true), //when select prompt in user send request to create url
         ],
     ]) ?>
     <?php if (Yii::$app->user->can('admin')): ?>
