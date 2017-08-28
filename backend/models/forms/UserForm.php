@@ -63,7 +63,7 @@ final class UserForm extends Model
             [
                 'password_repeat', 'required', 'enableClientValidation' => false,
                 'when' => function(UserForm $model, $attribute) {
-                    return ($model->scenario === UserForm::SCENARIO_DEFAULT)
+                    return ($model->scenario === UserForm::SCENARIO_UPDATE)
                         ? !empty($model->password{0})
                         : false;
                 },
