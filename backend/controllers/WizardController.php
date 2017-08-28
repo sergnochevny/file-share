@@ -97,6 +97,23 @@ class WizardController extends BaseController
      */
     public function actionUser($id = null)
     {
+        if ($id !== null) {
+            return $this->run('/user/update', ['id' => $id]);
+        }
+
+        return $this->run('/user/create');
+    }
+
+    /**
+     * Shows User tab
+     *
+     * @param string $id
+     * @return string
+     * @throws UserException
+     * @deprecated
+     */
+    public function actionUserO($id = null)
+    {
         $request = Yii::$app->getRequest();
         try {
             /** @var User $user */
@@ -120,6 +137,7 @@ class WizardController extends BaseController
                 $userService->populateForm($userForm);
                 $options['isUpdate'] = true;
                 $options['selectedUser'] = $user->id;
+                $userForm->scenario = UserForm::SCENARIO_UPDATE;
             } else {
                 $userForm->scenario = UserForm::SCENARIO_CREATE;
             }
@@ -142,7 +160,7 @@ class WizardController extends BaseController
 
                     $options['isUpdate'] = true;
                     $options['selectedUser'] = $user->id;
-                    $userForm->scenario = UserForm::SCENARIO_DEFAULT;
+//                    $userForm->scenario = UserForm::SCENARIO_DEFAULT;
 
                 } else {
                     $this->setFlashMessage('error', 'user', $options['isUpdate']);

@@ -3,11 +3,11 @@
 namespace backend\controllers;
 
 use ait\rbac\Item;
+use backend\models\forms\UserForm;
 use backend\models\services\UserService;
 use Yii;
-use yii\filters\AccessControl;
+use yii\base\UserException;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use backend\behaviors\RememberUrlBehavior;
 use backend\models\search\UserSearch;
@@ -16,7 +16,7 @@ use backend\models\User;
 /**
  * UserController implements the CRUD actions for User model.
  */
-class UserController extends Controller
+class UserController extends BaseController
 {
 
     public $layout = 'content';
@@ -69,6 +69,112 @@ class UserController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    /**
+     * Creates user
+     *
+     * @return string
+     */
+    public function actionCreate()
+    {
+        $rq = Yii::$app->getRequest();
+        $userForm = new UserForm([
+            'scenario' => UserForm::SCENARIO_CREATE
+        ]);
+        $user = new User();
+
+        $options = [
+            'isUser' => true,
+            'userForm' => $userForm,
+            'isUpdate' => false,
+            'selectedUser' => null,
+        ];
+
+        try {
+            /** @var UserService $userService */
+            $userService = Yii::createObject(UserService::class, [$user]);
+            if ($rq->isPost && $userForm->load($rq->post())) {
+                if (User::isAdmin()) {
+                    //admin can create only clients
+                    $userForm->role = 'user';
+                }
+                //new user with admin role can't have company
+                if ($userForm->role == 'admin' || $userForm->role == 'sadmin') {
+                    $userForm->company_id = null;
+                }
+
+                if ($userForm->validate() && $userService->save($userForm)) {
+                    $this->setFlashMessage('success', 'user');
+
+                    //reset password fields
+                    $userForm->password = $userForm->password_repeat = null;
+
+                    $options['isUpdate'] = true;
+                    $options['selectedUser'] = $user->id;
+//                    $userForm->scenario = UserForm::SCENARIO_UPDATE;
+
+                } else {
+                    $this->setFlashMessage('error', 'user');
+                }
+            }
+        } catch (\Exception $e) {
+            $this->setFlashMessage('error', null, null, $e->getMessage());
+        }
+
+        return $this->smartRender('//wizard/index', $options);
+    }
+
+    public function actionUpdate($id)
+    {
+        $rq = Yii::$app->getRequest();
+        $userForm = new UserForm([
+            'scenario' => UserForm::SCENARIO_UPDATE
+        ]);
+        $user = User::findOne($id);
+
+        $options = [
+            'isUser' => true,
+            'userForm' => $userForm,
+            'isUpdate' => true,
+            'selectedUser' => null,
+        ];
+
+        try {
+            if ($user === null) {
+                throw new UserException('The user does not exists');
+            }
+
+            /** @var UserService $userService */
+            $userService = Yii::createObject(UserService::class, [$user]);
+            $userService->populateForm($userForm);
+            $options['selectedUser'] = $user->id;
+
+            if ($rq->isPost && $userForm->load($rq->post())) {
+                if (User::isAdmin()) {
+                    //admin can create only clients
+                    $userForm->role = 'user';
+                }
+                //new user with admin role can't have company
+                if ($userForm->role == 'admin' || $userForm->role == 'sadmin') {
+                    $userForm->company_id = null;
+                }
+
+                if ($userForm->validate() && $userService->save($userForm)) {
+                    $this->setFlashMessage('success', 'user', $options['isUpdate']);
+
+                    //reset password fields
+                    $userForm->password = $userForm->password_repeat = null;
+                } else {
+                    $this->setFlashMessage('error', 'user', $options['isUpdate']);
+                }
+            }
+
+        } catch (\Exception $e) {
+            $this->setFlashMessage('error', null, null, $e->getMessage());
+        }
+
+        return $this->smartRender('//wizard/index', $options);
     }
 
     /**
