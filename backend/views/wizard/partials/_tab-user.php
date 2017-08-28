@@ -70,7 +70,7 @@ use yii\helpers\Html;
                 'pluginOptions' => [
                     'depends' => ['company-list', 'user-role'],
                     'placeholder' => 'Create a New User',
-                    'url' => Url::to(['company-users'])
+                    'url' => Url::to(['/wizard/company-users'])
                 ],
                 'options' => [
                     'id' => 'user-list',
@@ -106,7 +106,7 @@ use yii\helpers\Html;
                 <?= $isUpdate ? 'Update' : 'Create' ?>
             </button>
             <?php if (\Yii::$app->user->can('wizard.investigation')): ?>
-                <a href="<?= Url::to(['investigation'], true) ?>"
+                <a href="<?= Url::to(['/wizard/investigation'], true) ?>"
                    class="<?= $isUpdate ? '' : 'hidden ' ?>btn btn-sm btn-labeled  arrow-success">
                     <span class="btn-label">
                         <span class="icon icon-chevron-circle-right  icon-lg icon-fw"></span>
