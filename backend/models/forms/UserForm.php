@@ -2,7 +2,7 @@
 namespace backend\models\forms;
 
 use backend\models\User;
-use common\models\query\UndeletableActiveQuery;
+use common\models\query\UndeleteableActiveQuery;
 use kartik\password\StrengthValidator;
 use yii\base\Model;
 
@@ -81,7 +81,7 @@ final class UserForm extends Model
                 ['username'],
                 'unique',
                 'targetClass' => User::class,
-                'filter' => function (UndeletableActiveQuery $query) {
+                'filter' => function (UndeleteableActiveQuery $query) {
                     $query->ignoreHiddenStatuses();
                 },
                 'message' => 'Sorry, this username has already been taken',
@@ -94,7 +94,7 @@ final class UserForm extends Model
                 ['email'],
                 'unique',
                 'targetClass' => User::class,
-                'filter' => function (UndeletableActiveQuery $query) {
+                'filter' => function (UndeleteableActiveQuery $query) {
                     $query->ignoreHiddenStatuses();
                 },
                 'message' => 'Sorry, this email has already been taken',
