@@ -7,6 +7,7 @@ use backend\models\Investigation;
 use backend\models\search\InvestigationSearch;
 use backend\models\User;
 use Yii;
+use yii\base\UserException;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use common\models\InvestigationType;
@@ -135,6 +136,7 @@ class InvestigationController extends BaseController
     {
         $rq = Yii::$app->getRequest();
         $isUpdate = true;
+        $investigation = null;
 
         try {
             $investigation = Investigation::findOne($id);
