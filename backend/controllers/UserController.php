@@ -92,12 +92,22 @@ class UserController extends Controller
         return $this->actionIndex();
     }
 
+    /**
+     * Shows only users who work on protus3
+     *
+     * @return mixed
+     */
     public function actionProtus()
     {
         $this->setAdditionalQueryParams(['role_type' => Item::TYPE_ROLE]);
         return $this->runAction('index');
     }
 
+    /**
+     * Shows all users who do not belong to protus3 (i.e protus3's clients)
+     *
+     * @return mixed
+     */
     public function actionOthers()
     {
         $this->setAdditionalQueryParams(['role_type' => Item::TYPE_CUSTOM_ROLE]);
