@@ -8,14 +8,22 @@ use backend\models\Investigation;
 use backend\models\services\UserService;
 use backend\models\User;
 use backend\widgets\ActiveForm;
+use common\components\BaseController;
 use common\models\InvestigationType;
 use Yii;
 use yii\base\UserException;
 use yii\web\Response;
 
+/**
+ * Class WizardController
+ * @package backend\controllers
+ */
 class WizardController extends BaseController
 {
 
+    /**
+     * @var string
+     */
     public $layout = 'content';
 
     /**
@@ -176,7 +184,7 @@ class WizardController extends BaseController
     /**
      * list users in company || admins for dep dropdown
      *
-     * @return string JSON output
+     * @return array
      */
     public function actionCompanyUsers()
     {
@@ -282,7 +290,7 @@ class WizardController extends BaseController
         $model = new Investigation();
         $model->investigationTypeIds = InvestigationType::getDefaultIdsForCompanyId($companyId);
 
-        return $this->render('partials/_investigation-types', [
+        return $this->smartRender('partials/_investigation-types', [
             'model' => $model,
             'types' => InvestigationType::find()->select('name')->indexBy('id')->column(),
             'form' => new ActiveForm(),

@@ -5,6 +5,10 @@ namespace backend\controllers;
 use backend\behaviors\RememberUrlBehavior;
 use backend\models\Investigation;
 use backend\models\search\InvestigationSearch;
+use common\components\BaseController;
+use Yii;
+use yii\filters\VerbFilter;
+use yii\web\NotFoundHttpException;
 use backend\models\User;
 use Yii;
 use yii\base\UserException;
@@ -22,10 +26,9 @@ class InvestigationController extends BaseController
     public $layout = 'content';
 
     /**
-     * @param mixed $parent
      * @return array
      */
-    public static function prepareRenderInvestigations($parent = null)
+    public static function prepareRenderInvestigations()
     {
         $company = null;
         $searchModel = new InvestigationSearch();
@@ -75,13 +78,12 @@ class InvestigationController extends BaseController
 
     /**
      * Lists all Investigation models.
-     * @param null $parent
      * @return mixed
      */
-    public function actionIndex($parent = null)
+    public function actionIndex()
     {
-        $renderParams = static::prepareRenderInvestigations($parent);
-        return $this->render('index', $renderParams);
+        $renderParams = static::prepareRenderInvestigations();
+        return $this->smartRender('index', $renderParams);
     }
 
     public function actionCreate($companyId = null)
@@ -187,14 +189,13 @@ class InvestigationController extends BaseController
      */
     public function actionArchive($id)
     {
-        $session = Yii::$app->getSession();
         try {
             $model = $this->findModel($id);
-            $model->detachBehavior('citrixFolderBehavior');
-            $model->archive();
-            $session->setFlash('success', 'Archived successfully');
+            if ($model->archive()) {
+                Yii::$app->session->setFlash('success', 'Investigation ' . $model->name . ' is archived');
+            }
         } catch (\Exception $e) {
-            $session->setFlash('error', $e->getMessage());
+            Yii::$app->session->setFlash('error', $e->getMessage());
         }
 
         return $this->actionIndex();
@@ -206,12 +207,13 @@ class InvestigationController extends BaseController
      */
     public function actionComplete($id)
     {
-        $investigation = $this->findModel($id);
-        $investigation->status = Investigation::STATUS_COMPLETED;
-        if ($investigation->save(true, ['status'])) {
-            Yii::$app->session->setFlash('success', 'Status has been changed');
-        } else {
-            Yii::$app->session->setFlash('error', 'Cannot change the status of applicant');
+        try {
+            $model = $this->findModel($id);
+            if ($model->complete()) {
+                Yii::$app->session->setFlash('success', 'Investigation ' . $model->name . ' is completed.');
+            }
+        } catch (\Exception $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
         }
 
         return $this->run('file/index', ['id' => $id]);

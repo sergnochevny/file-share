@@ -3,18 +3,16 @@
 namespace backend\models\search;
 
 use backend\models\User;
-use common\traits\activeQuery\ActiveDataProviderAdditionalDataTrait;
-use Yii;
-use yii\base\Model;
-use yii\data\ActiveDataProvider;
 use common\models\History;
+use Yii;
+use yii\data\ActiveDataProvider;
 
 /**
  * CompanySearch represents the model behind the search form about `common\models\Company`.
  */
 class HistorySearch extends History
 {
-    use ActiveDataProviderAdditionalDataTrait;
+
     public $pagesize = 10;
 
     /**
@@ -28,35 +26,44 @@ class HistorySearch extends History
         ];
     }
 
+    protected static function extendFindConditionByPermissions(&$query)
+    {
+        $query->joinWith('company');
+        $permissions = ['history.find.all'];
+        $can = false;
+        foreach ($permissions as $permission) {
+            $can = $can || \Yii::$app->user->can($permission);
+        }
+        if (!$can) {
+            if(!\Yii::$app->user->can('company.find.all')) {
+                $query->joinWith('users');
+                $query->andWhere(['user.id' => \Yii::$app->user->id]);
+            }
+        }
+    }
+
     /**
      * Creates data provider instance with search query applied
      *
      * @param array $params
-     *
-     * @param array $relations
-     * @param array $where
-     * @param array $order
      * @return ActiveDataProvider
+     * @internal param array $relations
+     * @internal param array $where
+     * @internal param array $order
      */
     public function search(array $params)
     {
-        $query = History::find();
+        if (!empty($this->formName()) && !isset($params[$this->formName()])) {
+            $params = [$this->formName() => $params];
+        }
+
+        $query = static::find();
         //exclude users
         $query->andWhere(['<>', 'type', 'user']);
 
-        // add conditions that should always apply here
-        if (!Yii::$app->user->can('admin')) {
-            /** @var User $user */
-            $user = Yii::$app->user->identity;
-            $query->where(
-               // ['or', ['company_id' => Yii::$app->user->identity->company->id], ['company_id' => null]]
-                ['company_id' => $user->company->id]
-            );
-        }
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['created_at' => SORT_DESC]],
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
             //'pagination' => ['defaultPageSize' => 1]
         ]);
 

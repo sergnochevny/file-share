@@ -4,8 +4,10 @@ namespace common\models;
 
 use backend\models\PermissionsModelTrait;
 use common\behaviors\ArchiveCascadeBehavior;
+use common\models\query\UndeleteableActiveQuery;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\db\Query;
 
 /**
  * This is the model class for table "file".
@@ -133,15 +135,15 @@ class File extends HistoryActiveRecord
     }
 
     /**
-     * @return Investigation
+     * @return Query
      */
     public function getHistory()
     {
-        return $this->hasOne(History::className(), ['parent' => 'id'])->andWhere(['type'=>self::$history_type]);
+        return $this->hasOne(History::className(), ['parent' => 'id'])->andWhere(['type' => self::$history_type]);
     }
 
     /**
-     * @return Investigation
+     * @return Query
      */
     public function getInvestigation()
     {
@@ -149,11 +151,15 @@ class File extends HistoryActiveRecord
     }
 
     /**
-     * @return Investigation
+     * @return UndeleteableActiveQuery
      */
     public function getInvestigationWh()
     {
-        return $this->hasOne(Investigation::className(), ['citrix_id' => 'parent'])->andArchived();
+        $query = $this->hasOne(Investigation::className(), ['citrix_id' => 'parent']);
+        /**
+         * @var $query UndeleteableActiveQuery
+         */
+        return $query->andArchived();
     }
 
     /**
@@ -170,7 +176,9 @@ class File extends HistoryActiveRecord
         ];
 
         $res = in_array($this->status, $f_statuses);
-        if(!empty($this->investigationWh)) $res = $res && !in_array($this->investigationWh->status, $i_statuses);
+        if (!empty($this->investigationWh)) {
+            $res = $res && !in_array($this->investigationWh->status, $i_statuses);
+        }
         return $res;
     }
 

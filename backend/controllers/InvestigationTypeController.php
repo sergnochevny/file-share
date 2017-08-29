@@ -5,14 +5,13 @@ namespace backend\controllers;
 
 
 use backend\behaviors\RememberUrlBehavior;
+use common\components\BaseController;
 use common\models\InvestigationType;
-use yii\data\ActiveDataProvider;
-use yii\filters\AccessControl;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use Yii;
+use yii\data\ActiveDataProvider;
+use yii\web\NotFoundHttpException;
 
-class InvestigationTypeController extends Controller
+class InvestigationTypeController extends BaseController
 {
 
     public $layout = 'content';
@@ -53,7 +52,7 @@ class InvestigationTypeController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider(['query' => InvestigationType::find()]);
-        return $this->render('index', ['dataProvider' => $dataProvider]);
+        return $this->smartRender('index', ['dataProvider' => $dataProvider]);
     }
 
     /**
@@ -76,7 +75,7 @@ class InvestigationTypeController extends Controller
             }
         }
 
-        return $this->render('create', ['model' => $model]);
+        return $this->smartRender('create', ['model' => $model]);
     }
 
     /**
@@ -100,7 +99,7 @@ class InvestigationTypeController extends Controller
             }
         }
 
-        return $this->render('update', ['model' => $model]);
+        return $this->smartRender('update', ['model' => $model]);
     }
 
     public function actionDelete($id)

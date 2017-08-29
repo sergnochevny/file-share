@@ -50,6 +50,10 @@ class UserSearch extends User
      */
     public function search($params)
     {
+        if (!empty($this->formName()) && !isset($params[$this->formName()])) {
+            $params = [$this->formName() => $params];
+        }
+
         $query = static::find();
         if (!Yii::$app->user->can('sadmin')) {
             //admin can edit only company users

@@ -14,18 +14,44 @@ class FileSearch extends File
     const SCENARIO_APP = 'app';
     const SCENARIO_ALL = 'all';
 
+    protected static $instance;
+
     public $pagesize = 10;
+
+
+    /**
+     * @param  null|array $params
+     * @return FileSearch
+     */
+    public static function getInstance($params = null)
+    {
+        if (empty(static::$instance)) {
+            static::$instance = new static($params);
+        }
+        return static::$instance;
+    }
 
     protected static function extendFindConditionByPermissions(&$query)
     {
         $can = false;
+        $self = static::getInstance();
+        if (!empty($self->parent)) {
+            if (!Yii::$app->user->can('company.find.all')) {
+                $query
+                    ->joinWith(['users'])
+                    ->andWhere(['user.id' => Yii::$app->user->id]);
+            }
+            if ($self->scenario == self::SCENARIO_APP) {
+            }
+            $query->andWhere(['file.parent' => $self->parent]);
+        }
 
         $permissions = ['file.find.all'];
         foreach ($permissions as $permission) {
             $can = $can || \Yii::$app->user->can($permission);
         }
         if (!$can) {
-            $query->andWhere(['created_by' => \Yii::$app->user->id]);
+            $query->andWhere(['file.created_by' => \Yii::$app->user->id]);
         }
     }
 
@@ -58,6 +84,10 @@ class FileSearch extends File
      */
     public function search($params)
     {
+        if (!empty($this->formName()) && !isset($params[$this->formName()])) {
+            $params = [$this->formName() => $params];
+        }
+        $this->load($params);
         $query = static::find();
 
         // add conditions that should always apply here
@@ -69,23 +99,10 @@ class FileSearch extends File
 
         ]);
 
-        $this->load($params);
-
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
-        }
-
-        if (!empty($this->parent)) {
-            if ($this->scenario == self::SCENARIO_APP) {
-                if (!Yii::$app->user->can('admin')) {
-                    $query
-                        ->joinWith(['users'])
-                        ->andWhere(['user.id' => Yii::$app->user->id]);
-                }
-            }
-            $query->andWhere(['file.parent' => $this->parent]);
         }
 
         // grid filtering conditions

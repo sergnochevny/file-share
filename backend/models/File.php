@@ -7,6 +7,7 @@ use backend\behaviors\UploadBehavior;
 use common\models\UserCompany;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\db\Query;
 
 /**
  * @property Investigation $investigation
@@ -101,7 +102,7 @@ class File extends \common\models\File
     }
 
     /**
-     * @return User
+     * @return Query
      */
     public function getUsers()
     {
@@ -110,7 +111,7 @@ class File extends \common\models\File
     }
 
     /**
-     * @return UserCompany
+     * @return Query
      */
     public function getUserCompanies()
     {
@@ -120,7 +121,7 @@ class File extends \common\models\File
 
 
     /**
-     * @return Investigation
+     * @return Query
      */
     public function getInvestigation()
     {
@@ -128,12 +129,10 @@ class File extends \common\models\File
     }
 
     /**
-     * @return File
+     * @return Query
      */
     public function getParents()
     {
         return $this->hasOne(File::className(), ['citrix_id' => 'parent']);
     }
-
-
 }

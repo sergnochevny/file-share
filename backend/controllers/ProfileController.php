@@ -2,17 +2,16 @@
 namespace backend\controllers;
 
 
-use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use backend\behaviors\RememberUrlBehavior;
 use backend\models\User;
+use common\components\BaseController;
+use yii\filters\VerbFilter;
+use yii\web\NotFoundHttpException;
 
 /**
  * Profile controller
  */
-class ProfileController extends Controller
+class ProfileController extends BaseController
 {
 
     public $layout = 'content';
@@ -45,7 +44,7 @@ class ProfileController extends Controller
     public function actionIndex($username)
     {
         $model = $this->findModel($username)->profile;
-        return $this->render('index', ['model' => $model]);
+        return $this->smartRender('index', ['model' => $model]);
     }
 
     /**

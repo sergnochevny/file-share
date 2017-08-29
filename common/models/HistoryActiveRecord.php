@@ -24,7 +24,7 @@ class HistoryActiveRecord extends RecoverableActiveRecord
 
     /**
      * @param $condition
-     * @return array|null|ActiveRecord
+     * @return RecoverableActiveRecord
      */
     public static function findOneIncludeHistory($condition)
     {

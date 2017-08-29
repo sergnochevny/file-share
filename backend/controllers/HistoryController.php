@@ -2,19 +2,18 @@
 
 namespace backend\controllers;
 
-use Yii;
-use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use common\models\History;
 use backend\behaviors\RememberUrlBehavior;
 use backend\models\search\HistorySearch;
+use common\components\BaseController;
+use common\models\History;
+use Yii;
+use yii\filters\VerbFilter;
+use yii\web\NotFoundHttpException;
 
 /**
  * HistoryController implements the CRUD actions for File model.
  */
-class HistoryController extends Controller
+class HistoryController extends BaseController
 {
 
     public $layout = 'content';
@@ -65,7 +64,7 @@ class HistoryController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
 
-        return $this->render('index', [
+        return $this->smartRender('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -75,8 +74,7 @@ class HistoryController extends Controller
     {
         try{
             $model = $this->findModel($id);
-            $model->recover();
-            if ($model->delete()) {
+            if ($model->recover() && $model->delete()) {
                 Yii::$app->session->setFlash('success', 'Entry has been recovered successful');
             }
         } catch (\Exception $e ){

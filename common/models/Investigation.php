@@ -5,12 +5,13 @@ namespace common\models;
 
 use backend\models\PermissionsModelTrait;
 use common\behaviors\ArchiveCascadeBehavior;
+use common\models\query\UndeleteableActiveQuery;
 use common\validators\SsnValidator;
 use DateTime;
-use Exception;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
+use yii\db\Query;
 use yii2tech\ar\linkmany\LinkManyBehavior;
 
 /**
@@ -176,12 +177,22 @@ class Investigation extends HistoryActiveRecord
 
             [['description'], 'string', 'max' => 2000],
             ['status', 'default', 'value' => self::STATUS_IN_PROGRESS],
-            ['status', 'in', 'range' => [
-                self::STATUS_COMPLETED, self::STATUS_IN_PROGRESS, self::STATUS_PENDING,
-                self::STATUS_IN_HISTORY, self::STATUS_CANCELLED, self::STATUS_DELETED
-            ]],
             [
-                ['company_id'], 'exist', 'skipOnError' => true,
+                'status',
+                'in',
+                'range' => [
+                    self::STATUS_COMPLETED,
+                    self::STATUS_IN_PROGRESS,
+                    self::STATUS_PENDING,
+                    self::STATUS_IN_HISTORY,
+                    self::STATUS_CANCELLED,
+                    self::STATUS_DELETED
+                ]
+            ],
+            [
+                ['company_id'],
+                'exist',
+                'skipOnError' => true,
                 'targetClass' => Company::className(),
                 'targetAttribute' => ['company_id' => 'id']
             ],
@@ -264,7 +275,7 @@ class Investigation extends HistoryActiveRecord
     }
 
     /**
-     * @return UndeletableActiveQuery
+     * @return Query
      */
     public function getCompany()
     {
@@ -278,7 +289,7 @@ class Investigation extends HistoryActiveRecord
     }
 
     /**
-     * @return UndeletableActiveQuery
+     * @return Query
      */
     public function getCreatedBy()
     {
@@ -286,7 +297,7 @@ class Investigation extends HistoryActiveRecord
     }
 
     /**
-     * @return UndeletableActiveQuery
+     * @return Query
      */
     public function getFiles()
     {
@@ -294,11 +305,15 @@ class Investigation extends HistoryActiveRecord
     }
 
     /**
-     * @return UndeletableActiveQuery
+     * @return UndeleteableActiveQuery
      */
     public function getFilesWh()
     {
-        return $this->hasMany(File::className(), ['parent' => 'citrix_id'])->andArchived();
+        $query = $this->hasMany(File::className(), ['parent' => 'citrix_id']);
+        /**
+         * @var $query UndeleteableActiveQuery
+         */
+        return $query->andArchived();
     }
 
 
@@ -316,15 +331,15 @@ class Investigation extends HistoryActiveRecord
     }
 
     /**
-     * @return UndeletableActiveQuery
+     * @return Query
      */
     public function getHistory()
     {
-        return $this->hasOne(History::className(), ['parent' => 'id'])->andWhere(['type'=>self::$history_type]);
+        return $this->hasOne(History::className(), ['parent' => 'id'])->andWhere(['type' => self::$history_type]);
     }
 
     /**
-     * @return UndeletableActiveQuery
+     * @return Query
      */
     public function getUsers()
     {

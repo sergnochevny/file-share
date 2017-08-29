@@ -10,7 +10,7 @@ namespace common\components;
 use backend\behaviors\PermissionEvent;
 use yii\web\Controller;
 
-class PermissionController extends Controller
+class PermissionController extends BaseController
 {
 
     public function verifyPermission($event, $parameters)
