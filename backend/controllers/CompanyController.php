@@ -2,16 +2,16 @@
 
 namespace backend\controllers;
 
-use backend\models\User;
 use backend\behaviors\RememberUrlBehavior;
 use backend\models\Company;
 use backend\models\search\CompanySearch;
+use backend\models\User;
 use common\components\BaseController;
 use common\models\InvestigationType;
 use Yii;
+use yii\base\UserException;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
-use yii\base\UserException;
 
 /**
  * CompanyController implements the CRUD actions for Company model.

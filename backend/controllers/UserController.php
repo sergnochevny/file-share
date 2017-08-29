@@ -4,8 +4,8 @@ namespace backend\controllers;
 
 use ait\rbac\Item;
 use backend\behaviors\RememberUrlBehavior;
-use backend\models\search\UserSearch;
 use backend\models\forms\UserForm;
+use backend\models\search\UserSearch;
 use backend\models\services\UserService;
 use backend\models\User;
 use common\components\BaseController;

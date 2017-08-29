@@ -5,17 +5,13 @@ namespace backend\controllers;
 use backend\behaviors\RememberUrlBehavior;
 use backend\models\Investigation;
 use backend\models\search\InvestigationSearch;
-use common\components\BaseController;
-use Yii;
-use yii\filters\VerbFilter;
-use yii\web\NotFoundHttpException;
 use backend\models\User;
+use common\components\BaseController;
+use common\models\InvestigationType;
 use Yii;
 use yii\base\UserException;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
-use common\models\InvestigationType;
-
 
 /**
  * InvestigationController implements the CRUD actions for Investigation model.
