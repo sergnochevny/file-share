@@ -8,6 +8,7 @@ namespace backend\behaviors;
 
 use common\models\UndeleteableActiveRecord;
 use common\models\User;
+use exceptions\PermissionDeniedException;
 use Yii;
 use yii\base\Behavior;
 use yii\base\Model;
@@ -89,28 +90,22 @@ class VerifyPermissionBehavior extends Behavior
         return $event->isValid = true;
     }
 
-    public function beforeUpdate(ModelEvent $event){
+    public function beforeUpdate(ModelEvent $event)
+    {
+        //@todo Maybe move it to somewhere
+        /** @var User|null $identity */
+        $identity = Yii::$app->user->identity;
+        if ($identity === null ) {
+            throw new PermissionDeniedException('You can\'t perform this action');
+        }
 
-//        /** @var User|null $identity */
-//        $identity = Yii::$app->user->identity;
-//        if ($identity === null) {
-//            //or throw error
-//            return false;
-//        }
-//        if ($this->isUserOwnerOfRecord($identity)) {
-//            //is can
-//            return true;
-//        }
-//
-//        if (!empty($this->permissionNames[$event->name])
-//            && Yii::$app->user->can($this->permissionNames[$event->name])) {
-//
-//            //is can
-//            return true;
-//        }
-//
-//        return false;
-//        //return $event->isValid = true;
+        if ($this->isUserOwnerOfRecord($identity)
+            || Yii::$app->user->can($this->getPermissionName())) {
+            $event->isValid = true;
+            return;
+        }
+
+        throw new PermissionDeniedException('You can\'t perform this action');
     }
 
     public function beforeDelete(ModelEvent $event){
@@ -121,6 +116,18 @@ class VerifyPermissionBehavior extends Behavior
         return $event->isValid = true;
     }
 
+    /**
+     * @return string
+     */
+    protected function getPermissionName()
+    {
+        return str_replace('/', '.', Yii::$app->controller->action->uniqueId);
+    }
+
+    /**
+     * @param User $user
+     * @return bool
+     */
     protected function isUserOwnerOfRecord(User $user) {
         $model = $this->owner;
         if (!empty($model->created_by)) {
