@@ -7,6 +7,7 @@
 namespace backend\behaviors;
 
 use common\models\UndeleteableActiveRecord;
+use common\models\User;
 use Yii;
 use yii\base\Behavior;
 use yii\base\Model;
@@ -30,6 +31,7 @@ class VerifyPermissionBehavior extends Behavior
      */
     public $actions = [];
 
+    public $permissionNames;
 
     /**
      * @return array
@@ -88,7 +90,27 @@ class VerifyPermissionBehavior extends Behavior
     }
 
     public function beforeUpdate(ModelEvent $event){
-        return $event->isValid = true;
+
+//        /** @var User|null $identity */
+//        $identity = Yii::$app->user->identity;
+//        if ($identity === null) {
+//            //or throw error
+//            return false;
+//        }
+//        if ($this->isUserOwnerOfRecord($identity)) {
+//            //is can
+//            return true;
+//        }
+//
+//        if (!empty($this->permissionNames[$event->name])
+//            && Yii::$app->user->can($this->permissionNames[$event->name])) {
+//
+//            //is can
+//            return true;
+//        }
+//
+//        return false;
+//        //return $event->isValid = true;
     }
 
     public function beforeDelete(ModelEvent $event){
@@ -97,6 +119,15 @@ class VerifyPermissionBehavior extends Behavior
 
     public function beforeArchive(ModelEvent $event){
         return $event->isValid = true;
+    }
+
+    protected function isUserOwnerOfRecord(User $user) {
+        $model = $this->owner;
+        if (!empty($model->created_by)) {
+            return $model->created_by === $user->id;
+        }
+
+        return false;
     }
 
 }
