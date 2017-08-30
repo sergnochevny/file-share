@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:ait/auth.git",
-                "reference": "8a79a0f5a6fce1710073668a3d489436b4b29eb0"
+                "reference": "2a4a6c89b33ac198da02e9388d7032454365bbd5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/auth/9999999-dev/8a79a0f5a6fce1710073668a3d489436b4b29eb0.zip",
-                "reference": "8a79a0f5a6fce1710073668a3d489436b4b29eb0",
+                "url": "https://tp.ait.com/repo/private/dists/ait/auth/9999999-dev/2a4a6c89b33ac198da02e9388d7032454365bbd5.zip",
+                "reference": "2a4a6c89b33ac198da02e9388d7032454365bbd5",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -70,7 +70,7 @@
                 "yii 2",
                 "yii2"
             ],
-            "time": "2017-08-21T11:30:50+00:00"
+            "time": "2017-08-30T14:26:21+00:00"
         },
         {
             "name": "ait/citrix",
@@ -82,7 +82,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "http://tp.ait.com:443/repo/private/dists/ait/citrix/1.0.17.0/0d2be95e1b6a9e4131a5b883bac92350a6799c69.zip",
+                "url": "https://tp.ait.com/repo/private/dists/ait/citrix/1.0.17.0/0d2be95e1b6a9e4131a5b883bac92350a6799c69.zip",
                 "reference": "0d2be95e1b6a9e4131a5b883bac92350a6799c69",
                 "shasum": null,
                 "mirrors": [
@@ -233,12 +233,12 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:ait/rbac.git",
-                "reference": "93205612e20ee799ff29a6f8088ca017069ad282"
+                "reference": "667f16305f9cdbf4b7eaa10c5ca5f565ac0427c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/rbac/9999999-dev/93205612e20ee799ff29a6f8088ca017069ad282.zip",
-                "reference": "93205612e20ee799ff29a6f8088ca017069ad282",
+                "url": "https://tp.ait.com/repo/private/dists/ait/rbac/9999999-dev/667f16305f9cdbf4b7eaa10c5ca5f565ac0427c2.zip",
+                "reference": "667f16305f9cdbf4b7eaa10c5ca5f565ac0427c2",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -283,7 +283,7 @@
                 "yii 2",
                 "yii2"
             ],
-            "time": "2017-08-21T18:15:36+00:00"
+            "time": "2017-08-30T12:49:28+00:00"
         },
         {
             "name": "ait/utilities",
@@ -1859,12 +1859,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "bd3da52d22c6abfc808c2f9c56aca652e66d9e9a"
+                "reference": "1a2f9df896c8bfa6e22e8e1a78cca637c6f70613"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/bd3da52d22c6abfc808c2f9c56aca652e66d9e9a",
-                "reference": "bd3da52d22c6abfc808c2f9c56aca652e66d9e9a",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/1a2f9df896c8bfa6e22e8e1a78cca637c6f70613",
+                "reference": "1a2f9df896c8bfa6e22e8e1a78cca637c6f70613",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1912,7 +1912,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2017-08-22T22:08:15+00:00"
+            "time": "2017-08-29T20:44:31+00:00"
         },
         {
             "name": "yii2tech/ar-linkmany",
@@ -1977,12 +1977,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "e5f88beb29a1d7b57a16066043d41056cbcc15ef"
+                "reference": "3458b13a6cf9692051d012d7c1633e9267af0dc7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/e5f88beb29a1d7b57a16066043d41056cbcc15ef",
-                "reference": "e5f88beb29a1d7b57a16066043d41056cbcc15ef",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/3458b13a6cf9692051d012d7c1633e9267af0dc7",
+                "reference": "3458b13a6cf9692051d012d7c1633e9267af0dc7",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -2075,7 +2075,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2017-08-27T23:32:27+00:00"
+            "time": "2017-08-29T12:13:28+00:00"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -2375,12 +2375,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/Gherkin.git",
-                "reference": "5c14cff4f955b17d20d088dec1bde61c0539ec74"
+                "reference": "0069ea0ca51f5d372096fe7b02b63d5aef97ef15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/Gherkin/zipball/5c14cff4f955b17d20d088dec1bde61c0539ec74",
-                "reference": "5c14cff4f955b17d20d088dec1bde61c0539ec74",
+                "url": "https://api.github.com/repos/Behat/Gherkin/zipball/0069ea0ca51f5d372096fe7b02b63d5aef97ef15",
+                "reference": "0069ea0ca51f5d372096fe7b02b63d5aef97ef15",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -2432,7 +2432,7 @@
                 "gherkin",
                 "parser"
             ],
-            "time": "2016-10-30T11:50:56+00:00"
+            "time": "2017-08-30T11:04:59+00:00"
         },
         {
             "name": "bower-asset/typeahead.js",
@@ -2713,12 +2713,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "d3ed4cc37051c1ca52d22d76b437d14809fc7e0d"
+                "reference": "c3f82846fdfd1760b277767ac21426ca030f795e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/d3ed4cc37051c1ca52d22d76b437d14809fc7e0d",
-                "reference": "d3ed4cc37051c1ca52d22d76b437d14809fc7e0d",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/c3f82846fdfd1760b277767ac21426ca030f795e",
+                "reference": "c3f82846fdfd1760b277767ac21426ca030f795e",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -2761,7 +2761,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2017-08-15T16:48:10+00:00"
+            "time": "2017-08-30T09:14:20+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -4382,12 +4382,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "b789be584eeefa72bcc0d726b6da451e5d24a6df"
+                "reference": "7e3ea754c13d8fdab9f91679cdd628a4d567949d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/b789be584eeefa72bcc0d726b6da451e5d24a6df",
-                "reference": "b789be584eeefa72bcc0d726b6da451e5d24a6df",
+                "url": "https://api.github.com/repos/symfony/console/zipball/7e3ea754c13d8fdab9f91679cdd628a4d567949d",
+                "reference": "7e3ea754c13d8fdab9f91679cdd628a4d567949d",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -4449,7 +4449,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-08-24T14:43:56+00:00"
+            "time": "2017-08-29T21:15:51+00:00"
         },
         {
             "name": "symfony/css-selector",
@@ -4512,16 +4512,16 @@
         },
         {
             "name": "symfony/debug",
-            "version": "dev-master",
+            "version": "3.4.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
-                "reference": "07bc974dbe18bf4e520ba9e919f1ba46420657e9"
+                "reference": "f43bc2e05d4ac6fb36d6931fe41bd0a6d5c21a2b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/07bc974dbe18bf4e520ba9e919f1ba46420657e9",
-                "reference": "07bc974dbe18bf4e520ba9e919f1ba46420657e9",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/f43bc2e05d4ac6fb36d6931fe41bd0a6d5c21a2b",
+                "reference": "f43bc2e05d4ac6fb36d6931fe41bd0a6d5c21a2b",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -4531,19 +4531,19 @@
                 ]
             },
             "require": {
-                "php": "^7.1.3",
+                "php": "^5.5.9|>=7.0.8",
                 "psr/log": "~1.0"
             },
             "conflict": {
-                "symfony/http-kernel": "<3.4"
+                "symfony/http-kernel": ">=2.3,<2.3.24|~2.4.0|>=2.5,<2.5.9|>=2.6,<2.6.2"
             },
             "require-dev": {
-                "symfony/http-kernel": "~3.4|~4.0"
+                "symfony/http-kernel": "~2.8|~3.0|~4.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.0-dev"
+                    "dev-master": "3.4-dev"
                 }
             },
             "autoload": {
@@ -4570,7 +4570,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2017-08-10T14:21:53+00:00"
+            "time": "2017-08-29T21:00:42+00:00"
         },
         {
             "name": "symfony/dom-crawler",
@@ -4829,12 +4829,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "5a58daa633a14651d7b2a34613c9b62c02faf873"
+                "reference": "bd9dcffc3eb2984afd4c534864f2802eccd3435a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/5a58daa633a14651d7b2a34613c9b62c02faf873",
-                "reference": "5a58daa633a14651d7b2a34613c9b62c02faf873",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/bd9dcffc3eb2984afd4c534864f2802eccd3435a",
+                "reference": "bd9dcffc3eb2984afd4c534864f2802eccd3435a",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -4885,7 +4885,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-08-24T14:43:56+00:00"
+            "time": "2017-08-30T06:19:03+00:00"
         },
         {
             "name": "theseer/tokenizer",
