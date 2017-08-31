@@ -3,7 +3,6 @@
 
 namespace backend\behaviors;
 
-
 use backend\models\Company;
 use backend\models\Investigation;
 use backend\models\User;
@@ -66,9 +65,10 @@ class NotifyBehavior extends Behavior
                 }
             }
 
-            if (!empty($messages)) $this->mailer->sendMultiple($messages);
+            if (!empty($messages)) {
+                $this->mailer->sendMultiple($messages);
+            }
         }
-
     }
 
     /**
@@ -86,7 +86,9 @@ class NotifyBehavior extends Behavior
             throw new ErrorException('Need set createTemplate, updateTemplate, archiveTemplate, deleteTemplate for mails');
         }
 
-        if ($this->sendFrom instanceof \Closure) $this->sendFrom = call_user_func($this->sendFrom);
+        if ($this->sendFrom instanceof \Closure) {
+            $this->sendFrom = call_user_func($this->sendFrom);
+        }
         $this->sendFrom = !empty($this->sendFrom) ? $this->sendFrom : 'noreply@example.com';
     }
 
@@ -194,8 +196,10 @@ class NotifyBehavior extends Behavior
             (!empty($event->changedAttributes)) &&
             (in_array('status', array_keys($event->changedAttributes)))
         ) {
-            $this->sendMessagesWithTemplate($this->completeTemplate, ['admin'=>true, 'user' => true]);
-        } else $this->sendMessagesWithTemplate($this->updateTemplate);
+            $this->sendMessagesWithTemplate($this->completeTemplate, ['admin' => true, 'user' => true]);
+        } else {
+            $this->sendMessagesWithTemplate($this->updateTemplate);
+        }
     }
 
     /**

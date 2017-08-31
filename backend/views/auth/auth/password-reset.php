@@ -22,7 +22,8 @@ $fieldOptions1 = [
         <h3 class="login-heading"><b>Set new password</b></h3>
         <div class="login-form">
             <?php $form = ActiveForm::begin(['id' => 'password-reset-form', 'enableClientValidation' => false]); ?>
-                <?= $form->field($model, 'password', $fieldOptions1)->passwordInput() ?>
+                <?= $form->field($model, 'password', $fieldOptions1)->passwordInput(['autofocus' => true]) ?>
+                <?= $form->field($model, 'passwordRepeat', $fieldOptions1)->passwordInput() ?>
                 <div class="row">
                     <div class="col-xs-12">
                         <?= Html::submitButton('Save new password', ['class' => 'btn btn-primary btn-block btn-flat']) ?>
