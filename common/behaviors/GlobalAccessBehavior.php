@@ -47,6 +47,9 @@ class GlobalAccessBehavior extends Behavior
         ];
     }
 
+    /**
+     *
+     */
     public function beforeAction()
     {
         Yii::$app->controller->attachBehavior('access', [

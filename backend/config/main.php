@@ -73,7 +73,7 @@ return [
         'class' => 'ait\auth\behaviors\AccessControl'
     ],
     'as beforeAction' => [
-        'class' => 'common\behaviors\LastActionBehavior',
+        'class' => 'ait\auth\behaviors\LastActionBehavior',
     ],
     'params' => $params,
 ];

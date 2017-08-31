@@ -28,6 +28,8 @@ use yii\web\IdentityInterface;
  * @property string $password_reset_token
  *
  * @property integer $status
+ * @property integer $confirmed_at
+ * @property integer $confirmation_token
  * @property integer $created_at
  * @property integer $created_by
  * @property integer $updated_at
@@ -251,12 +253,11 @@ class User extends UndeleteableActiveRecord implements IdentityInterface
     }
 
     /**
-     * @return UndeleteableActiveQuery
+     * @return Company|\yii\db\ActiveQuery
      */
     public function getCompany()
     {
         return $this->hasOne(Company::className(), ['id' => 'company_id'])
             ->viaTable('user_company', ['user_id' => 'id']);
     }
-
 }
