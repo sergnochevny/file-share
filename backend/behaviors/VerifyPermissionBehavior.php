@@ -92,46 +92,62 @@ class VerifyPermissionBehavior extends Behavior
 
     public function beforeUpdate(ModelEvent $event)
     {
-        //@todo Maybe move it to somewhere
+        return $event->isValid = $this->checkPermission();
+    }
+
+    public function beforeDelete(ModelEvent $event){
+        return $event->isValid = $this->checkPermission();
+    }
+
+    public function beforeArchive(ModelEvent $event){
+        return $event->isValid = $this->checkPermission();
+    }
+
+    /**
+     * Checks if user can perform some action
+     * If he is owner of the record or permission granted to him directly
+     *
+     * @return bool TRUE if user can, else the Exception will be thrown
+     * @throws PermissionDeniedException
+     */
+    protected function checkPermission()
+    {
+        if ($this->isUserOwnerOfRecord()
+            || Yii::$app->user->can($this->getPermissionName())) {
+            return true;
+        }
+
+        throw new PermissionDeniedException('You can\'t perform this action');
+    }
+
+
+    /**
+     * Creates something like site.index.all (controller.action.all)
+     * or if it has module - module.controller.action.all
+     *
+     * @return string
+     */
+    protected function getPermissionName()
+    {
+        return str_replace('/', '.', Yii::$app->controller->action->uniqueId) . '.all';
+    }
+
+    /**
+     * Checks if current user is owner of the record
+     *
+     * @return bool
+     * @throws PermissionDeniedException Will be thrown if user not logged
+     */
+    protected function isUserOwnerOfRecord() {
         /** @var User|null $identity */
         $identity = Yii::$app->user->identity;
         if ($identity === null ) {
             throw new PermissionDeniedException('You can\'t perform this action');
         }
 
-        if ($this->isUserOwnerOfRecord($identity)
-            || Yii::$app->user->can($this->getPermissionName())) {
-            $event->isValid = true;
-            return;
-        }
-
-        throw new PermissionDeniedException('You can\'t perform this action');
-    }
-
-    public function beforeDelete(ModelEvent $event){
-        return $event->isValid = true;
-    }
-
-    public function beforeArchive(ModelEvent $event){
-        return $event->isValid = true;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getPermissionName()
-    {
-        return str_replace('/', '.', Yii::$app->controller->action->uniqueId);
-    }
-
-    /**
-     * @param User $user
-     * @return bool
-     */
-    protected function isUserOwnerOfRecord(User $user) {
         $model = $this->owner;
         if (!empty($model->created_by)) {
-            return $model->created_by === $user->id;
+            return $model->created_by === $identity->id;
         }
 
         return false;
