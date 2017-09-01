@@ -24,13 +24,18 @@ class ProtusController extends Controller
     {
         $manager = \Yii::$app->getAuthManager();
         //ensure that user want overwrite roles
-        $rule = new EmployeeRule();
+        $rule = \Yii::createObject([
+            'class' => EmployeeRule::className()
+        ]);
         if (!$manager->getRule($rule->name)) {
             $manager->add($rule);
         }
 
         if ($employee = $manager->getPermission('employee')) {
-            $answer = $this->prompt('You already have employee permission. Do you want overwrite it? y/yes:', ['required' => true]);
+            $answer = $this->prompt(
+                'You already have employee permission. Do you want overwrite it? y/yes:',
+                ['required' => true]
+            );
             if (in_array(strtolower($answer), ['y', 'yes'])) {
                 $manager->remove($employee);
                 $employee = $manager->createPermission('employee');
@@ -47,7 +52,10 @@ class ProtusController extends Controller
         }
 
         if ($client = $manager->getRole('user')) {
-            $answer = $this->prompt('You already have client role. Do you want overwrite it? y/yes:', ['required' => true]);
+            $answer = $this->prompt(
+                'You already have client role. Do you want overwrite it? y/yes:',
+                ['required' => true]
+            );
             if (in_array(strtolower($answer), ['y', 'yes'])) {
                 $manager->remove($client);
                 $client = $manager->createRole('user');
@@ -60,20 +68,26 @@ class ProtusController extends Controller
         }
 
         if ($admin = $manager->getRole('admin')) {
-            $answer = $this->prompt('You already have admin role. Do you want overwrite it? y/yes:', ['required' => true]);
+            $answer = $this->prompt(
+                'You already have admin role. Do you want overwrite it? y/yes:',
+                ['required' => true]
+            );
             if (in_array(strtolower($answer), ['y', 'yes'])) {
                 $this->stdout('OK. Now will be overwrite admin' . PHP_EOL, Console::FG_GREEN);
                 $manager->remove($admin);
                 $admin = $manager->createRole('admin');
                 $manager->add($admin);
             }
-        }else {
+        } else {
             $admin = $manager->createRole('admin');
             $manager->add($admin);
         }
 
         if ($superAdmin = $manager->getRole('sadmin')) {
-            $answer = $this->prompt('You already have sadmin role. Do you want overwrite it? y/yes:', ['required' => true]);
+            $answer = $this->prompt(
+                'You already have sadmin role. Do you want overwrite it? y/yes:',
+                ['required' => true]
+            );
             if (in_array(strtolower($answer), ['y', 'yes'])) {
                 $manager->remove($superAdmin);
                 $superAdmin = $manager->createRole('sadmin');
@@ -85,9 +99,15 @@ class ProtusController extends Controller
             $manager->add($superAdmin);
         }
 
-        if(!$manager->hasChild($client, $employee)) $manager->addChild($client, $employee);
-        if(!$manager->hasChild($superAdmin, $client)) $manager->addChild($superAdmin, $client);
-        if(!$manager->hasChild($superAdmin, $admin)) $manager->addChild($superAdmin, $admin);
+        if (!$manager->hasChild($client, $employee)) {
+            $manager->addChild($client, $employee);
+        }
+        if (!$manager->hasChild($superAdmin, $client)) {
+            $manager->addChild($superAdmin, $client);
+        }
+        if (!$manager->hasChild($superAdmin, $admin)) {
+            $manager->addChild($superAdmin, $admin);
+        }
 
         return $this->stdout('OK' . "\n");
     }
@@ -121,24 +141,29 @@ class ProtusController extends Controller
         return $errors;
     }
 
-    public function actionInitRoles(){
+    public function actionInitRoles()
+    {
         return $this->initRoles();
     }
+
     /**
-     * Initiate site. Creates roles client, admin and super admin. Creates super admin account. WARNING! If you already have db with roles, this will overwrite it. To add role or user see add-role, create-user respectively
+     * Initiate site. Creates roles client, admin and super admin. Creates super admin account.
+     * WARNING! If you already have db with roles, this will overwrite it.
+     * To add role or user see add-role, create-user respectively.
      *
      * @param string $adminData username:email:password[Minimum 8 digits]
      * @return string
      */
     public function actionInit($adminData)
     {
+        $this->initRoles();
+
         list($username, $email, $password) = explode(":", $adminData);
 
         if ($this->hasErrors($username, $password)) {
-            return;
+            return null;
         }
 
-        $this->initRoles();
         return $this->createSuperAdminAccount($username, $email, $password);
     }
 
@@ -192,7 +217,10 @@ class ProtusController extends Controller
         }
         $manager->assign($role, $user->id);
 
-        return $this->stdout('User ' . $user->username . ' was successfully created with role ' . $role->name . PHP_EOL, Console::FG_GREEN);
+        return $this->stdout(
+            'User ' . $user->username . ' was successfully created with role ' . $role->name . PHP_EOL,
+            Console::FG_GREEN
+        );
     }
 
     /**

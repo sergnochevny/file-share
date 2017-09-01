@@ -7,6 +7,7 @@ namespace backend\models;
 use backend\behaviors\CitrixFolderBehavior;
 use backend\behaviors\HistoryBehavior;
 use backend\behaviors\NotifyBehavior;
+use backend\behaviors\VerifyPermissionBehavior;
 use yii\db\Query;
 use yii\helpers\Inflector;
 
@@ -54,7 +55,8 @@ class Company extends \common\models\Company
     public function rules()
     {
         $rules = parent::rules();
-        //  $rules[] = ['name', 'match', 'pattern' => '/^[\w\s]*$/']; //todo unique what if user will create Company and then Company', what will be with folder in citrix
+        //todo unique what if user will create Company and then Company', what will be with folder in citrix
+        //  $rules[] = ['name', 'match', 'pattern' => '/^[\w\s]*$/'];
         $rules[] = [
             ['name'],
             'unique',
@@ -72,6 +74,9 @@ class Company extends \common\models\Company
     public function behaviors()
     {
         $behaviors = parent::behaviors();
+        $behaviors['VerifyPermissionBehavior'] = [
+            'class' => VerifyPermissionBehavior::className()
+        ];
         $behaviors['citrixFolderBehavior'] = [
             'class' => CitrixFolderBehavior::className(),
             'attribute' => 'citrix_id',

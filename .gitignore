@@ -34,3 +34,7 @@ phpunit.phar
 
 # vagrant runtime
 /.vagrant
+
+/.php_cs.cache
+/backend/web/assets/
+/backend/runtime/

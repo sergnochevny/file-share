@@ -16,15 +16,18 @@ use yii\db\Query;
  */
 class File extends \common\models\File
 {
-
     public $tmp;
 
     /**
      * @return mixed
      */
-    public function getCompany_Id()
+    public function getUserCompanyId()
     {
-        return \Yii::$app->user->identity->company->id;
+        $user = \Yii::$app->user->identity;
+        /**
+         * @var User $user
+         */
+        return $user->company->id;
     }
 
     /**
@@ -63,8 +66,9 @@ class File extends \common\models\File
                     'parent' => function (File $model) {
                         if (empty($model->parent)) {
                             $allfiles = File::findOne(['parent' => 'root']);
-                            if ($allfiles) $model->parent = $allfiles->citrix_id;
-                            else {
+                            if ($allfiles) {
+                                $model->parent = $allfiles->citrix_id;
+                            } else {
                                 $allfiles = new File(
                                     [
                                         'name' => 'AllFiles',
@@ -73,7 +77,9 @@ class File extends \common\models\File
                                         'parent' => 'root',
                                     ]
                                 );
-                                if ($allfiles->save(false)) $model->parent = $allfiles->citrix_id;
+                                if ($allfiles->save(false)) {
+                                    $model->parent = $allfiles->citrix_id;
+                                }
                             }
                         }
                         return $model->parent;
@@ -89,7 +95,9 @@ class File extends \common\models\File
             'company' => function (File $model) {
                 $company_id = null;
                 $investigation = $model->investigation;
-                if (!empty($investigation)) $company_id = $investigation->company_id;
+                if (!empty($investigation)) {
+                    $company_id = $investigation->company_id;
+                }
                 return $company_id;
             },
             'attribute' => 'name',

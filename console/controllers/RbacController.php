@@ -7,6 +7,7 @@ namespace console\controllers;
 
 
 use ait\auth\traits\RbacInitTrait;
+use backend\components\rbac\rules\EmployeeRule;
 use yii\console\Controller;
 
 /**
@@ -71,6 +72,12 @@ class RbacController extends Controller
         ['name' => 'file.upload', 'description' => 'Files upload'],
         ['name' => 'file.multi-upload', 'description' => 'Files multiple upload'],
         ['name' => 'file.archive', 'description' => 'Files delete'],
+
+        [
+            'name' => 'employee',
+            'description' => 'Verify employee of company',
+            'rule' => '\backend\components\rbac\rules\EmployeeRule'
+        ],
 
 // Modules permissions..............................................................................................
 

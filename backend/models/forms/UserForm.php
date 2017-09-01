@@ -1,4 +1,5 @@
 <?php
+
 namespace backend\models\forms;
 
 use backend\models\User;
@@ -11,36 +12,26 @@ final class UserForm extends Model
     const SCENARIO_CREATE = 'create';
     const SCENARIO_UPDATE = 'update';
 
-    /** @var string */
-    public $role;
-
-    /** @var string */
-    public $company_id;
-
-    /** @var string */
-    public $first_name;
-
-    /** @var string */
-    public $last_name;
-
-    /** @var string */
-    public $phone_number;
-
-    /** @var string */
-    public $email;
-
-    /** @var string */
-    public $username;
-
-    /** @var string */
-    public $password;
-
-    /** @var string */
-    public $password_repeat;
-
     /** @var User */
     private $user;
-
+    /** @var string */
+    public $role;
+    /** @var string */
+    public $company_id;
+    /** @var string */
+    public $first_name;
+    /** @var string */
+    public $last_name;
+    /** @var string */
+    public $phone_number;
+    /** @var string */
+    public $email;
+    /** @var string */
+    public $username;
+    /** @var string */
+    public $password;
+    /** @var string */
+    public $password_repeat;
 
     /**
      * @inheritdoc
@@ -50,34 +41,32 @@ final class UserForm extends Model
         return [
             ['role', 'required', 'message' => 'Please choose the role of user'],
             ['role', 'in', 'range' => ['admin', 'client', 'sadmin']],
-
-            [['company_id'], 'required', 'when' => function($form) {
-                //only client role require company
-                return $form->role == 'client';
-            }],
-
-            [['email', 'username'], 'required'],
-
-            [['password', 'password_repeat'], 'required', 'on' => self::SCENARIO_CREATE],
-
             [
-                'password_repeat', 'required', 'enableClientValidation' => false,
+                ['company_id'],
+                'required',
+                'when' => function ($form) {
+                    //only client role require company
+                    return $form->role == 'client';
+                }
+            ],
+            [['email', 'username'], 'required'],
+            [['password', 'password_repeat'], 'required', 'on' => self::SCENARIO_CREATE],
+            [
+                'password_repeat',
+                'required',
+                'enableClientValidation' => false,
                 'on' => self::SCENARIO_UPDATE,
-                'when' => function(UserForm $model, $attribute) {
+                'when' => function (UserForm $model, $attribute) {
                     return ($model->scenario === UserForm::SCENARIO_UPDATE)
                         ? !empty($model->password{0})
                         : false;
                 },
             ],
-
-            ['password', StrengthValidator::className(), 'preset'=>'fair'],
+            ['password', StrengthValidator::className(), 'preset' => 'fair'],
             ['password_repeat', 'compare', 'compareAttribute' => 'password', 'message' => "Passwords don't match"],
-
-
             [['company_id'], 'integer'],
             [['role', 'first_name', 'last_name', 'phone_number'], 'string'],
             [['email'], 'email'],
-
             [
                 ['username'],
                 'unique',
@@ -86,7 +75,7 @@ final class UserForm extends Model
                     $query->ignoreHiddenStatuses();
                 },
                 'message' => 'Sorry, this username has already been taken',
-                'when' => function($model, $attribute) {
+                'when' => function ($model, $attribute) {
                     /** @var $model UserForm */
                     return $model->user ? $model->user->isAttributeChanged($attribute, false) : true;
                 }
@@ -99,10 +88,9 @@ final class UserForm extends Model
                     $query->ignoreHiddenStatuses();
                 },
                 'message' => 'Sorry, this email has already been taken',
-                'when' => function($model, $attribute) {
+                'when' => function ($model, $attribute) {
                     /** @var $model UserForm */
                     return $model->user ? $model->user->isAttributeChanged($attribute, false) : true;
-
                 }
             ],
         ];

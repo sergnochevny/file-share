@@ -5,7 +5,6 @@ namespace common\models;
 use backend\models\PermissionsModelTrait;
 use common\behaviors\ArchiveCascadeBehavior;
 use common\models\query\UndeleteableActiveQuery;
-use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii2tech\ar\linkmany\LinkManyBehavior;
@@ -38,10 +37,9 @@ use yii2tech\ar\linkmany\LinkManyBehavior;
  */
 class Company extends HistoryActiveRecord
 {
-
     use PermissionsModelTrait;
 
-    static public $history_type = 'company';
+    public static $history_type = 'company';
     public $recoverStatus = self::STATUS_ACTIVE;
 
     /**
@@ -112,13 +110,12 @@ class Company extends HistoryActiveRecord
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
-
             'investigationTypeIds' => 'Investigative Services'
         ];
     }
 
     /**
-     * @return UndeleteableActiveQuery
+     * @return UndeleteableActiveQuery|\yii\db\ActiveQuery
      */
     public function getInvestigations()
     {
@@ -134,7 +131,7 @@ class Company extends HistoryActiveRecord
     }
 
     /**
-     * @return UndeleteableActiveQuery
+     * @return UndeleteableActiveQuery|\yii\db\ActiveQuery
      */
     public function getUsers()
     {
@@ -203,5 +200,4 @@ class Company extends HistoryActiveRecord
 
         return $res;
     }
-
 }

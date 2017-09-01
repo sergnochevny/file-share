@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:ait/auth.git",
-                "reference": "b7a477f242b86939565a20b6b9583c237ba355a8"
+                "reference": "63e6dc43e178fb69d67a510b0f2b8334ae60b22a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/auth/9999999-dev/b7a477f242b86939565a20b6b9583c237ba355a8.zip",
-                "reference": "b7a477f242b86939565a20b6b9583c237ba355a8",
+                "url": "https://tp.ait.com/repo/private/dists/ait/auth/9999999-dev/63e6dc43e178fb69d67a510b0f2b8334ae60b22a.zip",
+                "reference": "63e6dc43e178fb69d67a510b0f2b8334ae60b22a",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -30,7 +30,7 @@
                 "ait/rbac": "dev-master",
                 "ait/utilities": ">=1.0.39",
                 "php": ">=5.6.0",
-                "yiisoft/yii2": ">=2.0.11",
+                "yiisoft/yii2": ">=2.0.13",
                 "yiisoft/yii2-bootstrap": "~2.0.0",
                 "yiisoft/yii2-jui": "~2.0.0"
             },
@@ -70,20 +70,20 @@
                 "yii 2",
                 "yii2"
             ],
-            "time": "2017-08-31T11:52:21+00:00"
+            "time": "2017-09-01T14:12:08+00:00"
         },
         {
             "name": "ait/citrix",
-            "version": "1.0.17",
+            "version": "1.0.18",
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:ait/citrix.git",
-                "reference": "0d2be95e1b6a9e4131a5b883bac92350a6799c69"
+                "reference": "debe69264890ab4b13d48e8fb1d36e1f55b14989"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/citrix/1.0.17.0/0d2be95e1b6a9e4131a5b883bac92350a6799c69.zip",
-                "reference": "0d2be95e1b6a9e4131a5b883bac92350a6799c69",
+                "url": "https://tp.ait.com/repo/private/dists/ait/citrix/1.0.18.0/debe69264890ab4b13d48e8fb1d36e1f55b14989.zip",
+                "reference": "debe69264890ab4b13d48e8fb1d36e1f55b14989",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -120,7 +120,7 @@
                 }
             ],
             "description": "Citrix Share File API implementation the class wrapper",
-            "time": "2017-04-20T08:38:35+00:00"
+            "time": "2017-09-01T15:23:42+00:00"
         },
         {
             "name": "ait/guzzle",
@@ -233,12 +233,12 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:ait/rbac.git",
-                "reference": "667f16305f9cdbf4b7eaa10c5ca5f565ac0427c2"
+                "reference": "72deebc3d666884cc6eed1a6514b35641fefc6d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/rbac/9999999-dev/667f16305f9cdbf4b7eaa10c5ca5f565ac0427c2.zip",
-                "reference": "667f16305f9cdbf4b7eaa10c5ca5f565ac0427c2",
+                "url": "https://tp.ait.com/repo/private/dists/ait/rbac/9999999-dev/72deebc3d666884cc6eed1a6514b35641fefc6d3.zip",
+                "reference": "72deebc3d666884cc6eed1a6514b35641fefc6d3",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -249,7 +249,7 @@
             },
             "require": {
                 "php": ">=5.6.0",
-                "yiisoft/yii2": ">=2.0.11"
+                "yiisoft/yii2": ">=2.0.13"
             },
             "type": "yii2-extension",
             "extra": {
@@ -283,7 +283,7 @@
                 "yii 2",
                 "yii2"
             ],
-            "time": "2017-08-30T12:49:28+00:00"
+            "time": "2017-09-01T13:51:20+00:00"
         },
         {
             "name": "ait/utilities",
@@ -1977,12 +1977,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "3458b13a6cf9692051d012d7c1633e9267af0dc7"
+                "reference": "70c7adf1cdef6dda57b65a7aa4442c84611b5a30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/3458b13a6cf9692051d012d7c1633e9267af0dc7",
-                "reference": "3458b13a6cf9692051d012d7c1633e9267af0dc7",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/70c7adf1cdef6dda57b65a7aa4442c84611b5a30",
+                "reference": "70c7adf1cdef6dda57b65a7aa4442c84611b5a30",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -2075,7 +2075,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2017-08-29T12:13:28+00:00"
+            "time": "2017-09-01T10:30:56+00:00"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -5101,12 +5101,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-gii.git",
-                "reference": "ad39c5b75376a07085b3a7ed9407afabbf829656"
+                "reference": "4ec2b55e4f0e5a6f27be93b4a1618a727409dec5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/ad39c5b75376a07085b3a7ed9407afabbf829656",
-                "reference": "ad39c5b75376a07085b3a7ed9407afabbf829656",
+                "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/4ec2b55e4f0e5a6f27be93b4a1618a727409dec5",
+                "reference": "4ec2b55e4f0e5a6f27be93b4a1618a727409dec5",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -5152,7 +5152,7 @@
                 "gii",
                 "yii2"
             ],
-            "time": "2017-08-02T13:12:51+00:00"
+            "time": "2017-09-01T10:00:13+00:00"
         }
     ],
     "aliases": [],

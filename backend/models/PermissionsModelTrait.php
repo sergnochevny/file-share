@@ -6,7 +6,6 @@
 
 namespace backend\models;
 
-
 use common\models\query\UndeleteableActiveQuery;
 use Yii;
 use yii\db\ActiveQuery;
@@ -34,8 +33,5 @@ trait PermissionsModelTrait
      */
     protected static function extendFindConditionByPermissions(&$query)
     {
-
     }
-
-
 }

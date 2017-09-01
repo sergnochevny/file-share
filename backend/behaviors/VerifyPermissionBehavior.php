@@ -35,6 +35,56 @@ class VerifyPermissionBehavior extends Behavior
     public $permissionNames;
 
     /**
+     * Checks if user can perform some action
+     * If he is owner of the record or permission granted to him directly
+     *
+     * @return bool TRUE if user can, else the Exception will be thrown
+     * @throws PermissionDeniedException
+     */
+    protected function checkPermission()
+    {
+        if ($this->isUserOwnerOfRecord()
+            || Yii::$app->user->can($this->getPermissionName())) {
+            return true;
+        }
+
+        throw new PermissionDeniedException('You can\'t perform this action');
+    }
+
+    /**
+     * Creates something like site.index.all (controller.action.all)
+     * or if it has module - module.controller.action.all
+     *
+     * @return string
+     */
+    protected function getPermissionName()
+    {
+        return str_replace('/', '.', Yii::$app->controller->action->uniqueId) . '.all';
+    }
+
+    /**
+     * Checks if current user is owner of the record
+     *
+     * @return bool
+     * @throws PermissionDeniedException Will be thrown if user not logged
+     */
+    protected function isUserOwnerOfRecord()
+    {
+        /** @var User|null $identity */
+        $identity = Yii::$app->user->identity;
+        if ($identity === null) {
+            throw new PermissionDeniedException('You can\'t perform this action');
+        }
+
+        $model = $this->owner;
+        if (!empty($model->created_by)) {
+            return $model->created_by === $identity->id;
+        }
+
+        return false;
+    }
+
+    /**
      * @return array
      */
     public function events()
@@ -58,9 +108,13 @@ class VerifyPermissionBehavior extends Behavior
     {
         $prms = $event->parameters;
 
-        $event->isTruest = (Yii::$app->user->can('sadmin') || Yii::$app->user->can('admin') ||
-            (!Yii::$app->user->can('sadmin') && !Yii::$app->user->can('admin') ||
-                Yii::$app->user->can('employee', $prms)));
+        $event->isTruest = (
+            Yii::$app->user->can('sadmin') || Yii::$app->user->can('admin') ||
+            (
+                !Yii::$app->user->can('sadmin') && !Yii::$app->user->can('admin') ||
+                Yii::$app->user->can('employee', $prms)
+            )
+        );
 
         return $event->isTruest;
     }
@@ -75,82 +129,57 @@ class VerifyPermissionBehavior extends Behavior
         $investigation = $parameters['investigation'];
         $model = $parameters['model'];
 
-        $event->isTruest = (Yii::$app->user->can('admin') || Yii::$app->user->can('sadmin') ||
+        $event->isTruest = (
+            Yii::$app->user->can('admin') || Yii::$app->user->can('sadmin') ||
             (
                 !Yii::$app->user->can('admin') && !Yii::$app->user->can('sadmin') &&
-                ((!empty($investigation) && Yii::$app->user->can('employee', ['investigation' => $investigation])) ||
-                    (Yii::$app->user->can('employee', ['allfiles' => $model->parents->parent])))
+                (
+                    (
+                        !empty($investigation) &&
+                        Yii::$app->user->can('employee', ['investigation' => $investigation])
+                    ) ||
+                    (Yii::$app->user->can('employee', ['allfiles' => $model->parents->parent]))
+                )
             )
         );
 
         return $event->isTruest;
     }
 
-    public function beforeInsert(ModelEvent $event){
+    /**
+     * @param ModelEvent $event
+     * @return bool
+     */
+    public function beforeInsert(ModelEvent $event)
+    {
         return $event->isValid = true;
     }
 
+    /**
+     * @param ModelEvent $event
+     * @return bool
+     */
     public function beforeUpdate(ModelEvent $event)
     {
         return $event->isValid = $this->checkPermission();
     }
 
-    public function beforeDelete(ModelEvent $event){
-        return $event->isValid = $this->checkPermission();
-    }
-
-    public function beforeArchive(ModelEvent $event){
-        return $event->isValid = $this->checkPermission();
-    }
-
     /**
-     * Checks if user can perform some action
-     * If he is owner of the record or permission granted to him directly
-     *
-     * @return bool TRUE if user can, else the Exception will be thrown
-     * @throws PermissionDeniedException
-     */
-    protected function checkPermission()
-    {
-        if ($this->isUserOwnerOfRecord()
-            || Yii::$app->user->can($this->getPermissionName())) {
-            return true;
-        }
-
-        throw new PermissionDeniedException('You can\'t perform this action');
-    }
-
-
-    /**
-     * Creates something like site.index.all (controller.action.all)
-     * or if it has module - module.controller.action.all
-     *
-     * @return string
-     */
-    protected function getPermissionName()
-    {
-        return str_replace('/', '.', Yii::$app->controller->action->uniqueId) . '.all';
-    }
-
-    /**
-     * Checks if current user is owner of the record
-     *
+     * @param ModelEvent $event
      * @return bool
-     * @throws PermissionDeniedException Will be thrown if user not logged
      */
-    protected function isUserOwnerOfRecord() {
-        /** @var User|null $identity */
-        $identity = Yii::$app->user->identity;
-        if ($identity === null ) {
-            throw new PermissionDeniedException('You can\'t perform this action');
-        }
+    public function beforeDelete(ModelEvent $event)
+    {
+        return $event->isValid = $this->checkPermission();
+    }
 
-        $model = $this->owner;
-        if (!empty($model->created_by)) {
-            return $model->created_by === $identity->id;
-        }
-
-        return false;
+    /**
+     * @param ModelEvent $event
+     * @return bool
+     */
+    public function beforeArchive(ModelEvent $event)
+    {
+        return $event->isValid = $this->checkPermission();
     }
 
 }

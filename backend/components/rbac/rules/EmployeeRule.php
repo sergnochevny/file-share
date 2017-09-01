@@ -1,11 +1,9 @@
 <?php
 
-
 namespace backend\components\rbac\rules;
 
-
+use ait\rbac\Rule;
 use backend\models\Company;
-use yii\rbac\Rule;
 
 class EmployeeRule extends Rule
 {
