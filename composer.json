@@ -51,13 +51,15 @@
       "php yii migrate --interactive=0",
       "php yii auth/rbac/init --interactive=0",
       "php yii rbac/init --interactive=0",
-      "rm -rf backend/web/assets/*"
+      "rm -rf backend/web/assets/*",
+      "php yii cache/flush-all"
     ],
     "post-install-cmd": [
       "php yii migrate --interactive=0",
       "php yii auth/rbac/init --interactive=0",
       "php yii rbac/init --interactive=0",
-      "rm -rf backend/web/assets/*"
+      "rm -rf backend/web/assets/*",
+      "php yii cache/flush-all"
     ]
   }
 }

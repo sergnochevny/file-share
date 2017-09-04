@@ -8,7 +8,10 @@ return [
         ],
         'authManager' => [
             'class' => 'ait\rbac\DbManager',
-            'cache' => 'yii\caching\FileCache',
+            'cache' => [
+                'class' => 'yii\caching\FileCache',
+                'cachePath' => '@backend/runtime/cache'
+            ],
             'defaultRoles' => ['all']
         ],
         'cache' => [
