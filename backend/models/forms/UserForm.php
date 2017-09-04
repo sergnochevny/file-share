@@ -40,7 +40,7 @@ final class UserForm extends Model
     {
         return [
             ['role', 'required', 'message' => 'Please choose the role of user'],
-            ['role', 'in', 'range' => ['admin', 'client', 'sadmin']],
+            ['role', 'in', 'range' => ['admin', 'user', 'sadmin']],
             [
                 ['company_id'],
                 'required',
