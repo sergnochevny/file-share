@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:ait/auth.git",
-                "reference": "3c366324acca4332f2f4f55a08667b7e2f6b76cf"
+                "reference": "b69aca063a3ae6348a961726ac71726ff54b7f26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/auth/9999999-dev/3c366324acca4332f2f4f55a08667b7e2f6b76cf.zip",
-                "reference": "3c366324acca4332f2f4f55a08667b7e2f6b76cf",
+                "url": "https://tp.ait.com/repo/private/dists/ait/auth/9999999-dev/b69aca063a3ae6348a961726ac71726ff54b7f26.zip",
+                "reference": "b69aca063a3ae6348a961726ac71726ff54b7f26",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -70,7 +70,7 @@
                 "yii 2",
                 "yii2"
             ],
-            "time": "2017-09-04T10:40:29+00:00"
+            "time": "2017-09-04T12:11:03+00:00"
         },
         {
             "name": "ait/citrix",
@@ -233,12 +233,12 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:ait/rbac.git",
-                "reference": "72deebc3d666884cc6eed1a6514b35641fefc6d3"
+                "reference": "1c742c3413e86eaa1bed1c95512c709c6d794027"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/rbac/9999999-dev/72deebc3d666884cc6eed1a6514b35641fefc6d3.zip",
-                "reference": "72deebc3d666884cc6eed1a6514b35641fefc6d3",
+                "url": "https://tp.ait.com/repo/private/dists/ait/rbac/9999999-dev/1c742c3413e86eaa1bed1c95512c709c6d794027.zip",
+                "reference": "1c742c3413e86eaa1bed1c95512c709c6d794027",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -283,7 +283,7 @@
                 "yii 2",
                 "yii2"
             ],
-            "time": "2017-09-01T13:51:20+00:00"
+            "time": "2017-09-04T11:52:43+00:00"
         },
         {
             "name": "ait/utilities",
@@ -3139,12 +3139,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "15ea9ac619e37009edcda64089e3fa4cc88aa659"
+                "reference": "c9b8c6088acd19d769d4cc0ffa60a9fe34344bd6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/15ea9ac619e37009edcda64089e3fa4cc88aa659",
-                "reference": "15ea9ac619e37009edcda64089e3fa4cc88aa659",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/c9b8c6088acd19d769d4cc0ffa60a9fe34344bd6",
+                "reference": "c9b8c6088acd19d769d4cc0ffa60a9fe34344bd6",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -3200,7 +3200,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2017-09-03T09:38:53+00:00"
+            "time": "2017-09-04T11:05:03+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",

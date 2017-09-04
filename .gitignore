@@ -38,3 +38,4 @@ phpunit.phar
 /.php_cs.cache
 /backend/web/assets/
 /backend/runtime/
+/backend/config/env-local.php
