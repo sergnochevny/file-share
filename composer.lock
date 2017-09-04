@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "git@gitlab.ait.com:ait/auth.git",
-                "reference": "63e6dc43e178fb69d67a510b0f2b8334ae60b22a"
+                "reference": "3c366324acca4332f2f4f55a08667b7e2f6b76cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/auth/9999999-dev/63e6dc43e178fb69d67a510b0f2b8334ae60b22a.zip",
-                "reference": "63e6dc43e178fb69d67a510b0f2b8334ae60b22a",
+                "url": "https://tp.ait.com/repo/private/dists/ait/auth/9999999-dev/3c366324acca4332f2f4f55a08667b7e2f6b76cf.zip",
+                "reference": "3c366324acca4332f2f4f55a08667b7e2f6b76cf",
                 "shasum": null,
                 "mirrors": [
                     {
@@ -70,7 +70,7 @@
                 "yii 2",
                 "yii2"
             ],
-            "time": "2017-09-01T14:12:08+00:00"
+            "time": "2017-09-04T10:40:29+00:00"
         },
         {
             "name": "ait/citrix",
@@ -1977,12 +1977,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "70c7adf1cdef6dda57b65a7aa4442c84611b5a30"
+                "reference": "a407a75d927ec2060bb012ced9ec98c4177f56e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/70c7adf1cdef6dda57b65a7aa4442c84611b5a30",
-                "reference": "70c7adf1cdef6dda57b65a7aa4442c84611b5a30",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/a407a75d927ec2060bb012ced9ec98c4177f56e3",
+                "reference": "a407a75d927ec2060bb012ced9ec98c4177f56e3",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -2075,7 +2075,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2017-09-01T10:30:56+00:00"
+            "time": "2017-09-01T21:49:53+00:00"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -2713,12 +2713,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "c3f82846fdfd1760b277767ac21426ca030f795e"
+                "reference": "633549c771ae745af3e0e4ea26665b29ec01b7b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/c3f82846fdfd1760b277767ac21426ca030f795e",
-                "reference": "c3f82846fdfd1760b277767ac21426ca030f795e",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/633549c771ae745af3e0e4ea26665b29ec01b7b9",
+                "reference": "633549c771ae745af3e0e4ea26665b29ec01b7b9",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -2761,7 +2761,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2017-08-30T09:14:20+00:00"
+            "time": "2017-09-04T07:21:24+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -2987,16 +2987,16 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "3.2.3",
+            "version": "4.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "86e24012a3139b42a7b71155cfaa325389f00f1f"
+                "reference": "2d3d238c433cf69caeb4842e97a3223a116f94b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/86e24012a3139b42a7b71155cfaa325389f00f1f",
-                "reference": "86e24012a3139b42a7b71155cfaa325389f00f1f",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/2d3d238c433cf69caeb4842e97a3223a116f94b2",
+                "reference": "2d3d238c433cf69caeb4842e97a3223a116f94b2",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -3034,7 +3034,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2017-08-29T19:37:41+00:00"
+            "time": "2017-08-30T18:51:59+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -3139,12 +3139,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "420d44c5534bbf269e85e6213446e8284d53c6c7"
+                "reference": "15ea9ac619e37009edcda64089e3fa4cc88aa659"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/420d44c5534bbf269e85e6213446e8284d53c6c7",
-                "reference": "420d44c5534bbf269e85e6213446e8284d53c6c7",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/15ea9ac619e37009edcda64089e3fa4cc88aa659",
+                "reference": "15ea9ac619e37009edcda64089e3fa4cc88aa659",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -3156,7 +3156,7 @@
             "require": {
                 "doctrine/instantiator": "^1.0.2",
                 "php": "^5.3|^7.0",
-                "phpdocumentor/reflection-docblock": "^2.0|^3.0.2",
+                "phpdocumentor/reflection-docblock": "^2.0|^3.0.2|^4.0",
                 "sebastian/comparator": "^1.1|^2.0",
                 "sebastian/recursion-context": "^1.0|^2.0|^3.0"
             },
@@ -3200,7 +3200,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2017-07-19T07:44:25+00:00"
+            "time": "2017-09-03T09:38:53+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -4382,12 +4382,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "bab3bc775e2b175dcc0ada0169c6b8ae0efb6a6b"
+                "reference": "78d1370ad8d26a3f1bc117a2ac3af419aaf5c37e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/bab3bc775e2b175dcc0ada0169c6b8ae0efb6a6b",
-                "reference": "bab3bc775e2b175dcc0ada0169c6b8ae0efb6a6b",
+                "url": "https://api.github.com/repos/symfony/console/zipball/78d1370ad8d26a3f1bc117a2ac3af419aaf5c37e",
+                "reference": "78d1370ad8d26a3f1bc117a2ac3af419aaf5c37e",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -4449,7 +4449,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-08-31T09:02:44+00:00"
+            "time": "2017-09-03T15:31:40+00:00"
         },
         {
             "name": "symfony/css-selector",
@@ -4516,12 +4516,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
-                "reference": "f43bc2e05d4ac6fb36d6931fe41bd0a6d5c21a2b"
+                "reference": "33f6f36c28f4f280e5c999e556473bc98d8b173f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/f43bc2e05d4ac6fb36d6931fe41bd0a6d5c21a2b",
-                "reference": "f43bc2e05d4ac6fb36d6931fe41bd0a6d5c21a2b",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/33f6f36c28f4f280e5c999e556473bc98d8b173f",
+                "reference": "33f6f36c28f4f280e5c999e556473bc98d8b173f",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -4570,7 +4570,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2017-08-29T21:00:42+00:00"
+            "time": "2017-09-03T14:49:34+00:00"
         },
         {
             "name": "symfony/dom-crawler",
@@ -4995,12 +4995,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-debug.git",
-                "reference": "51fa1ddbe0356903eb0d6d54d47cc7bd2dc6bb82"
+                "reference": "8cc10206d1633d2b2288135841a9f232f2b78d33"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/51fa1ddbe0356903eb0d6d54d47cc7bd2dc6bb82",
-                "reference": "51fa1ddbe0356903eb0d6d54d47cc7bd2dc6bb82",
+                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/8cc10206d1633d2b2288135841a9f232f2b78d33",
+                "reference": "8cc10206d1633d2b2288135841a9f232f2b78d33",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -5040,7 +5040,7 @@
                 "debugger",
                 "yii2"
             ],
-            "time": "2017-08-20T16:59:36+00:00"
+            "time": "2017-09-04T09:43:21+00:00"
         },
         {
             "name": "yiisoft/yii2-faker",

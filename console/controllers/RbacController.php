@@ -20,26 +20,26 @@ class RbacController extends Controller
     use RbacInitTrait;
 
     protected $permissions = [
+        ['name' => 'site.index', 'description' => 'Site index view'],
+        ['name' => 'site.settings', 'description' => 'Site Settings View'],
+        ['name' => 'site.error', 'description' => 'Error page view'],
+        ['name' => 'site.captcha', 'description' => 'Captcha generation'],
+
         ['name' => 'company.index', 'description' => 'company.index'],
         ['name' => 'company.create', 'description' => 'company.create'],
         ['name' => 'company.update', 'description' => 'company.update'],
         ['name' => 'company.archive', 'description' => 'company.archive'],
 
-        ['name' => 'history.index', 'description' => 'history.index'],
-        ['name' => 'history.recover', 'description' => 'history.recover'],
+        ['name' => 'history.index', 'description' => 'History index'],
+        ['name' => 'history.recover', 'description' => 'History recover'],
 
-        ['name' => 'investigation.index', 'description' => 'investigation.index'],
+        ['name' => 'investigation.index', 'description' => 'Investigations list'],
+        ['name' => 'investigation.complete', 'description' => 'Investigations complete'],
+        ['name' => 'investigation.archive', 'description' => 'Investigations archive'],
         ['name' => 'investigation.create', 'description' => 'investigation.create'],
         ['name' => 'investigation.update', 'description' => 'investigation.update'],
-        ['name' => 'investigation.complete', 'description' => 'investigation.complete'],
-        ['name' => 'investigation.archive', 'description' => 'investigation.archive'],
 
         ['name' => 'profile.index', 'description' => 'profile.index'],
-
-        ['name' => 'site.index', 'description' => 'Site index view'],
-        ['name' => 'site.settings', 'description' => 'Site Settings View'],
-        ['name' => 'site.error', 'description' => 'Error page view'],
-        ['name' => 'site.captcha', 'description' => 'Captcha generation'],
 
         ['name' => 'user.index', 'description' => 'Users view'],
         ['name' => 'user.others', 'description' => 'Other users'],
@@ -57,13 +57,6 @@ class RbacController extends Controller
         ['name' => 'investigation-type.update', 'description' => 'Investigation type update'],
         ['name' => 'investigation-type.delete', 'description' => 'Investigation type delete'],
 
-        ['name' => 'investigation.index', 'description' => 'Investigations list'],
-        ['name' => 'investigation.complete', 'description' => 'Investigations complete'],
-        ['name' => 'investigation.archive', 'description' => 'Investigations archive'],
-
-        ['name' => 'history.index', 'description' => 'History index'],
-        ['name' => 'history.recover', 'description' => 'History recover'],
-
         ['name' => 'file.index', 'description' => 'Files list view'],
         ['name' => 'file.delete', 'description' => 'Files delete'],
         ['name' => 'file.download', 'description' => 'Files download'],
@@ -76,13 +69,18 @@ class RbacController extends Controller
 // Modules permissions..............................................................................................
 
         ['name' => 'company.find.all', 'description' => 'Model permission all companies list'],
-        ['name' => 'company.archive.all', 'description' => 'Model permission all companies archiving'],
+        ['name' => 'company.find.group', 'description' => 'Model permission group companies list'],
+        ['name' => 'company.update.all', 'description' => 'Model permission foreign all companies archiving'],
+        ['name' => 'company.update.group', 'description' => 'Model permission foreign group companies update'],
+        ['name' => 'company.archive.all', 'description' => 'Model permission foreign all companies archiving'],
+        ['name' => 'company.archive.group', 'description' => 'Model permission foreign group companies archiving'],
 
         ['name' => 'investigation.find.all', 'description' => 'Model permission all investigations list'],
+        ['name' => 'investigation.find.group', 'description' => 'Model permission group investigations list'],
         ['name' => 'investigation.complete.all', 'description' => 'Model permission all investigations completion'],
-        ['name' => 'investigation.archive.all', 'description' => 'Model permission all investigations archiving'],
-        ['name' => 'investigation.find.group', 'description' => 'Model permission group investigations archiving'],
         ['name' => 'investigation.complete.group', 'description' => 'Model permission group investigations completion'],
+        ['name' => 'investigation.archive.all', 'description' => 'Model permission all investigations archiving'],
+        ['name' => 'investigation.archive.group', 'description' => 'Model permission group investigations archiving'],
 
         ['name' => 'history.find.all', 'description' => 'Model permission all history list'],
         ['name' => 'history.find.group', 'description' => 'Model permission group history list'],
@@ -115,7 +113,9 @@ class RbacController extends Controller
                 'investigation-type.update' => true,
                 'investigation-type.delete' => true,
                 'investigation.archive' => true,
-                'history.recover' => true
+                'history.recover' => true,
+//permissions of foreign objects
+                'company.archive.all' => true,
             ]
         ],
         'admin' => [
@@ -138,10 +138,15 @@ class RbacController extends Controller
                 'investigation.archive' => false,
                 'investigation-type.index' => true,
                 'file.delete' => true,
+//permissions of foreign objects
                 'company.find.all' => true,
                 'investigation.find.all' => true,
+                'history.find.all' => true,
                 'investigation.complete.all' => true,
-                'history.find.all' => true
+
+//                'company.update.all' => true,
+                'company.update.group' => true,
+                'company.archive.group' => true,
             ]
         ],
         'user' => [
