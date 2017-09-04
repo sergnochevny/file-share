@@ -107,7 +107,6 @@ class CompanyController extends BaseController
             'isUpdate' => $isUpdate,
             'investigationTypes' => InvestigationType::getListOfInvestigationTypes(),
         ]);
-
     }
 
     /**
@@ -121,11 +120,6 @@ class CompanyController extends BaseController
         //after create gives ability to update new created record
         $isUpdate = true;
         $company = null;
-
-        $user = User::getIdentity();
-        if ($user && $user->company) {
-            $id = $user->company->id;
-        }
 
         try {
             $company = Company::findOne($id);
@@ -155,7 +149,6 @@ class CompanyController extends BaseController
             'isUpdate' => $isUpdate,
             'investigationTypes' => InvestigationType::getListOfInvestigationTypes(),
         ]);
-
     }
 
     /**

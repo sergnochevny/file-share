@@ -2,10 +2,10 @@
 
 namespace backend\models\search;
 
-use Yii;
+use backend\models\extend_find_traits\CompanyExtends;
+use common\models\Company;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Company;
 
 /**
  * CompanySearch represents the model behind the search form about `common\models\Company`.
@@ -13,26 +13,12 @@ use common\models\Company;
 class CompanySearch extends Company
 {
 
+    use CompanyExtends;
+
     /**
      * @var int
      */
     public $pagesize = 10;
-
-    /**
-     * @param \yii\db\ActiveQuery $query
-     */
-    protected static function extendFindConditionByPermissions(&$query)
-    {
-        $permissions = ['company.find.all'];
-        $can = false;
-        foreach ($permissions as $permission) {
-            $can = $can || \Yii::$app->user->can($permission);
-        }
-        if (!$can) {
-            $query->joinWith('users');
-            $query->andWhere(['user.id' => \Yii::$app->user->id]);
-        }
-    }
 
     /**
      * @inheritdoc

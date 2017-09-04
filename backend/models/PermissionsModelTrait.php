@@ -8,7 +8,6 @@ namespace backend\models;
 
 use common\models\query\UndeleteableActiveQuery;
 use Yii;
-use yii\db\ActiveQuery;
 
 /**
  * Trait PermissionsModelTrait
@@ -16,6 +15,8 @@ use yii\db\ActiveQuery;
  */
 trait PermissionsModelTrait
 {
+
+    protected static $ALLOW_SCENARIOS_OF_PERMISSIONS = ['all', 'group'];
 
     /**
      * @inheritdoc
@@ -29,7 +30,23 @@ trait PermissionsModelTrait
     }
 
     /**
-     * @param ActiveQuery $query
+     * Creates something like site.index.all (controller.action.all)
+     * or if it has module - module.controller.action.all
+     *
+     * @param string $scenario
+     * @return string
+     */
+    public static function getPermissionName($scenario = 'all')
+    {
+        if (!in_array($scenario, static::$ALLOW_SCENARIOS_OF_PERMISSIONS)) {
+            $scenario = 'all';
+        }
+        $tableName = \Yii::$app->db->schema->getRawTableName(static::tableName());
+        return ($tableName . '.find.' . $scenario);
+    }
+
+    /**
+     * @param UndeleteableActiveQuery $query
      */
     protected static function extendFindConditionByPermissions(&$query)
     {
