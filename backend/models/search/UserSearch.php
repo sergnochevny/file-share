@@ -15,11 +15,10 @@ use yii\rbac\Role;
  */
 class UserSearch extends User
 {
-    private $role;
     public $pagesize = 10;
     public $name;
 
-    public $type;
+    public $role_type;
 
     /**
      * @inheritdoc
@@ -28,7 +27,11 @@ class UserSearch extends User
     {
         return [
             [['id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['type', 'name', 'pagesize', 'first_name', 'last_name', 'phone_number', 'email', 'username', 'auth_key', 'password_hash', 'password_reset_token'], 'safe'],
+            [
+                ['role_type', 'name', 'pagesize', 'first_name', 'last_name',
+                    'phone_number', 'email', 'username', 'auth_key', 'password_hash',
+                    'password_reset_token'
+                ], 'safe'],
         ];
     }
 
@@ -76,9 +79,8 @@ class UserSearch extends User
         }
 
         // grid filtering conditions
-        if (!empty($params['role_type'])) {
-            $this->type = $params['role_type'];
-            $roleNames = (new Query())->select(['name'])->from('auth_item')->where(['type' => $this->type])->column();
+        if (!empty($this->role_type)) {
+            $roleNames = (new Query())->select(['name'])->from('auth_item')->where(['type' => $this->role_type])->column();
             $userIds = (new Query())->select(['user_id'])->from('auth_assignment')->where(['item_name' => $roleNames])->column();
             $query->andWhere(['id' => $userIds]);
         }
