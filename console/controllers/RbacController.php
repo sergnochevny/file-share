@@ -114,8 +114,9 @@ class RbacController extends Controller
                 'investigation-type.delete' => true,
                 'investigation.archive' => true,
                 'history.recover' => true,
+
 //permissions of foreign objects
-                'company.archive.all' => true,
+                'investigation.archive.all' => true,
             ]
         ],
         'admin' => [
@@ -138,15 +139,16 @@ class RbacController extends Controller
                 'investigation.archive' => false,
                 'investigation-type.index' => true,
                 'file.delete' => true,
+
 //permissions of foreign objects
                 'company.find.all' => true,
                 'investigation.find.all' => true,
                 'history.find.all' => true,
                 'investigation.complete.all' => true,
+                'investigation.archive.all' => false,
 
-//                'company.update.all' => true,
-                'company.update.group' => true,
-                'company.archive.group' => true,
+                'company.update.all' => true,
+                'company.archive.all' => true,
             ]
         ],
         'user' => [
