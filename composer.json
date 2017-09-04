@@ -52,14 +52,16 @@
       "php yii auth/rbac/init --interactive=0",
       "php yii rbac/init --interactive=0",
       "rm -rf backend/web/assets/*",
-      "php yii cache/flush-all"
+      "php yii cache/flush-all",
+      "php yii auth/rbac/clear-cache"
     ],
     "post-install-cmd": [
       "php yii migrate --interactive=0",
       "php yii auth/rbac/init --interactive=0",
       "php yii rbac/init --interactive=0",
       "rm -rf backend/web/assets/*",
-      "php yii cache/flush-all"
+      "php yii cache/flush-all",
+      "php yii auth/rbac/clear-cache"
     ]
   }
 }

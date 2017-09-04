@@ -16,6 +16,7 @@ return [
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
+            'cachePath' => '@backend/runtime/cache'
         ],
         'keyStorage' => [
             'class' => 'ait\keystorage\components\KeyStorage',
