@@ -6,9 +6,9 @@
 
 namespace backend\behaviors;
 
+use backend\exceptions\PermissionDeniedException;
 use common\models\UndeleteableActiveRecord;
 use common\models\User;
-use exceptions\PermissionDeniedException;
 use Yii;
 use yii\base\Behavior;
 use yii\base\Model;
@@ -38,17 +38,17 @@ class VerifyPermissionBehavior extends Behavior
      * Checks if user can perform some action
      * If he is owner of the record or permission granted to him directly
      *
-     * @return bool TRUE if user can, else the Exception will be thrown
-     * @throws PermissionDeniedException
+     * @param $model
+     * @return bool TRUE if user can, else returns FALSE
      */
-    protected function checkPermission()
+    public static function checkModelPermission($model)
     {
-        if ($this->isUserOwnerOfRecord()
-            || Yii::$app->user->can($this->getPermissionName())) {
+        if (self::isUserOwnerOfRecord($model)
+            || Yii::$app->user->can(self::getPermissionName())) {
             return true;
         }
 
-        throw new PermissionDeniedException('You can\'t perform this action');
+        return false;
     }
 
     /**
@@ -57,7 +57,7 @@ class VerifyPermissionBehavior extends Behavior
      *
      * @return string
      */
-    protected function getPermissionName()
+    public static function getPermissionName()
     {
         return str_replace('/', '.', Yii::$app->controller->action->uniqueId) . '.all';
     }
@@ -65,23 +65,41 @@ class VerifyPermissionBehavior extends Behavior
     /**
      * Checks if current user is owner of the record
      *
+     * @param $model
      * @return bool
      * @throws PermissionDeniedException Will be thrown if user not logged
      */
-    protected function isUserOwnerOfRecord()
+    public static function isUserOwnerOfRecord($model)
     {
-        /** @var User|null $identity */
-        $identity = Yii::$app->user->identity;
-        if ($identity === null) {
+        /** @var User|null $user */
+        $user = Yii::$app->user->identity;
+        if ($user === null) {
             throw new PermissionDeniedException('You can\'t perform this action');
         }
 
-        $model = $this->owner;
         if (!empty($model->created_by)) {
-            return $model->created_by === $identity->id;
+            return $model->created_by === $user->id;
         }
 
         return false;
+    }
+
+    /**
+     * Checks if user can perform some action
+     * If he is owner of the record or permission granted to him directly
+     *
+     * @return bool TRUE if user can, else the Exception will be thrown
+     * @throws PermissionDeniedException
+     */
+    protected function checkPermission()
+    {
+        $model = $this->owner;
+        if (self::isUserOwnerOfRecord($model)
+            || Yii::$app->user->can(self::getPermissionName())) {
+            return true;
+        }
+
+        throw new PermissionDeniedException('You can\'t perform this action');
     }
 
     /**
@@ -106,13 +124,11 @@ class VerifyPermissionBehavior extends Behavior
      */
     public function verifyFilePermission(PermissionEvent $event)
     {
-        $prms = $event->parameters;
-
         $event->isTruest = (
             Yii::$app->user->can('sadmin') || Yii::$app->user->can('admin') ||
             (
                 !Yii::$app->user->can('sadmin') && !Yii::$app->user->can('admin') ||
-                Yii::$app->user->can('employee', $prms)
+                Yii::$app->user->can('employee', $event->parameters)
             )
         );
 
@@ -182,4 +198,12 @@ class VerifyPermissionBehavior extends Behavior
         return $event->isValid = $this->checkPermission();
     }
 
+    /**
+     * @param ModelEvent $event
+     * @return bool
+     */
+    public function beforeValidate(ModelEvent $event)
+    {
+        return $event->isValid = true;
+    }
 }

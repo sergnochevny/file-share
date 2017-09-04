@@ -73,12 +73,6 @@ class RbacController extends Controller
         ['name' => 'file.multi-upload', 'description' => 'Files multiple upload'],
         ['name' => 'file.archive', 'description' => 'Files delete'],
 
-        [
-            'name' => 'employee',
-            'description' => 'Verify employee of company',
-            'rule' => '\backend\components\rbac\rules\EmployeeRule'
-        ],
-
 // Modules permissions..............................................................................................
 
         ['name' => 'company.find.all', 'description' => 'Model permission all companies list'],
@@ -97,7 +91,16 @@ class RbacController extends Controller
 
         ['name' => 'file.find.all', 'description' => 'Model permission all files list'],
         ['name' => 'file.find.group', 'description' => 'Model permission group files list'],
+
+//Specifying permissions rules.....................................................................................
+
+        [
+            'name' => 'employee',
+            'description' => 'Verify employee of company',
+            'rule' => '\backend\components\rbac\rules\EmployeeRule'
+        ],
     ];
+
 
     protected $dependencies = [
         'sadmin' => [
@@ -159,6 +162,7 @@ class RbacController extends Controller
                 'file.multi-download' => true,
                 'file.upload' => true,
                 'file.multi-upload' => true,
+                'employee' => true
             ]
         ],
         'all' => [
