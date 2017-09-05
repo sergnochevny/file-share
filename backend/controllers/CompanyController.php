@@ -143,6 +143,7 @@ class CompanyController extends BaseController
         return $this->smartRender('//wizard/index', [
             'isCompany' => true,
             'companyForm' => $company,
+            'selected' => $company ? $company->id : null,
             'isUpdate' => $isUpdate,
             'investigationTypes' => InvestigationType::getListOfInvestigationTypes(),
         ]);

@@ -29,8 +29,8 @@ $dropDown = function ($model = null, $name, $list, array $options) use ($form) {
         'class' => 'form-control',
         'prompt' => $model ? 'Select Company' : 'Create a New Company',
     ];
-    if (!empty($model)){
-      $options['options'] = [$model->id => ['selected'=>'selected']];
+    if (!empty($selected)){
+      $options['options'] = [$selected => ['selected'=>'selected']];
     }
     ?>
     <?= $dropDown($model, 'company_id', Company::getList(), $options ) ?>

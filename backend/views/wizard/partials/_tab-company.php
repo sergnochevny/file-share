@@ -30,7 +30,7 @@ $isReadOnly = User::isClient();
                 <span class="d-ib">Select Company</span>
             </h2>
         <div class="form-group">
-            <?= $this->render('_select-company', ['model' => $companyForm]) ?>
+            <?= $this->render('_select-company', ['selected' => $selected]) ?>
         </div>
     </div>
     <?php endif ?>
