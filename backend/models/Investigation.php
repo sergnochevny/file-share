@@ -7,7 +7,6 @@ use backend\behaviors\CitrixFolderBehavior;
 use backend\behaviors\HistoryBehavior;
 use backend\behaviors\NotifyBehavior;
 use backend\models\traits\ExtendFindConditionTrait;
-use backend\models\traits\FactoryTrait;
 use yii\base\ModelEvent;
 use yii\db\ActiveRecord;
 use yii\db\Query;
@@ -26,7 +25,6 @@ use yii\db\Query;
  */
 class Investigation extends \common\models\Investigation
 {
-    use FactoryTrait;
     use ExtendFindConditionTrait;
 
     const EVENT_BEFORE_COMPLETE = 'beforeComplete';

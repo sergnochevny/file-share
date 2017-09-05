@@ -4,7 +4,6 @@
 namespace backend\models;
 
 use backend\behaviors\HistoryBehavior;
-use backend\models\traits\FactoryTrait;
 use backend\models\traits\WhoIsUserTrait;
 use common\models\query\UndeleteableActiveQuery;
 use Yii;
@@ -21,7 +20,6 @@ use Yii;
  */
 class User extends \common\models\User
 {
-    use FactoryTrait;
     use WhoIsUserTrait;
 
     /**

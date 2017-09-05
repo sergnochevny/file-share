@@ -8,7 +8,6 @@ use backend\behaviors\HistoryBehavior;
 use backend\behaviors\NotifyBehavior;
 use backend\behaviors\VerifyPermissionBehavior;
 use backend\models\traits\ExtendCompanyFindConditionTrait;
-use backend\models\traits\FactoryTrait;
 use yii\db\Query;
 use yii\helpers\Inflector;
 
@@ -22,7 +21,6 @@ use yii\helpers\Inflector;
  */
 class Company extends \common\models\Company
 {
-    use FactoryTrait;
     use ExtendCompanyFindConditionTrait;
 
     /**
