@@ -3,10 +3,11 @@
 
 namespace backend\models;
 
-use common\behaviors\ArchiveCascadeBehavior;
 use backend\behaviors\CitrixFolderBehavior;
 use backend\behaviors\HistoryBehavior;
 use backend\behaviors\NotifyBehavior;
+use backend\models\traits\ExtendFindConditionTrait;
+use backend\models\traits\FactoryTrait;
 use yii\base\ModelEvent;
 use yii\db\ActiveRecord;
 use yii\db\Query;
@@ -26,6 +27,7 @@ use yii\db\Query;
 class Investigation extends \common\models\Investigation
 {
     use FactoryTrait;
+    use ExtendFindConditionTrait;
 
     const EVENT_BEFORE_COMPLETE = 'beforeComplete';
     const EVENT_AFTER_COMPLETE = 'afterComplete';
@@ -36,35 +38,6 @@ class Investigation extends \common\models\Investigation
     public static function getStatusesList()
     {
         return array_slice(parent::getStatusesList(), -6, 5, true); //remove 'deleted' status
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected static function extendFindConditionByPermissions(&$query)
-    {
-        $permissions = ['investigation.find.all'];
-        $can = false;
-        foreach ($permissions as $permission) {
-            $can = $can || \Yii::$app->user->can($permission);
-        }
-        if (!$can) {
-            $permissions = ['investigation.find.group'];
-            $can = false;
-            foreach ($permissions as $permission) {
-                $can = $can || \Yii::$app->user->can($permission);
-            }
-            if ($can) {
-
-            } else {
-                $query->andWhere(['investigation.created_by' => \Yii::$app->user->id]);
-            }
-        } else {
-            if (!\Yii::$app->user->can('company.find.all')) {
-                $query->joinWith('users');
-                $query->andWhere(['user.id' => \Yii::$app->user->id]);
-            }
-        }
     }
 
     /**
@@ -120,7 +93,6 @@ class Investigation extends \common\models\Investigation
             'when' => function ($model, $attribute) {
                 /** @var $model Investigation */
                 return $model->isAttributeChanged($attribute, false);
-
             },
             'filter' => function (Query $query) {
                 if ($this->company_id) {

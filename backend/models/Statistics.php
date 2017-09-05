@@ -3,10 +3,10 @@
 
 namespace backend\models;
 
-
 use common\models\query\UndeleteableActiveQuery;
 use yii\base\ErrorException;
 use yii\base\Model;
+use common\models\Investigation;
 
 /**
  * Class Statistics
@@ -28,6 +28,16 @@ class Statistics extends Model
 {
     /** @var string */
     public $dateRange;
+
+    /**
+     * @param int $status
+     * @return int|string
+     */
+    private function countApplicantsWithStatus($status)
+    {
+        $tableName = \Yii::$app->db->schema->getRawTableName(Investigation::tableName());
+        return $this->getInvestigationQuery()->andWhere([$tableName . '.status' => $status])->count();
+    }
 
     /**
      * @inheritdoc
@@ -84,8 +94,6 @@ class Statistics extends Model
         return $this->countApplicantsWithStatus(Investigation::STATUS_PENDING);
     }
 
-
-
     /**
      * @return \DateTime
      */
@@ -99,7 +107,7 @@ class Statistics extends Model
      */
     public function getEndDateTime()
     {
-       return new DateTime();
+        return new DateTime();
     }
 
     /**
@@ -162,21 +170,13 @@ class Statistics extends Model
             throw new ErrorException('Validation is failed');
         }
 
+        $tableName = \Yii::$app->db->schema->getRawTableName(Investigation::tableName());
         return Investigation::find()
             ->andWhere([
                 'between',
-                'updated_at',
+                $tableName . '.updated_at',
                 $this->getStartDateTime()->getTimestamp(),
                 $this->getEndDateTime()->getTimestamp()
             ]);
-    }
-
-    /**
-     * @param int $status
-     * @return int|string
-     */
-    private function countApplicantsWithStatus($status)
-    {
-        return $this->getInvestigationQuery()->andWhere(['status' => $status])->count();
     }
 }

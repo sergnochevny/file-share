@@ -1,10 +1,14 @@
 <?php
 /**
+ * Copyright (c) 2017. AIT
+ */
+
+/**
  * Date: 21.08.2017
  * Time: 17:57
  */
 
-namespace backend\models;
+namespace common\models\traits;
 
 use common\models\query\UndeleteableActiveQuery;
 use Yii;
@@ -43,6 +47,19 @@ trait PermissionsModelTrait
         }
         $tableName = \Yii::$app->db->schema->getRawTableName(static::tableName());
         return ($tableName . '.find.' . $scenario);
+    }
+
+    /**
+     * @return array
+     */
+    public static function getIntersectPermissions()
+    {
+        return array_filter([
+            str_replace('/', '.', static::getPermissionName('group')),
+//            str_replace('/', '.', Yii::$app->controller->getUniqueId() . '.create'),
+//            str_replace('/', '.', Yii::$app->controller->getUniqueId()),
+//            str_replace('/', '.', Yii::$app->controller->module->getUniqueId())
+        ]);
     }
 
     /**

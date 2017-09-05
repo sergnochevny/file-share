@@ -2,10 +2,9 @@
 
 namespace common\models;
 
-
-use backend\models\PermissionsModelTrait;
 use common\behaviors\ArchiveCascadeBehavior;
 use common\models\query\UndeleteableActiveQuery;
+use common\models\traits\PermissionsModelTrait;
 use common\validators\SsnValidator;
 use DateTime;
 use yii\behaviors\BlameableBehavior;

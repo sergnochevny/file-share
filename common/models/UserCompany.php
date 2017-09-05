@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "user_company".
@@ -13,7 +13,7 @@ use Yii;
  * @property Company $company
  * @property User $user
  */
-class UserCompany extends \yii\db\ActiveRecord
+class UserCompany extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -31,8 +31,20 @@ class UserCompany extends \yii\db\ActiveRecord
         return [
             [['user_id', 'company_id'], 'required'],
             [['user_id', 'company_id'], 'integer'],
-            [['company_id'], 'exist', 'skipOnError' => true, 'targetClass' => Company::className(), 'targetAttribute' => ['company_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [
+                ['company_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Company::className(),
+                'targetAttribute' => ['company_id' => 'id']
+            ],
+            [
+                ['user_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => User::className(),
+                'targetAttribute' => ['user_id' => 'id']
+            ],
         ];
     }
 

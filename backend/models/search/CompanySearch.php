@@ -2,7 +2,7 @@
 
 namespace backend\models\search;
 
-use backend\models\extend_find_traits\CompanyExtends;
+use backend\models\traits\ExtendCompanyFindConditionTrait;
 use common\models\Company;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -13,7 +13,7 @@ use yii\data\ActiveDataProvider;
 class CompanySearch extends Company
 {
 
-    use CompanyExtends;
+    use ExtendCompanyFindConditionTrait;
 
     /**
      * @var int

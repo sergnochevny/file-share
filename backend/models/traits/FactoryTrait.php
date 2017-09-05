@@ -1,10 +1,11 @@
 <?php
+/**
+ * Copyright (c) 2017. AIT
+ */
 
-
-namespace backend\models;
+namespace backend\models\traits;
 
 use yii\db\ActiveRecord;
-
 
 trait FactoryTrait
 {
@@ -18,7 +19,7 @@ trait FactoryTrait
     {
         try {
             $id = (int)$id;
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             $id = null;
         }
         if (!empty($id)) {

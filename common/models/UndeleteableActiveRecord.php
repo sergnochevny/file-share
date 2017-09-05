@@ -126,7 +126,7 @@ class UndeleteableActiveRecord extends ActiveRecord
     /**
      * @return false|int
      */
-    public function just_delete()
+    public function justDelete()
     {
         return parent::delete();
     }

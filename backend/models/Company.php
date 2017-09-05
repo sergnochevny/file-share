@@ -7,7 +7,8 @@ use backend\behaviors\CitrixFolderBehavior;
 use backend\behaviors\HistoryBehavior;
 use backend\behaviors\NotifyBehavior;
 use backend\behaviors\VerifyPermissionBehavior;
-use backend\models\extend_find_traits\CompanyExtends;
+use backend\models\traits\ExtendCompanyFindConditionTrait;
+use backend\models\traits\FactoryTrait;
 use yii\db\Query;
 use yii\helpers\Inflector;
 
@@ -22,7 +23,7 @@ use yii\helpers\Inflector;
 class Company extends \common\models\Company
 {
     use FactoryTrait;
-    use CompanyExtends;
+    use ExtendCompanyFindConditionTrait;
 
     /**
      * Gets list [id => name] of companies

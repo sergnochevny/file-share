@@ -3,8 +3,9 @@
 
 namespace backend\models;
 
-
 use backend\behaviors\HistoryBehavior;
+use backend\models\traits\FactoryTrait;
+use backend\models\traits\WhoIsUserTrait;
 use common\models\query\UndeleteableActiveQuery;
 use Yii;
 
@@ -38,7 +39,7 @@ class User extends \common\models\User
     }
 
     /**
-     * @return null|User
+     * @return User|null|\yii\web\IdentityInterface
      */
     public static function getIdentity()
     {
