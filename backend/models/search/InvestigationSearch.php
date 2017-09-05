@@ -2,10 +2,12 @@
 
 namespace backend\models\search;
 
+use ait\rbac\DbManager;
 use common\models\Investigation;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * InvestigationSearch represents the model behind the search form about `common\models\Investigation`.
@@ -16,34 +18,6 @@ class InvestigationSearch extends Investigation
     public $pagesize = 10;
     public $name;
     public $company_name;
-
-    protected static function extendFindConditionByPermissions(&$query)
-    {
-        $query->joinWith('company');
-        $permissions = ['investigation.find.all'];
-        $can = false;
-        foreach ($permissions as $permission) {
-            $can = $can || \Yii::$app->user->can($permission);
-        }
-        if (!$can) {
-            $permissions = ['investigation.find.group'];
-            $can = false;
-            foreach ($permissions as $permission) {
-                $can = $can || \Yii::$app->user->can($permission);
-            }
-            if ($can) {
-
-            } else {
-                $query->andWhere(['investigation.created_by' => \Yii::$app->user->id]);
-            }
-        } else {
-            if(!\Yii::$app->user->can('company.find.all')) {
-                $query->joinWith('users');
-                $query->andWhere(['user.id' => \Yii::$app->user->id]);
-            }
-        }
-    }
-
 
     /**
      * @inheritdoc

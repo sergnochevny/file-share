@@ -3,11 +3,11 @@
 
 namespace backend\models;
 
-
 use backend\behaviors\CitrixFolderBehavior;
 use backend\behaviors\HistoryBehavior;
 use backend\behaviors\NotifyBehavior;
 use backend\behaviors\VerifyPermissionBehavior;
+use backend\models\extend_find_traits\CompanyExtends;
 use yii\db\Query;
 use yii\helpers\Inflector;
 
@@ -22,6 +22,7 @@ use yii\helpers\Inflector;
 class Company extends \common\models\Company
 {
     use FactoryTrait;
+    use CompanyExtends;
 
     /**
      * Gets list [id => name] of companies
@@ -31,22 +32,6 @@ class Company extends \common\models\Company
     {
         $companies = static::find()->select(['id', 'name'])->asArray()->all();
         return array_column($companies, 'name', 'id');
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected static function extendFindConditionByPermissions(&$query)
-    {
-        $permissions = ['company.find.all'];
-        $can = false;
-        foreach ($permissions as $permission) {
-            $can = $can || \Yii::$app->user->can($permission);
-        }
-        if (!$can) {
-            $query->joinWith('users');
-            $query->andWhere(['user.id' => \Yii::$app->user->id]);
-        }
     }
 
     /**

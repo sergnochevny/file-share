@@ -15,17 +15,6 @@ class HistorySearch extends History
 
     public $pagesize = 10;
 
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['parent', 'name', 'created_at', 'type', 'created_at'], 'safe'],
-            [['pagesize'], 'integer']
-        ];
-    }
-
     protected static function extendFindConditionByPermissions(&$query)
     {
         $query->joinWith('company');
@@ -35,11 +24,22 @@ class HistorySearch extends History
             $can = $can || \Yii::$app->user->can($permission);
         }
         if (!$can) {
-            if(!\Yii::$app->user->can('company.find.all')) {
+            if (!\Yii::$app->user->can('company.find.all')) {
                 $query->joinWith('users');
                 $query->andWhere(['user.id' => \Yii::$app->user->id]);
             }
         }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['parent', 'name', 'created_at', 'type', 'created_at'], 'safe'],
+            [['pagesize'], 'integer']
+        ];
     }
 
     /**
