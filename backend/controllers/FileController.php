@@ -96,18 +96,15 @@ class FileController extends PermissionController
                 $parent = $parent->citrix_id;
             }
         }
+        $parameters = Yii::$app->request->queryParams;
         $uploadModel = new FileUpload();
-        if (!empty($id) && !empty($parent)) {
-            $searchModel = FileSearch::getInstance(['scenario' => FileSearch::SCENARIO_APP]);
-        } else {
-            $searchModel = FileSearch::getInstance();
-        }
+        $searchModel = FileSearch::find();
         if (!empty($parent)) {
             $uploadModel->parent = $parent;
             $searchModel->parent = $parent;
         }
 
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search($parameters);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
 
         return $this->smartRender('index', [

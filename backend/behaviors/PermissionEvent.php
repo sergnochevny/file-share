@@ -6,7 +6,6 @@
 
 namespace backend\behaviors;
 
-
 use yii\base\Event;
 
 class PermissionEvent extends Event
