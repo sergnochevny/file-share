@@ -57,6 +57,4 @@ trait CompanyExtends
             $query->andWhere(['user.id' => \Yii::$app->user->id]);
         }
     }
-
-
 }

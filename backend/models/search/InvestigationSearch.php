@@ -19,6 +19,7 @@ class InvestigationSearch extends Investigation
     public $name;
     public $company_name;
 
+
     /**
      * @inheritdoc
      */

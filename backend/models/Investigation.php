@@ -39,35 +39,6 @@ class Investigation extends \common\models\Investigation
     }
 
     /**
-     * @inheritdoc
-     */
-    protected static function extendFindConditionByPermissions(&$query)
-    {
-        $permissions = ['investigation.find.all'];
-        $can = false;
-        foreach ($permissions as $permission) {
-            $can = $can || \Yii::$app->user->can($permission);
-        }
-        if (!$can) {
-            $permissions = ['investigation.find.group'];
-            $can = false;
-            foreach ($permissions as $permission) {
-                $can = $can || \Yii::$app->user->can($permission);
-            }
-            if ($can) {
-
-            } else {
-                $query->andWhere(['investigation.created_by' => \Yii::$app->user->id]);
-            }
-        } else {
-            if (!\Yii::$app->user->can('company.find.all')) {
-                $query->joinWith('users');
-                $query->andWhere(['user.id' => \Yii::$app->user->id]);
-            }
-        }
-    }
-
-    /**
      * Changes status of record to STATUS_COMPLETED
      *
      * @return bool
@@ -120,7 +91,6 @@ class Investigation extends \common\models\Investigation
             'when' => function ($model, $attribute) {
                 /** @var $model Investigation */
                 return $model->isAttributeChanged($attribute, false);
-
             },
             'filter' => function (Query $query) {
                 if ($this->company_id) {
