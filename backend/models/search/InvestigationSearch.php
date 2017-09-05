@@ -2,18 +2,18 @@
 
 namespace backend\models\search;
 
-use ait\rbac\DbManager;
+use backend\models\traits\ExtendFindConditionTrait;
 use common\models\Investigation;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 
 /**
  * InvestigationSearch represents the model behind the search form about `common\models\Investigation`.
  */
 class InvestigationSearch extends Investigation
 {
+
+    use ExtendFindConditionTrait;
 
     public $pagesize = 10;
     public $name;

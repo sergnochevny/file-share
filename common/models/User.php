@@ -3,9 +3,8 @@
 namespace common\models;
 
 
-use backend\models\PermissionsModelTrait;
 use backend\models\UserProfile;
-use common\models\query\UndeleteableActiveQuery;
+use common\models\traits\PermissionsModelTrait;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\BlameableBehavior;

@@ -1,7 +1,9 @@
 <?php
+/**
+ * Copyright (c) 2017. AIT
+ */
 
-
-namespace backend\models;
+namespace backend\models\traits;
 
 use Yii;
 

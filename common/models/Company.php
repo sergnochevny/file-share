@@ -2,13 +2,11 @@
 
 namespace common\models;
 
-use ait\rbac\DbManager;
-use backend\models\PermissionsModelTrait;
 use common\behaviors\ArchiveCascadeBehavior;
 use common\models\query\UndeleteableActiveQuery;
+use common\models\traits\PermissionsModelTrait;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
 use yii2tech\ar\linkmany\LinkManyBehavior;
 
 /**

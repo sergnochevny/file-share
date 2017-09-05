@@ -2,12 +2,11 @@
 
 namespace common\models;
 
-use backend\models\PermissionsModelTrait;
-use Yii;
+use common\models\traits\PermissionsModelTrait;
 use yii\base\InvalidCallException;
 use yii\behaviors\BlameableBehavior;
-use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 use yii\db\Query;
 
 /**

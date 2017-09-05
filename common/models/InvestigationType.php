@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\traits\PermissionsModelTrait;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -19,6 +20,8 @@ use yii\behaviors\TimestampBehavior;
  */
 class InvestigationType extends UndeleteableActiveRecord
 {
+
+    use PermissionsModelTrait;
 
     /**
      * @inheritdoc
