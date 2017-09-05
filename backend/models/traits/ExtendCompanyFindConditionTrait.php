@@ -31,6 +31,8 @@ trait ExtendCompanyFindConditionTrait
         $permission = static::getPermissionName('all');
         $can = \Yii::$app->user->can($permission);
         if (!$can) {
+            $query->joinWith('users');
+            $query->andWhere(['user.id' => !empty($user->id) ? $user->id : null]);
             $permission = static::getPermissionName('group');
             if (\Yii::$app->user->can($permission)) {
                 $intersectRoles = $am->getRolesByUser($user->id);
@@ -54,8 +56,6 @@ trait ExtendCompanyFindConditionTrait
                             return $can;
                         });
                     if (!empty($intersectRoles)) {
-                        $query->joinWith('users');
-                        $query->andWhere(['user.id' => !empty($user->id) ? $user->id : null]);
                         $query->leftJoin(
                             $am->assignmentTable,
                             $am->assignmentTable . '.user_id = ' . $tableName . '.created_by'
@@ -68,9 +68,6 @@ trait ExtendCompanyFindConditionTrait
             if (!$can) {
                 $query->andWhere([$tableName . '.created_by' => !empty($user->id) ? $user->id : null]);
             }
-        } else {
-            $query->joinWith('users');
-            $query->andWhere(['user.id' => !empty($user->id) ? $user->id : null]);
         }
     }
 }
