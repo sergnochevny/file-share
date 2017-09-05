@@ -8,7 +8,6 @@
 
 namespace backend\behaviors;
 
-
 use common\models\History;
 use common\models\HistoryActiveRecord;
 use common\models\UndeleteableActiveRecord;

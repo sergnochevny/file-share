@@ -8,7 +8,6 @@
 
 namespace backend\behaviors;
 
-
 use Citrix\CitrixApi;
 use Citrix\Endpoints\Items;
 use Citrix\ShareFile\Api\Models\Folder;

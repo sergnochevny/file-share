@@ -2,8 +2,8 @@
 
 namespace backend\models\search;
 
-use Yii;
 use backend\models\File;
+use backend\models\traits\ExtendFindConditionTrait;
 use yii\data\ActiveDataProvider;
 
 /**
@@ -11,59 +11,11 @@ use yii\data\ActiveDataProvider;
  */
 class FileSearch extends File
 {
-    const SCENARIO_APP = 'app';
-    const SCENARIO_ALL = 'all';
+    use ExtendFindConditionTrait;
 
-    protected static $instance;
-
+    public $name;
     public $pagesize = 10;
-
-
-    /**
-     * @param  null|array $params
-     * @return FileSearch
-     */
-    public static function getInstance($params = null)
-    {
-        if (empty(static::$instance)) {
-            static::$instance = new static($params);
-        }
-        return static::$instance;
-    }
-
-    protected static function extendFindConditionByPermissions(&$query)
-    {
-        $can = false;
-        $self = static::getInstance();
-        if (!empty($self->parent)) {
-            if (!Yii::$app->user->can('company.find.all')) {
-                $query
-                    ->joinWith(['users'])
-                    ->andWhere(['user.id' => Yii::$app->user->id]);
-            }
-            if ($self->scenario == self::SCENARIO_APP) {
-            }
-            $query->andWhere(['file.parent' => $self->parent]);
-        }
-
-        $permissions = ['file.find.all'];
-        foreach ($permissions as $permission) {
-            $can = $can || \Yii::$app->user->can($permission);
-        }
-        if (!$can) {
-            $query->andWhere(['file.created_by' => \Yii::$app->user->id]);
-        }
-    }
-
-
-    public function scenarios()
-    {
-        $scenario = parent::scenarios();
-        return array_merge($scenario, [
-            self::SCENARIO_APP => ['name', 'pagesize'],
-            self::SCENARIO_ALL => ['name', 'pagesize'],
-        ]);
-    }
+    public $parent;
 
     /**
      * @inheritdoc
@@ -89,6 +41,9 @@ class FileSearch extends File
         }
         $this->load($params);
         $query = static::find();
+        if (!empty($this->parent)) {
+            $query->andWhere(['file.parent' => $this->parent]);
+        }
 
         // add conditions that should always apply here
 

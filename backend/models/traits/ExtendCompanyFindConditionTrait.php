@@ -20,18 +20,16 @@ trait ExtendCompanyFindConditionTrait
      */
     protected static function extendFindConditionByPermissions(&$query)
     {
-
         /**
          * @var ActiveRecord $this
-         */
-        $permission = static::getPermissionName('all');
-        $can = \Yii::$app->user->can($permission);
-        /**
          * @var DBManager $am
          */
         $am = \Yii::$app->authManager;
         $user = \Yii::$app->user->identity;
+        $tableName = \Yii::$app->db->schema->getRawTableName(static::tableName());
 
+        $permission = static::getPermissionName('all');
+        $can = \Yii::$app->user->can($permission);
         if (!$can) {
             $permission = static::getPermissionName('group');
             if (\Yii::$app->user->can($permission)) {
@@ -57,10 +55,10 @@ trait ExtendCompanyFindConditionTrait
                         });
                     if (!empty($intersectRoles)) {
                         $query->joinWith('users');
-                        $query->andWhere(['user.id' => !empty($user->id) ? $user->id : 0]);
+                        $query->andWhere(['user.id' => !empty($user->id) ? $user->id : null]);
                         $query->leftJoin(
                             $am->assignmentTable,
-                            $am->assignmentTable . '.user_id = ' . static::tableName() . '.created_by'
+                            $am->assignmentTable . '.user_id = ' . $tableName . '.created_by'
                         );
                         $query->andWhere(['in', $am->assignmentTable . '.item_name', array_keys($intersectRoles)]);
                         $can = true;
@@ -68,11 +66,11 @@ trait ExtendCompanyFindConditionTrait
                 }
             }
             if (!$can) {
-                $query->andWhere([static::tableName() . '.created_by' => !empty($user->id) ? $user->id : 0]);
+                $query->andWhere([$tableName . '.created_by' => !empty($user->id) ? $user->id : null]);
             }
         } else {
             $query->joinWith('users');
-            $query->andWhere(['user.id' => !empty($user->id) ? $user->id : 0]);
+            $query->andWhere(['user.id' => !empty($user->id) ? $user->id : null]);
         }
     }
 }

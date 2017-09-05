@@ -3,8 +3,8 @@
 
 namespace backend\models;
 
-
 use yii\db\Expression;
+use common\models\Investigation;
 
 class Graph
 {
