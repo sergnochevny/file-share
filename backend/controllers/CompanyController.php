@@ -123,11 +123,9 @@ class CompanyController extends BaseController
 
         try {
             $company = Company::findOne($id);
-            if ($company === null) {
-                $company = new Company(); //to prevent NPE
-                throw new UserException('The company does not exists');
+            if(empty($company)) {
+                throw new \Exception('Company not found!!!');
             }
-
             if ($rq->isPost && $company->load($rq->post())) {
                 if ($company->save()) {
                     $this->setFlashMessage('success', 'company', $isUpdate);
@@ -145,7 +143,6 @@ class CompanyController extends BaseController
         return $this->smartRender('//wizard/index', [
             'isCompany' => true,
             'companyForm' => $company,
-            'selected' => $company->id,
             'isUpdate' => $isUpdate,
             'investigationTypes' => InvestigationType::getListOfInvestigationTypes(),
         ]);

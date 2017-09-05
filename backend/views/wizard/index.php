@@ -53,7 +53,9 @@ $this->title = 'Wizard';
                                 <hr/>
                                 <ul class="steps">
                                     <li class="step <?= $col_xs_x ?><?= $companyActive ?>">
-                                        <a class="step-segment" href="<?= Url::to(['/wizard/company'], true) ?>">
+                                        <a class="step-segment" href="<?= Url::to([
+                                            '/wizard/company',
+                                            'id' => !empty(Yii::$app->user->identity->company) ? Yii::$app->user->identity->company->id:null], true) ?>">
                                             <span class="step-icon icon icon-contao"></span>
                                         </a>
 

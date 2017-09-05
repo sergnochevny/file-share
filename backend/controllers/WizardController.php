@@ -56,7 +56,7 @@ class WizardController extends BaseController
      * @throws UserException
      * @deprecated
      */
-    public function actionCompanyO($id = null)
+    public function actionCompanyP($id = null)
     {
         if (User::isClient()) {
             $user = User::getIdentity();

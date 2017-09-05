@@ -15,22 +15,22 @@ $isReadOnly = User::isClient();
 ?>
 
 <div id="tab-1" class="tab-pane active">
-    <?php $form = ActiveForm::begin([
+    <?php if (!empty($companyForm)): ?>
+        <?php $form = ActiveForm::begin([
         'action' => ['/wizard/company', 'id' => $companyForm->id],
         'id' => 'company-form',
         'options' => [
-            'data-pjax' => 'wizard-container',
-            'data-create-url' => Url::to(['/wizard/company'], true), //when select prompt send request to create url
+        'data-pjax' => 'wizard-container',
+        'data-create-url' => Url::to(['/wizard/company'], true), //when select prompt send request to create url
         ],
-    ]) ?>
-
+        ]) ?>
     <?php if ($isShowSelectCompany): ?>
     <div class="col-lg-6 col-lg-offset-3">
             <h2 align="center">
                 <span class="d-ib">Select Company</span>
             </h2>
         <div class="form-group">
-            <?= $this->render('_select-company', ['selected' => $selected]) ?>
+            <?= $this->render('_select-company', ['model' => $companyForm]) ?>
         </div>
     </div>
     <?php endif ?>
@@ -102,4 +102,9 @@ $isReadOnly = User::isClient();
         </div>
     </div>
     <?php ActiveForm::end() ?>
+    <?php else: ?>
+        <div class="row">
+            <div class="col-xs-12">Company was not found!</div>
+        </div>
+    <?php endif;?>
 </div>
