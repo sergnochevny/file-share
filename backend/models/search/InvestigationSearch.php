@@ -2,7 +2,7 @@
 
 namespace backend\models\search;
 
-use backend\models\traits\ExtendInvistigationFindConditionTrait;
+use backend\models\traits\ExtendInvestigationFindConditionTrait;
 use common\models\Investigation;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -13,7 +13,7 @@ use yii\data\ActiveDataProvider;
 class InvestigationSearch extends Investigation
 {
 
-    use ExtendInvistigationFindConditionTrait;
+    use ExtendInvestigationFindConditionTrait;
 
     public $pagesize = 10;
     public $name;

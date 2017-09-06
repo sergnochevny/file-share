@@ -94,24 +94,21 @@ class SiteController extends BaseController
         ];
         $model = new KeyStorageFormModel([
             'keys' => [
-                'system.sendfrom' =>
-                    [
-                        'label' => 'System Send From email',
-                        'type' => KeyStorageFormModel::TYPE_TEXTINPUT,
-                        'rules' => array_merge([['email']], $commonRules),
-                    ],
-                'citrix.id' =>
-                    [
-                        'label' => 'Citrix ID',
-                        'type' => KeyStorageFormModel::TYPE_TEXTINPUT,
-                        'rules' => $commonRules,
-                    ],
-                'citrix.pass' =>
-                    [
-                        'label' => 'Citrix Password',
-                        'type' => KeyStorageFormModel::TYPE_TEXTINPUT,
-                        'rules' => $commonRules,
-                    ],
+                'system.sendfrom' => [
+                    'label' => 'System Send From email',
+                    'type' => KeyStorageFormModel::TYPE_TEXTINPUT,
+                    'rules' => array_merge([['email']], $commonRules),
+                ],
+                'citrix.id' => [
+                    'label' => 'Citrix ID',
+                    'type' => KeyStorageFormModel::TYPE_TEXTINPUT,
+                    'rules' => $commonRules,
+                ],
+                'citrix.pass' => [
+                    'label' => 'Citrix Password',
+                    'type' => KeyStorageFormModel::TYPE_TEXTINPUT,
+                    'rules' => $commonRules,
+                ],
                 'citrix.secret' => [
                     'label' => 'Citrix Secret',
                     'type' => KeyStorageFormModel::TYPE_TEXTINPUT,

@@ -61,7 +61,7 @@ class RbacController extends Controller
         ['name' => 'file.delete', 'description' => 'Files delete'],
         ['name' => 'file.download', 'description' => 'Files download'],
         ['name' => 'file.download-archive', 'description' => 'Files download from archive'],
-        ['name' => 'file.multi-download', 'description' => 'Files download multiple'],
+        ['name' => 'file.multi-download', 'description' => 'Files multiple download'],
         ['name' => 'file.upload', 'description' => 'Files upload'],
         ['name' => 'file.multi-upload', 'description' => 'Files multiple upload'],
         ['name' => 'file.archive', 'description' => 'Files delete'],
@@ -89,6 +89,11 @@ class RbacController extends Controller
 
         ['name' => 'file.find.all', 'description' => 'Model permission all files list'],
         ['name' => 'file.find.group', 'description' => 'Model permission group files list'],
+        ['name' => 'file.multi-download.all', 'description' => 'Model permission download all files by packet'],
+        ['name' => 'file.download.all', 'description' => 'Model permission download all files'],
+        ['name' => 'file.multi-upload.all', 'description' => 'Model permission upload files by packet'],
+        ['name' => 'file.upload.all', 'description' => 'Model permission upload file'],
+        ['name' => 'file.archive.all', 'description' => 'Model permission archive file'],
 
 //Specifying permissions rules.....................................................................................
 
@@ -169,7 +174,7 @@ class RbacController extends Controller
                 'file.multi-download' => true,
                 'file.upload' => true,
                 'file.multi-upload' => true,
-                'employee' => true
+                'employee' => true,
             ]
         ],
         'all' => [
