@@ -145,32 +145,38 @@ class RbacController extends Controller
                 'file.delete' => true,
 
 //permissions of foreign objects
-                'investigation.find.all' => true,
-                'history.find.all' => true,
-                'investigation.complete.all' => true,
-                'investigation.archive.all' => false,
-
+                'company.find.all' => true,
                 'company.update.all' => true,
                 'company.archive.all' => true,
+
+                'history.find.all' => true,
+
+                'investigation.find.all' => true,
+                'investigation.complete.all' => true,
+                'investigation.archive.all' => false,
             ]
         ],
         'full' => [
+            'role' => ['shared'],
             'permission' => [
-                'investigation.find.all' => true
+                'investigation.find.all' => true,
+                'history.find.all' => true
             ]
         ],
         'shared' => [
+            'role' => ['individual'],
             'permission' => [
                 'investigation.find.group' => true,
+                'history.find.group' => true,
             ]
         ],
         'individual' => [
+            'role' => ['user'],
             'permission' => [
             ]
         ],
         'user' => [
             'permission' => [
-                'company.find.all' => true,
                 'company.update' => true,
                 'site.index' => true,
                 'investigation.index' => true,

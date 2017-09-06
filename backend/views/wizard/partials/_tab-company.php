@@ -93,7 +93,7 @@ $isReadOnly = User::isClient();
                 <?= $isUpdate ? 'Update' : 'Create' ?>
             </button>
             <?php endif ?>
-            <a href="<?= Url::to([User::isClient() ? 'investigation' : 'user'], true) ?>" class="<?= $isUpdate ? '' : 'hidden ' ?>btn btn-sm btn-labeled  arrow-success" type="button">
+            <a href="<?= Url::to([User::isClient() ? '/wizard/investigation' : '/wizard/user'], true) ?>" class="<?= $isUpdate ? '' : 'hidden ' ?>btn btn-sm btn-labeled  arrow-success" type="button">
                 <span class="btn-label">
                     <span class="icon icon-chevron-circle-right  icon-lg icon-fw"></span>
                 </span>
