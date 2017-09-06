@@ -151,6 +151,20 @@ class RbacController extends Controller
                 'company.archive.all' => true,
             ]
         ],
+        'full' => [
+            'permission' => [
+                'investigation.find.all' => true
+            ]
+        ],
+        'shared' => [
+            'permission' => [
+                'investigation.find.group' => true,
+            ]
+        ],
+        'individual' => [
+            'permission' => [
+            ]
+        ],
         'user' => [
             'permission' => [
                 'site.index' => true,
