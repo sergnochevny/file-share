@@ -126,7 +126,6 @@ class RbacController extends Controller
                 'user.protus' => true,
                 'company.index' => true,
                 'company.create' => true,
-                'company.update' => true,
                 'company.archive' => true,
                 'history.index' => true,
                 'history.recover' => true,
@@ -141,7 +140,6 @@ class RbacController extends Controller
                 'file.delete' => true,
 
 //permissions of foreign objects
-                'company.find.all' => true,
                 'investigation.find.all' => true,
                 'history.find.all' => true,
                 'investigation.complete.all' => true,
@@ -167,6 +165,8 @@ class RbacController extends Controller
         ],
         'user' => [
             'permission' => [
+                'company.find.all' => true,
+                'company.update' => true,
                 'site.index' => true,
                 'investigation.index' => true,
                 'profile.index' => true,
