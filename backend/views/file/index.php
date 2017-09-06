@@ -13,10 +13,13 @@ use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\search\FileSearch */
+/* @var $uploadModel backend\models\FileUpload */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 if (!empty($investigation)) {
-    $this->title = Html::encode($investigation->company->name) . ' | Investigation View | ' . Html::encode($investigation->name);
+    $this->title = Html::encode($investigation->company->name) .
+        ' | Investigation View | ' .
+        Html::encode($investigation->name);
     $this->params['breadcrumbs'][] = ['label' => 'Investigations', 'url' => ['index']];
     $this->params['breadcrumbs'][] = $this->title;
 } else {
@@ -26,24 +29,34 @@ if (!empty($investigation)) {
 
 $view = $this;
 ?>
-<div class="title-bar">
+    <div class="title-bar">
 
-    <div class="title-bar-actions">
-        <?= Html::a(Html::tag('span',
-                Html::tag('span', '', ['class' => 'icon icon-chevron-circle-left icon-lg icon-fw']),
-                ['class' => 'btn-label']) . ' Back', Url::previous(),
-            ['class' => 'btn btn-labeled arrow-default']) ?>
+        <div class="title-bar-actions">
+            <?= Html::a(
+                Html::tag(
+                    'span',
+                    Html::tag(
+                        'span',
+                        '',
+                        ['class' => 'icon icon-chevron-circle-left icon-lg icon-fw']
+                    ),
+                    ['class' => 'btn-label']
+                ) . ' Back',
+                Url::previous(),
+                ['class' => 'btn btn-labeled arrow-default']
+            )
+            ?>
+        </div>
+        <h1 class="title-bar-title">
+            <span class="d-ib"><span class="icon icon-save"></span> <?= Html::encode($this->title) ?></span>
+        </h1>
+
+        <p class="title-bar-description">
+            <?php if (!empty($investigation)) : ?>
+                <small>Applicant details</small>
+            <?php endif ?>
+        </p>
     </div>
-    <h1 class="title-bar-title">
-        <span class="d-ib"><span class="icon icon-save"></span> <?= Html::encode($this->title) ?></span>
-    </h1>
-
-    <p class="title-bar-description">
-        <?php if (!empty($investigation)) : ?>
-            <small>Applicant details</small>
-        <?php endif ?>
-    </p>
-</div>
 
 <div class="row gutter-xs">
     <div class="col-xs-12">
@@ -65,7 +78,7 @@ $view = $this;
                      */
                     $url = (!empty($investigation)) ?
                         Url::to(['/file/multi-upload', 'parent' => $investigation->citrix_id], true) :
-                        Url::to(['/file/multi-upload'], true);
+                        Url::to(['/file/multi-upload', 'parent' => $uploadModel->parent], true);
                     ?>
                     <?php if (!empty($investigation) || Yii::$app->user->can('admin') || Yii::$app->user->can('sadmin')): ?>
                         <?= $this->render('partials/_upload', ['model' => $uploadModel, 'action' => $url]) ?>
@@ -102,7 +115,13 @@ $view = $this;
                                 'cssClass' => 'multi-download',
                                 'options' => [
                                     'id' => 'selection-col',
-                                    'data-download-url' => Url::to(['/file/multi-download'], true),
+                                    'data-download-url' => Url::to(
+                                        (!empty($investigation)) ?
+                                            Url::to(['/file/multi-download', 'parent' => $investigation->citrix_id],
+                                                true) :
+                                            Url::to(['/file/multi-download', 'parent' => $uploadModel->parent], true),
+                                            true
+                                    ),
                                     'data-alert' => 'Please select documents to download.',
                                 ]
                             ],
@@ -113,7 +132,8 @@ $view = $this;
                                     $image = Html::tag('div', '', [
                                         'class' => 'file-thumbnail file-thumbnail-' . FileUpload::fileExt($model->type)
                                     ]);
-                                    return Html::tag('div',
+                                    return Html::tag(
+                                        'div',
                                         $image,
                                         ['class' => 'file']
                                     );
@@ -147,8 +167,9 @@ $view = $this;
                             [
                                 'attribute' => 'size',
                                 'value' => function ($model, $key, $index, $column) {
-                                    return Yii::$app->formatter->asShortSize($model->{$column->attribute}, 0, [],
-                                        []);
+                                    return Yii::$app
+                                        ->formatter
+                                        ->asShortSize($model->{$column->attribute}, 0, [], []);
                                 },
                                 'headerOptions' => [
                                     'class' => 'hidden-sm hidden-xs',
@@ -184,7 +205,8 @@ $view = $this;
                                 ],
                                 'buttons' => [
                                     'archive' => function ($url, $model) use ($investigation, $view) {
-                                        $content = Html::a('Archive',
+                                        $content = Html::a(
+                                            'Archive',
                                             Url::to(['/file/archive', 'id' => $model->id], true),
                                             [
                                                 'class' => "btn btn-purple btn-xs",
@@ -198,7 +220,8 @@ $view = $this;
                                         return $content;
                                     },
                                     'delete' => function ($url, $model) use ($investigation) {
-                                        $content = Html::a('Delete',
+                                        $content = Html::a(
+                                            'Delete',
                                             Url::to(['/file/delete', 'id' => $model->id], true),
                                             [
                                                 'class' => "btn btn-danger btn-xs",
@@ -212,7 +235,8 @@ $view = $this;
                                         return $content;
                                     },
                                     'download' => function ($url, $model) use ($investigation) {
-                                        $content = Html::a('Download',
+                                        $content = Html::a(
+                                            'Download',
                                             Url::to(['/file/download', 'id' => $model->citrix_id], true),
                                             [
                                                 'class' => 'btn btn-warning btn-xs',
@@ -228,11 +252,11 @@ $view = $this;
                             ],
                         ],
                         'pager' => [
-                            'options' => [
-                                'class' => 'pagination pull-right',
-                                'style' => 'margin-right:15px'
-                            ]
-                        ],
+                        'options' => [
+                            'class' => 'pagination pull-right',
+                            'style' => 'margin-right:15px'
+                        ]
+                    ],
                     ]) ?>
 
                 </div>

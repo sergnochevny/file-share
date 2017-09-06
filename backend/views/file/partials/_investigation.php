@@ -17,9 +17,10 @@ use yii\helpers\Html;
                     <div class="col-xs-12">
                         <?= strtoupper($model->fullName) ?>
                         <?php if (Investigation::STATUS_COMPLETED !== $model->status && !User::isClient()): ?>
-                            <a class="pull-right btn btn-xs btn-labeled arrow-success" href="<?= Url::to(['/investigation/complete', 'id' => $model->id]) ?>"
+                            <a class="pull-right btn btn-xs btn-labeled arrow-success"
+                               href="<?= Url::to(['/investigation/complete', 'id' => $model->id]) ?>"
                                data-confirm="This action will mark the investigation as completed . Are you sure you want to proceed?"
-                               data-pjax="1" data-method = "post">
+                               data-pjax="1" data-method="post">
                                 <span class="btn-label"><span class="icon icon-check icon-lg icon-fw"></span></span>
                                 Complete
                             </a>
@@ -68,10 +69,10 @@ use yii\helpers\Html;
                                 Birth Date
                             </li>
                             <?php if ($model->annual_salary_75k): ?>
-                            <li class="list-group-item">
-                                <span class="icon icon-check icon-lg icon-fw"></span>
-                                This position has an annual salary of more than $75,000
-                            </li>
+                                <li class="list-group-item">
+                                    <span class="icon icon-check icon-lg icon-fw"></span>
+                                    This position has an annual salary of more than $75,000
+                                </li>
                             <?php endif ?>
                         </ul>
                     </div>
@@ -80,7 +81,7 @@ use yii\helpers\Html;
                             <li class="list-group-item">
                                 <span class="pull-right">
                                     <span class="<?= Investigation::getStatusCSSClass($model->status) ?>-text">
-                                        <?= Investigation::getStatusByCode($model->status)?>
+                                        <?= Investigation::getStatusByCode($model->status) ?>
                                     </span>
 
                                 </span>
@@ -88,18 +89,22 @@ use yii\helpers\Html;
                                 Status
                             </li>
                             <li class="list-group-item">
-                                <span class="pull-right"><span title="<?= Yii::$app->formatter->asDate($model->start_date, 'full') ?>"
-                                                               class=""><?= Yii::$app->formatter->asDate($model->start_date) ?></span></span>
+                                <span class="pull-right"><span
+                                            title="<?= Yii::$app->formatter->asDate($model->start_date, 'full') ?>"
+                                            class=""><?= Yii::$app->formatter->asDate($model->start_date) ?></span></span>
                                 <span class="icon icon-calendar  icon-lg icon-fw"></span>
                                 Start date
                             </li>
                             <?php if ($model->createdBy): ?>
-                            <li class="list-group-item">
-                                <span class="pull-right"><span
-                                            class="label label-success"><?= Html::encode($model->createdBy->fullName) ?></span></span>
-                                <span class="icon icon-user-plus  icon-lg icon-fw"></span>
-                                Created By
-                            </li>
+                                <li class="list-group-item">
+                                    <span class="pull-right">
+                                        <span class="label label-success">
+                                            <?= Html::encode($model->createdBy->fullName) ?>
+                                        </span>
+                                    </span>
+                                    <span class="icon icon-user-plus  icon-lg icon-fw"></span>
+                                    Created By
+                                </li>
                             <?php endif ?>
                         </ul>
                     </div>

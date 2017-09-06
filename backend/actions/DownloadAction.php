@@ -48,7 +48,6 @@ class DownloadAction extends PermissionAction
         $this->pass = \Yii::$app->keyStorage->get('citrix.pass');
         $this->clientid = \Yii::$app->keyStorage->get('citrix.id');
         $this->secret = \Yii::$app->keyStorage->get('citrix.secret');
-
     }
 
     /**
@@ -62,10 +61,10 @@ class DownloadAction extends PermissionAction
          * @var PermissionController $thi ->controller
          */
 
-        $model = File::findOne(['citrix_id' => $id]);
+        $model = File::findOne(['file.citrix_id' => $id]);
         $investigation = $model->investigation;
         if ($this->controller->verifyPermission(VerifyPermissionBehavior::EVENT_VERIFY_FILE_DOWNLOAD_PERMISSION,
-            ['model' => $model, 'investigation' => $investigation])
+            ['model' => $model->parents, 'investigation' => $investigation])
         ) {
             $Citrix = CitrixApi::getInstance();
             $Citrix->setSubdomain($this->subdomain)

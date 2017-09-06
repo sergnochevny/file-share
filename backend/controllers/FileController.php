@@ -14,13 +14,11 @@ use backend\models\search\FileSearch;
 use backend\models\User;
 use common\components\PermissionController;
 use Yii;
-use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\web\BadRequestHttpException;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
-use yii\web\Request;
 use yii\web\Response;
 
 /**
@@ -30,6 +28,41 @@ class FileController extends PermissionController
 {
 
     public $layout = 'content';
+
+    private function prepareMultiUploadResponse(FileUpload $model)
+    {
+        $item = [
+            'id' => $model->model->id,
+            'update' => $model->update,
+            'name' => $model->file->name,
+            'type' => FileUpload::fileExt($model->model->type),
+            'size' => $model->file->size,
+        ];
+        if (Yii::$app->user->can('file.delete')) {
+            $item['deleteUrl'] = Url::to(['/file/delete', 'id' => $model->model->id], true);
+        };
+        if (Yii::$app->user->can('file.download') ||
+            (
+                !empty($investigation) &&
+                Yii::$app->user->can('employee', ['investigation' => $investigation])
+            ) ||
+            Yii::$app->user->can('employee', ['allfiles' => $model->model->parents->parent])
+        ) {
+            $item['downloadUrl'] = Url::to(['/file/download', 'id' => $model->model->citrix_id], true);
+        };
+        if (Yii::$app->user->can('file.archive') ||
+            (
+                !empty($investigation) &&
+                Yii::$app->user->can('employee', ['investigation' => $investigation])
+            )
+        ) {
+            $item['archiveLabel'] = User::isClient() ? 'Remove' : 'Archive';
+            $item['archiveUrl'] = Url::to(['/file/archive', 'id' => $model->model->id], true);
+        }
+        $item['width'] = isset($item['deleteUrl']) ? 220 : 150;
+
+        return $item;
+    }
 
     /**
      * Finds the File model based on its primary key value.
@@ -125,44 +158,15 @@ class FileController extends PermissionController
         Yii::$app->response->format = Response::FORMAT_JSON;
         $response = [];
         $model = new FileUpload(['parent' => $parent]);
-        $investigation = Investigation::findOne(['citrix_id' => $parent]);
-        if ($this->verifyPermission(VerifyPermissionBehavior::EVENT_VERIFY_FILE_PERMISSION,
-            ['investigation' => $investigation])
-        ) {
+        $parentFile = File::findOne(['file.citrix_id' => $parent]);
+        $investigation = Investigation::findOne(['investigation.citrix_id' => $parent]);
+        if ($this->verifyPermission(
+            VerifyPermissionBehavior::EVENT_VERIFY_FILE_MUPLOAD_PERMISSION,
+            ['model' => $parentFile, 'investigation' => $investigation]
+        )) {
             try {
                 if ($model->save()) {
-                    $item = [
-                        'id' => $model->model->id,
-                        'update' => $model->update,
-                        'name' => $model->file->name,
-                        'type' => FileUpload::fileExt($model->model->type),
-                        'size' => $model->file->size,
-                        'width' => (Yii::$app->user->can('admin') || Yii::$app->user->can('sadmin')) ? 220 : 150,
-                    ];
-                    if (Yii::$app->user->can('admin') || Yii::$app->user->can('sadmin')) {
-                        $item['deleteUrl'] = Url::to(['/file/delete', 'id' => $model->model->id], true);
-                    };
-                    if (Yii::$app->user->can('admin') || Yii::$app->user->can('sadmin') ||
-                        (
-                            !Yii::$app->user->can('admin') && !Yii::$app->user->can('sadmin') &&
-                            ((!empty($investigation) && Yii::$app->user->can('employee',
-                                        ['investigation' => $investigation])) ||
-                                (Yii::$app->user->can('employee', ['allfiles' => $model->model->parents->parent])))
-                        )
-                    ) {
-                        $item['downloadUrl'] = Url::to(['/file/download', 'id' => $model->model->citrix_id], true);
-                    };
-                    if (Yii::$app->user->can('admin') || Yii::$app->user->can('sadmin') ||
-                        (
-                            !Yii::$app->user->can('admin') && !Yii::$app->user->can('sadmin') &&
-                            !empty($investigation) &&
-                            Yii::$app->user->can('employee', ['investigation' => $investigation])
-                        )
-                    ) {
-                        $item['archiveLabel'] = User::isClient() ? 'Remove' : 'Archive';
-                        $item['archiveUrl'] = Url::to(['/file/archive', 'id' => $model->model->id], true);
-                    }
-                    $response['files'][] = $item;
+                    $response['files'][] = $this->prepareMultiUploadResponse($model);
                 } else {
                     if ($model->hasErrors([$model->file])) {
                         $response[] = ['errors' => $model->getModelErrors()];
@@ -193,25 +197,75 @@ class FileController extends PermissionController
      */
     public function actionUpload($parent = null)
     {
-        if ($this->verifyPermission(VerifyPermissionBehavior::EVENT_VERIFY_FILE_PERMISSION,
-            ['investigation' => Investigation::findOne(['citrix_id' => $parent])])
-        ) {
+        $model = File::findOne(['file.citrix_id' => $parent]);
+        $investigation = Investigation::findOne(['investigation.citrix_id' => $parent]);
+        if ($this->verifyPermission(
+            VerifyPermissionBehavior::EVENT_VERIFY_FILE_UPLOAD_PERMISSION,
+            ['model' => $model, 'investigation' => $investigation]
+        )) {
             try {
                 $model = new FileUpload(['parent' => $parent]);
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
                     Yii::$app->session->setFlash('success', 'File added successfully');
                 }
             } catch (\Exception $e) {
+                @unlink($model->file->tempName);
                 Yii::$app->session->setFlash('error', $e->getMessage());
             }
+        } else {
+            Yii::$app->session->setFlash('error', 'Unable to save file: You haven`t got permissions on this action!');
         }
 
-        $inv = Investigation::findOne(['citrix_id' => $parent]);
-
-        if (!empty($parent)) {
-            return $this->actionIndex($inv->id);
+        if (!empty($investigation)) {
+            return $this->actionIndex($investigation->id);
         }
         return $this->actionIndex();
+    }
+
+    /**
+     * Creates one archive with selected files and returns downloadUrl
+     *
+     * @param null $parent
+     * @return array
+     * @throws BadRequestHttpException
+     */
+    public function actionMultiDownload($parent = null)
+    {
+        set_time_limit(0); //!important
+
+        try {
+            $investigation = Investigation::findOne(['investigation.citrix_id' => $parent]);
+            $model = File::findOne(['file.citrix_id' => $parent]);
+
+            if ($this->verifyPermission(
+                VerifyPermissionBehavior::EVENT_VERIFY_FILE_ARCHIVE_PERMISSION,
+                ['model' => $model, 'investigation' => $investigation]
+            )) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                $model = new MultiDownload();
+                $errorMessage = 'Something went wrong';
+                if ($model->load(Yii::$app->request->post())) {
+                    try {
+                        $model->packIntoArchive();
+                        return [
+                            'downloadUrl' => Url::to([
+                                'download-archive',
+                                'name' => str_replace('.zip', '', $model->archiveFilename)
+                            ])
+                        ];
+
+                    } catch (\Exception $exception) {
+                        $errorMessage = $exception->getMessage();
+                    }
+                }
+            } else {
+                $errorMessage = 'Unable to download: You haven`t got permissions on this action!';
+            }
+        } catch (\Exception $e) {
+            $errorMessage = 'Unable to download: ' . $e->getMessage();
+        }
+
+        throw new BadRequestHttpException($errorMessage);
     }
 
     /**
@@ -222,14 +276,15 @@ class FileController extends PermissionController
      */
     public function actionArchive($id)
     {
-        $model = $this->findModel($id);
-        $model->detachBehavior('uploadBehavior');
-        $investigation = $model->investigation;
-
         try {
-            if ($this->verifyPermission(VerifyPermissionBehavior::EVENT_VERIFY_FILE_PERMISSION,
-                ['investigation' => $investigation])
-            ) {
+            $model = $this->findModel($id);
+            $model->detachBehavior('uploadBehavior');
+            $investigation = $model->investigation;
+            $model = File::findOne(['file.citrix_id' => $id]);
+            if ($this->verifyPermission(
+                VerifyPermissionBehavior::EVENT_VERIFY_FILE_ARCHIVE_PERMISSION,
+                ['model' => $model->parents, 'investigation' => $investigation]
+            )) {
                 $model->archive();
                 Yii::$app->session->setFlash('success', 'Archived successfully');
             } else {
@@ -238,6 +293,7 @@ class FileController extends PermissionController
         } catch (\Exception $e) {
             Yii::$app->session->setFlash('error', $e->getMessage());
         }
+
         if (!empty($investigation)) {
             return $this->actionIndex($investigation->id);
         }
@@ -252,10 +308,10 @@ class FileController extends PermissionController
      */
     public function actionDelete($id)
     {
-        $model = $this->findModel($id);
-        $model->detachBehavior('uploadBehavior');
-        $investigation = $model->investigation;
         try {
+            $model = $this->findModel($id);
+            $model->detachBehavior('uploadBehavior');
+            $investigation = $model->investigation;
             $model->delete();
             Yii::$app->session->setFlash('success', 'Deleted successfully');
         } catch (\Exception $e) {
@@ -265,38 +321,6 @@ class FileController extends PermissionController
             return $this->actionIndex($investigation->id);
         }
         return $this->actionIndex();
-    }
-
-    /**
-     * Creates one archive with selected files and returns downloadUrl
-     *
-     * @return array
-     * @throws BadRequestHttpException
-     */
-    public function actionMultiDownload()
-    {
-        set_time_limit(0); //!important
-
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        $model = new MultiDownload();
-        $errorMessage = 'Something went wrong';
-
-        if ($model->load(Yii::$app->request->post())) {
-            try {
-                $model->packIntoArchive();
-                return [
-                    'downloadUrl' => Url::to([
-                        'download-archive',
-                        'name' => str_replace('.zip', '', $model->archiveFilename)
-                    ])
-                ];
-
-            } catch (\Exception $exception) {
-                $errorMessage = $exception->getMessage();
-            }
-        }
-
-        throw new BadRequestHttpException($errorMessage);
     }
 
     /**

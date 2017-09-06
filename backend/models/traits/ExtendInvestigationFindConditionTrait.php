@@ -13,7 +13,7 @@ namespace backend\models\traits;
 use ait\rbac\DbManager;
 use yii\db\ActiveRecord;
 
-trait ExtendInvistigationFindConditionTrait
+trait ExtendInvestigationFindConditionTrait
 {
     /**
      * @param \common\models\query\UndeleteableActiveQuery $query

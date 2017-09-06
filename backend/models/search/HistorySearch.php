@@ -2,9 +2,8 @@
 
 namespace backend\models\search;
 
-use backend\models\User;
+use backend\models\traits\ExtendHistoryFindConditionTrait;
 use common\models\History;
-use Yii;
 use yii\data\ActiveDataProvider;
 
 /**
@@ -13,23 +12,9 @@ use yii\data\ActiveDataProvider;
 class HistorySearch extends History
 {
 
-    public $pagesize = 10;
+    use ExtendHistoryFindConditionTrait;
 
-    protected static function extendFindConditionByPermissions(&$query)
-    {
-        $query->joinWith('company');
-        $permissions = ['history.find.all'];
-        $can = false;
-        foreach ($permissions as $permission) {
-            $can = $can || \Yii::$app->user->can($permission);
-        }
-        if (!$can) {
-            if (!\Yii::$app->user->can('company.find.all')) {
-                $query->joinWith('users');
-                $query->andWhere(['user.id' => \Yii::$app->user->id]);
-            }
-        }
-    }
+    public $pagesize = 10;
 
     /**
      * @inheritdoc

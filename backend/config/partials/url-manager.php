@@ -23,6 +23,10 @@ return [
         '/sign-up' => '/auth/auth/sign-up',
         '/password-reset' => '/auth/auth/password-reset',
         '/password-restore' => '/auth/auth/password-restore',
+        '/file/download/<id:[\w\d-]+>' => '/file/download',
+        '/file/multi-download/<parent:[\w\d-]+>' => '/file/multi-download',
+        '/file/multi-upload/<parent:[\w\d-]+>' => '/file/multi-upload',
+        '/file/upload/<parent:[\w\d-]+>' => '/file/upload',
         '/user/<action>' => '/user/<action>',
 
         '/wizard/<action>' => '/wizard/<action>',

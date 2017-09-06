@@ -3,9 +3,9 @@
 namespace backend\controllers;
 
 use backend\behaviors\RememberUrlBehavior;
+use backend\models\History;
 use backend\models\search\HistorySearch;
 use common\components\BaseController;
-use common\models\History;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
@@ -18,7 +18,7 @@ class HistoryController extends BaseController
 
     public $layout = 'content';
 
-     /**
+    /**
      * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
@@ -72,12 +72,12 @@ class HistoryController extends BaseController
 
     public function actionRecover($id)
     {
-        try{
+        try {
             $model = $this->findModel($id);
             if ($model->recover() && $model->delete()) {
                 Yii::$app->session->setFlash('success', 'Entry has been recovered successful');
             }
-        } catch (\Exception $e ){
+        } catch (\Exception $e) {
             Yii::$app->session->setFlash('error', $e->getMessage());
         }
         return $this->run('index');
