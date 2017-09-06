@@ -3,7 +3,7 @@
 namespace backend\models\search;
 
 use backend\models\File;
-use backend\models\traits\ExtendFindConditionTrait;
+use backend\models\traits\ExtendFileFindConditionTrait;
 use yii\data\ActiveDataProvider;
 
 /**
@@ -11,11 +11,11 @@ use yii\data\ActiveDataProvider;
  */
 class FileSearch extends File
 {
-    use ExtendFindConditionTrait;
+    use ExtendFileFindConditionTrait;
 
     public $name;
     public $pagesize = 10;
-    public $parent;
+//    public $parent;
 
     /**
      * @inheritdoc
@@ -23,7 +23,7 @@ class FileSearch extends File
     public function rules()
     {
         return [
-            [['name', 'pagesize'], 'safe'],
+            [['name', /*'parent',*/ 'pagesize'], 'safe'],
         ];
     }
 
@@ -50,8 +50,7 @@ class FileSearch extends File
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => ['defaultOrder' => ['updated_at' => SORT_DESC]],
-            'pagination' => ['route' => 'file/index',],
-
+            'pagination' => ['route' => 'file/index']
         ]);
 
         if (!$this->validate()) {

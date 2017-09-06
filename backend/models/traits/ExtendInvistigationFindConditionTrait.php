@@ -13,7 +13,7 @@ namespace backend\models\traits;
 use ait\rbac\DbManager;
 use yii\db\ActiveRecord;
 
-trait ExtendCompanyFindConditionTrait
+trait ExtendInvistigationFindConditionTrait
 {
     /**
      * @param \common\models\query\UndeleteableActiveQuery $query
@@ -31,8 +31,6 @@ trait ExtendCompanyFindConditionTrait
         $permission = static::getPermissionName('all');
         $can = \Yii::$app->user->can($permission);
         if (!$can) {
-            $query->joinWith('users');
-            $query->andWhere(['user.id' => !empty($user->id) ? $user->id : null]);
             $permission = static::getPermissionName('group');
             if (\Yii::$app->user->can($permission)) {
                 $intersectRoles = $am->getRolesByUser($user->id);
@@ -61,9 +59,18 @@ trait ExtendCompanyFindConditionTrait
                             $am->assignmentTable . '.user_id = ' . $tableName . '.created_by'
                         );
                         $query->andWhere(['in', $am->assignmentTable . '.item_name', array_keys($intersectRoles)]);
+                        $can = true;
                     }
                 }
             }
+        }
+        if (!$can) {
+            $query->andWhere([$tableName . '.created_by' => !empty($user->id) ? $user->id : null]);
+        }
+        if (!\Yii::$app->user->can('company.find.all')) {
+            $query->joinWith('company');
+            $query->joinWith('users');
+            $query->andWhere(['user.id' => !empty($user->id) ? $user->id : null]);
         }
     }
 }

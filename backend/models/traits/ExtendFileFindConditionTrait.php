@@ -13,7 +13,7 @@ namespace backend\models\traits;
 use ait\rbac\DbManager;
 use yii\db\ActiveRecord;
 
-trait ExtendFindConditionTrait
+trait ExtendFileFindConditionTrait
 {
     /**
      * @param \common\models\query\UndeleteableActiveQuery $query
@@ -66,11 +66,6 @@ trait ExtendFindConditionTrait
         }
         if (!$can) {
             $query->andWhere([$tableName . '.created_by' => !empty($user->id) ? $user->id : null]);
-        }
-        if (!\Yii::$app->user->can('company.find.all')) {
-            $query->joinWith('company');
-            $query->joinWith('users');
-            $query->andWhere(['user.id' => !empty($user->id) ? $user->id : null]);
         }
     }
 }

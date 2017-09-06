@@ -98,7 +98,7 @@ class FileController extends PermissionController
         }
         $parameters = Yii::$app->request->queryParams;
         $uploadModel = new FileUpload();
-        $searchModel = FileSearch::find();
+        $searchModel = new FileSearch();
         if (!empty($parent)) {
             $uploadModel->parent = $parent;
             $searchModel->parent = $parent;
