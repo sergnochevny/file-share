@@ -133,7 +133,7 @@ class File extends \common\models\File
      */
     public function getInvestigation()
     {
-        return $this->hasOne(Investigation::className(), ['file.citrix_id' => 'parent'])->inverseOf('files');
+        return $this->hasOne(Investigation::className(), ['citrix_id' => 'parent'])->inverseOf('files');
     }
 
     /**
@@ -141,6 +141,6 @@ class File extends \common\models\File
      */
     public function getParents()
     {
-        return $this->hasOne(File::className(), ['file.citrix_id' => 'parent']);
+        return $this->hasOne(File::className(), ['citrix_id' => 'parent']);
     }
 }

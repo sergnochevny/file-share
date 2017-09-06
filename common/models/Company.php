@@ -71,7 +71,7 @@ class Company extends HistoryActiveRecord
                 'relation' => 'investigationTypes',
                 'relationReferenceAttribute' => 'investigationTypeIds',
             ],
-            [
+            'blameableBehavior'=>[
                 'class' => BlameableBehavior::className(),
                 'createdByAttribute' => 'created_by',
                 'updatedByAttribute' => false,

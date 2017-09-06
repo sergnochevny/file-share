@@ -38,7 +38,7 @@ $action = !empty($action) ? $action : Url::to([null], true);
         ])->label(false) ?>
     </div>
     <div class="col-sm-6">
-        <?= $form->field($model, 'name', [
+        <?= $form->field($model, 'searchname', [
             'options' => [
                 'class' => 'search-line',
             ],

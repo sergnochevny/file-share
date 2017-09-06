@@ -195,6 +195,8 @@ class RbacController extends Controller
                 'file.upload' => true,
                 'file.multi-upload' => true,
                 'employee' => true,
+
+                'file.find.all' => true,
             ]
         ],
         'all' => [

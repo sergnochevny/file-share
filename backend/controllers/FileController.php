@@ -11,7 +11,6 @@ use backend\models\FileUpload;
 use backend\models\Investigation;
 use backend\models\MultiDownload;
 use backend\models\search\FileSearch;
-use backend\models\User;
 use common\components\PermissionController;
 use Yii;
 use yii\filters\VerbFilter;
@@ -44,7 +43,7 @@ class FileController extends PermissionController
         if (Yii::$app->user->can('file.download') ||
             (
                 !empty($investigation) &&
-                Yii::$app->user->can('employee', ['investigation' => $investigation])
+                Yii::$app->user->can('employee', ['company' => $investigation->company])
             ) ||
             Yii::$app->user->can('employee', ['allfiles' => $model->model->parents->parent])
         ) {
@@ -56,7 +55,7 @@ class FileController extends PermissionController
                 Yii::$app->user->can('employee', ['investigation' => $investigation])
             )
         ) {
-            $item['archiveLabel'] = User::isClient() ? 'Remove' : 'Archive';
+            $item['archiveLabel'] = 'Archive';
             $item['archiveUrl'] = Url::to(['/file/archive', 'id' => $model->model->id], true);
         }
         $item['width'] = isset($item['deleteUrl']) ? 220 : 150;
@@ -278,12 +277,10 @@ class FileController extends PermissionController
     {
         try {
             $model = $this->findModel($id);
-            $model->detachBehavior('uploadBehavior');
             $investigation = $model->investigation;
-            $model = File::findOne(['file.citrix_id' => $id]);
             if ($this->verifyPermission(
                 VerifyPermissionBehavior::EVENT_VERIFY_FILE_ARCHIVE_PERMISSION,
-                ['model' => $model->parents, 'investigation' => $investigation]
+                ['model' => $model, 'investigation' => $investigation]
             )) {
                 $model->archive();
                 Yii::$app->session->setFlash('success', 'Archived successfully');

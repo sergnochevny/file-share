@@ -185,23 +185,22 @@ $view = $this;
                                 'headerOptions' => [
                                     'class' => 'action-column'
                                 ],
-                                'header' => (Yii::$app->user->can('admin') || Yii::$app->user->can('sadmin') ||
-                                    (!Yii::$app->user->can('admin') && !Yii::$app->user->can('sadmin') &&
-                                        ((!empty($investigation) && Yii::$app->user->can('employee',
-                                                ['investigation' => $investigation]))))
-                                ) ? '<a class="btn btn-warning btn-xs" id="download-all">Download selected</a>' : '',
+                                'header' => Yii::$app->user->can('file.multi-download')
+                                    ? '<a class="btn btn-warning btn-xs" id="download-all">Download selected</a>'
+                                    : '',
                                 'contentOptions' => [
-                                    'width' => (Yii::$app->user->can('admin') || Yii::$app->user->can('sadmin')) ? 220 : 150
+                                    'width' => (Yii::$app->user->can('file.multi-download')) ? 220 : 150
                                 ],
                                 'visibleButtons' => [
                                     'archive' => Yii::$app->user->can('file.archive') ||
                                         Yii::$app->user->can('employee', ['investigation' => $investigation]),
                                     'delete' => Yii::$app->user->can('file.delete'),
                                     'download' => Yii::$app->user->can('file.download') ||
-                                        (!empty($investigation) && Yii::$app->user->can('employee',
-                                                ['investigation' => $investigation]) ||
-                                            Yii::$app->user->can('employee',
-                                                ['allfiles' => $model->parents->parent]))
+                                        (
+                                            !empty($investigation) &&
+                                            Yii::$app->user->can('employee',['company' => $investigation->company]) ||
+                                            Yii::$app->user->can('employee',['allfiles' => $model->parents->parent])
+                                        )
                                 ],
                                 'buttons' => [
                                     'archive' => function ($url, $model) use ($investigation, $view) {

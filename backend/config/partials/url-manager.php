@@ -24,6 +24,7 @@ return [
         '/password-reset' => '/auth/auth/password-reset',
         '/password-restore' => '/auth/auth/password-restore',
         '/file/download/<id:[\w\d-]+>' => '/file/download',
+        '/file/archive/<id:[\w\d-]+>' => '/file/archive',
         '/file/multi-download/<parent:[\w\d-]+>' => '/file/multi-download',
         '/file/multi-upload/<parent:[\w\d-]+>' => '/file/multi-upload',
         '/file/upload/<parent:[\w\d-]+>' => '/file/upload',

@@ -7,6 +7,8 @@
 namespace backend\behaviors;
 
 use ait\auth\behaviors\ModelPermissionsBehavior;
+use backend\models\Investigation;
+use backend\models\User;
 use common\models\UndeleteableActiveRecord;
 use Yii;
 use yii\base\ModelEvent;
@@ -79,8 +81,13 @@ class VerifyPermissionBehavior extends ModelPermissionsBehavior
     public function verifyFileMUploadPermission(PermissionEvent $event)
     {
         $parameters = $event->parameters;
+        /**
+         * @var Investigation $investigation
+         * @var User $user
+         */
         $investigation = $parameters['investigation'];
         $model = $parameters['model'];
+        $user = Yii::$app->user->identity;
 
         $event->isTruest = (
             Yii::$app->user->can('file.multi-upload.all') ||
@@ -111,7 +118,7 @@ class VerifyPermissionBehavior extends ModelPermissionsBehavior
             (
                 Yii::$app->user->can('file.download') &&
                 (
-                    (!empty($investigation) && Yii::$app->user->can('employee', ['investigation' => $investigation])) ||
+                    (!empty($investigation) && Yii::$app->user->can('employee', ['company' => $investigation->company])) ||
                     Yii::$app->user->can('employee', ['allfiles' => $model->parent])
                 )
             )
@@ -135,7 +142,7 @@ class VerifyPermissionBehavior extends ModelPermissionsBehavior
             (
                 Yii::$app->user->can('file.multi-download') &&
                 (
-                    (!empty($investigation) && Yii::$app->user->can('employee', ['investigation' => $investigation])) ||
+                    (!empty($investigation) && Yii::$app->user->can('employee', ['company' => $investigation->company])) ||
                     Yii::$app->user->can('employee', ['allfiles' => $model->parent])
                 )
             )
@@ -153,6 +160,7 @@ class VerifyPermissionBehavior extends ModelPermissionsBehavior
         $parameters = $event->parameters;
         $investigation = $parameters['investigation'];
         $model = $parameters['model'];
+        $user = \Yii::$app->user->identity;
 
         $event->isTruest = (
             Yii::$app->user->can('file.archive.all') ||
@@ -160,7 +168,7 @@ class VerifyPermissionBehavior extends ModelPermissionsBehavior
                 Yii::$app->user->can('file.archive') &&
                 (
                     (!empty($investigation) && Yii::$app->user->can('employee', ['investigation' => $investigation])) ||
-                    Yii::$app->user->can('employee', ['allfiles' => $model->parent])
+                    (Yii::$app->user->can('employee', ['allfiles' => $model->parents->parent]) && ($user->id == $model->created_by))
                 )
             )
         );

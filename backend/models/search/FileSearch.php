@@ -13,7 +13,7 @@ class FileSearch extends File
 {
     use ExtendFileFindConditionTrait;
 
-    public $name;
+    public $searchname;
     public $pagesize = 10;
 //    public $parent;
 
@@ -23,7 +23,7 @@ class FileSearch extends File
     public function rules()
     {
         return [
-            [['name', /*'parent',*/ 'pagesize'], 'safe'],
+            [['searchname', /*'parent',*/ 'pagesize'], 'safe'],
         ];
     }
 
@@ -69,7 +69,7 @@ class FileSearch extends File
             'file.citrix_id' => $this->citrix_id,
         ]);
 
-        $query->andFilterWhere(['like', 'file.name', $this->name])
+        $query->andFilterWhere(['like', 'file.name', $this->searchname])
             ->andFilterWhere(['like', 'file.description', $this->description])
             ->andFilterWhere(['like', 'file.type', $this->type]);
 

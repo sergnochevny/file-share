@@ -55,7 +55,7 @@ class History extends ActiveRecord
                     ActiveRecord::EVENT_BEFORE_UPDATE => false,
                 ],
             ],
-            [
+            'blameableBehavior'=>[
                 'class' => BlameableBehavior::className(),
                 'createdByAttribute' => 'created_by',
                 'updatedByAttribute' => false,

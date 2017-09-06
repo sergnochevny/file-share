@@ -3,7 +3,8 @@
 namespace backend\components\rbac\rules;
 
 use ait\rbac\Rule;
-use backend\models\Company;
+use common\models\Company;
+use common\models\Investigation;
 
 class EmployeeRule extends Rule
 {
@@ -13,23 +14,22 @@ class EmployeeRule extends Rule
     {
         /**
          * @var Company $company
+         * @var Investigation $investigation
          */
-        if (isset($params['company'])) {
+        if (isset($params['company']) && ($params['company'] instanceof Company)) {
             $company = $params['company'];
-        } elseif (isset($params['investigation'])) {
-            $company = $params['investigation']->company;
-        } elseif (isset($params['allfiles']) && ($params['allfiles'] == 'root')) {
-            return true;
-        } else {
-            return false;
-        }
-        if (isset($company)) {
             foreach ($company->users as $item) {
                 if ($item->id == $user) {
                     return true;
                 }
             }
+        } elseif (isset($params['investigation']) && ($params['investigation'] instanceof Investigation)) {
+            $investigation = $params['investigation'];
+            return $investigation->created_by == $user;
+        } elseif (isset($params['allfiles']) && ($params['allfiles'] == 'root')) {
+            return true;
         }
+
         return false;
     }
 

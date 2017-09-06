@@ -57,7 +57,7 @@ class User extends UndeleteableActiveRecord implements IdentityInterface
     {
         return [
             TimestampBehavior::class,
-            [
+            'blameableBehavior'=>[
                 'class' => BlameableBehavior::className(),
                 'createdByAttribute' => 'created_by',
                 'updatedByAttribute' => false,
