@@ -33,6 +33,8 @@ class VerifyPermissionBehavior extends ModelPermissionsBehavior
      */
     public $actions = [];
 
+
+
     /**
      * @return array
      */
@@ -60,18 +62,26 @@ class VerifyPermissionBehavior extends ModelPermissionsBehavior
         $investigation = $parameters['investigation'];
         $model = $parameters['model'];
 
-        $event->isTruest = (
-            Yii::$app->user->can('file.upload.all') ||
+        $event->isTruest = static::canUpload($investigation, $model);
+
+        return $event->isTruest;
+    }
+
+    /**
+     * @param $investigation
+     * @param $model
+     * @return bool
+     */
+    public static function canUpload($investigation, $model)
+    {
+        return Yii::$app->user->can('file.upload.all') ||
             (
                 Yii::$app->user->can('file.upload') &&
                 (
                     (!empty($investigation) && Yii::$app->user->can('employee', ['investigation' => $investigation])) ||
                     Yii::$app->user->can('employee', ['allfiles' => $model->parent])
                 )
-            )
-        );
-
-        return $event->isTruest;
+            );
     }
 
     /**
@@ -87,9 +97,20 @@ class VerifyPermissionBehavior extends ModelPermissionsBehavior
          */
         $investigation = $parameters['investigation'];
         $model = $parameters['model'];
-        $user = Yii::$app->user->identity;
 
-        $event->isTruest = (
+        $event->isTruest = static::canMUpload($model, $investigation);
+
+        return $event->isTruest;
+    }
+
+    /**
+     * @param $model
+     * @param $investigation
+     * @return bool
+     */
+    public static function canMUpload($model, $investigation)
+    {
+        return (
             Yii::$app->user->can('file.multi-upload.all') ||
             (
                 Yii::$app->user->can('file.multi-upload') &&
@@ -99,8 +120,6 @@ class VerifyPermissionBehavior extends ModelPermissionsBehavior
                 )
             )
         );
-
-        return $event->isTruest;
     }
 
     /**
@@ -113,18 +132,27 @@ class VerifyPermissionBehavior extends ModelPermissionsBehavior
         $investigation = $parameters['investigation'];
         $model = $parameters['model'];
 
-        $event->isTruest = (
-            Yii::$app->user->can('file.download.all') ||
+        $event->isTruest = static::canDownload($investigation, $model);
+
+        return $event->isTruest;
+    }
+
+    /**
+     * @param $investigation
+     * @param $model
+     * @return bool
+     */
+    public static function canDownload($investigation, $model)
+    {
+        return Yii::$app->user->can('file.download.all') ||
             (
                 Yii::$app->user->can('file.download') &&
                 (
-                    (!empty($investigation) && Yii::$app->user->can('employee', ['company' => $investigation->company])) ||
+                    (!empty($investigation) && Yii::$app->user->can('employee',
+                            ['company' => $investigation->company])) ||
                     Yii::$app->user->can('employee', ['allfiles' => $model->parent])
                 )
-            )
-        );
-
-        return $event->isTruest;
+            );
     }
 
     /**
@@ -137,18 +165,27 @@ class VerifyPermissionBehavior extends ModelPermissionsBehavior
         $investigation = $parameters['investigation'];
         $model = $parameters['model'];
 
-        $event->isTruest = (
-            Yii::$app->user->can('file.multi-download.all') ||
+        $event->isTruest = self::canMDownload($investigation, $model);
+
+        return $event->isTruest;
+    }
+
+    /**
+     * @param $investigation
+     * @param $model
+     * @return bool
+     */
+    public static function canMDownload($investigation, $model)
+    {
+        return Yii::$app->user->can('file.multi-download.all') ||
             (
                 Yii::$app->user->can('file.multi-download') &&
                 (
-                    (!empty($investigation) && Yii::$app->user->can('employee', ['company' => $investigation->company])) ||
+                    (!empty($investigation) && Yii::$app->user->can('employee',
+                            ['company' => $investigation->company])) ||
                     Yii::$app->user->can('employee', ['allfiles' => $model->parent])
                 )
-            )
-        );
-
-        return $event->isTruest;
+            );
     }
 
     /**
@@ -162,18 +199,28 @@ class VerifyPermissionBehavior extends ModelPermissionsBehavior
         $model = $parameters['model'];
         $user = \Yii::$app->user->identity;
 
-        $event->isTruest = (
-            Yii::$app->user->can('file.archive.all') ||
+        $event->isTruest = static::canArchive($investigation, $model, $user);
+
+        return $event->isTruest;
+    }
+
+    /**
+     * @param $investigation
+     * @param $model
+     * @param $user
+     * @return bool
+     */
+    public static function canArchive($investigation, $model, $user)
+    {
+        return Yii::$app->user->can('file.archive.all') ||
             (
                 Yii::$app->user->can('file.archive') &&
                 (
                     (!empty($investigation) && Yii::$app->user->can('employee', ['investigation' => $investigation])) ||
-                    (Yii::$app->user->can('employee', ['allfiles' => $model->parents->parent]) && ($user->id == $model->created_by))
+                    (Yii::$app->user->can('employee',
+                            ['allfiles' => $model->parents->parent]) && ($user->id == $model->created_by))
                 )
-            )
-        );
-
-        return $event->isTruest;
+            );
     }
 
     /**
