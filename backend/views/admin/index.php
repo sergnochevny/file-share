@@ -1,4 +1,7 @@
 <?php
+/**
+ * Copyright (c) 2017. AIT
+ */
 
 use ait\utilities\helpers\Url;
 use common\widgets\Alert;
@@ -7,10 +10,10 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\UserSearch */
+/* @var $searchModel backend\models\search\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Users';
+$this->title = 'Admins';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="title-bar">
@@ -32,13 +35,13 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="panel panel-default">
             <div class="panel-heading">
                 <?= Html::a(Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-plus icon-lg icon-fw']),
-                        ['class' => 'btn-label']) . ' Add a New User', Url::to(['/wizard/user']),
+                        ['class' => 'btn-label']) . ' Add a New User', Url::to(['/wizard/admin']),
                     ['class' => 'btn btn-sm btn-labeled arrow-success']) ?>
             </div>
             <div class="form-inline no-footer">
 
                 <?php Pjax::begin([
-                    'id' => 'user_index',
+                    'id' => 'admin_index',
                     'enablePushState' => false,
                     'timeout' => 0,
                     'options' => ['class' => 'panel-body panel-collapse']
@@ -98,9 +101,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             'value' => function ($model, $key, $index, $column) {
                                 $suff = [
-                                    'full' => ['class' => 'success', 'label' => 'Full'],
-                                    'shared' => ['class' => 'warning', 'label' => 'Shared'],
-                                    'individual' => ['class' => 'danger', 'label' => 'Individual'],
+                                    'sadmin' => ['class' => 'success', 'label' => 'Super User'],
+                                    'admin' => ['class' => 'warning', 'label' => 'Admin'],
+                                    'user' => ['class' => '', 'label' => 'All'],
+                                    'all' => ['class' => '', 'label' => 'All'],
                                 ];
                                 //workaround for rename client
                                 $role = $model->{$column->attribute};
@@ -117,14 +121,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'width' => 120,
                             ],
                             'visibleButtons' => [
-                                'edit' => \Yii::$app->user->can('wizard.user'),
-                                'delete' => \Yii::$app->user->can('user.delete'),
+                                'edit' => \Yii::$app->user->can('wizard.admin'),
+                                'delete' => \Yii::$app->user->can('admin.delete'),
                             ],
                             'buttons' => [
                                 'edit' => function ($url, $model) {
                                     return Html::a(
                                         'Edit',
-                                        Url::to(['/wizard/user', 'id' => $model->id], true),
+                                        Url::to(['/wizard/admin', 'id' => $model->id], true),
                                         [
                                             'class' => "btn btn-primary btn-xs",
                                             'title' => 'Edit',

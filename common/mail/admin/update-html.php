@@ -7,7 +7,7 @@ use yii\helpers\Html;
 ?>
 
 
-<?php if ($model instanceof \backend\models\Company): ?>
+<?php if ($model instanceof \backend\models\Company) : ?>
 <tr>
     <td colspan="2" style="padding: 20px 0;">
         The <?= Html::encode($model->name) ?> company folder was
@@ -17,7 +17,7 @@ use yii\helpers\Html;
 </tr>
 
 
-<?php elseif ($model instanceof \backend\models\services\UserService): ?>
+<?php elseif ($model instanceof \backend\models\services\UserService) : ?>
 <tr>
     <td colspan="2" style="padding: 20px 0;">
         The user <?= Html::encode($model->getUser()->username) ?> was
@@ -26,7 +26,7 @@ use yii\helpers\Html;
     </td>
 </tr>
 
-<?php elseif ($model instanceof \backend\models\Investigation): ?>
+<?php elseif ($model instanceof \backend\models\Investigation) : ?>
 <tr>
     <td colspan="2" style="padding: 20px 0;">
         The applicant <?= Html::encode($model->fullName) ?>

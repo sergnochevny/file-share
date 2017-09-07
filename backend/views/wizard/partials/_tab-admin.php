@@ -11,9 +11,11 @@ use yii\helpers\Html;
 /** @var bool $isUpdate */
 /** @var array|null $selectedUser */
 
+\backend\assets\WizardAdminAsset::register($this);
+
 ?>
 
-<div id="tab-2" class="tab-pane active">
+<div id="tab-4" class="tab-pane active">
     <?php $form = ActiveForm::begin([
         'id' => 'user-form',
         'action' => ['/wizard/user', 'id' => $isUpdate ? $userForm->getUser()->id : null],

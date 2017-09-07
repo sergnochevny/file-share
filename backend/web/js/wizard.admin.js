@@ -46,13 +46,7 @@
     $(document).on('change', '#user-role', function (ev) {
         ev.preventDefault();
 
-        if ($(this).val() === 'user') {
-            $('#company-list-container').show();
-            $('#user-list-container').show();
-
-        } else if ($(this).val() === 'admin'
-                || $(this).val() === 'sadmin'
-        ) {
+        if ($(this).val() === 'admin' || $(this).val() === 'sadmin') {
             $('#company-list-container').hide();
             $('#user-list-container').show();
 

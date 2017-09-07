@@ -11,6 +11,7 @@ use yii\helpers\Html;
 /** @var bool $isUpdate */
 /** @var array|null $selectedUser */
 
+\backend\assets\WizardUserAsset::register($this);
 ?>
 
 <div id="tab-2" class="tab-pane active">
@@ -19,22 +20,29 @@ use yii\helpers\Html;
         'action' => ['/wizard/user', 'id' => $isUpdate ? $userForm->getUser()->id : null],
         'options' => [
             'data-pjax' => true,
-            'data-create-url' => Url::to(['/wizard/user'], true), //when select prompt in user send request to create url
+            'data-create-url' => Url::to(['/wizard/user'], true),
+            //when select prompt in user send request to create url
         ],
     ]) ?>
-    <?php if (Yii::$app->user->can('admin')): ?>
-        <?php if (Yii::$app->user->can('sadmin')): ?>
+    <?php if (Yii::$app->user->can('admin')) : ?>
+        <?php if (Yii::$app->user->can('sadmin')) : ?>
             <div class="col-lg-6 col-lg-offset-3">
                 <h2 align="center">
                     <span class="d-ib">Select Role</span>
                 </h2>
 
-                <div class="form-group<?= $userForm->hasErrors('role') ? ' has-error' : '' ?>">                            <?php /*todo get this list from db */ ?>
-                    <?= Html::activeDropDownList($userForm, 'role', $userForm->customRoles,
-                        ['id' => 'user-role', 'class' => 'form-control', 'prompt' => 'Select a Role']); ?>
+                <div class="form-group<?= $userForm->hasErrors('role') ? ' has-error' : '' ?>">
+                    <?= Html::activeDropDownList(
+                        $userForm,
+                        'role',
+                        $userForm->customRoles,
+                        ['id' => 'user-role', 'class' => 'form-control', 'prompt' => 'Select a Role']
+                    ); ?>
                     <?= Html::error($userForm, 'role', ['class' => 'help-block']) ?>
                 </div>
             </div>
+        <?php else : ?>
+            <?= Html::activeHiddenInput($userForm, 'role');?>
         <?php endif ?>
 
         <div class="col-lg-6 col-lg-offset-3" id="company-list-container" <?=
@@ -101,7 +109,7 @@ use yii\helpers\Html;
                 </span>
                 <?= $isUpdate ? 'Update' : 'Create' ?>
             </button>
-            <?php if (\Yii::$app->user->can('wizard.investigation')): ?>
+            <?php if (\Yii::$app->user->can('wizard.investigation')) : ?>
                 <a href="<?= Url::to(['/wizard/investigation'], true) ?>"
                    class="<?= $isUpdate ? '' : 'hidden ' ?>btn btn-sm btn-labeled  arrow-success">
                     <span class="btn-label">

@@ -3,7 +3,6 @@
 
 namespace backend\models\services;
 
-
 use backend\behaviors\NotifyBehavior;
 use backend\models\forms\UserForm;
 use backend\models\User;
@@ -22,12 +21,8 @@ use yii\rbac\DbManager;
  */
 final class UserService extends Component
 {
-    /** @var User  */
+    /** @var User */
     private $user;
-
-    /** @var DbManager  */
-    private $authManager;
-
 
     /**
      * UserService constructor.
@@ -35,11 +30,48 @@ final class UserService extends Component
      * @param DbManager $auth
      * @param array $config
      */
-    public function __construct(User $user, DbManager $auth, array $config = [])
+    public function __construct(User $user, array $config = [])
     {
         $this->user = $user;
-        $this->authManager = $auth;
         parent::__construct($config);
+    }
+
+    /**
+     * @param $id
+     * @return Company
+     * @throws
+     */
+    private function getCompany($id)
+    {
+        $company = Company::findOne($id);
+        if (!$company) {
+            throw new Exception("The company doesn't exists");
+        }
+
+        return $company;
+    }
+
+    /**
+     * @param $role
+     * @return \yii\rbac\Assignment | bool
+     * @throws Exception
+     */
+    private function assignRole($role)
+    {
+        $auth = \Yii::$app->authManager;
+        $user = $this->user;
+
+        if (!$user->id) {
+            throw new Exception("The user doesn't exists");
+        }
+        $role = $auth->getRole($role);
+        if (null === $role) {
+            throw new Exception("Such role doesn't exists");
+        }
+        //reset role in case of update
+        $auth->revokeAll($user->id);
+
+        return $auth->assign($role, $user->id);
     }
 
     /**
@@ -55,10 +87,10 @@ final class UserService extends Component
         return [
             [
                 'class' => NotifyBehavior::class,
-                'sendFrom' => function(){
+                'sendFrom' => function () {
                     return \Yii::$app->keyStorage->get('system.sendfrom');
                 },
-                'companyId' => function(UserService $model) {
+                'companyId' => function (UserService $model) {
                     return $model->user->company ? $model->user->company->id : null;
                 },
                 'createTemplate' => 'create',
@@ -78,7 +110,7 @@ final class UserService extends Component
         $form->setUser($this->user);
         $form->setAttributes($user->getAttributes());
 
-                            //admin can't have company
+        //admin can't have company
         $form->company_id = isset($user->company->id) ? $user->company->id : null;
         $form->role = $user->getUserRole();
     }
@@ -115,7 +147,6 @@ final class UserService extends Component
         ]));
 
         if ($this->beforeSave($isInsert) && $user->save() && $this->assignRole($form->role)) {
-
             //drop old relations if company related
             $user->unlinkAll('company', true);
 
@@ -167,7 +198,10 @@ final class UserService extends Component
     public function beforeSave($insert)
     {
         $event = new ModelEvent;
-        $this->trigger($insert ? UndeleteableActiveRecord::EVENT_BEFORE_INSERT : UndeleteableActiveRecord::EVENT_BEFORE_UPDATE, $event);
+        $this->trigger(
+            $insert ? UndeleteableActiveRecord::EVENT_BEFORE_INSERT : UndeleteableActiveRecord::EVENT_BEFORE_UPDATE,
+            $event
+        );
 
         return $event->isValid;
     }
@@ -178,47 +212,9 @@ final class UserService extends Component
      */
     public function afterSave($insert)
     {
-        $this->trigger($insert ? UndeleteableActiveRecord::EVENT_AFTER_INSERT : UndeleteableActiveRecord::EVENT_AFTER_UPDATE, new Event());
-    }
-
-
-
-
-    /**
-     * @param $id
-     * @return Company
-     * @throws
-     */
-    private function getCompany($id)
-    {
-        $company = Company::findOne($id);
-        if (!$company) {
-            throw new Exception("The company doesn't exists");
-        }
-
-        return $company;
-    }
-
-    /**
-     * @param $role
-     * @return \yii\rbac\Assignment | bool
-     * @throws Exception
-     */
-    private function assignRole($role)
-    {
-        $auth = $this->authManager;
-        $user = $this->user;
-
-        if (!$user->id) {
-            throw new Exception("The user doesn't exists");
-        }
-        $role = $auth->getRole($role);
-        if (null === $role) {
-            throw new Exception("Such role doesn't exists");
-        }
-        //reset role in case of update
-        $auth->revokeAll($user->id);
-
-        return $auth->assign($role, $user->id);
+        $this->trigger(
+            $insert ? UndeleteableActiveRecord::EVENT_AFTER_INSERT : UndeleteableActiveRecord::EVENT_AFTER_UPDATE,
+            new Event()
+        );
     }
 }

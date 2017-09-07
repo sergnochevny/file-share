@@ -8,6 +8,7 @@ namespace backend\controllers;
 use ait\rbac\Item;
 use backend\behaviors\RememberUrlBehavior;
 use backend\models\forms\UserForm;
+use backend\models\search\AdminSearch;
 use backend\models\search\UserSearch;
 use backend\models\services\UserService;
 use backend\models\User;
@@ -66,11 +67,11 @@ class AdminController extends BaseController
      */
     public function actionIndex()
     {
-        $searchModel = new UserSearch();
+        $searchModel = new AdminSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
 
-        return $this->smartRender('//user/index', [
+        return $this->smartRender('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -129,14 +130,14 @@ class AdminController extends BaseController
         ]);
 
         $options = [
-            'isUser' => true,
+            'isAdmin' => true,
             'userForm' => $userForm,
             'isUpdate' => true,
             'selectedUser' => null,
         ];
 
         try {
-            if ($user = User::findOne($id) === null) {
+            if (empty($user = User::findOne($id))) {
                 throw new UserException('The user does not exists');
             }
 

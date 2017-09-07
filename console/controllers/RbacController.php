@@ -42,7 +42,14 @@ class RbacController extends Controller
         ['name' => 'profile.index', 'description' => 'profile.index'],
 
         ['name' => 'user.index', 'description' => 'Users view'],
+        ['name' => 'user.create', 'description' => 'User create'],
+        ['name' => 'user.update', 'description' => 'Users update'],
         ['name' => 'user.delete', 'description' => 'Delete users'],
+
+        ['name' => 'admin.index', 'description' => 'Admins view'],
+        ['name' => 'admin.create', 'description' => 'Create Admins'],
+        ['name' => 'admin.update', 'description' => 'Update Admins'],
+        ['name' => 'admin.delete', 'description' => 'Delete Admins'],
 
         ['name' => 'wizard.update-types', 'description' => 'Wizard update types'],
         ['name' => 'wizard.company', 'description' => 'Wizard company'],
@@ -103,12 +110,21 @@ class RbacController extends Controller
         ],
     ];
 
+    protected $roles = [
+        ['name' => 'full', 'description' => 'Full Clients Role', 'type' => 'custom'],
+        ['name' => 'shared', 'description' => 'Shared Clients Role', 'type' => 'custom'],
+        ['name' => 'individual', 'description' => 'Individual Clients Role', 'type' => 'custom'],
+    ];
 
     protected $dependencies = [
         'sadmin' => [
             'permission' => [
                 'site.settings' => true,
                 'user.delete' => true,
+                'admin.index' => true,
+                'admin.create' => true,
+                'admin.update' => true,
+                'admin.delete' => true,
                 'wizard.admin' => true,
                 'wizard.update-types' => true,
                 'wizard.investigation' => true,
@@ -216,6 +232,7 @@ class RbacController extends Controller
      */
     public function actionInit()
     {
+        $this->initRoles($this->roles);
         $this->initPermissions($this->permissions);
         $this->initDependencies($this->dependencies);
     }

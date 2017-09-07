@@ -50,7 +50,7 @@ $userCompany = !empty($user) ? $user->company : null;
                 $items[] = [
                     'label' => 'Admins',
                     'url' => ['/admin/index'],
-                    'options' => ['icon' => 'icon-users'],
+                    'options' => ['icon' => 'icon-user-secret'],
                 ];
                 $items[] = [
                     'label' => 'Users',

@@ -133,7 +133,7 @@ class UserController extends BaseController
         ];
 
         try {
-            if ($user = User::findOne($id) === null) {
+            if (empty($user = User::findOne($id))) {
                 throw new UserException('The user does not exists');
             }
 

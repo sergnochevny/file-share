@@ -53,59 +53,6 @@ class User extends UndeleteableActiveRecord implements IdentityInterface
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::class,
-            'blameableBehavior'=>[
-                'class' => BlameableBehavior::className(),
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => false,
-            ],
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['email', 'username', 'auth_key', 'password_hash'], 'required'],
-            [['first_name', 'last_name', 'phone_number', 'email', 'username', 'password_hash', 'password_reset_token'], 'string', 'max' => 255],
-            [['auth_key'], 'string', 'max' => 32],
-            [['email'], 'unique'],
-            [['username'], 'unique'],
-            [['password_reset_token'], 'unique'],
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_IN_HISTORY, self::STATUS_DELETED]],
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'first_name' => 'First Name',
-            'last_name' => 'Last Name',
-            'phone_number' => 'Phone Number',
-            'email' => 'Email',
-            'username' => 'Username',
-            'auth_key' => 'Auth Key',
-            'password_hash' => 'Password Hash',
-            'password_reset_token' => 'Password Reset Token',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
     public static function findIdentity($id)
     {
         return static::findOne(['id' => $id]);
@@ -168,9 +115,74 @@ class User extends UndeleteableActiveRecord implements IdentityInterface
             return false;
         }
 
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
+        $timestamp = (int)substr($token, strrpos($token, '_') + 1);
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::class,
+            'blameableBehavior' => [
+                'class' => BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => false,
+            ],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['email', 'username', 'auth_key', 'password_hash'], 'required'],
+            [
+                [
+                    'first_name',
+                    'last_name',
+                    'phone_number',
+                    'email',
+                    'username',
+                    'password_hash',
+                    'password_reset_token'
+                ],
+                'string',
+                'max' => 255
+            ],
+            [['auth_key'], 'string', 'max' => 32],
+            [['email'], 'unique'],
+            [['username'], 'unique'],
+            [['password_reset_token'], 'unique'],
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
+            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_IN_HISTORY, self::STATUS_DELETED]],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'first_name' => 'First Name',
+            'last_name' => 'Last Name',
+            'phone_number' => 'Phone Number',
+            'email' => 'Email',
+            'username' => 'Username',
+            'auth_key' => 'Auth Key',
+            'password_hash' => 'Password Hash',
+            'password_reset_token' => 'Password Reset Token',
+            'status' => 'Status',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+        ];
     }
 
     /**
