@@ -6,7 +6,18 @@ use backend\models\User;
 use common\models\query\UndeleteableActiveQuery;
 use kartik\password\StrengthValidator;
 use yii\base\Model;
+use yii\db\Query;
+use ait\rbac\Item;
 
+/***
+ * Class UserForm
+ * @package backend\models\forms
+ *
+ * @property-read User $user
+ * @property-read string[] $adminRoles
+ * @property-read string[] $customRoles
+ *
+ */
 final class UserForm extends Model
 {
     const SCENARIO_CREATE = 'create';
@@ -14,6 +25,9 @@ final class UserForm extends Model
 
     /** @var User */
     private $user;
+
+    private $_customRoles;
+
     /** @var string */
     public $role;
     /** @var string */
@@ -120,5 +134,31 @@ final class UserForm extends Model
         return [
             'username' => 'User Name'
         ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getAdminRoles()
+    {
+        return  [
+            'sadmin' => 'Super admin',
+            'admin' => 'Admin'
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getCustomRoles()
+    {
+        if (empty($this->_customRoles)) {
+            $this->_customRoles = (new Query())->select('description')
+                ->from('auth_item')
+                ->indexBy('name')
+                ->where(['type' => Item::TYPE_CUSTOM_ROLE])
+                ->column();
+        }
+        return $this->_customRoles;
     }
 }

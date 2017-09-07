@@ -30,11 +30,7 @@ use yii\helpers\Html;
                 </h2>
 
                 <div class="form-group<?= $userForm->hasErrors('role') ? ' has-error' : '' ?>">                            <?php /*todo get this list from db */ ?>
-                    <?= Html::activeDropDownList($userForm, 'role', [
-                        'sadmin' => 'Super Admin',
-                        'admin' => 'Admin',
-                        'user' => 'Company User'
-                    ],
+                    <?= Html::activeDropDownList($userForm, 'role', $userForm->adminRoles,
                         ['id' => 'user-role', 'class' => 'form-control', 'prompt' => 'Select a Role']); ?>
                     <?= Html::error($userForm, 'role', ['class' => 'help-block']) ?>
                 </div>
