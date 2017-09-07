@@ -121,14 +121,14 @@ class History extends ActiveRecord
     public function afterRecover()
     {
         $event = new ModelEvent;
-        $this->trigger(self::EVENT_AFTER_RECOVER, $event);
+        $this->trigger(RecoverableActiveRecord::EVENT_AFTER_RECOVER, $event);
         return $event->isValid;
     }
 
     public function beforeRecover()
     {
         $event = new ModelEvent;
-        $this->trigger(self::EVENT_BEFORE_RECOVER, $event);
+        $this->trigger(RecoverableActiveRecord::EVENT_BEFORE_RECOVER, $event);
         return $event->isValid;
     }
 }
