@@ -31,6 +31,7 @@ return [
         '/history/<action>' => '/history/<action>',
         '/history/<action>/<id:\d+>' => '/history/<action>',
         '/user/<action>' => '/user/<action>',
+        '/admin/<action>' => '/admin/<action>',
 
         '/wizard/<action>' => '/wizard/<action>',
 

@@ -54,7 +54,7 @@ final class UserForm extends Model
     {
         return [
             ['role', 'required', 'message' => 'Please choose the role of user'],
-            ['role', 'in', 'range' => ['admin', 'user', 'sadmin']],
+            ['role', 'in', 'range' => array_keys(array_merge($this->getAdminRoles(), $this->getCustomRoles()))],
             [
                 ['company_id'],
                 'required',

@@ -110,8 +110,14 @@ $this->title = 'Wizard';
                                     <?php
                                     if ($companyActive) {
                                         echo $this->render('partials/_tab-company', compact('companyForm', 'selected', 'isUpdate', 'investigationTypes'));
+
                                     } else if ($userActive && !User::isClient()) {
-                                        echo $this->render('partials/_tab-user', compact('userForm', 'selectedUser', 'isUpdate'));
+                                        echo $this->render('partials/_tab-user',
+                                            compact('userForm', 'selectedUser', 'isUpdate'));
+
+                                    } else if ($adminActive && Yii::$app->user->can('wizard.admin')) {
+                                        echo $this->render('partials/_tab-admin', compact('userForm', 'selectedUser', 'isUpdate'));
+
                                     } else if ($investigationActive && !User::isAdmin()) {
                                         echo $this->render('partials/_tab-investigation', compact('investigationForm', 'isUpdate', 'investigationTypes'));
                                     }

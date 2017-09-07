@@ -113,6 +113,22 @@ class WizardController extends BaseController
     }
 
     /**
+     * Shows Admins tab
+     *
+     * @param string $id
+     * @return string
+     * @throws UserException
+     */
+    public function actionAdmin($id = null)
+    {
+        if ($id !== null) {
+            return $this->run('/admin/update', ['id' => $id]);
+        }
+
+        return $this->run('/admin/create');
+    }
+
+    /**
      * Shows User tab
      *
      * @param string $id

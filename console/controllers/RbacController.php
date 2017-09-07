@@ -42,8 +42,6 @@ class RbacController extends Controller
         ['name' => 'profile.index', 'description' => 'profile.index'],
 
         ['name' => 'user.index', 'description' => 'Users view'],
-        ['name' => 'user.others', 'description' => 'Other users'],
-        ['name' => 'user.protus', 'description' => 'Protus3 users'],
         ['name' => 'user.delete', 'description' => 'Delete users'],
 
         ['name' => 'wizard.update-types', 'description' => 'Wizard update types'],

@@ -90,7 +90,7 @@ class AdminController extends BaseController
         $user = new User();
 
         $options = [
-            'isUser' => true,
+            'isAdmin' => true,
             'userForm' => $userForm,
             'isUpdate' => false,
             'selectedUser' => null,
