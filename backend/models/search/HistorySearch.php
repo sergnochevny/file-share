@@ -15,14 +15,14 @@ class HistorySearch extends History
     use ExtendHistoryFindConditionTrait;
 
     public $pagesize = 10;
-
+    public $searchname;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['parent', 'name', 'created_at', 'type', 'created_at'], 'safe'],
+            [['parent', 'searchname', 'created_at', 'type', 'created_at'], 'safe'],
             [['pagesize'], 'integer']
         ];
     }
@@ -66,7 +66,7 @@ class HistorySearch extends History
             'created_at' => $this->created_at,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
+        $query->andFilterWhere(['like', 'name', $this->searchname])
             ->andFilterWhere(['like', 'parent', $this->parent]);
 
         return $dataProvider;

@@ -16,7 +16,7 @@ class InvestigationSearch extends Investigation
     use ExtendInvestigationFindConditionTrait;
 
     public $pagesize = 10;
-    public $name;
+    public $searchname;
     public $company_name;
 
 
@@ -27,7 +27,7 @@ class InvestigationSearch extends Investigation
     {
         return [
             [['id', 'company_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'pagesize', 'start_date', 'end_date', 'description'], 'safe'],
+            [['searchname', 'pagesize', 'start_date', 'end_date', 'description'], 'safe'],
         ];
     }
 
@@ -88,8 +88,8 @@ class InvestigationSearch extends Investigation
         $query->andFilterWhere(['like', 'description', $this->description]);
         $query->andFilterWhere([
             'OR',
-            ['like', 'company.name', $this->name],
-            ['like', 'investigation.name', $this->name],
+            ['like', 'company.name', $this->searchname],
+            ['like', 'investigation.name', $this->searchname],
         ]);
         return $dataProvider;
     }

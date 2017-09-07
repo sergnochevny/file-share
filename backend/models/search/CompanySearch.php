@@ -15,6 +15,7 @@ class CompanySearch extends Company
 
     use ExtendCompanyFindConditionTrait;
 
+    public $searchname;
     /**
      * @var int
      */
@@ -27,7 +28,7 @@ class CompanySearch extends Company
     {
         return [
             [['id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'pagesize', 'address', 'city', 'state', 'zip'], 'safe'],
+            [['searchname', 'pagesize', 'address', 'city', 'state', 'zip'], 'safe'],
         ];
     }
 
@@ -77,7 +78,7 @@ class CompanySearch extends Company
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
+        $query->andFilterWhere(['like', 'name', $this->searchname])
             ->andFilterWhere(['like', 'address', $this->address])
             ->andFilterWhere(['like', 'city', $this->city])
             ->andFilterWhere(['like', 'state', $this->state])

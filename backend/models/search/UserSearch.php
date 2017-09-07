@@ -16,7 +16,7 @@ use yii\rbac\Role;
 class UserSearch extends User
 {
     public $pagesize = 10;
-    public $name;
+    public $searchname;
 
     public $role_type;
 
@@ -28,7 +28,7 @@ class UserSearch extends User
         return [
             [['id', 'status', 'created_at', 'updated_at'], 'integer'],
             [
-                ['role_type', 'name', 'pagesize', 'first_name', 'last_name',
+                ['role_type', 'searchname', 'pagesize', 'first_name', 'last_name',
                     'phone_number', 'email', 'username', 'auth_key', 'password_hash',
                     'password_reset_token'
                 ], 'safe'],
@@ -91,10 +91,10 @@ class UserSearch extends User
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
-        $query->orFilterWhere(['like', 'first_name', $this->name])
-            ->orFilterWhere(['like', 'last_name', $this->name])
-            ->orFilterWhere(['like', 'email', $this->name])
-            ->orFilterWhere(['like', 'username', $this->name]);
+        $query->orFilterWhere(['like', 'first_name', $this->searchname])
+            ->orFilterWhere(['like', 'last_name', $this->searchname])
+            ->orFilterWhere(['like', 'email', $this->searchname])
+            ->orFilterWhere(['like', 'username', $this->searchname]);
 
         $query->andFilterWhere(['like', 'phone_number', $this->phone_number])
             ->andFilterWhere(['like', 'auth_key', $this->auth_key])
