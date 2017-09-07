@@ -11,10 +11,52 @@
 namespace backend\models\traits;
 
 use ait\rbac\DbManager;
+use Yii;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 trait ExtendHistoryFindConditionTrait
 {
+    protected static $ALLOW_SCENARIOS_OF_PERMISSIONS = ['all', 'group'];
+
+    /**
+     * Creates something like site.index.all (controller.action.all)
+     * or if it has module - module.controller.action.all
+     *
+     * @param string $scenario
+     * @return string
+     */
+    public static function getPermissionName($scenario = 'all')
+    {
+        if (!in_array($scenario, static::$ALLOW_SCENARIOS_OF_PERMISSIONS)) {
+            $scenario = 'all';
+        }
+        $tableName = \Yii::$app->db->schema->getRawTableName(static::tableName());
+        return ($tableName . '.find.' . $scenario);
+    }
+
+    /**
+     * @return array
+     */
+    public static function getIntersectPermissions()
+    {
+        return array_filter([
+            str_replace('/', '.', static::getPermissionName('group')),
+//            str_replace('/', '.', Yii::$app->controller->getUniqueId() . '.create'),
+//            str_replace('/', '.', Yii::$app->controller->getUniqueId()),
+//            str_replace('/', '.', Yii::$app->controller->module->getUniqueId())
+        ]);
+    }
+
+
+    public static function find()
+    {
+        $class = get_called_class();
+        $query = Yii::createObject(ActiveQuery::className(), [$class]);
+        static::extendFindConditionByPermissions($query);
+        return $query;
+    }
+
     /**
      * @param \common\models\query\UndeleteableActiveQuery $query
      */
@@ -68,7 +110,6 @@ trait ExtendHistoryFindConditionTrait
             $query->andWhere([$tableName . '.created_by' => !empty($user->id) ? $user->id : null]);
         }
         if (!\Yii::$app->user->can('company.find.all')) {
-            $query->joinWith('company');
             $query->joinWith('users');
             $query->andWhere(['user.id' => !empty($user->id) ? $user->id : null]);
         }

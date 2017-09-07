@@ -22,7 +22,6 @@ use yii\db\Query;
  */
 class History extends ActiveRecord
 {
-    use PermissionsModelTrait;
 
     /**
      * @inheritdoc

@@ -39,7 +39,7 @@ $userCompany = !empty($user) ? $user->company : null;
                 ];
                 $items[] = [
                     'label' => 'History',
-                    'url' => ['/history'],
+                    'url' => ['/history/index'],
                     'options' => ['icon' => 'icon-history'],
                 ];
                 $items[] = [

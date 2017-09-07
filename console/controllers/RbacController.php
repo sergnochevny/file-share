@@ -154,6 +154,8 @@ class RbacController extends Controller
                 'investigation.find.all' => true,
                 'investigation.complete.all' => true,
                 'investigation.archive.all' => false,
+
+                'file.archive.all' => true,
             ]
         ],
         'full' => [

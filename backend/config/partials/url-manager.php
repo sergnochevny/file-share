@@ -28,6 +28,8 @@ return [
         '/file/multi-download/<parent:[\w\d-]+>' => '/file/multi-download',
         '/file/multi-upload/<parent:[\w\d-]+>' => '/file/multi-upload',
         '/file/upload/<parent:[\w\d-]+>' => '/file/upload',
+        '/history/<action>' => '/history/<action>',
+        '/history/<action>/<id:\d+>' => '/history/<action>',
         '/user/<action>' => '/user/<action>',
 
         '/wizard/<action>' => '/wizard/<action>',

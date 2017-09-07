@@ -4,6 +4,7 @@ use ait\utilities\assets\ExtLibAsset;
 use ait\utilities\helpers\Url;
 use backend\assets\AlertHelperAsset;
 use backend\assets\DownloadAsset;
+use backend\behaviors\VerifyPermissionBehavior;
 use backend\models\FileUpload;
 use backend\models\User;
 use common\widgets\Alert;
@@ -26,7 +27,7 @@ if (!empty($investigation)) {
     $this->title = 'Forms & Templates';
     $this->params['breadcrumbs'][] = $this->title;
 }
-
+$user = Yii::$app->user->identity;
 $view = $this;
 ?>
     <div class="title-bar">
@@ -80,7 +81,11 @@ $view = $this;
                         Url::to(['/file/multi-upload', 'parent' => $investigation->citrix_id], true) :
                         Url::to(['/file/multi-upload', 'parent' => $uploadModel->parent], true);
                     ?>
-                    <?php if (!empty($investigation) || Yii::$app->user->can('admin') || Yii::$app->user->can('sadmin')): ?>
+                    <?php if (!empty($investigation)
+                        && (VerifyPermissionBehavior::canUpload($investigation, $uploadModel) || VerifyPermissionBehavior::canMUpload($investigation, $uploadModel))
+                        || Yii::$app->user->can('admin')
+                        || Yii::$app->user->can('sadmin')
+                    ): ?>
                         <?= $this->render('partials/_upload', ['model' => $uploadModel, 'action' => $url]) ?>
                     <?php endif; ?>
                 </div>
@@ -192,14 +197,22 @@ $view = $this;
                                     'width' => (Yii::$app->user->can('file.multi-download')) ? 220 : 150
                                 ],
                                 'visibleButtons' => [
-                                    'archive' => Yii::$app->user->can('file.archive') ||
-                                        Yii::$app->user->can('employee', ['investigation' => $investigation]),
+                                    'archive' =>(
+                                        Yii::$app->user->can('file.archive.all') ||
+                                        (
+                                            Yii::$app->user->can('file.archive') &&
+                                            (
+                                                (!empty($investigation) && Yii::$app->user->can('employee', ['investigation' => $investigation])) ||
+                                                (Yii::$app->user->can('employee', ['allfiles' => !empty($searchModel->parents)?$searchModel->parents->parent:null]) && ($user->id == $searchModel->created_by))
+                                            )
+                                        )
+                                    ),
                                     'delete' => Yii::$app->user->can('file.delete'),
                                     'download' => Yii::$app->user->can('file.download') ||
                                         (
                                             !empty($investigation) &&
                                             Yii::$app->user->can('employee',['company' => $investigation->company]) ||
-                                            Yii::$app->user->can('employee',['allfiles' => $model->parents->parent])
+                                            Yii::$app->user->can('employee',['allfiles' => !empty($searchModel->parents)?$searchModel->parents->parent:null])
                                         )
                                 ],
                                 'buttons' => [
