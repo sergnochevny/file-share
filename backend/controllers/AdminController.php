@@ -1,4 +1,7 @@
 <?php
+/**
+ * Copyright (c) 2017. AIT
+ */
 
 namespace backend\controllers;
 
@@ -17,7 +20,7 @@ use yii\web\NotFoundHttpException;
 /**
  * UserController implements the CRUD actions for User model.
  */
-class UserController extends BaseController
+class AdminController extends BaseController
 {
 
     public $layout = 'content';
@@ -67,7 +70,7 @@ class UserController extends BaseController
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = $searchModel->pagesize;
 
-        return $this->smartRender('index', [
+        return $this->smartRender('//user/index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

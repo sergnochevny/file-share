@@ -1,4 +1,7 @@
 <?php
+/**
+ * Copyright (c) 2017. AIT
+ */
 
 namespace backend\models\search;
 
@@ -13,7 +16,7 @@ use yii\rbac\Role;
 /**
  * UserSearch represents the model behind the search form about `common\models\User`.
  */
-class UserSearch extends User
+class AdminSearch extends User
 {
     public $pagesize = 10;
     public $searchname;
@@ -67,13 +70,10 @@ class UserSearch extends User
         }
 
         $query = static::find();
-        //admin can edit only company users
-
         $query
             ->leftJoin('auth_assignment', 'auth_assignment.user_id = user.id')
             ->leftJoin('auth_item', 'auth_item.name = auth_assignment.item_name')
-            ->where(['auth_item.type' => Item::TYPE_ROLE])
-            ->rightJoin('user_company', User::tableName() . '.[[id]] = [[user_company]].[[user_id]]');
+            ->where(['auth_item.type' => Item::TYPE_ROLE]);
 
         // add conditions that should always apply here
 
@@ -89,8 +89,8 @@ class UserSearch extends User
             // $query->where('0=1');
             return $dataProvider;
         }
-
         // grid filtering conditions
+
         $query->andFilterWhere([
             'user.id' => $this->id,
             'user.status' => $this->status,
