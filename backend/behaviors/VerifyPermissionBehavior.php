@@ -9,6 +9,7 @@ namespace backend\behaviors;
 use ait\auth\behaviors\ModelPermissionsBehavior;
 use backend\models\Investigation;
 use backend\models\User;
+use common\models\RecoverableActiveRecord;
 use common\models\UndeleteableActiveRecord;
 use Yii;
 use yii\base\ModelEvent;
@@ -47,7 +48,8 @@ class VerifyPermissionBehavior extends ModelPermissionsBehavior
             self::EVENT_VERIFY_FILE_ARCHIVE_PERMISSION => 'verifyFileArchivePermission',
             self::EVENT_VERIFY_FILE_DOWNLOAD_PERMISSION => 'verifyFileDownloadPermission',
             self::EVENT_VERIFY_FILE_MDOWNLOAD_PERMISSION => 'verifyFileMDownloadPermission',
-            UndeleteableActiveRecord::EVENT_BEFORE_ARCHIVE => 'beforeArchive'
+            UndeleteableActiveRecord::EVENT_BEFORE_ARCHIVE => 'beforeArchive',
+            RecoverableActiveRecord::EVENT_BEFORE_RECOVER => 'beforeRecover'
         ]);
     }
 
@@ -228,6 +230,15 @@ class VerifyPermissionBehavior extends ModelPermissionsBehavior
      * @return bool
      */
     public function beforeArchive(ModelEvent $event)
+    {
+        return $event->isValid = $this->checkPermission();
+    }
+
+    /**
+     * @param ModelEvent $event
+     * @return bool
+     */
+    public function beforeRecover(ModelEvent $event)
     {
         return $event->isValid = $this->checkPermission();
     }

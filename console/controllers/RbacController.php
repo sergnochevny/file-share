@@ -122,6 +122,7 @@ class RbacController extends Controller
 
 //permissions of foreign objects
                 'investigation.archive.all' => true,
+                'history.recover.all' => true,
             ]
         ],
         'admin' => [
@@ -156,6 +157,8 @@ class RbacController extends Controller
                 'investigation.archive.all' => false,
 
                 'file.archive.all' => true,
+                'file.upload.all' => true,
+                'file.multi-upload.all' => true,
             ]
         ],
         'full' => [

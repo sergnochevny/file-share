@@ -2,8 +2,8 @@
 
 namespace common\models;
 
-use common\models\traits\PermissionsModelTrait;
 use yii\base\InvalidCallException;
+use yii\base\ModelEvent;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -89,18 +89,24 @@ class History extends ActiveRecord
      */
     public function recover()
     {
-        if ($this->type == Company::$history_type) {
-            $model = Company::findOneIncludeHistory($this->parent);
-        } elseif ($this->type == Investigation::$history_type) {
-            $model = Investigation::findOneIncludeHistory($this->parent);
-        } elseif ($this->type == File::$history_type) {
-            $model = File::findOneIncludeHistory($this->parent);
+        $res = false;
+        if ($this->beforeRecover()) {
+            if ($this->type == Company::$history_type) {
+                $model = Company::findOneIncludeHistory($this->parent);
+            } elseif ($this->type == Investigation::$history_type) {
+                $model = Investigation::findOneIncludeHistory($this->parent);
+            } elseif ($this->type == File::$history_type) {
+                $model = File::findOneIncludeHistory($this->parent);
+            }
+            if (!empty($model)) {
+                if ($model->recover()) {
+                    $res = $this->afterRecover();
+                }
+            } else {
+                throw new InvalidCallException('Model must be instance of the HistoryActiveRecord class!');
+            }
         }
-        if (!empty($model)) {
-            return $model->recover();
-        } else {
-            throw new InvalidCallException('Model must be instance of the HistoryActiveRecord class!');
-        }
+        return $res;
     }
 
     /**
@@ -112,5 +118,17 @@ class History extends ActiveRecord
             ->viaTable('user_company', ['company_id' => 'company_id']);
     }
 
+    public function afterRecover()
+    {
+        $event = new ModelEvent;
+        $this->trigger(self::EVENT_AFTER_RECOVER, $event);
+        return $event->isValid;
+    }
 
+    public function beforeRecover()
+    {
+        $event = new ModelEvent;
+        $this->trigger(self::EVENT_BEFORE_RECOVER, $event);
+        return $event->isValid;
+    }
 }

@@ -149,7 +149,6 @@ class ArchiveCascadeBehavior extends Behavior
         /**
          * @var $file File
          */
-        $res = false;
         $file = $this->owner;
         if (!$file->isDeleted()) {
             if (!$file->isRecoverable()) {

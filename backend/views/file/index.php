@@ -81,11 +81,10 @@ $view = $this;
                         Url::to(['/file/multi-upload', 'parent' => $investigation->citrix_id], true) :
                         Url::to(['/file/multi-upload', 'parent' => $uploadModel->parent], true);
                     ?>
-                    <?php if (!empty($investigation)
-                        && (VerifyPermissionBehavior::canUpload($investigation, $uploadModel) || VerifyPermissionBehavior::canMUpload($investigation, $uploadModel))
-                        || Yii::$app->user->can('admin')
-                        || Yii::$app->user->can('sadmin')
-                    ): ?>
+                    <?php if (!empty($investigation) && (
+                        VerifyPermissionBehavior::canUpload($investigation, $uploadModel)
+                        || VerifyPermissionBehavior::canMUpload($investigation, $uploadModel)
+                    )): ?>
                         <?= $this->render('partials/_upload', ['model' => $uploadModel, 'action' => $url]) ?>
                     <?php endif; ?>
                 </div>
