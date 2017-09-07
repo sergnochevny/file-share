@@ -181,32 +181,4 @@ class UserController extends BaseController
         return $this->actionIndex();
     }
 
-    /**
-     * Shows only users who work on protus3
-     *
-     * @return mixed
-     */
-    public function actionProtus()
-    {
-        $this->setAdditionalQueryParams(['role_type' => Item::TYPE_ROLE]);
-        return $this->runAction('index');
-    }
-
-    /**
-     * Shows all users who do not belong to protus3 (i.e protus3's clients)
-     *
-     * @return mixed
-     */
-    public function actionOthers()
-    {
-        $this->setAdditionalQueryParams(['role_type' => Item::TYPE_CUSTOM_ROLE]);
-        return $this->runAction('index');
-    }
-
-    private function setAdditionalQueryParams(array $params)
-    {
-        $rq = Yii::$app->request;
-        $params = array_merge($rq->queryParams, $params);
-        $rq->setQueryParams($params);
-    }
 }
