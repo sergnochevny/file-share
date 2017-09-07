@@ -49,6 +49,7 @@ class RbacController extends Controller
         ['name' => 'wizard.update-types', 'description' => 'Wizard update types'],
         ['name' => 'wizard.company', 'description' => 'Wizard company'],
         ['name' => 'wizard.user', 'description' => 'Wizard users'],
+        ['name' => 'wizard.admin', 'description' => 'Wizard admins'],
         ['name' => 'wizard.company-users', 'description' => 'Wizard company user'],
         ['name' => 'wizard.investigation', 'description' => 'Wizard investigation'],
 
@@ -110,6 +111,7 @@ class RbacController extends Controller
             'permission' => [
                 'site.settings' => true,
                 'user.delete' => true,
+                'wizard.admin' => true,
                 'wizard.update-types' => true,
                 'wizard.investigation' => true,
                 'investigation.create' => true,
@@ -128,8 +130,6 @@ class RbacController extends Controller
         'admin' => [
             'permission' => [
                 'user.index' => true,
-                'user.others' => true,
-                'user.protus' => true,
                 'company.index' => true,
                 'company.create' => true,
                 'company.archive' => true,

@@ -48,13 +48,13 @@ $userCompany = !empty($user) ? $user->company : null;
                     'options' => ['icon' => 'icon-save'],
                 ];
                 $items[] = [
-                    'label' => 'Protus users',
-                    'url' => ['/user/protus'],
+                    'label' => 'Admins',
+                    'url' => ['/admin/index'],
                     'options' => ['icon' => 'icon-users'],
                 ];
                 $items[] = [
-                    'label' => 'Other users',
-                    'url' => ['/user/others'],
+                    'label' => 'Users',
+                    'url' => ['/user/index'],
                     'options' => ['icon' => 'icon-users'],
                 ];
                 $items[] = [

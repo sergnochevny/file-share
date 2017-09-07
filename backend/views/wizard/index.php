@@ -11,10 +11,11 @@ use yii\widgets\Pjax;
 $activeClass = ' active';
 $companyActive = isset($isCompany) ? $activeClass : '';
 $userActive = isset($isUser) ? $activeClass : '';
+$adminActive = isset($isAdmin) ? $activeClass : '';
 $investigationActive = isset($isInvestigation) ? $activeClass : '';
 $isUpdate = isset($isUpdate) ? $isUpdate : false;
 
-$col_xs_x = User::isSuperAdmin() ? 'col-xs-4' : 'col-xs-6';
+$col_xs_x = Yii::$app->user->can('sadmin') ? 'col-xs-3' : 'col-xs-6';
 
 //@todo consider to move in css file
 $this->registerCss('.investigation-types label {display: block;}');
@@ -52,6 +53,7 @@ $this->title = 'Wizard';
                             <div id="demo-form-wizard-1" class="form form-horizontal">
                                 <hr/>
                                 <ul class="steps">
+                                    <?php if (Yii::$app->user->can('wizard.company')): ?>
                                     <li class="step <?= $col_xs_x ?><?= $companyActive ?>">
                                         <a class="step-segment" href="<?= Url::to([
                                             '/wizard/company',
@@ -63,8 +65,10 @@ $this->title = 'Wizard';
                                             <strong class="hidden-xs">Company</strong>
                                         </div>
                                     </li>
+                                    <?php endif ?>
 
-                                    <?php if (!User::isClient()): ?>
+
+                                    <?php if (Yii::$app->user->can('wizard.user')): ?>
                                     <li class="step <?= $col_xs_x ?><?= $userActive ?>">
                                         <a class="step-segment" href="<?= Url::to(['/wizard/user'], true) ?>">
                                             <span class="step-icon icon icon-users"></span>
@@ -76,7 +80,19 @@ $this->title = 'Wizard';
                                     </li>
                                     <?php endif ?>
 
-                                    <?php if (!User::isAdmin()): ?>
+                                    <?php if (Yii::$app->user->can('wizard.admin')): ?>
+                                        <li class="step <?= $col_xs_x ?><?= $adminActive ?>">
+                                            <a class="step-segment" href="<?= Url::to(['/wizard/admin'], true) ?>">
+                                                <span class="step-icon icon icon-users"></span>
+                                            </a>
+
+                                            <div class="step-content">
+                                                <strong class="hidden-xs">Admins</strong>
+                                            </div>
+                                        </li>
+                                    <?php endif ?>
+
+                                    <?php if (Yii::$app->user->can('wizard.investigation')): ?>
                                     <li class="step <?= $col_xs_x ?><?= $investigationActive ?>">
                                         <a class="step-segment" href="<?= Url::to(['/wizard/investigation'], true) ?>">
                                             <span class="step-icon icon icon-folder-open-o"></span>

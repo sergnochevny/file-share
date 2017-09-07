@@ -62,6 +62,10 @@ class UserSearch extends User
      */
     public function search($params)
     {
+        $user = \Yii::$app->user->identity;
+        /**
+         * @var User $user
+         */
         if (!empty($this->formName()) && !isset($params[$this->formName()])) {
             $params = [$this->formName() => $params];
         }
@@ -72,8 +76,12 @@ class UserSearch extends User
         $query
             ->leftJoin('auth_assignment', 'auth_assignment.user_id = user.id')
             ->leftJoin('auth_item', 'auth_item.name = auth_assignment.item_name')
-            ->where(['auth_item.type' => Item::TYPE_ROLE])
-            ->rightJoin('user_company', User::tableName() . '.[[id]] = [[user_company]].[[user_id]]');
+            ->where(['auth_item.type' => Item::TYPE_CUSTOM_ROLE]);
+        if (!empty($user->company)){
+            $query
+                ->rightJoin('user_company', 'user.id = user_company.user_id')
+                ->where(['user_company.id'=>$user->company->id]);
+        }
 
         // add conditions that should always apply here
 
