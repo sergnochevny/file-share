@@ -21,18 +21,23 @@
         });
     }
 
+    function clearFormInputs(){
+        debugger;
+        $(userForm).find('#inputs').val('');
+    }
+
     function updateFormOnListChange(list, form) {
         $(document).on('change', list, function (e) {
             e.preventDefault();
             var id = $(this).val(),
                 createUrl = $(form).data('createUrl'),
                 data = {};
-
             if (id) {
                 data.id = id;
+                pjaxSendRequest(createUrl, 'get', data);
+            } else {
+                clearFormInputs();
             }
-
-            pjaxSendRequest(createUrl, 'get', data);
         });
     }
 
