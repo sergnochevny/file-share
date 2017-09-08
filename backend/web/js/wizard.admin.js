@@ -22,8 +22,7 @@
     }
 
     function clearFormInputs(){
-        debugger;
-        $(userForm).find('#inputs').val('');
+        $(userForm).find('#inputs input').val('');
     }
 
     function updateFormOnListChange(list, form) {

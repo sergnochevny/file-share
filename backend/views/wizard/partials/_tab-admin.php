@@ -82,8 +82,8 @@ use yii\helpers\Html;
 
     <div class="clearfix"></div>
     <hr/>
-    <div class="row">
-        <div id="inputs" class="col-sm-6">
+    <div id="inputs" class="row">
+        <div class="col-sm-6">
             <?= $form->field($userForm, 'username')->textInput(['placeholder' => 'User Name']) ?>
             <?= $form->field($userForm, 'email')->textInput(['placeholder' => 'Actual Email Address']) ?>
             <?= $form->field($userForm, 'password')->passwordInput(['placeholder' => 'Your Password']) ?>

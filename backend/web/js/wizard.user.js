@@ -21,9 +21,8 @@
         });
     }
 
-    function clearFormInputs(){
-        debugger;
-        $(userForm).find('#inputs').val('');
+    function clearFormInputs() {
+        $(userForm).find('#inputs input').val('');
     }
 
     function updateFormOnListChange(list, form) {
