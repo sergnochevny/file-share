@@ -80,7 +80,7 @@ class UserSearch extends User
         if (!empty($user->company)) {
             $query
                 ->rightJoin('user_company', 'user.id = user_company.user_id')
-                ->where(['user_company.id' => $user->company->id]);
+                ->where(['user_company.company_id' => $user->company->id]);
         }
 
         // add conditions that should always apply here
