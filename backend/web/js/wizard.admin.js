@@ -21,6 +21,10 @@
         });
     }
 
+    function clearFormInputs(){
+        $(userForm).find('#inputs input').val('');
+    }
+
     function updateFormOnListChange(list, form) {
         $(document).on('change', list, function (e) {
             e.preventDefault();
@@ -30,9 +34,10 @@
 
             if (id) {
                 data.id = id;
+                pjaxSendRequest(createUrl, 'get', data);
+            } else {
+                clearFormInputs();
             }
-
-            pjaxSendRequest(createUrl, 'get', data);
         });
     }
 
