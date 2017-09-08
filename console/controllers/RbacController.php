@@ -155,7 +155,7 @@ class RbacController extends Controller
                 'investigation.create' => false,
                 'investigation.update' => false,
                 'investigation.complete' => true,
-                'investigation.archive' => false,
+                'investigation.archive' => true,
                 'investigation-type.index' => true,
                 'file.delete' => true,
 
@@ -204,7 +204,6 @@ class RbacController extends Controller
                 'wizard.investigation' => true,
                 'investigation.create' => true,
                 'investigation.update' => true,
-                'investigation.archive' => true,
                 'history.index' => true,
                 'file.index' => true,
                 'file.archive' => true,
