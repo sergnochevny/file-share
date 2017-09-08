@@ -178,7 +178,7 @@ class UserController extends BaseController
             Yii::$app->session->setFlash('error', $e->getMessage());
         }
 
-        return $this->actionIndex();
+        return $this->redirect(['index']);
     }
 
 }
