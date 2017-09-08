@@ -76,7 +76,9 @@ Pjax::begin([
                 'width' => 150,
             ],
             'visibleButtons' => [
-                'edit' => \Yii::$app->user->can('wizard.investigation'),
+                'edit' => function($model) {
+                   return Yii::$app->user->can('employee', ['investigation' => $model]);
+                },
                 'delete' => \Yii::$app->user->can('investigation.archive'),
                 'view' => \Yii::$app->user->can('file.index'),
             ],
