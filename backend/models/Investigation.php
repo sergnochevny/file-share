@@ -6,6 +6,7 @@ namespace backend\models;
 use backend\behaviors\CitrixFolderBehavior;
 use backend\behaviors\HistoryBehavior;
 use backend\behaviors\NotifyBehavior;
+use backend\behaviors\VerifyPermissionBehavior;
 use backend\models\traits\ExtendInvestigationFindConditionTrait;
 use yii\base\ModelEvent;
 use yii\db\ActiveRecord;
@@ -108,6 +109,9 @@ class Investigation extends \common\models\Investigation
     public function behaviors()
     {
         $behaviors = parent::behaviors();
+        $behaviors['VerifyPermissionBehavior'] = [
+            'class' => VerifyPermissionBehavior::className()
+        ];
         $behaviors['citrixFolderBehavior'] = [
             'class' => CitrixFolderBehavior::className(),
             'attribute' => 'citrix_id',
