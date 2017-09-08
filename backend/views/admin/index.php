@@ -103,14 +103,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                 $suff = [
                                     'sadmin' => ['class' => 'success', 'label' => 'Super User'],
                                     'admin' => ['class' => 'warning', 'label' => 'Admin'],
-                                    'user' => ['class' => '', 'label' => 'All'],
-                                    'all' => ['class' => '', 'label' => 'All'],
                                 ];
                                 //workaround for rename client
                                 $role = $model->{$column->attribute};
-                                $value = '<span class="' . $suff[$role]['class'] . '-text" >' .
-                                    $suff[$role]['label'] .
-                                    '</span >';
+                                $value = $role;
+                                if (isset($suff[$role])) {
+                                    $value = '<span class="' . $suff[$role]['class'] . '-text" >' .
+                                        $suff[$role]['label'] .
+                                        '</span >';
+                                }
                                 return $value;
                             }
                         ],
