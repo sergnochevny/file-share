@@ -21,7 +21,8 @@ use yii\helpers\Html;
         'action' => ['/wizard/admin', 'id' => $isUpdate ? $userForm->getUser()->id : null],
         'options' => [
             'data-pjax' => true,
-            'data-create-url' => Url::to(['/wizard/admin'], true), //when select prompt in user send request to create url
+            'data-create-url' => Url::to(['/wizard/admin'], true),
+            //when select prompt in user send request to create url
         ],
     ]) ?>
     <?php if (Yii::$app->user->can('admin')): ?>
@@ -52,32 +53,36 @@ use yii\helpers\Html;
         </div>
     <?php endif ?>
 
-    <div class="col-lg-6 col-lg-offset-3" id="user-list-container" <?=
-    $isUpdate ? '' : 'style="display: none"'
-    ?>>
-        <h2 align="center">
-            <span class="d-ib">Select Users</span>
-        </h2>
+    <?php if ($isUpdate) : ?>
+        <?= $form->field($userForm, 'user')->hiddenInput(['placeholder' => 'User'])->label(false) ?>
+    <?php else : ?>
+        <div class="col-lg-6 col-lg-offset-3" id="user-list-container" <?=
+        $isUpdate ? '' : 'style="display: none"'
+        ?>>
+            <h2 align="center">
+                <span class="d-ib">Select Users</span>
+            </h2>
 
-        <div class="form-group">
-            <?= DepDrop::widget([
-                'name' => 'user',
-                'data' => $isUpdate
-                    ? $userForm->getUser()->getColleaguesList()
-                    : [],
-                'pluginOptions' => [
-                    'depends' => ['company-list', 'user-role'],
-                    'placeholder' => 'Create a New User',
-                    'url' => Url::to(['/wizard/company-users'])
-                ],
-                'options' => [
-                    'id' => 'user-list',
-                    'prompt' => 'Create a New User',
-                    'options' => [$selectedUser => ['selected' => 'selected']]
-                ],
-            ]) ?>
+            <div class="form-group">
+                <?= DepDrop::widget([
+                    'name' => 'user',
+                    'data' => $isUpdate
+                        ? $userForm->getUser()->getColleaguesList()
+                        : [],
+                    'pluginOptions' => [
+                        'depends' => ['company-list', 'user-role'],
+                        'placeholder' => 'Create a New User',
+                        'url' => Url::to(['/wizard/company-users'])
+                    ],
+                    'options' => [
+                        'id' => 'user-list',
+                        'prompt' => 'Create a New User',
+                        'options' => [$selectedUser => ['selected' => 'selected']]
+                    ],
+                ]) ?>
+            </div>
         </div>
-    </div>
+    <?php endif; ?>
 
 
     <div class="clearfix"></div>
