@@ -10,7 +10,9 @@
     %}
     <tr class="fade" data-key="{%= file.id %}">
         <td>
-            <input type="checkbox" class="multi-download" name="selection[]" value="{%= file.id %}">
+            <div class="rounded">
+                <input type="checkbox" class="multi-download" name="selection[]" value="{%= file.id %}">
+            </div>
         </td>
         <td class="sorting">
             <div class="file">
