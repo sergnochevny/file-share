@@ -53,7 +53,8 @@
       "php yii rbac/init --interactive=0",
       "rm -rf backend/web/assets/*",
       "php yii cache/flush-all",
-      "php yii auth/rbac/clear-cache"
+      "php yii auth/rbac/clear-cache",
+      "yii\\composer\\Installer::postInstall"
     ],
     "post-install-cmd": [
       "php yii migrate --interactive=0",
@@ -61,7 +62,17 @@
       "php yii rbac/init --interactive=0",
       "rm -rf backend/web/assets/*",
       "php yii cache/flush-all",
-      "php yii auth/rbac/clear-cache"
+      "php yii auth/rbac/clear-cache",
+      "yii\\composer\\Installer::postInstall"
     ]
+  },
+  "extra": {
+    "yii\\composer\\Installer::postInstall": {
+      "copyFiles": [
+        {
+          "backend/config/env-local.def.php": "backend/config/env-local.php"
+        }
+      ]
+    }
   }
 }
