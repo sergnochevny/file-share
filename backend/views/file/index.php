@@ -189,7 +189,7 @@ $view = $this;
                                 'headerOptions' => [
                                     'class' => 'action-column'
                                 ],
-                                'header' => Yii::$app->user->can('file.multi-download')
+                                'header' =>  \Yii::$app->user->can($permission);
                                     ? '<a class="btn btn-warning btn-xs" id="download-all">Download selected</a>'
                                     : '',
                                 'contentOptions' => [

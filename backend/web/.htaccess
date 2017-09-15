@@ -21,9 +21,9 @@ RewriteEngine On
 #RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
 #RewriteRule ^ http%{ENV:protossl}://%1%{REQUEST_URI} [L,R=301]
 #
-#RewriteCond %{HTTPS} off
-#RewriteCond %{HTTP:XForwarded} !https
-#RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:XForwarded} !https
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 RewriteCond %{REQUEST_URI} !\.(css|jpg|jpeg|gif|png|zip|rar|doc|xls|js|tif|tiff|docx|xlsx|ico|map|gz|svg|woff|woff2|ttf)$
 RewriteCond %{REQUEST_FILENAME} !-f

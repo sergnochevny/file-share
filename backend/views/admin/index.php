@@ -34,9 +34,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-xs-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <?= Html::a(Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-plus icon-lg icon-fw']),
-                        ['class' => 'btn-label']) . ' Add a New Admin', Url::to(['/wizard/admin']),
-                    ['class' => 'btn btn-sm btn-labeled arrow-success']) ?>
+                <?php if (\Yii::$app->user->can('wizard.admin')) : ?>
+                    <?= Html::a(Html::tag('span', Html::tag('span', '', ['class' => 'icon icon-plus icon-lg icon-fw']),
+                            ['class' => 'btn-label']) . ' Add a New Admin', Url::to(['/wizard/admin']),
+                        ['class' => 'btn btn-sm btn-labeled arrow-success'])
+                    ?>
+                <?php endif; ?>
             </div>
             <div class="form-inline no-footer">
 
