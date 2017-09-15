@@ -63,7 +63,7 @@ final class UserForm extends Model
                     return $form->role == 'client';
                 }
             ],
-            [['email', 'username'], 'required'],
+            [['email', 'username', 'first_name'], 'required'],
             [['password', 'password_repeat'], 'required', 'on' => self::SCENARIO_CREATE],
             [
                 'password_repeat',
@@ -158,6 +158,12 @@ final class UserForm extends Model
                 ->indexBy('name')
                 ->where(['type' => Item::TYPE_CUSTOM_ROLE])
                 ->column();
+            //need sort by access rights DESC
+            $this->_customRoles = [
+                'full' => 'Full Acc',
+                'shared' => 'Shared Acc',
+                'individual' => 'Individual Acc'
+            ];
         }
         return $this->_customRoles;
     }
