@@ -86,15 +86,15 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         [
                             'class' => 'yii\grid\ActionColumn',
-                            'template' => '{recovery}',
+                            'template' => '{recover}',
                             'visible' => \Yii::$app->user->can('history.recover'),
                             'buttons' => [
-                                'recovery' => function ($url, $model) {
-                                    $content = Html::a('Recovery', Url::to(['/history/recover', 'id' => $model->id], true),
+                                'recover' => function ($url, $model) {
+                                    $content = Html::a('Recover', Url::to(['/history/recover', 'id' => $model->id], true),
                                         [
                                             'class' => "btn btn-primary btn-xs",
-                                            'title' => 'Recovery',
-                                            'aria-label' => "Recovery",
+                                            'title' => 'Recover',
+                                            'aria-label' => "Recover",
                                             'data-method' => 'post',
                                             'data-pjax' => 1
                                         ]
