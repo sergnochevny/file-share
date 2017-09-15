@@ -63,7 +63,7 @@ final class UserForm extends Model
                     return $form->role == 'client';
                 }
             ],
-            [['email', 'username'], 'required'],
+            [['email', 'username', 'first_name'], 'required'],
             [['password', 'password_repeat'], 'required', 'on' => self::SCENARIO_CREATE],
             [
                 'password_repeat',
