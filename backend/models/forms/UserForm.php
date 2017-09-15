@@ -158,6 +158,12 @@ final class UserForm extends Model
                 ->indexBy('name')
                 ->where(['type' => Item::TYPE_CUSTOM_ROLE])
                 ->column();
+            //need sort by access rights DESC
+            $this->_customRoles = [
+                'full' => 'Full Acc',
+                'shared' => 'Shared Acc',
+                'individual' => 'Individual Acc'
+            ];
         }
         return $this->_customRoles;
     }
