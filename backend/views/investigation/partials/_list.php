@@ -77,7 +77,7 @@ Pjax::begin([
             ],
             'visibleButtons' => [
                 'edit' => function($model) {
-                   return Yii::$app->user->can('employee', ['investigation' => $model]);
+                   return Yii::$app->user->can('investigation.update.all') || Yii::$app->user->can('employee', ['investigation' => $model]);
                 },
                 'delete' => \Yii::$app->user->can('investigation.archive'),
                 'view' => \Yii::$app->user->can('file.index'),

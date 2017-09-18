@@ -83,6 +83,7 @@ class RbacController extends Controller
 
         ['name' => 'investigation.find.all', 'description' => 'Model permission all investigations list'],
         ['name' => 'investigation.find.group', 'description' => 'Model permission group investigations list'],
+        ['name' => 'investigation.update.all', 'description' => 'Model permission all investigations update'],
         ['name' => 'investigation.complete.all', 'description' => 'Model permission all investigations completion'],
         ['name' => 'investigation.complete.group', 'description' => 'Model permission group investigations completion'],
         ['name' => 'investigation.archive.all', 'description' => 'Model permission all investigations archiving'],
@@ -130,6 +131,7 @@ class RbacController extends Controller
                 'wizard.investigation' => true,
                 'investigation.create' => true,
                 'investigation.update' => true,
+                'investigation.update.all' => true,
                 'investigation-type.create' => true,
                 'investigation-type.update' => true,
                 'investigation-type.delete' => true,
