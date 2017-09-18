@@ -5,6 +5,7 @@ use backend\models\User;
 use backend\widgets\ActiveForm;
 use kartik\depdrop\DepDrop;
 use yii\helpers\Html;
+use yii\widgets\MaskedInput;
 
 /** @var $this \yii\web\View */
 /** @var $userForm \backend\models\forms\UserForm */
@@ -96,7 +97,11 @@ use yii\helpers\Html;
         <div class="col-sm-6">
             <?= $form->field($userForm, 'first_name')->textInput(['placeholder' => 'First Name']) ?>
             <?= $form->field($userForm, 'last_name')->textInput(['placeholder' => 'Last Name']) ?>
-            <?= $form->field($userForm, 'phone_number')->textInput(['placeholder' => 'Phone Number']) ?>
+            <?= $form->field($userForm, 'phone_number')->widget(MaskedInput::className(), [
+                'mask' => '(999) 999-9999',
+                'clientOptions' => ['removeMaskOnSubmit' => true,],
+                'options' => ['class' => 'form-control']
+            ]) ?>
         </div>
         <div class="clearfix"></div>
         <hr/>
