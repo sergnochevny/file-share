@@ -17,7 +17,7 @@ use yii\helpers\Html;
 
 <div id="tab-4" class="tab-pane active">
     <?php $form = ActiveForm::begin([
-        'id' => 'user-form',
+        'id' => 'admin-form',
         'action' => ['/wizard/admin', 'id' => $isUpdate ? $userForm->getUser()->id : null],
         'options' => [
             'data-pjax' => true,
@@ -25,30 +25,16 @@ use yii\helpers\Html;
             //when select prompt in user send request to create url
         ],
     ]) ?>
-    <?php if (Yii::$app->user->can('admin')): ?>
-        <?php if (Yii::$app->user->can('sadmin')): ?>
-            <div class="col-lg-6 col-lg-offset-3">
-                <h2 align="center">
-                    <span class="d-ib">Select Role</span>
-                </h2>
-
-                <div class="form-group<?= $userForm->hasErrors('role') ? ' has-error' : '' ?>">                            <?php /*todo get this list from db */ ?>
-                    <?= Html::activeDropDownList($userForm, 'role', $userForm->adminRoles,
-                        ['id' => 'user-role', 'class' => 'form-control', 'prompt' => 'Select a Role']); ?>
-                    <?= Html::error($userForm, 'role', ['class' => 'help-block']) ?>
-                </div>
-            </div>
-        <?php endif ?>
-
-        <div class="col-lg-6 col-lg-offset-3" id="company-list-container" <?=
-        $userForm->company_id || User::isAdmin() ? '' : 'style="display: none"'
-        ?>>
+    <?php if (Yii::$app->user->can('sadmin')): ?>
+        <div class="col-lg-6 col-lg-offset-3">
             <h2 align="center">
-                <span class="d-ib">Select Company</span>
+                <span class="d-ib">Select Role</span>
             </h2>
 
-            <div class="form-group">
-                <?= $this->render('_select-company', ['model' => $userForm]) ?>
+            <div class="form-group<?= $userForm->hasErrors('role') ? ' has-error' : '' ?>">                            <?php /*todo get this list from db */ ?>
+                <?= Html::activeDropDownList($userForm, 'role', $userForm->adminRoles,
+                    ['id' => 'admin-role', 'class' => 'form-control', 'prompt' => 'Select a Role']); ?>
+                <?= Html::error($userForm, 'role', ['class' => 'help-block']) ?>
             </div>
         </div>
     <?php endif ?>
@@ -56,7 +42,7 @@ use yii\helpers\Html;
     <?php if ($isUpdate) : ?>
         <?= $form->field($userForm, 'user')->hiddenInput(['placeholder' => 'User'])->label(false) ?>
     <?php else : ?>
-        <div class="col-lg-6 col-lg-offset-3" id="user-list-container" <?=
+        <div class="col-lg-6 col-lg-offset-3" id="admin-list-container" <?=
         $isUpdate ? '' : 'style="display: none"'
         ?>>
             <h2 align="center">
@@ -70,12 +56,12 @@ use yii\helpers\Html;
                         ? $userForm->getUser()->getColleaguesList()
                         : [],
                     'pluginOptions' => [
-                        'depends' => ['company-list', 'user-role'],
+                        'depends' => ['admin-role'],
                         'placeholder' => 'Create a New User',
                         'url' => Url::to(['/wizard/company-users'])
                     ],
                     'options' => [
-                        'id' => 'user-list',
+                        'id' => 'admin-list',
                         'prompt' => 'Create a New User',
                         'options' => [$selectedUser => ['selected' => 'selected']]
                     ],

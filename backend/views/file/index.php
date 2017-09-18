@@ -30,34 +30,34 @@ if (!empty($investigation)) {
 $user = Yii::$app->user->identity;
 $view = $this;
 ?>
-    <div class="title-bar">
+<div class="title-bar">
 
-        <div class="title-bar-actions">
-            <?= Html::a(
+    <div class="title-bar-actions">
+        <?= Html::a(
+            Html::tag(
+                'span',
                 Html::tag(
                     'span',
-                    Html::tag(
-                        'span',
-                        '',
-                        ['class' => 'icon icon-chevron-circle-left icon-lg icon-fw']
-                    ),
-                    ['class' => 'btn-label']
-                ) . ' Back',
-                Url::previous(),
-                ['class' => 'btn btn-labeled arrow-default']
-            )
-            ?>
-        </div>
-        <h1 class="title-bar-title">
-            <span class="d-ib"><span class="icon icon-save"></span> <?= Html::encode($this->title) ?></span>
-        </h1>
-
-        <p class="title-bar-description">
-            <?php if (!empty($investigation)) : ?>
-                <small>Applicant details</small>
-            <?php endif ?>
-        </p>
+                    '',
+                    ['class' => 'icon icon-chevron-circle-left icon-lg icon-fw']
+                ),
+                ['class' => 'btn-label']
+            ) . ' Back',
+            Url::previous(),
+            ['class' => 'btn btn-labeled arrow-default']
+        )
+        ?>
     </div>
+    <h1 class="title-bar-title">
+        <span class="d-ib"><span class="icon icon-save"></span> <?= Html::encode($this->title) ?></span>
+    </h1>
+
+    <p class="title-bar-description">
+        <?php if (!empty($investigation)) : ?>
+            <small>Applicant details</small>
+        <?php endif ?>
+    </p>
+</div>
 
 <div class="row gutter-xs">
     <div class="col-xs-12">
@@ -82,9 +82,9 @@ $view = $this;
                         Url::to(['/file/multi-upload', 'parent' => $uploadModel->parent], true);
                     ?>
                     <?php if (!empty($investigation) && (
-                        VerifyPermissionBehavior::canUpload($investigation, $uploadModel)
-                        || VerifyPermissionBehavior::canMUpload($investigation, $uploadModel)
-                    )): ?>
+                            VerifyPermissionBehavior::canUpload($investigation, $uploadModel)
+                            || VerifyPermissionBehavior::canMUpload($investigation, $uploadModel)
+                        )): ?>
                         <?= $this->render('partials/_upload', ['model' => $uploadModel, 'action' => $url]) ?>
                     <?php endif; ?>
                 </div>
@@ -124,7 +124,7 @@ $view = $this;
                                             Url::to(['/file/multi-download', 'parent' => $investigation->citrix_id],
                                                 true) :
                                             Url::to(['/file/multi-download', 'parent' => $uploadModel->parent], true),
-                                            true
+                                        true
                                     ),
                                     'data-alert' => 'Please select documents to download.',
                                 ]
@@ -189,20 +189,32 @@ $view = $this;
                                 'headerOptions' => [
                                     'class' => 'action-column'
                                 ],
-                                'header' => Yii::$app->user->can('file.multi-download')
+                                'header' => \Yii::$app->user->can($permission)
                                     ? '<a class="btn btn-warning btn-xs" id="download-all">Download selected</a>'
                                     : '',
                                 'contentOptions' => [
                                     'width' => (Yii::$app->user->can('file.multi-download')) ? 220 : 150
                                 ],
                                 'visibleButtons' => [
-                                    'archive' =>(
+                                    'archive' => (
                                         Yii::$app->user->can('file.archive.all') ||
                                         (
                                             Yii::$app->user->can('file.archive') &&
                                             (
-                                                (!empty($investigation) && Yii::$app->user->can('employee', ['investigation' => $investigation])) ||
-                                                (Yii::$app->user->can('employee', ['allfiles' => !empty($searchModel->parents)?$searchModel->parents->parent:null]) && ($user->id == $searchModel->created_by))
+                                                (!empty($investigation) && Yii::$app->user->can(
+                                                        'employee',
+                                                        ['investigation' => $investigation])
+                                                ) ||
+                                                (Yii::$app->user->can(
+                                                        'employee',
+                                                        [
+                                                            'allfiles' => !empty($searchModel->parents)
+                                                                ? $searchModel->parents->parent
+                                                                : null
+                                                        ]
+                                                    )
+                                                    && ($user->id == $searchModel->created_by)
+                                                )
                                             )
                                         )
                                     ),
@@ -210,8 +222,9 @@ $view = $this;
                                     'download' => Yii::$app->user->can('file.download') ||
                                         (
                                             !empty($investigation) &&
-                                            Yii::$app->user->can('employee',['company' => $investigation->company]) ||
-                                            Yii::$app->user->can('employee',['allfiles' => !empty($searchModel->parents)?$searchModel->parents->parent:null])
+                                            Yii::$app->user->can('employee', ['company' => $investigation->company]) ||
+                                            Yii::$app->user->can('employee',
+                                                ['allfiles' => !empty($searchModel->parents) ? $searchModel->parents->parent : null])
                                         )
                                 ],
                                 'buttons' => [
@@ -263,11 +276,11 @@ $view = $this;
                             ],
                         ],
                         'pager' => [
-                        'options' => [
-                            'class' => 'pagination pull-right',
-                            'style' => 'margin-right:15px'
+                            'options' => [
+                                'class' => 'pagination pull-right',
+                                'style' => 'margin-right:15px'
+                            ]
                         ]
-                    ],
                     ]) ?>
 
                 </div>
