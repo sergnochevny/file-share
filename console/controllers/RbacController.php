@@ -180,6 +180,7 @@ class RbacController extends Controller
         'full' => [
             'role' => ['shared'],
             'permission' => [
+                'user.index' => true,
                 'investigation.find.all' => true,
                 'history.find.all' => true
             ]
