@@ -87,7 +87,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'class' => 'yii\grid\ActionColumn',
                             'template' => '{recover}',
-                            'visible' => \Yii::$app->user->can('history.recover'),
+                            'visibleButtons' => [
+                                'recover' => function ($model) {
+                                    return \Yii::$app->user->can('history.recover.all')
+                                        || (\Yii::$app->user->can('history.recover') && $model->created_by == Yii::$app->user->getId());
+                                },
+                            ],
                             'buttons' => [
                                 'recover' => function ($url, $model) {
                                     $content = Html::a('Recover', Url::to(['/history/recover', 'id' => $model->id], true),
