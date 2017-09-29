@@ -11,7 +11,7 @@
 
     $( window ).on('keydown', function( event ){
         //F5 or Ctrl+R
-        if ( event.keyCode == 116 || ( event.ctrlKey && event.keyCode == 82 ) )
+        if ( event.keyCode === 116 || ( event.ctrlKey && event.keyCode === 82 ) )
         refresh = true;
     });
 

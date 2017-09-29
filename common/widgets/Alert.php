@@ -1,9 +1,9 @@
 <?php
 namespace common\widgets;
 
+use backend\assets\AlertHelperAsset;
 use Yii;
 use yii\bootstrap\Html;
-use yii\web\JqueryAsset;
 
 /**
  * Alert widget renders a message from session flash. All flash messages are displayed
@@ -77,7 +77,7 @@ class Alert extends \yii\bootstrap\Widget
             }
             echo Html::endTag('div');
 
-            \backend\assets\AlertHelperAsset::register($this->getView());
+            AlertHelperAsset::register($this->getView());
 
         }
     }
