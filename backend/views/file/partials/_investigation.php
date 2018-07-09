@@ -1,6 +1,6 @@
 <?php
 
-use ait\utilities\helpers\Url;
+use sn\utilities\helpers\Url;
 use backend\models\Investigation;
 use backend\models\User;
 use yii\helpers\Html;

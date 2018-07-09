@@ -1,14 +1,14 @@
 {
-  "name": "ait/protus",
-  "description": "Protus 3",
+  "name": "sn/file_share",
+  "description": "file_share 3",
   "keywords": [
-    "Protus"
+    "file_share"
   ],
-  "homepage": "http://ait.com/",
+  "homepage": "http://sn.com/",
   "type": "project",
   "license": "BSD-3-Clause",
   "support": {
-    "issues": "http://ait.com/"
+    "issues": "http://sn.com/"
   },
   "minimum-stability": "dev",
   "require": {
@@ -19,14 +19,14 @@
     "yiisoft/yii2-swiftmailer": "~2.0.0",
     "mdmsoft/yii2-admin": "~2.0",
     "kartik-v/yii2-widget-depdrop": "^1.0.0",
-    "ait/keystorage": "^1.0.2",
+    "sn/keystorage": "^1.0.2",
     "bower/ext-lib": "^1.0.1",
     "yii2tech/ar-linkmany": "^1.0",
-    "ait/citrix": "^1.0.17",
+    "sn/citrix": "^1.0.17",
     "kartik-v/yii2-password": "^1.5",
-    "ait/yii2-fileupload":"^1.0.2",
+    "sn/yii2-fileupload":"^1.0.2",
     "yiisoft/yii2-coding-standards": "^2.0",
-    "ait/auth": "dev-master"
+    "sn/auth": "dev-master"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.0.0",
@@ -48,18 +48,18 @@
   "scripts": {
     "post-create-cmd": "php init --env=Development --overwrite=n",
     "post-update-cmd": [
-      "php yii migrate --interactive=0",
-      "php yii auth/rbac/init --interactive=0",
-      "php yii rbac/init --interactive=0",
+      "php yii migrate --interactive=n",
+      "php yii auth/rbac/init --interactive=n",
+      "php yii rbac/init --interactive=n",
       "rm -rf backend/web/assets/*",
       "php yii cache/flush-all",
       "php yii auth/rbac/clear-cache",
       "yii\\composer\\Installer::postInstall"
     ],
     "post-install-cmd": [
-      "php yii migrate --interactive=0",
-      "php yii auth/rbac/init --interactive=0",
-      "php yii rbac/init --interactive=0",
+      "php yii migrate --interactive=n",
+      "php yii auth/rbac/init --interactive=n",
+      "php yii rbac/init --interactive=n",
       "rm -rf backend/web/assets/*",
       "php yii cache/flush-all",
       "php yii auth/rbac/clear-cache",

@@ -14,7 +14,7 @@ return [
     'controllerMap' => [
         'migrate-keystorage' => [
             'class' => 'yii\console\controllers\MigrateController',
-            'migrationPath' => '@vendor/ait/keystorage/migrations',
+            'migrationPath' => '@vendor/sn/keystorage/migrations',
         ]
     ],
     'components' => [

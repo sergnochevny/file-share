@@ -1,7 +1,6 @@
 ## How to install ##
 
 ```
-git clone git@gitlab.ait.com:ait/protus.git
 ```
 after cloning run in shell
 ```
@@ -25,7 +24,7 @@ to up rbac tables
 And then init rbac rules and create first user admin
 format: ```username:email:password-8-chars-min```
 ```
-./yii protus/init admin:email@email.com:12345678
+./yii file_share/init admin:email@email.com:12345678
 ```
 
 And last...

@@ -7,7 +7,7 @@ return [
             'identityClass' => 'common\models\User',
         ],
         'authManager' => [
-            'class' => 'ait\rbac\DbManager',
+            'class' => 'sn\rbac\DbManager',
             'cache' => [
                 'class' => 'yii\caching\FileCache',
                 'cachePath' => '@backend/runtime/cache'
@@ -19,12 +19,12 @@ return [
             'cachePath' => '@backend/runtime/cache'
         ],
         'keyStorage' => [
-            'class' => 'ait\keystorage\components\KeyStorage',
+            'class' => 'sn\keystorage\components\KeyStorage',
         ],
     ],
     'modules' => [
         'auth' => [
-            'class' => 'ait\auth\Module',
+            'class' => 'sn\auth\Module',
             'viewPath' => '@backend/views/auth'
         ],
     ],

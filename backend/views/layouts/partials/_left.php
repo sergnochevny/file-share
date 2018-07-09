@@ -1,7 +1,7 @@
 <?php
 
-use ait\auth\widgets\Menu;
-use ait\utilities\helpers\Url;
+use sn\auth\widgets\Menu;
+use sn\utilities\helpers\Url;
 use backend\models\Company;
 
 

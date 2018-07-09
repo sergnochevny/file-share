@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2017. AIT
+ * Copyright (c) 2017. sn
  */
 
 /**
@@ -10,7 +10,7 @@
  * @var $fb_ref boolean
  * */
 
-use ait\auth\models\forms\SignUpForm;
+use sn\auth\models\forms\SignUpForm;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 

@@ -1,12 +1,12 @@
 <?php
 
-use ait\utilities\helpers\Url;
+use sn\utilities\helpers\Url;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model ait\auth\models\forms\LoginForm */
+/* @var $model sn\auth\models\forms\LoginForm */
 
 $this->title = 'Sign In';
 

@@ -1,6 +1,6 @@
 <?php
 
-use ait\utilities\helpers\Url;
+use sn\utilities\helpers\Url;
 use yii\helpers\Html;
 use backend\models\Company;
 

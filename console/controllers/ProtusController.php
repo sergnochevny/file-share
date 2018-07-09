@@ -193,7 +193,7 @@ class ProtusController extends Controller
     }
 
     /**
-     * Creates user and assigns a role. Usage: protus/create-user username:email:password:role
+     * Creates user and assigns a role. Usage: file_share/create-user username:email:password:role
      *
      * @param $userData
      * @return bool|int

@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use ait\utilities\helpers\Url;
+use sn\utilities\helpers\Url;
 use backend\actions\DownloadAction;
 use backend\behaviors\RememberUrlBehavior;
 use backend\behaviors\VerifyPermissionBehavior;

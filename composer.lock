@@ -7,28 +7,28 @@
     "content-hash": "3fb9a03a21e8a20b8e63bad16501cef5",
     "packages": [
         {
-            "name": "ait/auth",
+            "name": "sn/auth",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@gitlab.ait.com:ait/auth.git",
+                "url": "git@gitlab.sn.com:sn/auth.git",
                 "reference": "e8d4581a57698a766b3b34030fc716485a864a9d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/auth/9999999-dev/e8d4581a57698a766b3b34030fc716485a864a9d.zip",
+                "url": "https://tp.sn.com/repo/private/dists/sn/auth/9999999-dev/e8d4581a57698a766b3b34030fc716485a864a9d.zip",
                 "reference": "e8d4581a57698a766b3b34030fc716485a864a9d",
                 "shasum": null,
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
             },
             "require": {
-                "ait/rbac": "dev-master",
-                "ait/utilities": ">=1.0.39",
+                "sn/rbac": "dev-master",
+                "sn/utilities": ">=1.0.39",
                 "php": ">=5.6.0",
                 "yiisoft/yii2": ">=2.0.13",
                 "yiisoft/yii2-bootstrap": "~2.0.0",
@@ -47,7 +47,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "ait\\auth\\": ""
+                    "sn\\auth\\": ""
                 }
             },
             "scripts": {
@@ -63,7 +63,7 @@
             ],
             "description": "Users management, user profile, auth",
             "keywords": [
-                "ait",
+                "sn",
                 "user",
                 "users",
                 "yii",
@@ -73,28 +73,28 @@
             "time": "2017-09-29T14:57:25+00:00"
         },
         {
-            "name": "ait/citrix",
+            "name": "sn/citrix",
             "version": "1.0.19",
             "source": {
                 "type": "git",
-                "url": "git@gitlab.ait.com:ait/citrix.git",
+                "url": "git@gitlab.sn.com:sn/citrix.git",
                 "reference": "efa4f8dfdc49d3602bb2e0c65ff64a285441914d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/citrix/1.0.19.0/efa4f8dfdc49d3602bb2e0c65ff64a285441914d.zip",
+                "url": "https://tp.sn.com/repo/private/dists/sn/citrix/1.0.19.0/efa4f8dfdc49d3602bb2e0c65ff64a285441914d.zip",
                 "reference": "efa4f8dfdc49d3602bb2e0c65ff64a285441914d",
                 "shasum": null,
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
             },
             "require": {
-                "ait/guzzle": "^6.2.2",
-                "ait/utilities": "^1.0.14",
+                "sn/guzzle": "^6.2.2",
+                "sn/utilities": "^1.0.14",
                 "monolog/monolog": "^1.22",
                 "php": ">=5.5",
                 "yiisoft/yii2": "*"
@@ -115,29 +115,29 @@
             ],
             "authors": [
                 {
-                    "name": "AIT Serg Nochevny",
-                    "email": "serg.nochevny@engineering.ait.com"
+                    "name": "sn Serg Nochevny",
+                    "email": "serg.nochevny@engineering.sn.com"
                 }
             ],
             "description": "Citrix Share File API implementation the class wrapper",
             "time": "2017-09-06T16:46:30+00:00"
         },
         {
-            "name": "ait/guzzle",
+            "name": "sn/guzzle",
             "version": "6.3.3",
             "source": {
                 "type": "git",
-                "url": "git@gitlab.ait.com:ait/guzzle.git",
+                "url": "git@gitlab.sn.com:sn/guzzle.git",
                 "reference": "49b10fe50e5ebd927f8527c6230d7f3ed43528dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/guzzle/6.3.3.0/49b10fe50e5ebd927f8527c6230d7f3ed43528dd.zip",
+                "url": "https://tp.sn.com/repo/private/dists/sn/guzzle/6.3.3.0/49b10fe50e5ebd927f8527c6230d7f3ed43528dd.zip",
                 "reference": "49b10fe50e5ebd927f8527c6230d7f3ed43528dd",
                 "shasum": null,
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -158,12 +158,12 @@
                     "functions_include.php"
                 ],
                 "psr-4": {
-                    "ait\\guzzle\\": ""
+                    "sn\\guzzle\\": ""
                 }
             },
             "autoload-dev": {
                 "psr-4": {
-                    "ait\\guzzle\\Tests\\": "tests/"
+                    "sn\\guzzle\\Tests\\": "tests/"
                 }
             },
             "license": [
@@ -188,21 +188,21 @@
             "time": "2017-03-29T12:56:24+00:00"
         },
         {
-            "name": "ait/keystorage",
+            "name": "sn/keystorage",
             "version": "1.0.2",
             "source": {
                 "type": "git",
-                "url": "git@gitlab.ait.com:ait/keystorage.git",
+                "url": "git@gitlab.sn.com:sn/keystorage.git",
                 "reference": "1410848bc7c72f8d7dc5ab103184c71af8ac6acc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/keystorage/1.0.2.0/1410848bc7c72f8d7dc5ab103184c71af8ac6acc.zip",
+                "url": "https://tp.sn.com/repo/private/dists/sn/keystorage/1.0.2.0/1410848bc7c72f8d7dc5ab103184c71af8ac6acc.zip",
                 "reference": "1410848bc7c72f8d7dc5ab103184c71af8ac6acc",
                 "shasum": null,
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -213,7 +213,7 @@
             "type": "extension",
             "autoload": {
                 "psr-4": {
-                    "ait\\keystorage\\": ""
+                    "sn\\keystorage\\": ""
                 }
             },
             "license": [
@@ -222,27 +222,27 @@
             "authors": [
                 {
                     "name": "Serg Nochevny",
-                    "email": "serg.nochevny@engineering.ait.com"
+                    "email": "serg.nochevny@engineering.sn.com"
                 }
             ],
             "time": "2017-04-21T13:10:00+00:00"
         },
         {
-            "name": "ait/rbac",
+            "name": "sn/rbac",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@gitlab.ait.com:ait/rbac.git",
+                "url": "git@gitlab.sn.com:sn/rbac.git",
                 "reference": "b4f20899060d0709c9451739fc21263db26fb582"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/rbac/9999999-dev/b4f20899060d0709c9451739fc21263db26fb582.zip",
+                "url": "https://tp.sn.com/repo/private/dists/sn/rbac/9999999-dev/b4f20899060d0709c9451739fc21263db26fb582.zip",
                 "reference": "b4f20899060d0709c9451739fc21263db26fb582",
                 "shasum": null,
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -261,7 +261,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "ait\\rbac\\": ""
+                    "sn\\rbac\\": ""
                 }
             },
             "scripts": {
@@ -275,9 +275,9 @@
             "license": [
                 "BSD-3-Clause"
             ],
-            "description": "AIT RBAC",
+            "description": "sn RBAC",
             "keywords": [
-                "ait",
+                "sn",
                 "rbac",
                 "yii",
                 "yii 2",
@@ -286,21 +286,21 @@
             "time": "2017-09-07T15:33:00+00:00"
         },
         {
-            "name": "ait/utilities",
+            "name": "sn/utilities",
             "version": "1.0.41",
             "source": {
                 "type": "git",
-                "url": "git@gitlab.ait.com:ait/utilities.git",
+                "url": "git@gitlab.sn.com:sn/utilities.git",
                 "reference": "0c847fa7557417ec2119c313bfbfe398ca578a8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/utilities/1.0.41.0/0c847fa7557417ec2119c313bfbfe398ca578a8e.zip",
+                "url": "https://tp.sn.com/repo/private/dists/sn/utilities/1.0.41.0/0c847fa7557417ec2119c313bfbfe398ca578a8e.zip",
                 "reference": "0c847fa7557417ec2119c313bfbfe398ca578a8e",
                 "shasum": null,
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -315,40 +315,40 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "ait\\utilities\\": ""
+                    "sn\\utilities\\": ""
                 }
             },
             "authors": [
                 {
                     "name": "Serg Nochevny",
-                    "email": "serg.nochevny@engineering.ait.com"
+                    "email": "serg.nochevny@engineering.sn.com"
                 }
             ],
-            "description": "AIT Yii2 Utilities Library",
+            "description": "sn Yii2 Utilities Library",
             "time": "2017-08-14T15:29:39+00:00"
         },
         {
-            "name": "ait/yii2-fileupload",
+            "name": "sn/yii2-fileupload",
             "version": "1.0.12",
             "source": {
                 "type": "git",
-                "url": "git@gitlab.ait.com:ait/yii2-fileupload.git",
+                "url": "git@gitlab.sn.com:sn/yii2-fileupload.git",
                 "reference": "f8faf789abb3ce71268e17383e25c839e8057124"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/yii2-fileupload/1.0.12.0/f8faf789abb3ce71268e17383e25c839e8057124.zip",
+                "url": "https://tp.sn.com/repo/private/dists/sn/yii2-fileupload/1.0.12.0/f8faf789abb3ce71268e17383e25c839e8057124.zip",
                 "reference": "f8faf789abb3ce71268e17383e25c839e8057124",
                 "shasum": null,
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
             },
             "require": {
-                "ait/yii2-gallery": "~1.0",
+                "sn/yii2-gallery": "~1.0",
                 "bower-asset/blueimp-file-upload": "^9.18.0",
                 "php": ">=5.6.0",
                 "yiisoft/yii2": ">=2.0.11",
@@ -361,7 +361,7 @@
             "type": "yii2-extension",
             "autoload": {
                 "psr-4": {
-                    "ait\\fileupload\\": "src"
+                    "sn\\fileupload\\": "src"
                 }
             },
             "license": [
@@ -370,7 +370,7 @@
             "description": "Blueimp file upload widget for the Yii framework",
             "keywords": [
                 "2amigos",
-                "ait",
+                "sn",
                 "upload",
                 "widget",
                 "yii",
@@ -380,21 +380,21 @@
             "time": "2017-07-29T12:17:15+00:00"
         },
         {
-            "name": "ait/yii2-gallery",
+            "name": "sn/yii2-gallery",
             "version": "1.0.4",
             "source": {
                 "type": "git",
-                "url": "git@gitlab.ait.com:ait/yii2-gallery.git",
+                "url": "git@gitlab.sn.com:sn/yii2-gallery.git",
                 "reference": "e3ba1eacc407e7f75c38254cdef66f39f1214517"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/ait/yii2-gallery/1.0.4.0/e3ba1eacc407e7f75c38254cdef66f39f1214517.zip",
+                "url": "https://tp.sn.com/repo/private/dists/sn/yii2-gallery/1.0.4.0/e3ba1eacc407e7f75c38254cdef66f39f1214517.zip",
                 "reference": "e3ba1eacc407e7f75c38254cdef66f39f1214517",
                 "shasum": null,
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -411,7 +411,7 @@
             "type": "yii2-extension",
             "autoload": {
                 "psr-4": {
-                    "ait\\gallery\\": "src"
+                    "sn\\gallery\\": "src"
                 }
             },
             "license": [
@@ -420,7 +420,7 @@
             "description": "Blueimp gallery widget for the Yii framework",
             "keywords": [
                 "2amigos",
-                "ait",
+                "sn",
                 "gallery",
                 "widget",
                 "yii",
@@ -828,17 +828,17 @@
             "version": "1.0.16",
             "source": {
                 "type": "git",
-                "url": "git@gitlab.ait.com:ait/extlib.git",
+                "url": "git@gitlab.sn.com:sn/extlib.git",
                 "reference": "2ffbf46db42bca5f463c85eb9000740c92521ee1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://tp.ait.com/repo/private/dists/bower/ext-lib/1.0.16.0/2ffbf46db42bca5f463c85eb9000740c92521ee1.zip",
+                "url": "https://tp.sn.com/repo/private/dists/bower/ext-lib/1.0.16.0/2ffbf46db42bca5f463c85eb9000740c92521ee1.zip",
                 "reference": "2ffbf46db42bca5f463c85eb9000740c92521ee1",
                 "shasum": null,
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/private/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/private/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -865,8 +865,8 @@
             ],
             "authors": [
                 {
-                    "name": "AIT Serg Nochevny",
-                    "homepage": "http://www.ait.com"
+                    "name": "sn Serg Nochevny",
+                    "homepage": "http://www.sn.com"
                 }
             ],
             "description": "JQuery Library Extensions",
@@ -887,7 +887,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -953,7 +953,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1006,7 +1006,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1063,7 +1063,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1134,7 +1134,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1187,7 +1187,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1240,7 +1240,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1297,7 +1297,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1354,7 +1354,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1409,7 +1409,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1473,7 +1473,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1557,7 +1557,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1613,7 +1613,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1666,7 +1666,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1750,7 +1750,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1810,7 +1810,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1867,7 +1867,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -1973,7 +1973,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2025,7 +2025,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2099,7 +2099,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2155,7 +2155,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2207,7 +2207,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2265,7 +2265,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2357,7 +2357,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2402,7 +2402,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2500,7 +2500,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2542,7 +2542,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2602,7 +2602,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2658,7 +2658,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2706,7 +2706,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2767,7 +2767,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2820,7 +2820,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2880,7 +2880,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2931,7 +2931,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -2984,7 +2984,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3028,7 +3028,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3097,7 +3097,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3167,7 +3167,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3220,7 +3220,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3267,7 +3267,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3322,7 +3322,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3377,7 +3377,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3467,7 +3467,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3532,7 +3532,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3583,7 +3583,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3653,7 +3653,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3711,7 +3711,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3767,7 +3767,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3840,7 +3840,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3897,7 +3897,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -3950,7 +3950,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4001,7 +4001,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4060,7 +4060,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4108,7 +4108,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4157,7 +4157,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4208,7 +4208,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4271,7 +4271,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4346,7 +4346,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4405,7 +4405,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4467,7 +4467,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4529,7 +4529,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4598,7 +4598,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4653,7 +4653,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4718,7 +4718,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4782,7 +4782,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4828,7 +4828,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4884,7 +4884,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4937,7 +4937,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -4990,7 +4990,7 @@
                 "shasum": "",
                 "mirrors": [
                     {
-                        "url": "https://tp.ait.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
+                        "url": "https://tp.sn.com/repo/packagist/dists/%package%/%version%/%reference%.%type%",
                         "preferred": true
                     }
                 ]
@@ -5038,7 +5038,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "ait/auth": 20
+        "sn/auth": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

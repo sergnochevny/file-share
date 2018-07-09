@@ -1,12 +1,12 @@
 <?php
 
-use ait\utilities\helpers\Url;
+use sn\utilities\helpers\Url;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model ait\auth\models\forms\PasswordRestoreForm */
+/* @var $model sn\auth\models\forms\PasswordRestoreForm */
 
 $subtitle = 'Restore your password';
 $this->title = Yii::$app->name . ' | ' . $subtitle;

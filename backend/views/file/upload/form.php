@@ -1,5 +1,5 @@
 <?php
-/** @var \ait\fileupload\FileUploadUI $this */
+/** @var \sn\fileupload\FileUploadUI $this */
 use yii\helpers\Html;
 
 $context = $this->context;

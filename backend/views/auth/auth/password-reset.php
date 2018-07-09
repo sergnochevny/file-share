@@ -1,12 +1,12 @@
 <?php
 
-use ait\utilities\helpers\Url;
+use sn\utilities\helpers\Url;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model ait\auth\models\forms\PasswordResetForm */
+/* @var $model sn\auth\models\forms\PasswordResetForm */
 
 $this->title = 'Password Reset';
 

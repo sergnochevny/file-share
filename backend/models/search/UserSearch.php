@@ -2,7 +2,7 @@
 
 namespace backend\models\search;
 
-use ait\rbac\Item;
+use sn\rbac\Item;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;

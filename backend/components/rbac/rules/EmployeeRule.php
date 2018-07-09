@@ -2,7 +2,7 @@
 
 namespace backend\components\rbac\rules;
 
-use ait\rbac\Rule;
+use sn\rbac\Rule;
 use common\models\Company;
 use common\models\Investigation;
 

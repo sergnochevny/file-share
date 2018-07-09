@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use ait\keystorage\models\KeyStorageFormModel;
+use sn\keystorage\models\KeyStorageFormModel;
 use backend\behaviors\RememberUrlBehavior;
 use backend\models\Graph;
 use backend\models\Statistics;

@@ -11,14 +11,14 @@ $params = array_merge(
 
 return [
     'id' => 'app-backend',
-    'name' => 'Protus',
+    'name' => 'file_share',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'defaultRoute' => 'site/index',
     'components' => [
         'keyStorage' => [
-            'class' => 'ait\keystorage\components\KeyStorage',
+            'class' => 'sn\keystorage\components\KeyStorage',
         ],
         'assetManager' => [
             'linkAssets' => false,
@@ -40,7 +40,7 @@ return [
             'csrfParam' => '_csrf-backend',
         ],
         'user' => [
-            'class' => 'ait\utilities\web\User',
+            'class' => 'sn\utilities\web\User',
             'identityClass' => User::class,
             'loginUrl' => ['auth/auth/login'],
             'enableAutoLogin' => false,
@@ -70,10 +70,10 @@ return [
         ],
     ],
     'as access' => [
-        'class' => 'ait\auth\behaviors\AccessControl'
+        'class' => 'sn\auth\behaviors\AccessControl'
     ],
     'as beforeAction' => [
-        'class' => 'ait\auth\behaviors\LastActionBehavior',
+        'class' => 'sn\auth\behaviors\LastActionBehavior',
     ],
     'params' => $params,
 ];

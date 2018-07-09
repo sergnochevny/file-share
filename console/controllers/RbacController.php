@@ -1,12 +1,12 @@
 <?php
 /**
- * Copyright (c) 2017. AIT
+ * Copyright (c) 2017. sn
  */
 
 namespace console\controllers;
 
 
-use ait\auth\traits\RbacInitTrait;
+use sn\auth\traits\RbacInitTrait;
 use backend\components\rbac\rules\EmployeeRule;
 use yii\console\Controller;
 

@@ -4,7 +4,7 @@
  * Time: 11:52
  */
 
-use ait\fileupload\FileUploadUI;
+use sn\fileupload\FileUploadUI;
 
 echo FileUploadUI::widget([
     'model' => $model,

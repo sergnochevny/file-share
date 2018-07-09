@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2017. AIT
+ * Copyright (c) 2017. sn
  */
 
 namespace backend\models\traits;

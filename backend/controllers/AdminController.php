@@ -1,11 +1,11 @@
 <?php
 /**
- * Copyright (c) 2017. AIT
+ * Copyright (c) 2017. sn
  */
 
 namespace backend\controllers;
 
-use ait\rbac\Item;
+use sn\rbac\Item;
 use backend\behaviors\RememberUrlBehavior;
 use backend\models\forms\UserForm;
 use backend\models\search\AdminSearch;

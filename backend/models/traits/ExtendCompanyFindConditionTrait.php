@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2017. AIT
+ * Copyright (c) 2017. sn
  */
 
 /**
@@ -10,7 +10,7 @@
 
 namespace backend\models\traits;
 
-use ait\rbac\DbManager;
+use sn\rbac\DbManager;
 use yii\db\ActiveRecord;
 
 trait ExtendCompanyFindConditionTrait
@@ -43,7 +43,7 @@ trait ExtendCompanyFindConditionTrait
                         array_filter($intersectRoles, function ($roleObj) use ($am, $intersectPermissions) {
                             $permissions = $am->getPermissionsByRole($roleObj->name);
                             /**
-                             * @var \ait\rbac\Permission[] $permissions
+                             * @var \sn\rbac\Permission[] $permissions
                              */
                             $intersectPermissions = array_intersect($intersectPermissions, array_keys($permissions));
                             if (empty($intersectPermissions)) {

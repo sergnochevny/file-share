@@ -4,7 +4,7 @@
 /** @var $isUpdate bool */
 ///** @var $companyId int|bool If user is not client then false */
 
-use ait\utilities\helpers\Url;
+use sn\utilities\helpers\Url;
 use backend\models\Company;
 use backend\models\User;
 use backend\widgets\ActiveForm;

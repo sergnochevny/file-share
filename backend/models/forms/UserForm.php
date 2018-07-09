@@ -7,7 +7,7 @@ use common\models\query\UndeleteableActiveQuery;
 use kartik\password\StrengthValidator;
 use yii\base\Model;
 use yii\db\Query;
-use ait\rbac\Item;
+use sn\rbac\Item;
 
 /***
  * Class UserForm

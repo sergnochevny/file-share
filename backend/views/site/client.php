@@ -2,7 +2,7 @@
 
 /** @var \backend\models\User $user */
 
-use ait\utilities\helpers\Url;
+use sn\utilities\helpers\Url;
 
 $user = Yii::$app->getUser()->getIdentity();
 $company = $user->company;

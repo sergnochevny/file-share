@@ -1,6 +1,6 @@
 <?php
 
-use ait\utilities\helpers\Url;
+use sn\utilities\helpers\Url;
 use backend\models\User;
 
 /** @var \common\models\User $user */

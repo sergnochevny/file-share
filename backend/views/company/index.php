@@ -1,6 +1,6 @@
 <?php
 
-use ait\utilities\helpers\Url;
+use sn\utilities\helpers\Url;
 use common\widgets\Alert;
 use yii\grid\GridView;
 use yii\helpers\Html;

@@ -1,7 +1,7 @@
 <?php
 
-use ait\utilities\assets\ExtLibAsset;
-use ait\utilities\helpers\Url;
+use sn\utilities\assets\ExtLibAsset;
+use sn\utilities\helpers\Url;
 use backend\assets\AlertHelperAsset;
 use backend\assets\DownloadAsset;
 use backend\behaviors\VerifyPermissionBehavior;

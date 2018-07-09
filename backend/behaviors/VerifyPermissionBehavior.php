@@ -6,7 +6,7 @@
 
 namespace backend\behaviors;
 
-use ait\auth\behaviors\ModelPermissionsBehavior;
+use sn\auth\behaviors\ModelPermissionsBehavior;
 use backend\models\Investigation;
 use backend\models\User;
 use common\models\RecoverableActiveRecord;

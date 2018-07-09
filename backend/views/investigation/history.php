@@ -4,7 +4,7 @@
 /* @var $searchModel backend\models\search\InvestigationSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-use ait\utilities\helpers\Url;
+use sn\utilities\helpers\Url;
 use common\widgets\Alert;
 use yii\helpers\Html;
 use yii\grid\GridView;
